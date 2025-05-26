@@ -3,9 +3,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+
 interface DomainSettingsGeneralProps {
   domainName: string;
 }
+
 export const DomainSettingsGeneral = ({
   domainName
 }: DomainSettingsGeneralProps) => {
@@ -14,12 +17,14 @@ export const DomainSettingsGeneral = ({
   const [redirectUrl, setRedirectUrl] = useState("http://edicy.voog.com/redirection");
   const [keepSubpagePath, setKeepSubpagePath] = useState(false);
   const [forceSSL, setForceSSL] = useState("allow-non-ssl");
-  const [iframePermissions, setIframePermissions] = useState("allow-origin-only");
+  const [allowIframeEmbedding, setAllowIframeEmbedding] = useState(false);
 
   // Mock SSL active state - in real app this would come from props
   const sslActive = false;
   const isExternal = true;
-  return <div className="space-y-8">
+
+  return (
+    <div className="space-y-8">
       {/* Default domain form row */}
       <div className="grid grid-cols-2 gap-8">
         <div>
@@ -64,33 +69,37 @@ export const DomainSettingsGeneral = ({
       </div>
 
       {/* Redirect address row - conditionally shown */}
-      {redirecting === "to-specific-address" && <div className="grid grid-cols-2 gap-8">
+      {redirecting === "to-specific-address" && (
+        <div className="grid grid-cols-2 gap-8">
           <div>
             <Label htmlFor="redirect-url" className="text-sm font-medium text-gray-900 block mb-3">
               Redirect address
             </Label>
-            <Input id="redirect-url" type="url" value={redirectUrl} onChange={e => setRedirectUrl(e.target.value)} className="w-full" />
+            <Input
+              id="redirect-url"
+              type="url"
+              value={redirectUrl}
+              onChange={(e) => setRedirectUrl(e.target.value)}
+              className="w-full"
+            />
           </div>
           <div className="text-xs text-gray-600 pt-7">
             <p>Enter the full URL where you want to redirect visitors.</p>
           </div>
-        </div>}
+        </div>
+      )}
 
-      {/* Keep subpage path row */}
+      {/* Keep subpage path row - now with toggle */}
       <div className="grid grid-cols-2 gap-8">
         <div>
           <Label htmlFor="keep-subpage-path" className="text-sm font-medium text-gray-900 block mb-3">
             Keep subpage path
           </Label>
-          <Select value={keepSubpagePath ? "yes" : "no"} onValueChange={value => setKeepSubpagePath(value === "yes")}>
-            <SelectTrigger className="w-24">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="no">No</SelectItem>
-              <SelectItem value="yes">Yes</SelectItem>
-            </SelectContent>
-          </Select>
+          <Switch
+            id="keep-subpage-path"
+            checked={keepSubpagePath}
+            onCheckedChange={setKeepSubpagePath}
+          />
         </div>
         <div className="text-xs text-gray-600 pt-7">
           <p>When redirecting, preserve the original page path in the destination URL.</p>
@@ -102,7 +111,6 @@ export const DomainSettingsGeneral = ({
         <div>
           <Label htmlFor="force-ssl" className="text-sm font-medium text-gray-900 block mb-3">
             Force SSL
-            
           </Label>
           <Select value={forceSSL} onValueChange={setForceSSL} disabled={!sslActive}>
             <SelectTrigger className={`w-48 ${!sslActive ? 'opacity-50 cursor-not-allowed' : ''}`}>
@@ -115,40 +123,38 @@ export const DomainSettingsGeneral = ({
           </Select>
         </div>
         <div className="text-xs text-gray-600 pt-7">
-          <p>Force all visitors to use HTTPS. Requires an active SSL certificate.</p>
+          <p>This domain does not have an SSL certificate. You can upload your own or auto-activate a free certificate in SSL certificates.</p>
         </div>
       </div>
 
-      {/* Need to transfer row - conditional */}
-      {isExternal && <div className="grid grid-cols-2 gap-8">
+      {/* Need to transfer row - conditional with blue text link */}
+      {isExternal && (
+        <div className="grid grid-cols-2 gap-8">
           <div>
             <Label className="text-sm font-medium text-gray-900 block mb-3">
               Need to transfer?
             </Label>
-            <Button variant="outline" className="text-sm">
+            <button className="text-blue-600 hover:text-blue-700 text-sm font-medium underline">
               Request code
-            </Button>
+            </button>
           </div>
           <div className="text-xs text-gray-600 pt-7">
-            <p>Request authorization code to transfer domain to another registrar.</p>
+            <p>Request authorization code to transfer domain to another registrar. Contact our support team for assistance.</p>
           </div>
-        </div>}
+        </div>
+      )}
 
-      {/* Allow embedding in IFrame row */}
+      {/* Allow embedding in IFrame row - now with toggle */}
       <div className="grid grid-cols-2 gap-8">
         <div>
-          <Label htmlFor="iframe-permissions" className="text-sm font-medium text-gray-900 block mb-3">
-            Allow embedding in IFrame
+          <Label htmlFor="iframe-embedding" className="text-sm font-medium text-gray-900 block mb-3">
+            Allow embedding in iframe
           </Label>
-          <Select value={iframePermissions} onValueChange={setIframePermissions}>
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="allow-origin-only">Allow origin only</SelectItem>
-              <SelectItem value="allow-everywhere">Allow everywhere</SelectItem>
-            </SelectContent>
-          </Select>
+          <Switch
+            id="iframe-embedding"
+            checked={allowIframeEmbedding}
+            onCheckedChange={setAllowIframeEmbedding}
+          />
         </div>
         <div className="text-xs text-gray-600 pt-7">
           <p>Control whether your site can be embedded in frames on other websites.</p>
@@ -166,5 +172,6 @@ export const DomainSettingsGeneral = ({
           </Button>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
