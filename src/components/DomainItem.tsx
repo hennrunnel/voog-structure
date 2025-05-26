@@ -1,4 +1,3 @@
-
 import { Lock, LockOpen, Settings, MoreVertical, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -149,11 +148,11 @@ export const DomainItem = ({
           <div className="text-right">
             {/* Handle not registered domains specially */}
             {isNotRegistered ? (
-              <p className="text-base text-red-600">Domain is not registered</p>
+              <p className="text-sm text-red-600">Domain is not registered</p>
             ) : (
               <>
                 {domain.expiry && (
-                  <p className="font-medium text-base text-gray-600">
+                  <p className="font-medium text-sm text-gray-600">
                     {domain.expiry}
                   </p>
                 )}

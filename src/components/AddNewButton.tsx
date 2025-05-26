@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ChevronDown, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface AddNewButtonProps {
@@ -43,7 +43,6 @@ export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
       >
         <Plus className="w-4 h-4" />
         <span>Add new</span>
-        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
