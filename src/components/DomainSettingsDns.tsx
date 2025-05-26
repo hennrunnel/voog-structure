@@ -18,12 +18,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 interface DnsRecord {
   id: string;
@@ -36,17 +30,6 @@ interface DnsRecord {
 interface DomainSettingsDnsProps {
   domainName: string;
 }
-
-const dnsTypeTooltips = {
-  'A': 'A Record: Points your domain to an IPv4 address (like 192.168.1.1)',
-  'AAAA': 'AAAA Record: Points your domain to an IPv6 address',
-  'CNAME': 'CNAME Record: Creates an alias that points to another domain name',
-  'MX': 'MX Record: Directs email to mail servers with priority numbers',
-  'TXT': 'TXT Record: Stores text information, often used for verification',
-  'SRV': 'SRV Record: Defines service locations for specific protocols',
-  'NS': 'NS Record: Delegates a subdomain to a set of name servers',
-  'SOA': 'SOA Record: Contains administrative information about the domain'
-};
 
 export const DomainSettingsDns = ({ domainName }: DomainSettingsDnsProps) => {
   const [dnsRecords, setDnsRecords] = useState<DnsRecord[]>([
@@ -89,136 +72,102 @@ export const DomainSettingsDns = ({ domainName }: DomainSettingsDnsProps) => {
   };
 
   return (
-    <TooltipProvider>
-      <div className="space-y-6">
-        <div className="mb-6">
-          <h3 className="text-lg font-medium text-gray-900 mb-2">DNS Zone for {domainName}</h3>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Info className="w-4 h-4" />
-            <p>Manage DNS records for your domain. Changes may take up to 24 hours to propagate globally.</p>
-          </div>
-        </div>
-
-        <div className="border border-gray-200 rounded-lg overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-gray-50">
-                <TableHead className="text-sm font-medium text-gray-900">Subdomain</TableHead>
-                <TableHead className="text-sm font-medium text-gray-900">
-                  <div className="flex items-center gap-2">
-                    Type
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="w-4 h-4 text-gray-400" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>DNS record types define how your domain resolves to different services</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
-                </TableHead>
-                <TableHead className="text-sm font-medium text-gray-900">Value</TableHead>
-                <TableHead className="w-12"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {dnsRecords.map((record) => (
-                <TableRow key={record.id} className="hover:bg-gray-50">
-                  <TableCell className="py-3">
-                    {record.isEditable ? (
-                      <Input
-                        value={record.subdomain}
-                        onChange={(e) => updateDnsRecord(record.id, 'subdomain', e.target.value)}
-                        placeholder="@"
-                        className="text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                      />
-                    ) : (
-                      <span className="text-sm text-gray-900">{record.subdomain}</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="py-3">
-                    {record.isEditable ? (
-                      <div className="flex items-center gap-2">
-                        <Select value={record.type} onValueChange={(value) => updateDnsRecord(record.id, 'type', value)}>
-                          <SelectTrigger className="text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="A">A</SelectItem>
-                            <SelectItem value="AAAA">AAAA</SelectItem>
-                            <SelectItem value="CNAME">CNAME</SelectItem>
-                            <SelectItem value="MX">MX</SelectItem>
-                            <SelectItem value="TXT">TXT</SelectItem>
-                            <SelectItem value="SRV">SRV</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="w-4 h-4 text-gray-400" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{dnsTypeTooltips[record.type as keyof typeof dnsTypeTooltips] || 'DNS record type'}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-900 font-mono">{record.type}</span>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="w-4 h-4 text-gray-400" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{dnsTypeTooltips[record.type as keyof typeof dnsTypeTooltips] || 'DNS record type'}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="py-3">
-                    {record.isEditable ? (
-                      <Input
-                        value={record.value}
-                        onChange={(e) => updateDnsRecord(record.id, 'value', e.target.value)}
-                        placeholder="Enter value..."
-                        className="text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                      />
-                    ) : (
-                      <span className="text-sm text-gray-900 font-mono">{record.value}</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="py-3">
-                    {record.isEditable && (
-                      <button
-                        onClick={() => deleteDnsRecord(record.id)}
-                        className="text-gray-400 hover:text-red-600 transition-colors p-1"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <button
-            onClick={addDnsRecord}
-            className="text-blue-600 hover:text-blue-700 text-sm transition-colors"
-          >
-            + Add DNS record
-          </button>
-        </div>
-
-        {/* Standardized full-width save button */}
-        <div className="pt-4">
-          <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3">
-            Save settings
-          </Button>
+    <div className="space-y-6">
+      <div className="mb-6">
+        <h3 className="text-lg font-medium text-gray-900 mb-2">DNS Zone for {domainName}</h3>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <Info className="w-4 h-4" />
+          <p>Manage DNS records for your domain. Changes may take up to 24 hours to propagate globally.</p>
         </div>
       </div>
-    </TooltipProvider>
+
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-gray-50">
+              <TableHead className="text-sm font-medium text-gray-900">Subdomain</TableHead>
+              <TableHead className="text-sm font-medium text-gray-900">Type</TableHead>
+              <TableHead className="text-sm font-medium text-gray-900">Value</TableHead>
+              <TableHead className="w-12"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {dnsRecords.map((record) => (
+              <TableRow key={record.id} className="hover:bg-gray-50">
+                <TableCell className="py-3">
+                  {record.isEditable ? (
+                    <Input
+                      value={record.subdomain}
+                      onChange={(e) => updateDnsRecord(record.id, 'subdomain', e.target.value)}
+                      placeholder="@"
+                      className="text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <span className="text-sm text-gray-900">{record.subdomain}</span>
+                  )}
+                </TableCell>
+                <TableCell className="py-3">
+                  {record.isEditable ? (
+                    <Select value={record.type} onValueChange={(value) => updateDnsRecord(record.id, 'type', value)}>
+                      <SelectTrigger className="text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="A">A</SelectItem>
+                        <SelectItem value="AAAA">AAAA</SelectItem>
+                        <SelectItem value="CNAME">CNAME</SelectItem>
+                        <SelectItem value="MX">MX</SelectItem>
+                        <SelectItem value="TXT">TXT</SelectItem>
+                        <SelectItem value="SRV">SRV</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <span className="text-sm text-gray-900 font-mono">{record.type}</span>
+                  )}
+                </TableCell>
+                <TableCell className="py-3">
+                  {record.isEditable ? (
+                    <Input
+                      value={record.value}
+                      onChange={(e) => updateDnsRecord(record.id, 'value', e.target.value)}
+                      placeholder="Enter value..."
+                      className="text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <span className="text-sm text-gray-900 font-mono">{record.value}</span>
+                  )}
+                </TableCell>
+                <TableCell className="py-3">
+                  {record.isEditable && (
+                    <button
+                      onClick={() => deleteDnsRecord(record.id)}
+                      className="text-gray-400 hover:text-red-600 transition-colors p-1"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      <div className="flex justify-between items-center">
+        <button
+          onClick={addDnsRecord}
+          className="text-blue-600 hover:text-blue-700 text-sm transition-colors"
+        >
+          + Add DNS record
+        </button>
+      </div>
+
+      {/* Narrow save button with consistent styling */}
+      <div className="pt-4">
+        <Button className="bg-blue-600 hover:bg-blue-700 text-white py-3 text-sm font-medium rounded-lg px-4">
+          Save
+        </Button>
+      </div>
+    </div>
   );
 };

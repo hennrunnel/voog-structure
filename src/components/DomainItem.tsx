@@ -1,3 +1,4 @@
+
 import { Lock, LockOpen, Settings, MoreVertical, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -41,25 +42,23 @@ export const DomainItem = ({
     if (type === "BIZ") return "bg-orange-50 text-orange-700 border-orange-200";
     return "bg-gray-50 text-gray-700 border-gray-200";
   };
+  
   const getIconText = (type: string) => {
-    if (type === "Free Voog domain") return "•";
+    if (type === "Free Voog domain") return "";
     return type.substring(0, 3).toUpperCase();
   };
+  
   const getExpiryDateColor = (expiryDate: string) => {
-    if (expiryDate.includes("Expired") || expiryDate.includes("Domain is not registered") || expiryDate.includes("Sep") || expiryDate.toLowerCase().includes("expires")) return "text-red-600";
+    // Only red if already expired (past dates)
+    if (expiryDate.includes("Expired") || expiryDate.includes("Domain is not registered")) return "text-red-600";
     return "text-gray-600";
   };
 
   // Check if we should show the type badge (only for domains with "free" in the type)
   const shouldShowTypeBadge = domain.type.toLowerCase().includes("free");
 
-  // Get the source text - for free Voog domains, show as source instead of type
-  const getSourceText = () => {
-    if (domain.type === "Free Voog domain") {
-      return "Free Voog domain";
-    }
-    return domain.source;
-  };
+  // Show notes only for redirected domains (first domain in this case)
+  const shouldShowNotes = domain.notes && domain.notes.includes("Redirected");
 
   const handleSettingsClick = () => {
     navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
@@ -135,11 +134,8 @@ export const DomainItem = ({
             {/* Type Badge - only show for free domains */}
             {shouldShowTypeBadge}
             
-            {/* Notes */}
-            {domain.notes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
-            
-            {/* Source */}
-            {getSourceText() && <p className="text-xs text-gray-500 mt-1">{getSourceText()}</p>}
+            {/* Notes - only show for redirected domains */}
+            {shouldShowNotes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
           </div>
         </div>
 
