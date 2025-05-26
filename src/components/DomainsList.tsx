@@ -20,12 +20,12 @@ interface DomainsListProps {
 export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
   const domains = [
     {
-      name: "creativestudio.com",
+      name: "creativeagency.com",
       type: "COM",
       sslActive: false,
       expiry: "€16.00 / year",
       expiryDate: "Expired (Mar 15'24)",
-      notes: "Redirected to http://edicy.voog.com/redirection",
+      notes: "Redirected to portfolio.voog.com",
       source: "Bought from Voog",
       isExternal: false
     },
@@ -36,12 +36,12 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
       expiry: "Free forever",
       expiryDate: "",
       notes: "",
-      source: "",
+      source: "Free Voog domain",
       isExternal: false,
       isPrimary: true
     },
     {
-      name: "designagency.ee",
+      name: "designstudio.ee",
       type: "EE",
       sslActive: true,
       expiry: "€12.00 / year",
@@ -51,17 +51,17 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
       isExternal: false
     },
     {
-      name: "oldcompany.com",
+      name: "legacy-site.com",
       type: "COM",
       sslActive: false,
       expiry: "External",
       expiryDate: "Can't extend here",
-      notes: "Imported",
-      source: "",
+      notes: "",
+      source: "Imported",
       isExternal: true
     },
     {
-      name: "marketing-site.org",
+      name: "mybusiness.org",
       type: "ORG",
       sslActive: true,
       expiry: "€18.00 / year",
@@ -71,7 +71,7 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
       isExternal: false
     },
     {
-      name: "startup-demo.net",
+      name: "demo-project.net",
       type: "NET",
       sslActive: false,
       expiry: "!",
@@ -81,7 +81,7 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
       isExternal: false
     },
     {
-      name: "consultancy.biz",
+      name: "consulting.biz",
       type: "BIZ",
       sslActive: true,
       expiry: "€22.00 / year",
@@ -91,13 +91,13 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
       isExternal: false
     },
     {
-      name: "myblog.voog.com",
+      name: "personal.voog.com",
       type: "Free Voog domain",
       sslActive: true,
       expiry: "Free forever",
       expiryDate: "",
       notes: "",
-      source: "",
+      source: "Free Voog domain",
       isExternal: false
     }
   ];
@@ -115,6 +115,7 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
           domain={domain} 
           onAddToCart={onAddToCart}
           onOpenSettings={handleOpenSettings}
+          isFirst={index === 0}
         />
       ))}
     </div>

@@ -1,5 +1,7 @@
+
 import { Lock, Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
 interface Domain {
   name: string;
   type: string;
@@ -11,17 +13,22 @@ interface Domain {
   isExternal: boolean;
   isPrimary?: boolean;
 }
+
 interface DomainItemProps {
   domain: Domain;
   onAddToCart: (domain: string) => void;
   onOpenSettings: (domain: Domain) => void;
+  isFirst?: boolean;
 }
+
 export const DomainItem = ({
   domain,
   onAddToCart,
-  onOpenSettings
+  onOpenSettings,
+  isFirst = false
 }: DomainItemProps) => {
   const navigate = useNavigate();
+
   const getTypeColor = (type: string) => {
     if (type === "COM") return "bg-blue-50 text-blue-700 border-blue-200";
     if (type === "EE") return "bg-yellow-50 text-yellow-700 border-yellow-200";
@@ -30,18 +37,12 @@ export const DomainItem = ({
     if (type === "BIZ") return "bg-orange-50 text-orange-700 border-orange-200";
     return "bg-gray-50 text-gray-700 border-gray-200";
   };
-  const getIconColor = (type: string) => {
-    if (type === "COM") return "bg-blue-500";
-    if (type === "EE") return "bg-yellow-500";
-    if (type === "ORG") return "bg-green-500";
-    if (type === "NET") return "bg-purple-500";
-    if (type === "BIZ") return "bg-orange-500";
-    return "bg-gray-400";
-  };
+
   const getIconText = (type: string) => {
     if (type === "Free Voog domain") return "•";
     return type.substring(0, 3).toUpperCase();
   };
+
   const getExpiryColor = (expiry: string) => {
     if (expiry.includes("Expired")) return "text-red-600";
     if (expiry === "External") return "text-orange-600";
@@ -60,13 +61,16 @@ export const DomainItem = ({
     }
     return domain.source;
   };
+
   const handleSettingsClick = () => {
     navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
   };
-  return <div className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
+
+  return (
+    <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
       <div className="flex items-center space-x-4">
-        {/* Domain Icon */}
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-medium text-xs ${getIconColor(domain.type)}`}>
+        {/* Domain Icon - updated styling with dark gray background and more padding */}
+        <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">
           {getIconText(domain.type)}
         </div>
 
@@ -79,13 +83,19 @@ export const DomainItem = ({
             {domain.sslActive && <Lock className="w-4 h-4 text-green-600" />}
             
             {/* Primary Badge */}
-            {domain.isPrimary && <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
+            {domain.isPrimary && (
+              <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
                 PRIMARY
-              </span>}
+              </span>
+            )}
           </div>
           
           {/* Type Badge - only show for free domains */}
-          {shouldShowTypeBadge}
+          {shouldShowTypeBadge && (
+            <span className={`text-xs px-2 py-1 rounded border font-medium ${getTypeColor(domain.type)}`}>
+              {domain.type}
+            </span>
+          )}
           
           {/* Notes */}
           {domain.notes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
@@ -98,18 +108,26 @@ export const DomainItem = ({
       {/* Right Side - Expiry and Actions */}
       <div className="flex items-center space-x-4">
         <div className="text-right">
-          {domain.expiry && <p className={`font-medium text-sm ${getExpiryColor(domain.expiry)}`}>
+          {domain.expiry && (
+            <p className={`font-medium text-sm ${getExpiryColor(domain.expiry)}`}>
               {domain.expiry}
-            </p>}
-          {domain.expiryDate && <p className={`text-xs ${getExpiryColor(domain.expiryDate)}`}>
+            </p>
+          )}
+          {domain.expiryDate && (
+            <p className={`text-xs ${getExpiryColor(domain.expiryDate)}`}>
               {domain.expiryDate}
-            </p>}
+            </p>
+          )}
         </div>
         
         {/* Settings Icon */}
-        <button onClick={handleSettingsClick} className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+        <button 
+          onClick={handleSettingsClick} 
+          className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+        >
           <Settings className="w-4 h-4" />
         </button>
       </div>
-    </div>;
+    </div>
+  );
 };
