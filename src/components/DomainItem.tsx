@@ -1,13 +1,6 @@
-
 import { Lock, LockOpen, Settings, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 interface Domain {
   name: string;
   type: string;
@@ -19,14 +12,12 @@ interface Domain {
   isExternal: boolean;
   isPrimary?: boolean;
 }
-
 interface DomainItemProps {
   domain: Domain;
   onAddToCart: (domain: string) => void;
   onOpenSettings: (domain: Domain) => void;
   isFirst?: boolean;
 }
-
 export const DomainItem = ({
   domain,
   onAddToCart,
@@ -34,7 +25,6 @@ export const DomainItem = ({
   isFirst = false
 }: DomainItemProps) => {
   const navigate = useNavigate();
-
   const getTypeColor = (type: string) => {
     if (type === "COM") return "bg-blue-50 text-blue-700 border-blue-200";
     if (type === "EE") return "bg-yellow-50 text-yellow-700 border-yellow-200";
@@ -43,12 +33,10 @@ export const DomainItem = ({
     if (type === "BIZ") return "bg-orange-50 text-orange-700 border-orange-200";
     return "bg-gray-50 text-gray-700 border-gray-200";
   };
-
   const getIconText = (type: string) => {
     if (type === "Free Voog domain") return "•";
     return type.substring(0, 3).toUpperCase();
   };
-
   const getExpiryColor = (expiry: string, expiryDate: string) => {
     if (expiry.includes("Expired") || expiryDate.includes("Domain is not registered")) return "text-red-600";
     return "text-gray-600";
@@ -64,11 +52,9 @@ export const DomainItem = ({
     }
     return domain.source;
   };
-
   const handleSettingsClick = () => {
     navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
   };
-
   const handleRenewClick = () => {
     onAddToCart(domain.name);
   };
@@ -77,11 +63,8 @@ export const DomainItem = ({
   const hasPricing = domain.expiry.includes("€") && !domain.expiry.includes("External") && !domain.expiry.includes("Free");
 
   // Check if domain is about to expire (within 30 days)
-  const isAboutToExpire = domain.expiryDate.toLowerCase().includes("expires") && 
-    !domain.expiryDate.toLowerCase().includes("2026");
-
-  return (
-    <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
+  const isAboutToExpire = domain.expiryDate.toLowerCase().includes("expires") && !domain.expiryDate.toLowerCase().includes("2026");
+  return <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
       <div className="flex items-center space-x-4 flex-1">
         {/* Domain Icon */}
         <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">
@@ -94,26 +77,16 @@ export const DomainItem = ({
             <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
             
             {/* SSL Status */}
-            {domain.sslActive ? (
-              <Lock className="w-4 h-4 text-green-600" />
-            ) : (
-              <LockOpen className="w-4 h-4 text-red-600" />
-            )}
+            {domain.sslActive ? <Lock className="w-4 h-4 text-green-600" /> : <LockOpen className="w-4 h-4 text-red-600" />}
             
             {/* Primary Badge */}
-            {domain.isPrimary && (
-              <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
+            {domain.isPrimary && <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
                 PRIMARY
-              </span>
-            )}
+              </span>}
           </div>
           
           {/* Type Badge - only show for free domains */}
-          {shouldShowTypeBadge && (
-            <span className={`text-xs px-2 py-1 rounded border font-medium ${getTypeColor(domain.type)}`}>
-              {domain.type}
-            </span>
-          )}
+          {shouldShowTypeBadge}
           
           {/* Notes */}
           {domain.notes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
@@ -126,21 +99,15 @@ export const DomainItem = ({
       {/* Right Side - Expiry and Actions */}
       <div className="flex items-center space-x-4">
         <div className="text-right">
-          {domain.expiry && (
-            <p className={`font-medium text-sm ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
+          {domain.expiry && <p className={`font-medium text-sm ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
               {domain.expiry}
-            </p>
-          )}
-          {domain.expiryDate && (
-            <p className={`text-xs ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
+            </p>}
+          {domain.expiryDate && <p className={`text-xs ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
               {domain.expiryDate}
-            </p>
-          )}
-          {isAboutToExpire && (
-            <p className="text-xs text-orange-600 font-medium mt-1">
+            </p>}
+          {isAboutToExpire && <p className="text-xs text-orange-600 font-medium mt-1">
               About to expire
-            </p>
-          )}
+            </p>}
         </div>
         
         {/* Kebab Menu */}
@@ -155,14 +122,11 @@ export const DomainItem = ({
               <Settings className="w-4 h-4 mr-2" />
               Settings
             </DropdownMenuItem>
-            {hasPricing && (
-              <DropdownMenuItem onClick={handleRenewClick}>
+            {hasPricing && <DropdownMenuItem onClick={handleRenewClick}>
                 Renew
-              </DropdownMenuItem>
-            )}
+              </DropdownMenuItem>}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </div>
-  );
+    </div>;
 };
