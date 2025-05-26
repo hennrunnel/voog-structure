@@ -5,6 +5,7 @@ import { useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RemoveConfirmationModal } from "./RemoveConfirmationModal";
+import { toast } from "sonner";
 
 interface Domain {
   name: string;
@@ -65,6 +66,12 @@ export const DomainItem = ({
   };
 
   const handleRenewClick = () => {
+    // Show informational toast about Renew functionality
+    toast.info("Clicking Renew takes the user to store.voog.com", {
+      duration: 4000,
+      position: "bottom-right",
+    });
+    
     onAddToCart(domain.name);
   };
 
@@ -92,7 +99,7 @@ export const DomainItem = ({
 
   return (
     <TooltipProvider delayDuration={300}>
-      <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
+      <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
         <div className="flex items-center space-x-4 flex-1">
           {/* Domain Icon */}
           <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">

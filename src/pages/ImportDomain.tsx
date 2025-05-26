@@ -1,14 +1,16 @@
 
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 const ImportDomain = () => {
   const [domain, setDomain] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cartItems, setCartItems] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const validateDomain = (value: string) => {
     // Basic domain validation
@@ -35,6 +37,18 @@ const ImportDomain = () => {
     e.preventDefault();
     if (validateDomain(domain)) {
       setCartItems(prev => [...prev, domain]);
+      
+      // Show success message
+      toast.success(`Domain "${domain}" has been successfully imported!`, {
+        duration: 4000,
+        position: "top-center",
+      });
+      
+      // Navigate back to domains list after a short delay
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+      
       setDomain("");
     }
   };
