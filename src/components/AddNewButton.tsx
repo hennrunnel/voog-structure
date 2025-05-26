@@ -18,7 +18,13 @@ export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
         setIsOpen(false);
       }
     },
-    { label: "Import", action: () => onAddDomain("imported-domain.com") },
+    { 
+      label: "Import", 
+      action: () => {
+        navigate("/import-domain");
+        setIsOpen(false);
+      }
+    },
     { 
       label: "Pick a free one", 
       action: () => {
