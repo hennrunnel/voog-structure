@@ -1,16 +1,16 @@
-
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
+import { SuccessModal } from "@/components/SuccessModal";
 
 const FreeDomain = () => {
   const [subdomain, setSubdomain] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
   const [isValidating, setIsValidating] = useState(false);
   const [cartItems, setCartItems] = useState<string[]>([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
 
   const validateSubdomain = async (value: string) => {
@@ -48,18 +48,13 @@ const FreeDomain = () => {
     if (subdomain && validationMessage.includes("available")) {
       const domainName = `${subdomain}.voog.com`;
       setCartItems(prev => [...prev, domainName]);
-      
-      // Show success message
-      toast.success(`Free domain "${domainName}" has been successfully added!`, {
-        duration: 4000,
-        position: "top-center",
-      });
-      
-      // Navigate back to domains list after a short delay
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      setShowSuccessModal(true);
     }
+  };
+
+  const handleViewDomains = () => {
+    setShowSuccessModal(false);
+    navigate("/");
   };
 
   const isAvailable = validationMessage.includes("available");
@@ -135,6 +130,16 @@ const FreeDomain = () => {
           </div>
         </div>
       </div>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        title="Free Domain Successfully Added!"
+        description={`${subdomain}.voog.com has been added to your account and is ready to use.`}
+        primaryAction={{
+          label: "View Your Domains",
+          onClick: handleViewDomains
+        }}
+      />
     </div>
   );
 };

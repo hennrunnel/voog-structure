@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,7 +10,14 @@ const DomainSettings = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const domainName = searchParams.get('domain') || 'example.com';
-  const [activeTab, setActiveTab] = useState("general");
+  const tabParam = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(tabParam === 'dns' ? 'dns' : 'general');
+
+  useEffect(() => {
+    if (tabParam === 'dns') {
+      setActiveTab('dns');
+    }
+  }, [tabParam]);
 
   const handleBackToDomains = () => {
     navigate('/');

@@ -1,15 +1,17 @@
-
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
+import { SuccessModal } from "@/components/SuccessModal";
+import { DnsConfigurationPopover } from "@/components/DnsConfigurationPopover";
 
 const ImportDomain = () => {
   const [domain, setDomain] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cartItems, setCartItems] = useState<string[]>([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showDnsPopover, setShowDnsPopover] = useState(false);
   const navigate = useNavigate();
 
   const validateDomain = (value: string) => {
@@ -37,20 +39,23 @@ const ImportDomain = () => {
     e.preventDefault();
     if (validateDomain(domain)) {
       setCartItems(prev => [...prev, domain]);
-      
-      // Show success message
-      toast.success(`Domain "${domain}" has been successfully imported!`, {
-        duration: 4000,
-        position: "top-center",
-      });
-      
-      // Navigate back to domains list after a short delay
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-      
-      setDomain("");
+      setShowSuccessModal(true);
     }
+  };
+
+  const handleViewDomains = () => {
+    setShowSuccessModal(false);
+    navigate("/");
+  };
+
+  const handleConfigureDns = () => {
+    setShowSuccessModal(false);
+    setShowDnsPopover(true);
+  };
+
+  const handleDnsPopoverComplete = () => {
+    setShowDnsPopover(false);
+    navigate(`/domain-settings?domain=${encodeURIComponent(domain)}&tab=dns`);
   };
 
   return (
@@ -112,6 +117,26 @@ const ImportDomain = () => {
           </div>
         </div>
       </div>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        title="Domain Successfully Imported!"
+        description={`${domain} has been added to your account. Choose your next step:`}
+        primaryAction={{
+          label: "Configure DNS Settings",
+          onClick: handleConfigureDns
+        }}
+        secondaryAction={{
+          label: "View Domains List",
+          onClick: handleViewDomains
+        }}
+      />
+
+      <DnsConfigurationPopover
+        isVisible={showDnsPopover}
+        domainName={domain}
+        onComplete={handleDnsPopoverComplete}
+      />
     </div>
   );
 };
