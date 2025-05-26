@@ -1,6 +1,6 @@
-
 import { useState } from "react";
 import { ChevronDown, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface AddNewButtonProps {
   onAddDomain: (domain: string) => void;
@@ -8,9 +8,16 @@ interface AddNewButtonProps {
 
 export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const options = [
-    { label: "Buy new", action: () => onAddDomain("new-domain.com") },
+    { 
+      label: "Buy new", 
+      action: () => {
+        navigate("/buy-domain");
+        setIsOpen(false);
+      }
+    },
     { label: "Import", action: () => onAddDomain("imported-domain.com") },
     { label: "Pick a free one", action: () => onAddDomain("free-domain.voog.construction") }
   ];
