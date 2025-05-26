@@ -13,7 +13,7 @@ export const DomainSettingsGeneral = ({
   domainName
 }: DomainSettingsGeneralProps) => {
   const [defaultDomainForm, setDefaultDomainForm] = useState("not-specified");
-  const [redirecting, setRedirecting] = useState("to-specific-address");
+  const [redirecting, setRedirecting] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState("http://edicy.voog.com/redirection");
   const [keepSubpagePath, setKeepSubpagePath] = useState(false);
   const [forceSSL, setForceSSL] = useState("allow-non-ssl");
@@ -47,21 +47,17 @@ export const DomainSettingsGeneral = ({
         </div>
       </div>
 
-      {/* Redirecting row */}
+      {/* Redirecting row - now with toggle */}
       <div className="grid grid-cols-2 gap-8">
         <div>
           <Label htmlFor="redirecting" className="text-sm font-medium text-gray-900 block mb-3">
             Redirecting
           </Label>
-          <Select value={redirecting} onValueChange={setRedirecting}>
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="do-not-redirect">Do not redirect</SelectItem>
-              <SelectItem value="to-specific-address">To a specific address</SelectItem>
-            </SelectContent>
-          </Select>
+          <Switch
+            id="redirecting"
+            checked={redirecting}
+            onCheckedChange={setRedirecting}
+          />
         </div>
         <div className="text-xs text-gray-600 pt-7">
           <p>Set up automatic redirecting to another website or specific page.</p>
@@ -69,7 +65,7 @@ export const DomainSettingsGeneral = ({
       </div>
 
       {/* Redirect address row - conditionally shown */}
-      {redirecting === "to-specific-address" && (
+      {redirecting && (
         <div className="grid grid-cols-2 gap-8">
           <div>
             <Label htmlFor="redirect-url" className="text-sm font-medium text-gray-900 block mb-3">
