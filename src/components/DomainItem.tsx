@@ -172,7 +172,6 @@ export const DomainItem = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleSettingsClick}>
-                <Settings className="w-4 h-4 mr-2" />
                 Settings
               </DropdownMenuItem>
               {hasPricing && (
@@ -180,12 +179,10 @@ export const DomainItem = ({
                   Renew
                 </DropdownMenuItem>
               )}
-              {isFreeForever && (
-                <DropdownMenuItem onClick={handleRemoveClick}>
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Remove
-                </DropdownMenuItem>
-              )}
+              <DropdownMenuItem onClick={handleRemoveClick} className="text-red-600 focus:text-red-600">
+                <Trash2 className="w-4 h-4 mr-2 text-red-600" />
+                Remove
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
