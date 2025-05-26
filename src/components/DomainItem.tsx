@@ -20,12 +20,14 @@ interface DomainItemProps {
   domain: Domain;
   onAddToCart: (domain: string) => void;
   onOpenSettings: (domain: Domain) => void;
+  onRemoveDomain: (domainName: string) => void;
   isFirst?: boolean;
 }
 export const DomainItem = ({
   domain,
   onAddToCart,
   onOpenSettings,
+  onRemoveDomain,
   isFirst = false
 }: DomainItemProps) => {
   const navigate = useNavigate();
@@ -73,8 +75,8 @@ export const DomainItem = ({
 
   const handleConfirmRemove = () => {
     console.log(`Removing domain: ${domain.name}`);
+    onRemoveDomain(domain.name);
     setIsRemoveModalOpen(false);
-    // Here you would typically call an API to remove the domain
   };
 
   // Check if domain has pricing (to show renew option)

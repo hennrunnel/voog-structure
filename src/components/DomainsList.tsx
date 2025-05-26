@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { DomainItem } from "./DomainItem";
 
 interface Domain {
@@ -18,7 +19,7 @@ interface DomainsListProps {
 }
 
 export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
-  const domains = [
+  const [domains, setDomains] = useState([
     {
       name: "creativeagency.com",
       type: "COM",
@@ -100,21 +101,26 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
       source: "Free Voog domain",
       isExternal: false
     }
-  ];
+  ]);
 
   const handleOpenSettings = (domain: Domain) => {
     // This function is kept for compatibility but not used anymore
     // Navigation is handled directly in DomainItem component
   };
 
+  const handleRemoveDomain = (domainName: string) => {
+    setDomains(prevDomains => prevDomains.filter(domain => domain.name !== domainName));
+  };
+
   return (
     <div className="divide-y divide-gray-100">
       {domains.map((domain, index) => (
         <DomainItem 
-          key={index} 
+          key={domain.name} 
           domain={domain} 
           onAddToCart={onAddToCart}
           onOpenSettings={handleOpenSettings}
+          onRemoveDomain={handleRemoveDomain}
           isFirst={index === 0}
         />
       ))}
