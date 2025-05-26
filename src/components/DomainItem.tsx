@@ -1,4 +1,3 @@
-
 import { Lock, LockOpen, Settings, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -41,7 +40,7 @@ export const DomainItem = ({
     return type.substring(0, 3).toUpperCase();
   };
   const getExpiryColor = (expiry: string, expiryDate: string) => {
-    if (expiry.includes("Expired") || expiryDate.includes("Domain is not registered")) return "text-red-600";
+    if (expiry.includes("Expired") || expiryDate.includes("Domain is not registered") || expiryDate.includes("Sep")) return "text-red-600";
     return "text-gray-600";
   };
 
@@ -141,11 +140,6 @@ export const DomainItem = ({
                 {domain.expiryDate && (
                   <p className={`text-xs ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
                     {domain.expiryDate}
-                  </p>
-                )}
-                {isAboutToExpire && (
-                  <p className="text-xs text-orange-600 font-medium mt-1">
-                    About to expire
                   </p>
                 )}
               </>
