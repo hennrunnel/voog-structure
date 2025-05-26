@@ -21,8 +21,8 @@ export const UploadSslSidebar = ({ isOpen, onClose }: UploadSslSidebarProps) => 
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="right" className="w-[580px] p-0 bg-white">
-        <div className="border-b border-gray-200 p-6">
+      <SheetContent side="right" className="w-[580px] bg-white flex flex-col">
+        <div className="border-b border-gray-200 p-6 flex-shrink-0">
           <SheetHeader className="mb-0">
             <div className="flex items-center justify-between">
               <SheetTitle className="text-black text-xl font-medium">
@@ -38,8 +38,8 @@ export const UploadSslSidebar = ({ isOpen, onClose }: UploadSslSidebarProps) => 
           </p>
         </div>
         
-        <div className="p-6 flex flex-col h-full bg-white">
-          <div className="flex-1 space-y-6">
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="space-y-6">
             <div>
               <label className="block text-gray-900 text-sm font-medium mb-2">
                 Private key
@@ -85,22 +85,22 @@ export const UploadSslSidebar = ({ isOpen, onClose }: UploadSslSidebarProps) => 
               </p>
             </div>
           </div>
-          
-          <div className="border-t border-gray-200 pt-4 mt-6">
-            <div className="flex justify-between space-x-3">
-              <button
-                onClick={onClose}
-                className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
-              >
-                Save
-              </button>
-            </div>
+        </div>
+        
+        <div className="border-t border-gray-200 p-6 flex-shrink-0">
+          <div className="flex justify-between space-x-3">
+            <button
+              onClick={onClose}
+              className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
+            >
+              Save
+            </button>
           </div>
         </div>
       </SheetContent>
