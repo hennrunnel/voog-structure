@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -109,13 +110,6 @@ const BuyDomain = () => {
         <div className="w-full" style={{ maxWidth: '992px' }}>
           <div className="flex justify-between items-center mb-8">
             <div>
-              <Link 
-                to="/" 
-                className="flex items-center text-gray-600 hover:text-gray-700 mb-4 font-medium"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to all domains
-              </Link>
               <h1 className="text-gray-900 text-2xl font-medium">Buy domain</h1>
             </div>
             <div className="text-gray-900 font-medium text-xl">VOOG</div>
@@ -125,6 +119,16 @@ const BuyDomain = () => {
         {/* Main Content Card - 992px width, centered */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
           <div className="p-8">
+            {/* Tabs with back navigation */}
+            <div className="border-b border-gray-200 mb-6">
+              <div className="flex space-x-12">
+                <Link to="/" className="pb-4 text-sm font-medium border-b-2 text-gray-900 border-gray-900 flex items-center">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Domains
+                </Link>
+              </div>
+            </div>
+
             <DomainSearch onSearch={handleSearch} />
             
             {hasSearched && (
