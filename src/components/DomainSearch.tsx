@@ -22,7 +22,7 @@ export const DomainSearch = ({ onSearch }: DomainSearchProps) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Label htmlFor="domain-search" className="text-gray-900 font-medium">
-            Search for a domain
+            Treat yourself with any domain name
           </Label>
           <div className="mt-2 flex gap-3">
             <Input
