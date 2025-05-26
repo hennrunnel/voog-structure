@@ -109,25 +109,27 @@ const BuyDomain = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <Link 
-              to="/" 
-              className="flex items-center text-blue-600 hover:text-blue-700 mb-4 font-medium"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to all domains
-            </Link>
-            <h1 className="text-gray-900 text-2xl font-medium">Buy Domain</h1>
+      <div className="flex flex-col items-center px-4 py-12">
+        {/* Header Container - 992px width, centered */}
+        <div className="w-full" style={{ maxWidth: '992px' }}>
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <Link 
+                to="/" 
+                className="flex items-center text-blue-600 hover:text-blue-700 mb-4 font-medium"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to all domains
+              </Link>
+              <h1 className="text-gray-900 text-2xl font-medium">Buy Domain</h1>
+            </div>
+            <div className="text-gray-900 font-medium text-xl">VOOG</div>
           </div>
-          <div className="text-gray-900 font-medium text-xl">VOOG</div>
         </div>
 
-        {/* Cart Banner */}
+        {/* Cart Banner - 992px width, centered */}
         {cartItems.length > 0 && (
-          <div className="mb-6">
+          <div className="w-full mb-6" style={{ maxWidth: '992px' }}>
             <CartBanner 
               itemCount={cartItems.length} 
               onClearCart={clearCart}
@@ -135,8 +137,8 @@ const BuyDomain = () => {
           </div>
         )}
 
-        {/* Main Content Card */}
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm" style={{ maxWidth: '992px' }}>
+        {/* Main Content Card - 992px width, centered */}
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
           <div className="p-8">
             <DomainSearch onSearch={handleSearch} />
             

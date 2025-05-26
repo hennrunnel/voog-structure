@@ -21,26 +21,28 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-gray-900 text-2xl font-medium mb-4">Domains</h1>
-            <div className="flex gap-1">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
-                Domains
-              </button>
-              <button className="text-gray-600 hover:text-gray-900 px-4 py-2 rounded-md text-sm transition-colors">
-                SSL certificates
-              </button>
+      <div className="flex flex-col items-center px-4 py-12">
+        {/* Header Container - 992px width, centered */}
+        <div className="w-full" style={{ maxWidth: '992px' }}>
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h1 className="text-gray-900 text-2xl font-medium mb-4">Domains</h1>
+              <div className="flex gap-1">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                  Domains
+                </button>
+                <button className="text-gray-600 hover:text-gray-900 px-4 py-2 rounded-md text-sm transition-colors">
+                  SSL certificates
+                </button>
+              </div>
             </div>
+            <div className="text-gray-900 font-medium text-xl">VOOG</div>
           </div>
-          <div className="text-gray-900 font-medium text-xl">VOOG</div>
         </div>
 
-        {/* Cart Banner */}
+        {/* Cart Banner - 992px width, centered */}
         {cartItems.length > 0 && (
-          <div className="mb-6">
+          <div className="w-full mb-6" style={{ maxWidth: '992px' }}>
             <CartBanner 
               itemCount={cartItems.length} 
               onClearCart={clearCart}
@@ -48,8 +50,8 @@ const Index = () => {
           </div>
         )}
 
-        {/* Main Content Card - 992px width */}
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm" style={{ maxWidth: '992px' }}>
+        {/* Main Content Card - 992px width, centered */}
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
           <div className="p-8">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-xl font-medium text-gray-900">Domains</h2>
