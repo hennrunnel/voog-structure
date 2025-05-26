@@ -54,6 +54,17 @@ export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemPr
     return "text-gray-600";
   };
 
+  // Check if we should show the type badge (only for domains with "free" in the type)
+  const shouldShowTypeBadge = domain.type.toLowerCase().includes("free");
+
+  // Get the source text - for free Voog domains, show as source instead of type
+  const getSourceText = () => {
+    if (domain.type === "Free Voog domain") {
+      return "Free Voog domain";
+    }
+    return domain.source;
+  };
+
   const handleSettingsClick = () => {
     navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
   };
@@ -84,10 +95,12 @@ export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemPr
             )}
           </div>
           
-          {/* Type Badge */}
-          <span className={`inline-block text-xs px-2 py-1 rounded border font-medium ${getTypeColor(domain.type)}`}>
-            {domain.type === "Free Voog domain" ? "Free Voog domain" : domain.type}
-          </span>
+          {/* Type Badge - only show for free domains */}
+          {shouldShowTypeBadge && (
+            <span className={`inline-block text-xs px-2 py-1 rounded border font-medium ${getTypeColor(domain.type)}`}>
+              {domain.type}
+            </span>
+          )}
           
           {/* Notes */}
           {domain.notes && (
@@ -95,8 +108,8 @@ export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemPr
           )}
           
           {/* Source */}
-          {domain.source && (
-            <p className="text-xs text-gray-500 mt-1">{domain.source}</p>
+          {getSourceText() && (
+            <p className="text-xs text-gray-500 mt-1">{getSourceText()}</p>
           )}
         </div>
       </div>

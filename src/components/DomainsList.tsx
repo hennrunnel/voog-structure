@@ -20,23 +20,13 @@ interface DomainsListProps {
 export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
   const domains = [
     {
-      name: "myawesomeblog.com",
+      name: "creativestudio.com",
       type: "COM",
       sslActive: false,
       expiry: "€16.00 / year",
       expiryDate: "Expired (Mar 15'24)",
       notes: "Redirected to http://edicy.voog.com/redirection",
       source: "Bought from Voog",
-      isExternal: false
-    },
-    {
-      name: "creativestudio.voog.com",
-      type: "Free Voog domain",
-      sslActive: true,
-      expiry: "Free forever",
-      expiryDate: "",
-      notes: "",
-      source: "",
       isExternal: false
     },
     {
@@ -98,6 +88,16 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
       expiryDate: "Expires Jan 05'26",
       notes: "",
       source: "Bought from Voog",
+      isExternal: false
+    },
+    {
+      name: "myblog.voog.com",
+      type: "Free Voog domain",
+      sslActive: true,
+      expiry: "Free forever",
+      expiryDate: "",
+      notes: "",
+      source: "",
       isExternal: false
     }
   ];
