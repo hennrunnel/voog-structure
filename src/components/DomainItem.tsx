@@ -1,6 +1,8 @@
 import { Lock, LockOpen, Settings, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 interface Domain {
   name: string;
   type: string;
@@ -52,9 +54,11 @@ export const DomainItem = ({
     }
     return domain.source;
   };
+
   const handleSettingsClick = () => {
     navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
   };
+
   const handleRenewClick = () => {
     onAddToCart(domain.name);
   };
@@ -64,69 +68,110 @@ export const DomainItem = ({
 
   // Check if domain is about to expire (within 30 days)
   const isAboutToExpire = domain.expiryDate.toLowerCase().includes("expires") && !domain.expiryDate.toLowerCase().includes("2026");
-  return <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
-      <div className="flex items-center space-x-4 flex-1">
-        {/* Domain Icon */}
-        <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">
-          {getIconText(domain.type)}
+
+  // Check if domain is not registered
+  const isNotRegistered = domain.expiryDate.includes("Domain is not registered");
+
+  return (
+    <TooltipProvider>
+      <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
+        <div className="flex items-center space-x-4 flex-1">
+          {/* Domain Icon */}
+          <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">
+            {getIconText(domain.type)}
+          </div>
+
+          {/* Domain Info */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center space-x-3 mb-1">
+              <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
+              
+              {/* SSL Status with Tooltip */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  {domain.sslActive ? (
+                    <Lock className="w-4 h-4 text-green-600 cursor-help" />
+                  ) : (
+                    <LockOpen className="w-4 h-4 text-red-600 cursor-help" />
+                  )}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {domain.sslActive 
+                      ? "SSL certificate for this domain is valid" 
+                      : "This domain does not have an SSL certificate. You can upload your own or auto-activate a free certificate in SSL certificates."
+                    }
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+              
+              {/* Primary Badge */}
+              {domain.isPrimary && (
+                <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
+                  PRIMARY
+                </span>
+              )}
+            </div>
+            
+            {/* Type Badge - only show for free domains */}
+            {shouldShowTypeBadge}
+            
+            {/* Notes */}
+            {domain.notes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
+            
+            {/* Source */}
+            {getSourceText() && <p className="text-xs text-gray-500 mt-1">{getSourceText()}</p>}
+          </div>
         </div>
 
-        {/* Domain Info */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center space-x-3 mb-1">
-            <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
-            
-            {/* SSL Status */}
-            {domain.sslActive ? <Lock className="w-4 h-4 text-green-600" /> : <LockOpen className="w-4 h-4 text-red-600" />}
-            
-            {/* Primary Badge */}
-            {domain.isPrimary && <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
-                PRIMARY
-              </span>}
+        {/* Right Side - Expiry and Actions */}
+        <div className="flex items-center space-x-4">
+          <div className="text-right">
+            {/* Handle not registered domains specially */}
+            {isNotRegistered ? (
+              <p className="text-sm text-red-600">Domain is not registered</p>
+            ) : (
+              <>
+                {domain.expiry && (
+                  <p className={`font-medium text-sm ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
+                    {domain.expiry}
+                  </p>
+                )}
+                {domain.expiryDate && (
+                  <p className={`text-xs ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
+                    {domain.expiryDate}
+                  </p>
+                )}
+                {isAboutToExpire && (
+                  <p className="text-xs text-orange-600 font-medium mt-1">
+                    About to expire
+                  </p>
+                )}
+              </>
+            )}
           </div>
           
-          {/* Type Badge - only show for free domains */}
-          {shouldShowTypeBadge}
-          
-          {/* Notes */}
-          {domain.notes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
-          
-          {/* Source */}
-          {getSourceText() && <p className="text-xs text-gray-500 mt-1">{getSourceText()}</p>}
+          {/* Kebab Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <MoreVertical className="w-4 h-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleSettingsClick}>
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </DropdownMenuItem>
+              {hasPricing && (
+                <DropdownMenuItem onClick={handleRenewClick}>
+                  Renew
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
-
-      {/* Right Side - Expiry and Actions */}
-      <div className="flex items-center space-x-4">
-        <div className="text-right">
-          {domain.expiry && <p className={`font-medium text-sm ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
-              {domain.expiry}
-            </p>}
-          {domain.expiryDate && <p className={`text-xs ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
-              {domain.expiryDate}
-            </p>}
-          {isAboutToExpire && <p className="text-xs text-orange-600 font-medium mt-1">
-              About to expire
-            </p>}
-        </div>
-        
-        {/* Kebab Menu */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-              <MoreVertical className="w-4 h-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={handleSettingsClick}>
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </DropdownMenuItem>
-            {hasPricing && <DropdownMenuItem onClick={handleRenewClick}>
-                Renew
-              </DropdownMenuItem>}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </div>;
+    </TooltipProvider>
+  );
 };
