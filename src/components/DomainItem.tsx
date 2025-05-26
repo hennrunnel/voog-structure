@@ -1,8 +1,9 @@
-
-import { Lock, LockOpen, Settings, MoreVertical } from "lucide-react";
+import { Lock, LockOpen, Settings, MoreVertical, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { RemoveConfirmationModal } from "./RemoveConfirmationModal";
 
 interface Domain {
   name: string;
@@ -28,6 +29,8 @@ export const DomainItem = ({
   isFirst = false
 }: DomainItemProps) => {
   const navigate = useNavigate();
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+
   const getTypeColor = (type: string) => {
     if (type === "COM") return "bg-blue-50 text-blue-700 border-blue-200";
     if (type === "EE") return "bg-yellow-50 text-yellow-700 border-yellow-200";
@@ -64,6 +67,16 @@ export const DomainItem = ({
     onAddToCart(domain.name);
   };
 
+  const handleRemoveClick = () => {
+    setIsRemoveModalOpen(true);
+  };
+
+  const handleConfirmRemove = () => {
+    console.log(`Removing domain: ${domain.name}`);
+    setIsRemoveModalOpen(false);
+    // Here you would typically call an API to remove the domain
+  };
+
   // Check if domain has pricing (to show renew option)
   const hasPricing = domain.expiry.includes("€") && !domain.expiry.includes("External") && !domain.expiry.includes("Free");
 
@@ -72,6 +85,9 @@ export const DomainItem = ({
 
   // Check if domain is not registered
   const isNotRegistered = domain.expiryDate.includes("Domain is not registered");
+
+  // Check if domain is "Free Forever"
+  const isFreeForever = domain.expiry === "Free forever";
 
   return (
     <TooltipProvider delayDuration={300}>
@@ -164,10 +180,23 @@ export const DomainItem = ({
                   Renew
                 </DropdownMenuItem>
               )}
+              {isFreeForever && (
+                <DropdownMenuItem onClick={handleRemoveClick}>
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Remove
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
+
+      <RemoveConfirmationModal
+        isOpen={isRemoveModalOpen}
+        onClose={() => setIsRemoveModalOpen(false)}
+        onConfirm={handleConfirmRemove}
+        domainName={domain.name}
+      />
     </TooltipProvider>
   );
 };
