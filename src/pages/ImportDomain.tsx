@@ -35,7 +35,8 @@ const ImportDomain = () => {
     validateDomain(value);
   };
 
-  const handleImport = () => {
+  const handleImport = (e: React.FormEvent) => {
+    e.preventDefault();
     if (validateDomain(domain)) {
       setCartItems(prev => [...prev, domain]);
       setDomain("");
@@ -77,32 +78,33 @@ const ImportDomain = () => {
         )}
 
         {/* Main Content Card - 992px width, centered */}
-        <div 
-          className="bg-white rounded-lg w-full border border-gray-200 shadow-sm"
-          style={{ maxWidth: '992px' }}
-        >
-          <div className="p-8 text-center">
-            <h2 className="text-3xl font-medium mb-8 text-gray-900">
-              Use any registered domain on this site.
-            </h2>
-            
-            <div className="max-w-md mx-auto">
-              <div className="flex bg-white rounded-md overflow-hidden border border-gray-300">
-                <Input
-                  type="text"
-                  value={domain}
-                  onChange={handleInputChange}
-                  placeholder="Type your domain name here..."
-                  className="flex-1 border-0 rounded-none text-gray-900 focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-                <button
-                  onClick={handleImport}
-                  disabled={!domain || !!errorMessage}
-                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 font-medium transition-colors"
-                >
-                  Import
-                </button>
-              </div>
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
+          <div className="p-8">
+            <div className="mb-8">
+              <form onSubmit={handleImport} className="space-y-4">
+                <div>
+                  <Label htmlFor="domain-import" className="text-gray-900 font-medium">
+                    Import your domain
+                  </Label>
+                  <div className="mt-2 flex gap-3">
+                    <Input
+                      id="domain-import"
+                      type="text"
+                      value={domain}
+                      onChange={handleInputChange}
+                      placeholder="Type your domain name here..."
+                      className="flex-1"
+                    />
+                    <button
+                      type="submit"
+                      disabled={!domain || !!errorMessage}
+                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 rounded-md font-medium transition-colors"
+                    >
+                      Import
+                    </button>
+                  </div>
+                </div>
+              </form>
               
               {/* Error Message */}
               {errorMessage && (

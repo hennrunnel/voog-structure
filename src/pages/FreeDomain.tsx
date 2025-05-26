@@ -45,7 +45,8 @@ const FreeDomain = () => {
     }
   };
 
-  const handleTakeIt = () => {
+  const handleTakeIt = (e: React.FormEvent) => {
+    e.preventDefault();
     if (subdomain && validationMessage.includes("available")) {
       const domainName = `${subdomain}.voog.com`;
       setCartItems(prev => [...prev, domainName]);
@@ -90,44 +91,48 @@ const FreeDomain = () => {
         )}
 
         {/* Main Content Card - 992px width, centered */}
-        <div className="bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg w-full text-white" style={{ maxWidth: '992px' }}>
-          <div className="p-12 text-center">
-            <h2 className="text-3xl font-medium mb-8">
-              Add free .voog.com domain to<br />this site.
-            </h2>
-            
-            <div className="max-w-md mx-auto">
-              <div className="flex bg-white rounded-md overflow-hidden">
-                <div className="flex-1 relative">
-                  <Input
-                    type="text"
-                    value={subdomain}
-                    onChange={handleInputChange}
-                    placeholder="yourdomain"
-                    className="border-0 rounded-none text-gray-900 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  />
-                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600">
-                    .voog.com
-                  </span>
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
+          <div className="p-8">
+            <div className="mb-8">
+              <form onSubmit={handleTakeIt} className="space-y-4">
+                <div>
+                  <Label htmlFor="subdomain-search" className="text-gray-900 font-medium">
+                    Choose your free subdomain
+                  </Label>
+                  <div className="mt-2 flex gap-3">
+                    <div className="flex-1 relative">
+                      <Input
+                        id="subdomain-search"
+                        type="text"
+                        value={subdomain}
+                        onChange={handleInputChange}
+                        placeholder="yourdomain"
+                        className="pr-20"
+                      />
+                      <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600">
+                        .voog.com
+                      </span>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={!isAvailable}
+                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 rounded-md font-medium transition-colors"
+                    >
+                      Take it!
+                    </button>
+                  </div>
                 </div>
-                <button
-                  onClick={handleTakeIt}
-                  disabled={!isAvailable}
-                  className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 font-medium transition-colors"
-                >
-                  Take it!
-                </button>
-              </div>
+              </form>
               
               {/* Validation Message */}
               {validationMessage && (
-                <div className={`mt-3 text-sm ${isAvailable ? 'text-green-200' : isTaken ? 'text-red-200' : ''}`}>
+                <div className={`mt-3 text-sm ${isAvailable ? 'text-green-600' : isTaken ? 'text-red-600' : ''}`}>
                   {validationMessage}
                 </div>
               )}
               
               {isValidating && (
-                <div className="mt-3 text-sm text-blue-200">
+                <div className="mt-3 text-sm text-gray-600">
                   Checking availability...
                 </div>
               )}
