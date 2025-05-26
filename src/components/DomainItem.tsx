@@ -1,3 +1,4 @@
+
 import { Lock, LockOpen, Settings, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -84,7 +85,7 @@ export const DomainItem = ({
           {/* Domain Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-3 mb-1">
-              <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
+              <h3 className="font-medium text-gray-900 text-base">{domain.name}</h3>
               
               {/* SSL Status with Tooltip */}
               <Tooltip>
@@ -129,11 +130,11 @@ export const DomainItem = ({
           <div className="text-right">
             {/* Handle not registered domains specially */}
             {isNotRegistered ? (
-              <p className="text-sm text-red-600">Domain is not registered</p>
+              <p className="text-base text-red-600">Domain is not registered</p>
             ) : (
               <>
                 {domain.expiry && (
-                  <p className="font-medium text-sm text-gray-600">
+                  <p className="font-medium text-base text-gray-600">
                     {domain.expiry}
                   </p>
                 )}
