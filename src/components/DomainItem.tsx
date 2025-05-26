@@ -1,3 +1,4 @@
+
 import { Lock, LockOpen, Settings, MoreVertical, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -103,7 +104,7 @@ export const DomainItem = ({
           {/* Domain Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-3 mb-1">
-              <h3 className="font-medium text-gray-900 text-base">{domain.name}</h3>
+              <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
               
               {/* SSL Status with Tooltip */}
               <Tooltip>
