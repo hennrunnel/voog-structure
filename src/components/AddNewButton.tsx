@@ -19,7 +19,13 @@ export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
       }
     },
     { label: "Import", action: () => onAddDomain("imported-domain.com") },
-    { label: "Pick a free one", action: () => onAddDomain("free-domain.voog.construction") }
+    { 
+      label: "Pick a free one", 
+      action: () => {
+        navigate("/free-domain");
+        setIsOpen(false);
+      }
+    }
   ];
 
   return (
