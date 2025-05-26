@@ -78,22 +78,16 @@ const ImportDomain = () => {
 
         {/* Main Content Card - 992px width, centered */}
         <div 
-          className="bg-cover bg-center rounded-lg w-full text-white relative overflow-hidden" 
-          style={{ 
-            maxWidth: '992px',
-            backgroundImage: `url(${'/lovable-uploads/223be2a4-fb9d-455f-80ff-1b9aad4db19e.png'})`
-          }}
+          className="bg-white rounded-lg w-full border border-gray-200 shadow-sm"
+          style={{ maxWidth: '992px' }}
         >
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-blue-900/70"></div>
-          
-          <div className="relative p-12 text-center">
-            <h2 className="text-3xl font-medium mb-8">
+          <div className="p-8 text-center">
+            <h2 className="text-3xl font-medium mb-8 text-gray-900">
               Use any registered domain on this site.
             </h2>
             
             <div className="max-w-md mx-auto">
-              <div className="flex bg-white rounded-md overflow-hidden">
+              <div className="flex bg-white rounded-md overflow-hidden border border-gray-300">
                 <Input
                   type="text"
                   value={domain}
@@ -104,7 +98,7 @@ const ImportDomain = () => {
                 <button
                   onClick={handleImport}
                   disabled={!domain || !!errorMessage}
-                  className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 font-medium transition-colors"
+                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 font-medium transition-colors"
                 >
                   Import
                 </button>
@@ -112,13 +106,13 @@ const ImportDomain = () => {
               
               {/* Error Message */}
               {errorMessage && (
-                <div className="mt-3 text-sm text-red-200">
+                <div className="mt-3 text-sm text-red-600">
                   {errorMessage}
                 </div>
               )}
               
               {/* Info tooltip */}
-              <div className="mt-4 text-sm text-blue-200">
+              <div className="mt-4 text-sm text-gray-600">
                 💡 You must point DNS to Voog servers.
               </div>
             </div>
