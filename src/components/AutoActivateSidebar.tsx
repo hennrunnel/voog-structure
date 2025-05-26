@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import { Checkbox } from "./ui/checkbox";
 
@@ -29,14 +29,6 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
     );
   };
 
-  const handleSelectAll = () => {
-    if (selectedDomains.length === domains.length) {
-      setSelectedDomains([]);
-    } else {
-      setSelectedDomains(domains);
-    }
-  };
-
   const handleSave = () => {
     console.log("Activating SSL for domains:", selectedDomains);
     onClose();
@@ -45,17 +37,20 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent side="right" className="w-[480px] p-0 bg-white">
-        <div className="bg-green-600 text-white p-6">
+        <div className="border-b border-gray-200 p-6">
           <SheetHeader className="mb-0">
-            <div className="flex items-center space-x-3">
-              <button onClick={onClose} className="text-white hover:text-gray-200">
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <SheetTitle className="text-white text-xl font-medium">
-                Auto-activate...
+            <div className="flex items-center justify-between">
+              <SheetTitle className="text-black text-xl font-medium">
+                Auto-activate SSL certificates
               </SheetTitle>
+              <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
             </div>
           </SheetHeader>
+          <p className="text-gray-600 text-sm mt-3">
+            Select the domains for which you want to automatically activate SSL certificates.
+          </p>
         </div>
         
         <div className="p-6 flex flex-col h-full bg-white">
@@ -79,7 +74,7 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
             </div>
           </div>
           
-          <div className="border-t pt-4 mt-6">
+          <div className="border-t border-gray-200 pt-4 mt-6">
             <div className="flex justify-between space-x-3">
               <button
                 onClick={onClose}

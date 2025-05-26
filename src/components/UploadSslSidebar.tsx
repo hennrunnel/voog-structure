@@ -1,8 +1,8 @@
 
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
-import { Textarea } from "./ui/textarea";
+import { Input } from "./ui/input";
 
 interface UploadSslSidebarProps {
   isOpen: boolean;
@@ -22,18 +22,18 @@ export const UploadSslSidebar = ({ isOpen, onClose }: UploadSslSidebarProps) => 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent side="right" className="w-[580px] p-0 bg-white">
-        <div className="bg-blue-600 text-white p-6">
+        <div className="border-b border-gray-200 p-6">
           <SheetHeader className="mb-0">
-            <div className="flex items-center space-x-3">
-              <button onClick={onClose} className="text-white hover:text-gray-200">
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <SheetTitle className="text-white text-xl font-medium">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="text-black text-xl font-medium">
                 Upload SSL certificate
               </SheetTitle>
+              <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+                <X className="w-5 h-5" />
+              </button>
             </div>
           </SheetHeader>
-          <p className="text-blue-100 text-sm mt-3">
+          <p className="text-gray-600 text-sm mt-3">
             Copy the corresponding values from your SSL certificate files to the fields below.
           </p>
         </div>
@@ -44,40 +44,49 @@ export const UploadSslSidebar = ({ isOpen, onClose }: UploadSslSidebarProps) => 
               <label className="block text-gray-900 text-sm font-medium mb-2">
                 Private key
               </label>
-              <Textarea
+              <Input
                 value={privateKey}
                 onChange={(e) => setPrivateKey(e.target.value)}
                 placeholder="Copy private key"
-                className="min-h-[120px] bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
               />
+              <p className="text-xs text-gray-600 mt-2">
+                This is the private key you used to generate the SSL certificate. Most often its filename is "yourdomain_com.key".
+              </p>
             </div>
             
             <div>
               <label className="block text-gray-900 text-sm font-medium mb-2">
                 Certificate
               </label>
-              <Textarea
+              <Input
                 value={certificate}
                 onChange={(e) => setCertificate(e.target.value)}
                 placeholder="Copy certificate"
-                className="min-h-[120px] bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
               />
+              <p className="text-xs text-gray-600 mt-2">
+                This is the content of the certificate file. Most common filenames are "yourdomain_com.crt" or "ssl_certificate.crt".
+              </p>
             </div>
             
             <div>
               <label className="block text-gray-900 text-sm font-medium mb-2">
                 Certificate chain
               </label>
-              <Textarea
+              <Input
                 value={certificateChain}
                 onChange={(e) => setCertificateChain(e.target.value)}
                 placeholder="Copy certificate chain"
-                className="min-h-[120px] bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
               />
+              <p className="text-xs text-gray-600 mt-2">
+                This is the content of the certificate chain file. Most common filenames are "yourdomain_com.ca-bundle", "yourdomain_com_ssl-bundle.crt" or "IntermediateCA.crt".
+              </p>
             </div>
           </div>
           
-          <div className="border-t pt-4 mt-6">
+          <div className="border-t border-gray-200 pt-4 mt-6">
             <div className="flex justify-between space-x-3">
               <button
                 onClick={onClose}

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Shield, Upload } from "lucide-react";
+import { Shield, Upload, Info } from "lucide-react";
 import { AutoActivateSidebar } from "./AutoActivateSidebar";
 import { UploadSslSidebar } from "./UploadSslSidebar";
 
@@ -61,10 +61,16 @@ export const SslCertificatesView = () => {
       </div>
 
       {/* Info Block */}
-      <div className="bg-purple-50 rounded-lg p-4 mb-6">
-        <p className="text-gray-600 text-sm">
-          SSL certificates ensure secure connections to your domains. Auto-activate will automatically obtain and renew SSL certificates for your domains using Let's Encrypt.
-        </p>
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex items-start space-x-3">
+        <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+        <div className="text-sm text-gray-700">
+          <p className="mb-2">
+            You can add Let's Encrypt SSL certificates to one or several of your domains. They come free of charge and will be renewed automatically every three months.
+          </p>
+          <p>
+            Our Premium plan allows you to use SSL certificates from alternative providers. All you have to do is click and upload the certificate files or send them via e-mail to support@voog.com. We'll set them up for you.
+          </p>
+        </div>
       </div>
 
       {/* Certificates Table */}
