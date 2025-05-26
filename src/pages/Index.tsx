@@ -1,11 +1,14 @@
 
 import { useState } from "react";
+import { Settings } from "lucide-react";
 import { DomainsList } from "@/components/DomainsList";
 import { CartBanner } from "@/components/CartBanner";
 import { AddNewButton } from "@/components/AddNewButton";
+import { PageSettings } from "@/components/PageSettings";
 
 const Index = () => {
   const [cartItems, setCartItems] = useState<string[]>([]);
+  const [isPageSettingsOpen, setIsPageSettingsOpen] = useState(false);
 
   const addToCart = (domain: string) => {
     setCartItems(prev => [...prev, domain]);
@@ -26,7 +29,16 @@ const Index = () => {
         <div className="w-full" style={{ maxWidth: '992px' }}>
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className="text-gray-900 text-2xl font-medium mb-4">Domains</h1>
+              <div className="flex items-center space-x-4 mb-4">
+                <h1 className="text-gray-900 text-2xl font-medium">Domains</h1>
+                <button
+                  onClick={() => setIsPageSettingsOpen(true)}
+                  className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                  title="Page settings"
+                >
+                  <Settings className="w-5 h-5" />
+                </button>
+              </div>
               <div className="flex gap-1">
                 <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
                   Domains
@@ -62,6 +74,11 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      <PageSettings
+        isOpen={isPageSettingsOpen}
+        onClose={() => setIsPageSettingsOpen(false)}
+      />
     </div>
   );
 };
