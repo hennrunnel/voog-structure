@@ -20,17 +20,25 @@ export const DomainResults = ({ results, onAddToCart, onRemoveFromCart }: Domain
       {results.map((result, index) => (
         <div key={index} className="flex items-center justify-between py-4 px-4 border border-gray-200 rounded-lg">
           <div className="flex items-center space-x-4">
-            <div className="font-medium text-gray-900">
+            {/* Domain Icon - Dark grey circle with white text */}
+            <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">
+              {result.tld.substring(0, 3).toUpperCase()}
+            </div>
+            
+            <div className="font-medium text-gray-900 text-sm">
               {result.price}
             </div>
-            <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
+            
+            {/* Domain signifier badge with 14px font */}
+            <span className="bg-purple-50 text-purple-700 text-sm px-2 py-1 rounded border border-purple-200 font-medium">
               {result.tld}
             </span>
-            <div className="text-gray-900">
+            
+            <div className={`text-sm ${result.status === 'taken' ? 'text-gray-400' : 'text-gray-900'}`}>
               {result.status === 'available' && `${result.name} is available.`}
               {result.status === 'in-cart' && `${result.name} is in shopping cart.`}
               {result.status === 'taken' && (
-                <span className="text-gray-500">{result.name} is taken.</span>
+                <span>{result.name} is taken.</span>
               )}
               {result.status === 'error' && (
                 <span className="text-red-600">{result.errorMessage}</span>
@@ -42,7 +50,7 @@ export const DomainResults = ({ results, onAddToCart, onRemoveFromCart }: Domain
             {result.status === 'available' && (
               <button
                 onClick={() => onAddToCart(result.name)}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition-colors text-sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors text-sm"
               >
                 Add to cart
               </button>

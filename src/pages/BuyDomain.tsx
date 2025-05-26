@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { DomainSearch } from "@/components/DomainSearch";
 import { DomainResults } from "@/components/DomainResults";
 import { CartBanner } from "@/components/CartBanner";
+import { CartNotificationBar } from "@/components/CartNotificationBar";
 
 export interface DomainResult {
   name: string;
@@ -19,6 +20,7 @@ const BuyDomain = () => {
   const [searchResults, setSearchResults] = useState<DomainResult[]>([]);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -83,6 +85,7 @@ const BuyDomain = () => {
           : result
       )
     );
+    setShowNotification(true);
   };
 
   const removeFromCart = (domain: string) => {
@@ -105,10 +108,22 @@ const BuyDomain = () => {
           : result
       )
     );
+    setShowNotification(false);
+  };
+
+  const handleCheckout = () => {
+    console.log("Proceeding to checkout...");
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <CartNotificationBar 
+        show={showNotification && cartItems.length > 0}
+        itemCount={cartItems.length}
+        onClose={() => setShowNotification(false)}
+        onCheckout={handleCheckout}
+      />
+      
       <div className="flex flex-col items-center px-4 py-12">
         {/* Header Container - 992px width, centered */}
         <div className="w-full" style={{ maxWidth: '992px' }}>
