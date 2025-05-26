@@ -26,13 +26,31 @@ export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemPr
   const getTypeColor = (type: string) => {
     if (type === "COM") return "bg-blue-50 text-blue-700 border-blue-200";
     if (type === "EE") return "bg-yellow-50 text-yellow-700 border-yellow-200";
+    if (type === "ORG") return "bg-green-50 text-green-700 border-green-200";
+    if (type === "NET") return "bg-purple-50 text-purple-700 border-purple-200";
+    if (type === "BIZ") return "bg-orange-50 text-orange-700 border-orange-200";
     return "bg-gray-50 text-gray-700 border-gray-200";
+  };
+
+  const getIconColor = (type: string) => {
+    if (type === "COM") return "bg-blue-500";
+    if (type === "EE") return "bg-yellow-500";
+    if (type === "ORG") return "bg-green-500";
+    if (type === "NET") return "bg-purple-500";
+    if (type === "BIZ") return "bg-orange-500";
+    return "bg-gray-400";
+  };
+
+  const getIconText = (type: string) => {
+    if (type === "Free Voog domain") return "•";
+    return type.substring(0, 3).toUpperCase();
   };
 
   const getExpiryColor = (expiry: string) => {
     if (expiry.includes("Expired")) return "text-red-600";
     if (expiry === "External") return "text-orange-600";
     if (expiry === "Free forever") return "text-green-600";
+    if (expiry === "!") return "text-red-600";
     return "text-gray-600";
   };
 
@@ -44,12 +62,8 @@ export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemPr
     <div className="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
       <div className="flex items-center space-x-4">
         {/* Domain Icon */}
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-medium text-xs ${
-          domain.type === "COM" ? "bg-blue-500" : 
-          domain.type === "EE" ? "bg-yellow-500" : "bg-gray-400"
-        }`}>
-          {domain.type === "COM" ? "COM" : 
-           domain.type === "EE" ? "EE" : "•"}
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-medium text-xs ${getIconColor(domain.type)}`}>
+          {getIconText(domain.type)}
         </div>
 
         {/* Domain Info */}
