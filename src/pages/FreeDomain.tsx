@@ -1,8 +1,8 @@
+
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { SuccessModal } from "@/components/SuccessModal";
 
 const FreeDomain = () => {
@@ -133,10 +133,10 @@ const FreeDomain = () => {
 
       <SuccessModal
         isOpen={showSuccessModal}
-        title="Free Domain Successfully Added!"
+        title="Free domain added successfully!"
         description={`${subdomain}.voog.com has been added to your account and is ready to use.`}
         primaryAction={{
-          label: "View Your Domains",
+          label: "View your domains",
           onClick: handleViewDomains
         }}
       />

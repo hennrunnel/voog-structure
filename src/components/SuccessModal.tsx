@@ -27,27 +27,27 @@ export const SuccessModal = ({
     <Dialog open={isOpen}>
       <DialogContent className="sm:max-w-md" hideCloseButton>
         <DialogHeader>
-          <DialogTitle className="text-green-600">{title}</DialogTitle>
+          <DialogTitle className="text-gray-900">{title}</DialogTitle>
           <DialogDescription className="text-gray-600">
             {description}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-          {secondaryAction && (
-            <Button 
-              variant="outline" 
-              onClick={secondaryAction.onClick}
-              className="mt-2 sm:mt-0"
-            >
-              {secondaryAction.label}
-            </Button>
-          )}
+        <DialogFooter className={`flex ${secondaryAction ? 'flex-col-reverse sm:flex-row sm:justify-start sm:space-x-2' : 'justify-center'}`}>
           <Button 
             onClick={primaryAction.onClick}
             className="bg-blue-600 hover:bg-blue-700"
           >
             {primaryAction.label}
           </Button>
+          {secondaryAction && (
+            <Button 
+              variant="outline" 
+              onClick={secondaryAction.onClick}
+              className="mt-2 sm:mt-0 bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200"
+            >
+              {secondaryAction.label}
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

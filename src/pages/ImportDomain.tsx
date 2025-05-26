@@ -1,17 +1,15 @@
+
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { SuccessModal } from "@/components/SuccessModal";
-import { DnsConfigurationPopover } from "@/components/DnsConfigurationPopover";
 
 const ImportDomain = () => {
   const [domain, setDomain] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showDnsPopover, setShowDnsPopover] = useState(false);
   const navigate = useNavigate();
 
   const validateDomain = (value: string) => {
@@ -50,11 +48,6 @@ const ImportDomain = () => {
 
   const handleConfigureDns = () => {
     setShowSuccessModal(false);
-    setShowDnsPopover(true);
-  };
-
-  const handleDnsPopoverComplete = () => {
-    setShowDnsPopover(false);
     navigate(`/domain-settings?domain=${encodeURIComponent(domain)}&tab=dns`);
   };
 
@@ -120,22 +113,16 @@ const ImportDomain = () => {
 
       <SuccessModal
         isOpen={showSuccessModal}
-        title="Domain Successfully Imported!"
-        description={`${domain} has been added to your account. Choose your next step:`}
+        title="Domain imported successfully!"
+        description={`${domain} has been added to your account. Configure DNS settings to point your domain to Voog's hosting infrastructure, or view your domains list.`}
         primaryAction={{
-          label: "Configure DNS Settings",
+          label: "Configure DNS settings",
           onClick: handleConfigureDns
         }}
         secondaryAction={{
-          label: "View Domains List",
+          label: "View domains list",
           onClick: handleViewDomains
         }}
-      />
-
-      <DnsConfigurationPopover
-        isVisible={showDnsPopover}
-        domainName={domain}
-        onComplete={handleDnsPopoverComplete}
       />
     </div>
   );
