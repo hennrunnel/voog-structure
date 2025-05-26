@@ -1,20 +1,14 @@
 import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
 interface DomainSettingsGeneralProps {
   domainName: string;
 }
-
-export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps) => {
+export const DomainSettingsGeneral = ({
+  domainName
+}: DomainSettingsGeneralProps) => {
   const [defaultDomainForm, setDefaultDomainForm] = useState("not-specified");
   const [redirecting, setRedirecting] = useState("to-specific-address");
   const [redirectUrl, setRedirectUrl] = useState("http://edicy.voog.com/redirection");
@@ -25,9 +19,7 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
   // Mock SSL active state - in real app this would come from props
   const sslActive = false;
   const isExternal = true;
-
-  return (
-    <div className="space-y-8">
+  return <div className="space-y-8">
       {/* Default domain form row */}
       <div className="grid grid-cols-2 gap-8">
         <div>
@@ -72,25 +64,17 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
       </div>
 
       {/* Redirect address row - conditionally shown */}
-      {redirecting === "to-specific-address" && (
-        <div className="grid grid-cols-2 gap-8">
+      {redirecting === "to-specific-address" && <div className="grid grid-cols-2 gap-8">
           <div>
             <Label htmlFor="redirect-url" className="text-sm font-medium text-gray-900 block mb-3">
               Redirect address
             </Label>
-            <Input
-              id="redirect-url"
-              type="url"
-              value={redirectUrl}
-              onChange={(e) => setRedirectUrl(e.target.value)}
-              className="w-full"
-            />
+            <Input id="redirect-url" type="url" value={redirectUrl} onChange={e => setRedirectUrl(e.target.value)} className="w-full" />
           </div>
           <div className="text-xs text-gray-600 pt-7">
             <p>Enter the full URL where you want to redirect visitors.</p>
           </div>
-        </div>
-      )}
+        </div>}
 
       {/* Keep subpage path row */}
       <div className="grid grid-cols-2 gap-8">
@@ -98,7 +82,7 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
           <Label htmlFor="keep-subpage-path" className="text-sm font-medium text-gray-900 block mb-3">
             Keep subpage path
           </Label>
-          <Select value={keepSubpagePath ? "yes" : "no"} onValueChange={(value) => setKeepSubpagePath(value === "yes")}>
+          <Select value={keepSubpagePath ? "yes" : "no"} onValueChange={value => setKeepSubpagePath(value === "yes")}>
             <SelectTrigger className="w-24">
               <SelectValue />
             </SelectTrigger>
@@ -118,15 +102,9 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
         <div>
           <Label htmlFor="force-ssl" className="text-sm font-medium text-gray-900 block mb-3">
             Force SSL
-            <div className="inline-block w-4 h-4 rounded-full bg-gray-300 flex items-center justify-center ml-2">
-              <span className="text-xs text-white font-bold">i</span>
-            </div>
+            
           </Label>
-          <Select 
-            value={forceSSL} 
-            onValueChange={setForceSSL}
-            disabled={!sslActive}
-          >
+          <Select value={forceSSL} onValueChange={setForceSSL} disabled={!sslActive}>
             <SelectTrigger className={`w-48 ${!sslActive ? 'opacity-50 cursor-not-allowed' : ''}`}>
               <SelectValue />
             </SelectTrigger>
@@ -142,8 +120,7 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
       </div>
 
       {/* Need to transfer row - conditional */}
-      {isExternal && (
-        <div className="grid grid-cols-2 gap-8">
+      {isExternal && <div className="grid grid-cols-2 gap-8">
           <div>
             <Label className="text-sm font-medium text-gray-900 block mb-3">
               Need to transfer?
@@ -155,8 +132,7 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
           <div className="text-xs text-gray-600 pt-7">
             <p>Request authorization code to transfer domain to another registrar.</p>
           </div>
-        </div>
-      )}
+        </div>}
 
       {/* Allow embedding in IFrame row */}
       <div className="grid grid-cols-2 gap-8">
@@ -190,6 +166,5 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
           </Button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
