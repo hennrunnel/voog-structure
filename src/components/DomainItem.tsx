@@ -1,5 +1,5 @@
 
-import { Lock, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface Domain {
@@ -68,19 +68,16 @@ export const DomainItem = ({
 
   return (
     <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
-      <div className="flex items-center space-x-4">
-        {/* Domain Icon - updated styling with dark gray background and more padding */}
+      <div className="flex items-center space-x-4 flex-1">
+        {/* Domain Icon */}
         <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">
           {getIconText(domain.type)}
         </div>
 
         {/* Domain Info */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <div className="flex items-center space-x-3 mb-1">
             <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
-            
-            {/* SSL Lock */}
-            {domain.sslActive && <Lock className="w-4 h-4 text-green-600" />}
             
             {/* Primary Badge */}
             {domain.isPrimary && (
@@ -103,6 +100,15 @@ export const DomainItem = ({
           {/* Source */}
           {getSourceText() && <p className="text-xs text-gray-500 mt-1">{getSourceText()}</p>}
         </div>
+      </div>
+
+      {/* SSL Status Column */}
+      <div className="px-6 text-sm">
+        {domain.sslActive ? (
+          <span className="text-green-600 font-medium">Secured</span>
+        ) : (
+          <span className="text-red-600 font-medium">Not secured</span>
+        )}
       </div>
 
       {/* Right Side - Expiry and Actions */}
