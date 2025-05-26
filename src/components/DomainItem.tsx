@@ -107,7 +107,7 @@ export const DomainItem = ({
               
               {/* Primary Badge */}
               {domain.isPrimary && (
-                <span className="bg-purple-50 text-purple-700 text-xs px-2 py-1 rounded border border-purple-200 font-medium">
+                <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">
                   PRIMARY
                 </span>
               )}
