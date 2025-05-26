@@ -95,22 +95,20 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
       {/* Keep subpage path row */}
       <div className="grid grid-cols-2 gap-8">
         <div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="keep-subpage-path" className="text-sm font-medium text-gray-900">
-              Keep subpage path
-            </Label>
-            <Select value={keepSubpagePath ? "yes" : "no"} onValueChange={(value) => setKeepSubpagePath(value === "yes")}>
-              <SelectTrigger className="w-24">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="no">No</SelectItem>
-                <SelectItem value="yes">Yes</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Label htmlFor="keep-subpage-path" className="text-sm font-medium text-gray-900 block mb-3">
+            Keep subpage path
+          </Label>
+          <Select value={keepSubpagePath ? "yes" : "no"} onValueChange={(value) => setKeepSubpagePath(value === "yes")}>
+            <SelectTrigger className="w-24">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="no">No</SelectItem>
+              <SelectItem value="yes">Yes</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="text-xs text-gray-600 pt-1">
+        <div className="text-xs text-gray-600 pt-7">
           <p>When redirecting, preserve the original page path in the destination URL.</p>
         </div>
       </div>
@@ -118,31 +116,27 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
       {/* Force SSL row */}
       <div className="grid grid-cols-2 gap-8">
         <div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Label htmlFor="force-ssl" className="text-sm font-medium text-gray-900">
-                Force SSL
-              </Label>
-              <div className="w-4 h-4 rounded-full bg-gray-300 flex items-center justify-center">
-                <span className="text-xs text-white font-bold">i</span>
-              </div>
+          <Label htmlFor="force-ssl" className="text-sm font-medium text-gray-900 block mb-3">
+            Force SSL
+            <div className="inline-block w-4 h-4 rounded-full bg-gray-300 flex items-center justify-center ml-2">
+              <span className="text-xs text-white font-bold">i</span>
             </div>
-            <Select 
-              value={forceSSL} 
-              onValueChange={setForceSSL}
-              disabled={!sslActive}
-            >
-              <SelectTrigger className={`w-48 ${!sslActive ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="always-use-ssl">Always use SSL</SelectItem>
-                <SelectItem value="allow-non-ssl">Allow non-SSL requests</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          </Label>
+          <Select 
+            value={forceSSL} 
+            onValueChange={setForceSSL}
+            disabled={!sslActive}
+          >
+            <SelectTrigger className={`w-48 ${!sslActive ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="always-use-ssl">Always use SSL</SelectItem>
+              <SelectItem value="allow-non-ssl">Allow non-SSL requests</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="text-xs text-gray-600 pt-1">
+        <div className="text-xs text-gray-600 pt-7">
           <p>Force all visitors to use HTTPS. Requires an active SSL certificate.</p>
         </div>
       </div>
@@ -151,16 +145,14 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
       {isExternal && (
         <div className="grid grid-cols-2 gap-8">
           <div>
-            <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium text-gray-900">
-                Need to transfer?
-              </Label>
-              <Button variant="outline" className="text-sm">
-                Request code
-              </Button>
-            </div>
+            <Label className="text-sm font-medium text-gray-900 block mb-3">
+              Need to transfer?
+            </Label>
+            <Button variant="outline" className="text-sm">
+              Request code
+            </Button>
           </div>
-          <div className="text-xs text-gray-600 pt-1">
+          <div className="text-xs text-gray-600 pt-7">
             <p>Request authorization code to transfer domain to another registrar.</p>
           </div>
         </div>
