@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DomainItem } from "./DomainItem";
 
 interface Domain {
@@ -113,17 +114,31 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
   };
 
   return (
-    <div className="divide-y divide-gray-100">
-      {domains.map((domain, index) => (
-        <DomainItem 
-          key={domain.name} 
-          domain={domain} 
-          onAddToCart={onAddToCart}
-          onOpenSettings={handleOpenSettings}
-          onRemoveDomain={handleRemoveDomain}
-          isFirst={index === 0}
-        />
-      ))}
+    <div className="border border-gray-200 rounded-lg">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[40%]">Domain</TableHead>
+            <TableHead className="w-[10%]">Type</TableHead>
+            <TableHead className="w-[15%]">Source</TableHead>
+            <TableHead className="w-[15%] text-right">Expiry Price</TableHead>
+            <TableHead className="w-[15%]">Status</TableHead>
+            <TableHead className="w-[5%]"></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {domains.map((domain, index) => (
+            <DomainItem 
+              key={domain.name} 
+              domain={domain} 
+              onAddToCart={onAddToCart}
+              onOpenSettings={handleOpenSettings}
+              onRemoveDomain={handleRemoveDomain}
+              isFirst={index === 0}
+            />
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };

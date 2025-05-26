@@ -1,7 +1,9 @@
 
-import { Lock, LockOpen, Settings, MoreVertical, Trash2 } from "lucide-react";
+import { Lock, LockOpen, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RemoveConfirmationModal } from "./RemoveConfirmationModal";
@@ -17,6 +19,7 @@ interface Domain {
   isExternal: boolean;
   isPrimary?: boolean;
 }
+
 interface DomainItemProps {
   domain: Domain;
   onAddToCart: (domain: string) => void;
@@ -24,6 +27,7 @@ interface DomainItemProps {
   onRemoveDomain: (domainName: string) => void;
   isFirst?: boolean;
 }
+
 export const DomainItem = ({
   domain,
   onAddToCart,
@@ -43,22 +47,11 @@ export const DomainItem = ({
     return "bg-gray-50 text-gray-700 border-gray-200";
   };
   
-  const getIconText = (type: string) => {
-    if (type === "Free Voog domain") return "";
-    return type.substring(0, 3).toUpperCase();
-  };
-  
-  const getExpiryDateColor = (expiryDate: string) => {
-    // Only red if already expired (past dates)
+  const getStatusColor = (expiryDate: string) => {
+    // Only red if already expired or not registered
     if (expiryDate.includes("Expired") || expiryDate.includes("Domain is not registered")) return "text-red-600";
     return "text-gray-600";
   };
-
-  // Check if we should show the type badge (only for domains with "free" in the type)
-  const shouldShowTypeBadge = domain.type.toLowerCase().includes("free");
-
-  // Show notes only for redirected domains (first domain in this case)
-  const shouldShowNotes = domain.notes && domain.notes.includes("Redirected");
 
   const handleSettingsClick = () => {
     navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
@@ -81,27 +74,21 @@ export const DomainItem = ({
   // Check if domain has pricing (to show renew option)
   const hasPricing = domain.expiry.includes("€") && !domain.expiry.includes("External") && !domain.expiry.includes("Free");
 
-  // Check if domain is about to expire (within 30 days)
-  const isAboutToExpire = domain.expiryDate.toLowerCase().includes("expires") && !domain.expiryDate.toLowerCase().includes("2026");
+  // Show notes only for redirected domains (first domain in this case)
+  const shouldShowNotes = domain.notes && domain.notes.includes("Redirected");
 
-  // Check if domain is not registered
-  const isNotRegistered = domain.expiryDate.includes("Domain is not registered");
-
-  // Check if domain is "Free Forever"
-  const isFreeForever = domain.expiry === "Free forever";
+  const getTypeDisplay = (type: string) => {
+    if (type === "Free Voog domain") return "FREE";
+    return type;
+  };
 
   return (
     <TooltipProvider delayDuration={300}>
-      <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
-        <div className="flex items-center space-x-4 flex-1">
-          {/* Domain Icon */}
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium text-sm bg-gray-600">
-            {getIconText(domain.type)}
-          </div>
-
-          {/* Domain Info */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center space-x-3 mb-1">
+      <TableRow className="hover:bg-gray-50">
+        {/* Domain Column */}
+        <TableCell>
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
               
               {/* SSL Status with Tooltip */}
@@ -125,43 +112,49 @@ export const DomainItem = ({
               
               {/* Primary Badge */}
               {domain.isPrimary && (
-                <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">
+                <Badge className="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">
                   PRIMARY
-                </span>
+                </Badge>
               )}
             </div>
-            
-            {/* Type Badge - only show for free domains */}
-            {shouldShowTypeBadge}
-            
-            {/* Notes - only show for redirected domains */}
-            {shouldShowNotes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
-          </div>
-        </div>
-
-        {/* Right Side - Expiry and Actions */}
-        <div className="flex items-center space-x-4">
-          <div className="text-right">
-            {/* Handle not registered domains specially */}
-            {isNotRegistered ? (
-              <p className="text-sm text-red-600">Domain is not registered</p>
-            ) : (
-              <>
-                {domain.expiry && (
-                  <p className="font-medium text-sm text-gray-600">
-                    {domain.expiry}
-                  </p>
-                )}
-                {domain.expiryDate && (
-                  <p className={`text-xs ${getExpiryDateColor(domain.expiryDate)}`}>
-                    {domain.expiryDate}
-                  </p>
-                )}
-              </>
-            )}
           </div>
           
-          {/* Kebab Menu */}
+          {/* Notes - only show for redirected domains */}
+          {shouldShowNotes && (
+            <p className="text-xs text-gray-600 mt-1">{domain.notes}</p>
+          )}
+        </TableCell>
+
+        {/* Type Column */}
+        <TableCell>
+          <Badge variant="outline" className={getTypeColor(domain.type)}>
+            {getTypeDisplay(domain.type)}
+          </Badge>
+        </TableCell>
+
+        {/* Source Column */}
+        <TableCell>
+          <span className="text-sm text-gray-600">{domain.source}</span>
+        </TableCell>
+
+        {/* Expiry Price Column */}
+        <TableCell className="text-right">
+          <span className="text-sm font-medium text-gray-900">{domain.expiry}</span>
+        </TableCell>
+
+        {/* Status Column */}
+        <TableCell>
+          {domain.expiryDate ? (
+            <span className={`text-sm ${getStatusColor(domain.expiryDate)}`}>
+              {domain.expiryDate}
+            </span>
+          ) : (
+            <span className="text-sm text-gray-400">-</span>
+          )}
+        </TableCell>
+
+        {/* Actions Column */}
+        <TableCell>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
@@ -182,8 +175,8 @@ export const DomainItem = ({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-      </div>
+        </TableCell>
+      </TableRow>
 
       <RemoveConfirmationModal
         isOpen={isRemoveModalOpen}
