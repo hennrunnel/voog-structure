@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import { Shield, Upload } from "lucide-react";
+import { AutoActivateSidebar } from "./AutoActivateSidebar";
+import { UploadSslSidebar } from "./UploadSslSidebar";
 
 export const SslCertificatesView = () => {
   const [certificates] = useState([
@@ -36,14 +38,23 @@ export const SslCertificatesView = () => {
     }
   ]);
 
+  const [isAutoActivateOpen, setIsAutoActivateOpen] = useState(false);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
+
   return (
     <div>
       {/* Action Buttons */}
       <div className="flex space-x-4 mb-6">
-        <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors">
+        <button 
+          onClick={() => setIsAutoActivateOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors"
+        >
           Auto-activate
         </button>
-        <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-medium text-sm transition-colors flex items-center space-x-2">
+        <button 
+          onClick={() => setIsUploadOpen(true)}
+          className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-medium text-sm transition-colors flex items-center space-x-2"
+        >
           <Upload className="w-4 h-4" />
           <span>Upload...</span>
         </button>
@@ -93,6 +104,16 @@ export const SslCertificatesView = () => {
           </tbody>
         </table>
       </div>
+
+      <AutoActivateSidebar 
+        isOpen={isAutoActivateOpen} 
+        onClose={() => setIsAutoActivateOpen(false)} 
+      />
+      
+      <UploadSslSidebar 
+        isOpen={isUploadOpen} 
+        onClose={() => setIsUploadOpen(false)} 
+      />
     </div>
   );
 };
