@@ -44,7 +44,7 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="right" className="w-[480px] p-0">
+      <SheetContent side="right" className="w-[480px] p-0 bg-white">
         <div className="bg-green-600 text-white p-6">
           <SheetHeader className="mb-0">
             <div className="flex items-center space-x-3">
@@ -58,7 +58,7 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
           </SheetHeader>
         </div>
         
-        <div className="p-6 flex flex-col h-full">
+        <div className="p-6 flex flex-col h-full bg-white">
           <div className="flex-1">
             <div className="space-y-4">
               {domains.map((domain) => (
@@ -90,9 +90,9 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
               <button
                 onClick={handleSave}
                 disabled={selectedDomains.length === 0}
-                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-md transition-colors"
+                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-md transition-colors"
               >
-                Activate selected
+                Save
               </button>
             </div>
           </div>
