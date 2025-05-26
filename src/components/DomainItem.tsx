@@ -180,7 +180,6 @@ export const DomainItem = ({
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={handleRemoveClick} className="text-red-600 focus:text-red-600">
-                <Trash2 className="w-4 h-4 mr-2 text-red-600" />
                 Remove
               </DropdownMenuItem>
             </DropdownMenuContent>
