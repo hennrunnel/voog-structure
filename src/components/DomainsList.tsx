@@ -1,6 +1,5 @@
-import { useState } from "react";
+
 import { DomainItem } from "./DomainItem";
-import { DomainSettings } from "./DomainSettings";
 
 interface Domain {
   name: string;
@@ -19,9 +18,6 @@ interface DomainsListProps {
 }
 
 export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
-  const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
   const domains = [
     {
       name: "kasitis-ostetud.com",
@@ -107,33 +103,20 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
   ];
 
   const handleOpenSettings = (domain: Domain) => {
-    setSelectedDomain(domain);
-    setIsSettingsOpen(true);
-  };
-
-  const handleCloseSettings = () => {
-    setIsSettingsOpen(false);
-    setSelectedDomain(null);
+    // This function is kept for compatibility but not used anymore
+    // Navigation is handled directly in DomainItem component
   };
 
   return (
-    <>
-      <div className="divide-y divide-gray-100">
-        {domains.map((domain, index) => (
-          <DomainItem 
-            key={index} 
-            domain={domain} 
-            onAddToCart={onAddToCart}
-            onOpenSettings={handleOpenSettings}
-          />
-        ))}
-      </div>
-      
-      <DomainSettings
-        domain={selectedDomain}
-        isOpen={isSettingsOpen}
-        onClose={handleCloseSettings}
-      />
-    </>
+    <div className="divide-y divide-gray-100">
+      {domains.map((domain, index) => (
+        <DomainItem 
+          key={index} 
+          domain={domain} 
+          onAddToCart={onAddToCart}
+          onOpenSettings={handleOpenSettings}
+        />
+      ))}
+    </div>
   );
 };

@@ -1,5 +1,6 @@
 
 import { Lock, Settings } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Domain {
   name: string;
@@ -20,6 +21,8 @@ interface DomainItemProps {
 }
 
 export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemProps) => {
+  const navigate = useNavigate();
+
   const getTypeColor = (type: string) => {
     if (type === "COM") return "bg-blue-50 text-blue-700 border-blue-200";
     if (type === "EE") return "bg-yellow-50 text-yellow-700 border-yellow-200";
@@ -31,6 +34,10 @@ export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemPr
     if (expiry === "External") return "text-orange-600";
     if (expiry === "Free forever") return "text-green-600";
     return "text-gray-600";
+  };
+
+  const handleSettingsClick = () => {
+    navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
   };
 
   return (
@@ -97,7 +104,7 @@ export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemPr
         
         {/* Settings Icon */}
         <button 
-          onClick={() => onOpenSettings(domain)}
+          onClick={handleSettingsClick}
           className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
         >
           <Settings className="w-4 h-4" />
