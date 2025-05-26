@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CartBanner } from "@/components/CartBanner";
 
 const ImportDomain = () => {
   const [domain, setDomain] = useState("");
@@ -43,10 +42,6 @@ const ImportDomain = () => {
     }
   };
 
-  const clearCart = () => {
-    setCartItems([]);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="flex flex-col items-center px-4 py-12">
@@ -66,16 +61,6 @@ const ImportDomain = () => {
             <div className="text-gray-900 font-medium text-xl">VOOG</div>
           </div>
         </div>
-
-        {/* Cart Banner - 992px width, centered */}
-        {cartItems.length > 0 && (
-          <div className="w-full mb-6" style={{ maxWidth: '992px' }}>
-            <CartBanner 
-              itemCount={cartItems.length} 
-              onClearCart={clearCart}
-            />
-          </div>
-        )}
 
         {/* Main Content Card - 992px width, centered */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>

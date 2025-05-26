@@ -1,9 +1,9 @@
+
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { DomainSearch } from "@/components/DomainSearch";
 import { DomainResults } from "@/components/DomainResults";
-import { CartBanner } from "@/components/CartBanner";
 import { CartNotificationBar } from "@/components/CartNotificationBar";
 export interface DomainResult {
   name: string;
@@ -107,13 +107,6 @@ const BuyDomain = () => {
             <div className="text-gray-900 font-medium text-xl">VOOG</div>
           </div>
         </div>
-
-        {/* Cart Banner - 992px width, centered */}
-        {cartItems.length > 0 && <div className="w-full mb-6" style={{
-        maxWidth: '992px'
-      }}>
-            <CartBanner itemCount={cartItems.length} onClearCart={clearCart} />
-          </div>}
 
         {/* Main Content Card - 992px width, centered */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{

@@ -1,7 +1,7 @@
+
 import { useState } from "react";
 import { Settings } from "lucide-react";
 import { DomainsList } from "@/components/DomainsList";
-import { CartBanner } from "@/components/CartBanner";
 import { AddNewButton } from "@/components/AddNewButton";
 import { PageSettings } from "@/components/PageSettings";
 const Index = () => {
@@ -32,13 +32,6 @@ const Index = () => {
             <div className="text-gray-900 font-medium text-xl">VOOG</div>
           </div>
         </div>
-
-        {/* Cart Banner - 992px width, centered */}
-        {cartItems.length > 0 && <div className="w-full mb-6" style={{
-        maxWidth: '992px'
-      }}>
-            <CartBanner itemCount={cartItems.length} onClearCart={clearCart} />
-          </div>}
 
         {/* Main Content Card - 992px width, centered */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{

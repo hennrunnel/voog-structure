@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CartBanner } from "@/components/CartBanner";
 
 const FreeDomain = () => {
   const [subdomain, setSubdomain] = useState("");
@@ -53,10 +52,6 @@ const FreeDomain = () => {
     }
   };
 
-  const clearCart = () => {
-    setCartItems([]);
-  };
-
   const isAvailable = validationMessage.includes("available");
   const isTaken = validationMessage.includes("taken");
 
@@ -79,16 +74,6 @@ const FreeDomain = () => {
             <div className="text-gray-900 font-medium text-xl">VOOG</div>
           </div>
         </div>
-
-        {/* Cart Banner - 992px width, centered */}
-        {cartItems.length > 0 && (
-          <div className="w-full mb-6" style={{ maxWidth: '992px' }}>
-            <CartBanner 
-              itemCount={cartItems.length} 
-              onClearCart={clearCart}
-            />
-          </div>
-        )}
 
         {/* Main Content Card - 992px width, centered */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
