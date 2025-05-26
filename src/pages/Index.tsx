@@ -20,40 +20,44 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-white text-3xl font-bold mb-2">Domains</h1>
-            <div className="flex gap-4">
-              <button className="bg-blue-800 text-white px-4 py-2 rounded-md font-medium">
+            <h1 className="text-gray-900 text-2xl font-medium mb-4">Domains</h1>
+            <div className="flex gap-1">
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
                 Domains
               </button>
-              <button className="text-blue-100 hover:text-white px-4 py-2 rounded-md transition-colors">
+              <button className="text-gray-600 hover:text-gray-900 px-4 py-2 rounded-md text-sm transition-colors">
                 SSL certificates
               </button>
             </div>
           </div>
-          <div className="text-white font-bold text-2xl">VOOG</div>
+          <div className="text-gray-900 font-medium text-xl">VOOG</div>
         </div>
 
         {/* Cart Banner */}
         {cartItems.length > 0 && (
-          <CartBanner 
-            itemCount={cartItems.length} 
-            onClearCart={clearCart}
-          />
+          <div className="mb-6">
+            <CartBanner 
+              itemCount={cartItems.length} 
+              onClearCart={clearCart}
+            />
+          </div>
         )}
 
-        {/* Main Dashboard */}
-        <div className="bg-white rounded-lg shadow-xl p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Domains</h2>
-            <AddNewButton onAddDomain={addToCart} />
+        {/* Main Content Card - 992px width */}
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm" style={{ maxWidth: '992px' }}>
+          <div className="p-8">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-xl font-medium text-gray-900">Domains</h2>
+              <AddNewButton onAddDomain={addToCart} />
+            </div>
+            
+            <DomainsList onAddToCart={addToCart} />
           </div>
-          
-          <DomainsList onAddToCart={addToCart} />
         </div>
       </div>
     </div>

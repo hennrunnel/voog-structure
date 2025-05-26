@@ -19,7 +19,7 @@ export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium flex items-center space-x-2 transition-colors"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium flex items-center space-x-2 transition-colors text-sm"
       >
         <Plus className="w-4 h-4" />
         <span>Add new</span>
@@ -35,7 +35,7 @@ export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
           />
           
           {/* Dropdown */}
-          <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-2 z-20">
+          <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-20">
             {options.map((option, index) => (
               <button
                 key={index}
@@ -43,7 +43,7 @@ export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
                   option.action();
                   setIsOpen(false);
                 }}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors text-gray-700"
+                className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors text-gray-700 text-sm"
               >
                 {option.label}
               </button>

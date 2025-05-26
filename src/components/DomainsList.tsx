@@ -1,4 +1,3 @@
-
 import { DomainItem } from "./DomainItem";
 
 interface DomainsListProps {
@@ -91,7 +90,7 @@ export const DomainsList = ({ onAddToCart }: DomainsListProps) => {
   ];
 
   return (
-    <div className="space-y-3">
+    <div className="divide-y divide-gray-100">
       {domains.map((domain, index) => (
         <DomainItem 
           key={index} 
