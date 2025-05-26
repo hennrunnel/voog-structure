@@ -53,10 +53,31 @@ const DomainSettings = () => {
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
           <div className="p-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="general" className="text-sm">GENERAL</TabsTrigger>
-                <TabsTrigger value="dns" className="text-sm">DNS SETTINGS</TabsTrigger>
-              </TabsList>
+              {/* Updated Tab styling to match screenshot */}
+              <div className="border-b border-gray-200 mb-8">
+                <div className="flex space-x-12">
+                  <button
+                    onClick={() => setActiveTab("general")}
+                    className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
+                      activeTab === "general"
+                        ? "text-blue-600 border-blue-600"
+                        : "text-gray-500 border-transparent hover:text-gray-700"
+                    }`}
+                  >
+                    General
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("dns")}
+                    className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
+                      activeTab === "dns"
+                        ? "text-blue-600 border-blue-600"
+                        : "text-gray-500 border-transparent hover:text-gray-700"
+                    }`}
+                  >
+                    DNS Settings
+                  </button>
+                </div>
+              </div>
 
               <TabsContent value="general" className="space-y-0">
                 <DomainSettingsGeneral domainName={domainName} />

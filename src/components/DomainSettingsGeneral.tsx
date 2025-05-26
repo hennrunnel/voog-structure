@@ -27,12 +27,11 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
   const isExternal = true;
 
   return (
-    <div className="grid grid-cols-2 gap-12">
-      {/* Left Column - Inputs */}
-      <div className="space-y-6">
-        {/* Default domain form */}
+    <div className="space-y-8">
+      {/* Default domain form row */}
+      <div className="grid grid-cols-2 gap-8">
         <div>
-          <Label htmlFor="default-domain-form" className="text-sm font-medium text-gray-900 block mb-2">
+          <Label htmlFor="default-domain-form" className="text-sm font-medium text-gray-900 block mb-3">
             Default domain form
           </Label>
           <Select value={defaultDomainForm} onValueChange={setDefaultDomainForm}>
@@ -46,10 +45,15 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
             </SelectContent>
           </Select>
         </div>
+        <div className="text-xs text-gray-600 pt-7">
+          <p>Choose whether your domain should always redirect to www or non-www version.</p>
+        </div>
+      </div>
 
-        {/* Redirecting */}
+      {/* Redirecting row */}
+      <div className="grid grid-cols-2 gap-8">
         <div>
-          <Label htmlFor="redirecting" className="text-sm font-medium text-gray-900 block mb-2">
+          <Label htmlFor="redirecting" className="text-sm font-medium text-gray-900 block mb-3">
             Redirecting
           </Label>
           <Select value={redirecting} onValueChange={setRedirecting}>
@@ -62,11 +66,16 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
             </SelectContent>
           </Select>
         </div>
+        <div className="text-xs text-gray-600 pt-7">
+          <p>Set up automatic redirecting to another website or specific page.</p>
+        </div>
+      </div>
 
-        {/* Redirect address - conditionally shown */}
-        {redirecting === "to-specific-address" && (
+      {/* Redirect address row - conditionally shown */}
+      {redirecting === "to-specific-address" && (
+        <div className="grid grid-cols-2 gap-8">
           <div>
-            <Label htmlFor="redirect-url" className="text-sm font-medium text-gray-900 block mb-2">
+            <Label htmlFor="redirect-url" className="text-sm font-medium text-gray-900 block mb-3">
               Redirect address
             </Label>
             <Input
@@ -77,9 +86,14 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
               className="w-full"
             />
           </div>
-        )}
+          <div className="text-xs text-gray-600 pt-7">
+            <p>Enter the full URL where you want to redirect visitors.</p>
+          </div>
+        </div>
+      )}
 
-        {/* Keep subpage path */}
+      {/* Keep subpage path row */}
+      <div className="grid grid-cols-2 gap-8">
         <div>
           <div className="flex items-center justify-between">
             <Label htmlFor="keep-subpage-path" className="text-sm font-medium text-gray-900">
@@ -96,8 +110,13 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
             </Select>
           </div>
         </div>
+        <div className="text-xs text-gray-600 pt-1">
+          <p>When redirecting, preserve the original page path in the destination URL.</p>
+        </div>
+      </div>
 
-        {/* Force SSL */}
+      {/* Force SSL row */}
+      <div className="grid grid-cols-2 gap-8">
         <div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -123,9 +142,14 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
             </Select>
           </div>
         </div>
+        <div className="text-xs text-gray-600 pt-1">
+          <p>Force all visitors to use HTTPS. Requires an active SSL certificate.</p>
+        </div>
+      </div>
 
-        {/* Need to transfer - conditional */}
-        {isExternal && (
+      {/* Need to transfer row - conditional */}
+      {isExternal && (
+        <div className="grid grid-cols-2 gap-8">
           <div>
             <div className="flex items-center justify-between">
               <Label className="text-sm font-medium text-gray-900">
@@ -136,11 +160,16 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
               </Button>
             </div>
           </div>
-        )}
+          <div className="text-xs text-gray-600 pt-1">
+            <p>Request authorization code to transfer domain to another registrar.</p>
+          </div>
+        </div>
+      )}
 
-        {/* Allow embedding in IFrame */}
+      {/* Allow embedding in IFrame row */}
+      <div className="grid grid-cols-2 gap-8">
         <div>
-          <Label htmlFor="iframe-permissions" className="text-sm font-medium text-gray-900 block mb-2">
+          <Label htmlFor="iframe-permissions" className="text-sm font-medium text-gray-900 block mb-3">
             Allow embedding in IFrame
           </Label>
           <Select value={iframePermissions} onValueChange={setIframePermissions}>
@@ -153,47 +182,20 @@ export const DomainSettingsGeneral = ({ domainName }: DomainSettingsGeneralProps
             </SelectContent>
           </Select>
         </div>
-
-        {/* Save button */}
-        <div className="pt-4">
-          <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-            Save settings
-          </Button>
+        <div className="text-xs text-gray-600 pt-7">
+          <p>Control whether your site can be embedded in frames on other websites.</p>
         </div>
       </div>
 
-      {/* Right Column - Descriptions */}
-      <div className="space-y-6 text-xs text-gray-600">
-        <div>
-          <p>Choose whether your domain should always redirect to www or non-www version.</p>
-        </div>
-        
-        <div>
-          <p>Set up automatic redirecting to another website or specific page.</p>
-        </div>
-
-        {redirecting === "to-specific-address" && (
-          <div>
-            <p>Enter the full URL where you want to redirect visitors.</p>
-          </div>
-        )}
-
-        <div>
-          <p>When redirecting, preserve the original page path in the destination URL.</p>
-        </div>
-
-        <div>
-          <p>Force all visitors to use HTTPS. Requires an active SSL certificate.</p>
-        </div>
-
-        {isExternal && (
-          <div>
-            <p>Request authorization code to transfer domain to another registrar.</p>
-          </div>
-        )}
-
-        <div>
-          <p>Control whether your site can be embedded in frames on other websites.</p>
+      {/* Save and Cancel buttons */}
+      <div className="pt-8">
+        <div className="flex gap-3">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 text-sm font-medium rounded-lg">
+            Save
+          </Button>
+          <Button variant="outline" className="bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100 px-6 py-2 text-sm font-medium rounded-lg">
+            Cancel
+          </Button>
         </div>
       </div>
     </div>
