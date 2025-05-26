@@ -39,8 +39,8 @@ export const DomainItem = ({
     if (type === "Free Voog domain") return "•";
     return type.substring(0, 3).toUpperCase();
   };
-  const getExpiryColor = (expiry: string, expiryDate: string) => {
-    if (expiry.includes("Expired") || expiryDate.includes("Domain is not registered") || expiryDate.includes("Sep")) return "text-red-600";
+  const getExpiryDateColor = (expiryDate: string) => {
+    if (expiryDate.includes("Expired") || expiryDate.includes("Domain is not registered") || expiryDate.includes("Sep") || expiryDate.toLowerCase().includes("expires")) return "text-red-600";
     return "text-gray-600";
   };
 
@@ -133,12 +133,12 @@ export const DomainItem = ({
             ) : (
               <>
                 {domain.expiry && (
-                  <p className={`font-medium text-sm ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
+                  <p className="font-medium text-sm text-gray-600">
                     {domain.expiry}
                   </p>
                 )}
                 {domain.expiryDate && (
-                  <p className={`text-xs ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
+                  <p className={`text-xs ${getExpiryDateColor(domain.expiryDate)}`}>
                     {domain.expiryDate}
                   </p>
                 )}
