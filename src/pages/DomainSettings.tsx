@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DomainSettingsGeneral } from "@/components/DomainSettingsGeneral";
 import { DomainSettingsDns } from "@/components/DomainSettingsDns";
 
@@ -49,44 +50,41 @@ const DomainSettings = () => {
         {/* Main Content Card - 992px width, centered */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
           <div className="p-8">
-            {/* Custom Tab styling to match screenshot */}
-            <div className="border-b border-gray-200 mb-8">
-              <div className="flex space-x-12">
-                <button 
-                  onClick={() => setActiveTab("general")} 
-                  className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === "general" 
-                      ? "text-blue-600 border-blue-600" 
-                      : "text-gray-500 border-transparent hover:text-gray-700"
-                  }`}
-                >
-                  General
-                </button>
-                <button 
-                  onClick={() => setActiveTab("dns")} 
-                  className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === "dns" 
-                      ? "text-blue-600 border-blue-600" 
-                      : "text-gray-500 border-transparent hover:text-gray-700"
-                  }`}
-                >
-                  DNS Settings
-                </button>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              {/* Updated Tab styling to match screenshot */}
+              <div className="border-b border-gray-200 mb-8">
+                <div className="flex space-x-12">
+                  <button 
+                    onClick={() => setActiveTab("general")} 
+                    className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
+                      activeTab === "general" 
+                        ? "text-blue-600 border-blue-600" 
+                        : "text-gray-500 border-transparent hover:text-gray-700"
+                    }`}
+                  >
+                    General
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab("dns")} 
+                    className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
+                      activeTab === "dns" 
+                        ? "text-blue-600 border-blue-600" 
+                        : "text-gray-500 border-transparent hover:text-gray-700"
+                    }`}
+                  >
+                    DNS Settings
+                  </button>
+                </div>
               </div>
-            </div>
 
-            {/* Tab Content */}
-            {activeTab === "general" && (
-              <div className="space-y-0">
+              <TabsContent value="general" className="space-y-0">
                 <DomainSettingsGeneral domainName={domainName} />
-              </div>
-            )}
+              </TabsContent>
 
-            {activeTab === "dns" && (
-              <div className="space-y-0">
+              <TabsContent value="dns" className="space-y-0">
                 <DomainSettingsDns domainName={domainName} />
-              </div>
-            )}
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
