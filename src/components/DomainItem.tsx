@@ -1,6 +1,12 @@
 
-import { Settings } from "lucide-react";
+import { Lock, LockOpen, Settings, MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Domain {
   name: string;
@@ -43,11 +49,8 @@ export const DomainItem = ({
     return type.substring(0, 3).toUpperCase();
   };
 
-  const getExpiryColor = (expiry: string) => {
-    if (expiry.includes("Expired")) return "text-red-600";
-    if (expiry === "External") return "text-orange-600";
-    if (expiry === "Free forever") return "text-green-600";
-    if (expiry === "!") return "text-red-600";
+  const getExpiryColor = (expiry: string, expiryDate: string) => {
+    if (expiry.includes("Expired") || expiryDate.includes("Domain is not registered")) return "text-red-600";
     return "text-gray-600";
   };
 
@@ -66,6 +69,17 @@ export const DomainItem = ({
     navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
   };
 
+  const handleRenewClick = () => {
+    onAddToCart(domain.name);
+  };
+
+  // Check if domain has pricing (to show renew option)
+  const hasPricing = domain.expiry.includes("€") && !domain.expiry.includes("External") && !domain.expiry.includes("Free");
+
+  // Check if domain is about to expire (within 30 days)
+  const isAboutToExpire = domain.expiryDate.toLowerCase().includes("expires") && 
+    !domain.expiryDate.toLowerCase().includes("2026");
+
   return (
     <div className={`flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors ${isFirst ? 'border-t border-gray-100' : ''}`}>
       <div className="flex items-center space-x-4 flex-1">
@@ -78,6 +92,13 @@ export const DomainItem = ({
         <div className="flex-1 min-w-0">
           <div className="flex items-center space-x-3 mb-1">
             <h3 className="font-medium text-gray-900 text-sm">{domain.name}</h3>
+            
+            {/* SSL Status */}
+            {domain.sslActive ? (
+              <Lock className="w-4 h-4 text-green-600" />
+            ) : (
+              <LockOpen className="w-4 h-4 text-red-600" />
+            )}
             
             {/* Primary Badge */}
             {domain.isPrimary && (
@@ -102,37 +123,45 @@ export const DomainItem = ({
         </div>
       </div>
 
-      {/* SSL Status Column */}
-      <div className="px-6 text-sm">
-        {domain.sslActive ? (
-          <span className="text-green-600 font-medium">Secured</span>
-        ) : (
-          <span className="text-red-600 font-medium">Not secured</span>
-        )}
-      </div>
-
       {/* Right Side - Expiry and Actions */}
       <div className="flex items-center space-x-4">
         <div className="text-right">
           {domain.expiry && (
-            <p className={`font-medium text-sm ${getExpiryColor(domain.expiry)}`}>
+            <p className={`font-medium text-sm ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
               {domain.expiry}
             </p>
           )}
           {domain.expiryDate && (
-            <p className={`text-xs ${getExpiryColor(domain.expiryDate)}`}>
+            <p className={`text-xs ${getExpiryColor(domain.expiry, domain.expiryDate)}`}>
               {domain.expiryDate}
+            </p>
+          )}
+          {isAboutToExpire && (
+            <p className="text-xs text-orange-600 font-medium mt-1">
+              About to expire
             </p>
           )}
         </div>
         
-        {/* Settings Icon */}
-        <button 
-          onClick={handleSettingsClick} 
-          className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          <Settings className="w-4 h-4" />
-        </button>
+        {/* Kebab Menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+              <MoreVertical className="w-4 h-4" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleSettingsClick}>
+              <Settings className="w-4 h-4 mr-2" />
+              Settings
+            </DropdownMenuItem>
+            {hasPricing && (
+              <DropdownMenuItem onClick={handleRenewClick}>
+                Renew
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
