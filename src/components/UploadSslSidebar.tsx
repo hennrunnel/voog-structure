@@ -88,18 +88,18 @@ export const UploadSslSidebar = ({ isOpen, onClose }: UploadSslSidebarProps) => 
         </div>
         
         <div className="border-t border-gray-200 p-6 flex-shrink-0">
-          <div className="flex justify-between space-x-3">
-            <button
-              onClick={onClose}
-              className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-            >
-              Cancel
-            </button>
+          <div className="flex space-x-3">
             <button
               onClick={handleSave}
-              className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-3 text-sm font-medium rounded-lg px-4 transition-colors"
             >
               Save
+            </button>
+            <button
+              onClick={onClose}
+              className="bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 py-3 text-sm font-medium rounded-lg px-4 transition-colors"
+            >
+              Cancel
             </button>
           </div>
         </div>

@@ -7,9 +7,10 @@ import { Checkbox } from "./ui/checkbox";
 interface AutoActivateSidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  onSave?: (selectedDomains: string[]) => void;
 }
 
-export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProps) => {
+export const AutoActivateSidebar = ({ isOpen, onClose, onSave }: AutoActivateSidebarProps) => {
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
   
   const domains = [
@@ -31,6 +32,10 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
 
   const handleSave = () => {
     console.log("Activating SSL for domains:", selectedDomains);
+    if (onSave) {
+      onSave(selectedDomains);
+    }
+    setSelectedDomains([]);
     onClose();
   };
 
@@ -74,19 +79,19 @@ export const AutoActivateSidebar = ({ isOpen, onClose }: AutoActivateSidebarProp
         </div>
         
         <div className="border-t border-gray-200 p-6 flex-shrink-0">
-          <div className="flex justify-between space-x-3">
-            <button
-              onClick={onClose}
-              className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-            >
-              Cancel
-            </button>
+          <div className="flex space-x-3">
             <button
               onClick={handleSave}
               disabled={selectedDomains.length === 0}
-              className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-md transition-colors"
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white py-3 text-sm font-medium rounded-lg px-4 transition-colors"
             >
               Save
+            </button>
+            <button
+              onClick={onClose}
+              className="bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 py-3 text-sm font-medium rounded-lg px-4 transition-colors"
+            >
+              Cancel
             </button>
           </div>
         </div>
