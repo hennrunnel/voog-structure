@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ChevronDown, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +55,7 @@ export const AddNewButton = ({ onAddDomain }: AddNewButtonProps) => {
           />
           
           {/* Dropdown */}
-          <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-20">
+          <div className="absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-20">
             {options.map((option, index) => (
               <button
                 key={index}
