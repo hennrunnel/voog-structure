@@ -16,9 +16,10 @@ interface Domain {
 interface DomainItemProps {
   domain: Domain;
   onAddToCart: (domain: string) => void;
+  onOpenSettings: (domain: Domain) => void;
 }
 
-export const DomainItem = ({ domain, onAddToCart }: DomainItemProps) => {
+export const DomainItem = ({ domain, onAddToCart, onOpenSettings }: DomainItemProps) => {
   const getTypeColor = (type: string) => {
     if (type === "COM") return "bg-blue-50 text-blue-700 border-blue-200";
     if (type === "EE") return "bg-yellow-50 text-yellow-700 border-yellow-200";
@@ -95,7 +96,10 @@ export const DomainItem = ({ domain, onAddToCart }: DomainItemProps) => {
         </div>
         
         {/* Settings Icon */}
-        <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+        <button 
+          onClick={() => onOpenSettings(domain)}
+          className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+        >
           <Settings className="w-4 h-4" />
         </button>
       </div>
