@@ -1,4 +1,3 @@
-
 import { Lock, LockOpen, Settings, MoreVertical, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -85,6 +84,11 @@ export const DomainItem = ({
     setIsRemoveModalOpen(false);
   };
 
+  const handleRegisterClick = () => {
+    console.log(`Register domain: ${domain.name}`);
+    // Placeholder for register functionality
+  };
+
   // Check if domain has pricing (to show renew option)
   const hasPricing = domain.expiry.includes("€") && !domain.expiry.includes("External") && !domain.expiry.includes("Free");
 
@@ -138,6 +142,11 @@ export const DomainItem = ({
               )}
             </div>
             
+            {/* Domain is not registered text - moved here */}
+            {isNotRegistered && (
+              <p className="text-xs text-red-600 mb-1">Domain is not registered</p>
+            )}
+            
             {/* Type Badge - only show for free domains */}
             {shouldShowTypeBadge}
             
@@ -151,7 +160,12 @@ export const DomainItem = ({
           <div className="text-right">
             {/* Handle not registered domains specially */}
             {isNotRegistered ? (
-              <p className="text-sm text-red-600">Domain is not registered</p>
+              <button 
+                onClick={handleRegisterClick}
+                className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer transition-colors"
+              >
+                Register
+              </button>
             ) : (
               <>
                 {domain.expiry && (
