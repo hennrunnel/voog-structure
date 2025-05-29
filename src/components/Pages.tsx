@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Trash, Plus, Pencil, Settings, MoreVertical, GripVertical } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, Pencil, Settings, MoreVertical, GripVertical, X } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface PageItem {
   id: string;
@@ -22,6 +22,20 @@ interface PageItem {
   children?: PageItem[];
   isExpanded?: boolean;
 }
+
+interface LayoutOption {
+  id: string;
+  title: string;
+  icon: string;
+}
+
+const layoutOptions: LayoutOption[] = [
+  { id: "front-page", title: "Front Page", icon: "🏠" },
+  { id: "common-page", title: "Common Page", icon: "📄" },
+  { id: "shop", title: "Shop", icon: "🛒" },
+  { id: "blog-news", title: "Blog & News", icon: "📰" },
+  { id: "link-navigation", title: "Link in the navigation", icon: "🔗" }
+];
 
 const mockPages: PageItem[] = [
   {
@@ -46,7 +60,7 @@ const mockPages: PageItem[] = [
     title: "About",
     slug: "/about", 
     pageType: "Common Page",
-    seoScore: "Good",
+    seoScore: "Poor",
     translationStatus: "Hidden"
   },
   {
@@ -72,6 +86,11 @@ export const Pages = () => {
   const [pages, setPages] = useState<PageItem[]>(mockPages);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [pageToDelete, setPageToDelete] = useState<PageItem | null>(null);
+  const [newPageModalOpen, setNewPageModalOpen] = useState(false);
+  const [selectedLayout, setSelectedLayout] = useState<string | null>(null);
+  const [showPageForm, setShowPageForm] = useState(false);
+  const [newPageTitle, setNewPageTitle] = useState("");
+  const [newPageSlug, setNewPageSlug] = useState("");
 
   const togglePageExpansion = (pageId: string) => {
     setPages(prevPages => 
@@ -128,16 +147,45 @@ export const Pages = () => {
     );
   };
 
+  const handleNewPageClick = () => {
+    setNewPageModalOpen(true);
+    setSelectedLayout(null);
+    setShowPageForm(false);
+    setNewPageTitle("");
+    setNewPageSlug("");
+  };
+
+  const handleLayoutSelect = (layoutId: string) => {
+    setSelectedLayout(layoutId);
+    setShowPageForm(true);
+  };
+
+  const handleCreatePage = () => {
+    if (newPageTitle && newPageSlug && selectedLayout) {
+      const layoutOption = layoutOptions.find(opt => opt.id === selectedLayout);
+      const newPage = {
+        id: Date.now().toString(),
+        title: newPageTitle,
+        slug: newPageSlug.startsWith('/') ? newPageSlug : `/${newPageSlug}`,
+        pageType: layoutOption?.title || "Common Page",
+        seoScore: "Good" as const
+      };
+      
+      setPages(prevPages => [...prevPages, newPage]);
+      setNewPageModalOpen(false);
+      setSelectedLayout(null);
+      setShowPageForm(false);
+      setNewPageTitle("");
+      setNewPageSlug("");
+    }
+  };
+
   const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
-    const variant = score === "Good" ? "default" : score === "Medium" ? "secondary" : "destructive";
-    const bgColor = score === "Good" ? "bg-green-100 text-green-800" : 
-                   score === "Medium" ? "bg-yellow-100 text-yellow-800" : 
-                   "bg-red-100 text-red-800";
+    const color = score === "Good" ? "bg-green-500" : score === "Medium" ? "bg-yellow-500" : "bg-red-500";
     
     return (
-      <div className="flex items-center gap-2">
-        <div className={`w-2 h-2 rounded-full ${score === "Good" ? "bg-green-500" : score === "Medium" ? "bg-yellow-500" : "bg-red-500"}`} />
-        <span className="text-sm text-gray-600">{score}</span>
+      <div className="flex items-center justify-center">
+        <div className={`w-2 h-2 rounded-full ${color}`} />
       </div>
     );
   };
@@ -291,13 +339,15 @@ export const Pages = () => {
                     Language settings
                   </AccordionTrigger>
                   <Button
-                    className="bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2"
+                    onClick={handleNewPageClick}
+                    className="bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
                     New page
                   </Button>
                 </div>
                 <AccordionContent className="pb-4 pt-2">
+                  {/* ... keep existing code (language settings form) */}
                   <div className="relative">
                     {/* Trash icon in top-right */}
                     <div className="absolute top-0 right-0">
@@ -442,6 +492,115 @@ export const Pages = () => {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* New Page Modal */}
+        <Dialog open={newPageModalOpen} onOpenChange={setNewPageModalOpen}>
+          <DialogContent className="max-w-2xl" hideCloseButton>
+            <div className="absolute right-4 top-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setNewPageModalOpen(false)}
+                className="h-8 w-8 p-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-semibold text-white text-center">
+                Add a new page
+              </DialogTitle>
+            </DialogHeader>
+            
+            {!showPageForm ? (
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                {layoutOptions.map((option) => (
+                  <div
+                    key={option.id}
+                    onClick={() => handleLayoutSelect(option.id)}
+                    className="w-40 h-24 border border-gray-200 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-[#5A4FFF] transition-colors bg-gray-100"
+                  >
+                    <div className="text-2xl mb-2">{option.icon}</div>
+                    <div className="text-sm font-medium text-gray-900">{option.title}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-6 mt-6">
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Page title
+                  </label>
+                  <Input
+                    value={newPageTitle}
+                    onChange={(e) => setNewPageTitle(e.target.value)}
+                    placeholder="Type here..."
+                    className="bg-transparent border-gray-600 text-white placeholder:text-gray-400"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Address
+                  </label>
+                  <Input
+                    value={newPageSlug}
+                    onChange={(e) => setNewPageSlug(e.target.value)}
+                    placeholder="/newpage"
+                    className="bg-transparent border-gray-600 text-white placeholder:text-gray-400"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Page layout
+                  </label>
+                  <Select defaultValue="2023-front-page">
+                    <SelectTrigger className="bg-transparent border-gray-600 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2023-front-page">2023 front page</SelectItem>
+                      <SelectItem value="common-page">Common page</SelectItem>
+                      <SelectItem value="blog-layout">Blog layout</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Visibility
+                  </label>
+                  <Select defaultValue="visible-in-menu">
+                    <SelectTrigger className="bg-transparent border-gray-600 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="visible-in-menu">Visible in menu</SelectItem>
+                      <SelectItem value="hidden">Hidden</SelectItem>
+                      <SelectItem value="visible-not-in-menu">Visible but not in menu</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <Button
+                  onClick={handleCreatePage}
+                  className="w-full bg-gray-800 hover:bg-gray-700 text-white"
+                  disabled={!newPageTitle || !newPageSlug}
+                >
+                  Create this page
+                </Button>
+                
+                <div className="text-center">
+                  <button className="text-gray-400 text-sm hover:underline">
+                    Add a link instead
+                  </button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
 
         {/* Delete Confirmation Dialog */}
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
