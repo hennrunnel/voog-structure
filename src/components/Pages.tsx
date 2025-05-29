@@ -1,16 +1,173 @@
-
 import { useState } from "react";
-import { ChevronDown, Trash, Plus } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, Pencil, Settings, MoreVertical, GripVertical } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+
+interface PageItem {
+  id: string;
+  title: string;
+  slug: string;
+  pageType: string;
+  seoScore: "Good" | "Medium" | "Poor";
+  translationStatus?: "Not translated" | "Hidden";
+  children?: PageItem[];
+  isExpanded?: boolean;
+}
+
+const mockPages: PageItem[] = [
+  {
+    id: "1",
+    title: "Home",
+    slug: "/",
+    pageType: "Front Page",
+    seoScore: "Good",
+    translationStatus: "Not translated"
+  },
+  {
+    id: "2", 
+    title: "Products",
+    slug: "/products",
+    pageType: "Product List",
+    seoScore: "Good",
+    isExpanded: true,
+    children: []
+  },
+  {
+    id: "3",
+    title: "About",
+    slug: "/about", 
+    pageType: "Common Page",
+    seoScore: "Good",
+    translationStatus: "Hidden"
+  },
+  {
+    id: "4",
+    title: "News",
+    slug: "/news",
+    pageType: "Blog & News", 
+    seoScore: "Medium"
+  },
+  {
+    id: "5",
+    title: "Contact",
+    slug: "/contact",
+    pageType: "Common Page",
+    seoScore: "Good",
+    isExpanded: false,
+    children: []
+  }
+];
 
 export const Pages = () => {
   const [activeTab, setActiveTab] = useState("estonian");
-  const [isPubliclyVisible, setIsPubliclyVisible] = useState(true);
+  const [pages, setPages] = useState<PageItem[]>(mockPages);
+
+  const togglePageExpansion = (pageId: string) => {
+    setPages(prevPages => 
+      prevPages.map(page => 
+        page.id === pageId 
+          ? { ...page, isExpanded: !page.isExpanded }
+          : page
+      )
+    );
+  };
+
+  const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
+    const variant = score === "Good" ? "default" : score === "Medium" ? "secondary" : "destructive";
+    const bgColor = score === "Good" ? "bg-green-100 text-green-800" : 
+                   score === "Medium" ? "bg-yellow-100 text-yellow-800" : 
+                   "bg-red-100 text-red-800";
+    
+    return (
+      <div className="flex items-center gap-2">
+        <div className={`w-2 h-2 rounded-full ${score === "Good" ? "bg-green-500" : score === "Medium" ? "bg-yellow-500" : "bg-red-500"}`} />
+        <span className="text-sm text-gray-600">{score}</span>
+      </div>
+    );
+  };
+
+  const renderPageRow = (page: PageItem, level: number = 0) => {
+    const hasChildren = page.children && page.children.length > 0;
+    const paddingLeft = level * 24;
+
+    return (
+      <div key={page.id}>
+        <div 
+          className="flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors"
+          style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }}
+        >
+          {/* Drag handle */}
+          <GripVertical className="w-4 h-4 text-gray-400 mr-3 cursor-move" />
+          
+          {/* Expand/collapse button for pages with children */}
+          <div className="w-5 flex justify-center mr-2">
+            {hasChildren && (
+              <button
+                onClick={() => togglePageExpansion(page.id)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                {page.isExpanded ? 
+                  <ChevronDown className="w-4 h-4" /> : 
+                  <ChevronRight className="w-4 h-4" />
+                }
+              </button>
+            )}
+          </div>
+
+          {/* Title */}
+          <div className="flex-1 min-w-0">
+            <span className="text-sm font-medium text-gray-900">{page.title}</span>
+          </div>
+
+          {/* Slug */}
+          <div className="w-32 px-4">
+            <span className="text-sm text-gray-600">{page.slug}</span>
+          </div>
+
+          {/* Page Type */}
+          <div className="w-32 px-4">
+            <span className="text-sm text-gray-600">{page.pageType}</span>
+          </div>
+
+          {/* SEO Score */}
+          <div className="w-24 px-4">
+            {renderSeoScore(page.seoScore)}
+          </div>
+
+          {/* Translation Status */}
+          <div className="w-32 px-4">
+            {page.translationStatus && (
+              <span className="text-sm text-gray-500">{page.translationStatus}</span>
+            )}
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" className="p-1 h-auto">
+              <Pencil className="w-4 h-4 text-gray-400" />
+            </Button>
+            <Button variant="ghost" size="sm" className="p-1 h-auto">
+              <Settings className="w-4 h-4 text-gray-400" />
+            </Button>
+            <Button variant="ghost" size="sm" className="p-1 h-auto">
+              <MoreVertical className="w-4 h-4 text-gray-400" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Render children if expanded */}
+        {hasChildren && page.isExpanded && page.children?.map(child => 
+          renderPageRow(child, level + 1)
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12">
@@ -37,7 +194,7 @@ export const Pages = () => {
 
           <TabsContent value="estonian" className="mt-0">
             {/* Language Settings Accordion */}
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="w-full mb-6">
               <AccordionItem value="language-settings" className="border-b-0">
                 <div className="flex items-center justify-between">
                   <AccordionTrigger className="text-base font-medium text-[#1A1A1A] hover:no-underline py-3 px-0 flex-1">
@@ -158,6 +315,26 @@ export const Pages = () => {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+
+            {/* Page Structure Table */}
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
+              {/* Table Header */}
+              <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
+                <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '52px' }}>
+                  <div className="flex-1">Title in the menu</div>
+                  <div className="w-32 px-4">Slug</div>
+                  <div className="w-32 px-4">Page type</div>
+                  <div className="w-24 px-4">SEO Score</div>
+                  <div className="w-32 px-4"></div>
+                  <div className="w-24"></div>
+                </div>
+              </div>
+
+              {/* Page Rows */}
+              <div>
+                {pages.map(page => renderPageRow(page))}
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="general" className="mt-0">
