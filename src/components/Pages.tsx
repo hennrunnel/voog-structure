@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Trash, Plus, Pencil, Settings, MoreVertical, GripVertical } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,6 +9,8 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 interface PageItem {
   id: string;
@@ -67,12 +70,59 @@ const mockPages: PageItem[] = [
 export const Pages = () => {
   const [activeTab, setActiveTab] = useState("estonian");
   const [pages, setPages] = useState<PageItem[]>(mockPages);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [pageToDelete, setPageToDelete] = useState<PageItem | null>(null);
 
   const togglePageExpansion = (pageId: string) => {
     setPages(prevPages => 
       prevPages.map(page => 
         page.id === pageId 
           ? { ...page, isExpanded: !page.isExpanded }
+          : page
+      )
+    );
+  };
+
+  const handleDeletePage = (page: PageItem) => {
+    setPageToDelete(page);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDeletePage = () => {
+    if (pageToDelete) {
+      setPages(prevPages => prevPages.filter(page => page.id !== pageToDelete.id));
+      setDeleteDialogOpen(false);
+      setPageToDelete(null);
+    }
+  };
+
+  const handleDuplicatePage = (page: PageItem) => {
+    const newPage = {
+      ...page,
+      id: Date.now().toString(),
+      title: `${page.title} (Copy)`,
+      slug: `${page.slug}-copy`
+    };
+    setPages(prevPages => [...prevPages, newPage]);
+  };
+
+  const handleAddNestedPage = (parentPage: PageItem) => {
+    const newPage = {
+      id: Date.now().toString(),
+      title: "New Page",
+      slug: `${parentPage.slug}/new-page`,
+      pageType: "Common Page",
+      seoScore: "Good" as const
+    };
+    
+    setPages(prevPages => 
+      prevPages.map(page => 
+        page.id === parentPage.id 
+          ? { 
+              ...page, 
+              children: [...(page.children || []), newPage],
+              isExpanded: true
+            }
           : page
       )
     );
@@ -99,7 +149,7 @@ export const Pages = () => {
     return (
       <div key={page.id}>
         <div 
-          className="flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors"
+          className="group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors"
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }}
         >
           {/* Drag handle */}
@@ -111,6 +161,7 @@ export const Pages = () => {
               <button
                 onClick={() => togglePageExpansion(page.id)}
                 className="text-gray-400 hover:text-gray-600"
+                aria-label={page.isExpanded ? "Collapse" : "Expand"}
               >
                 {page.isExpanded ? 
                   <ChevronDown className="w-4 h-4" /> : 
@@ -147,17 +198,56 @@ export const Pages = () => {
             )}
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="p-1 h-auto">
+          {/* Actions - Show on hover */}
+          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-1 h-auto hover:bg-gray-200"
+              aria-label="Edit page content"
+            >
               <Pencil className="w-4 h-4 text-gray-400" />
             </Button>
-            <Button variant="ghost" size="sm" className="p-1 h-auto">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-1 h-auto hover:bg-gray-200"
+              aria-label="Page settings"
+            >
               <Settings className="w-4 h-4 text-gray-400" />
             </Button>
-            <Button variant="ghost" size="sm" className="p-1 h-auto">
-              <MoreVertical className="w-4 h-4 text-gray-400" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="p-1 h-auto hover:bg-gray-200"
+                  aria-label="More options"
+                >
+                  <MoreVertical className="w-4 h-4 text-gray-400" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border">
+                <DropdownMenuItem 
+                  onClick={() => handleDuplicatePage(page)}
+                  className="cursor-pointer"
+                >
+                  Duplicate page
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleAddNestedPage(page)}
+                  className="cursor-pointer"
+                >
+                  Add nested page
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleDeletePage(page)}
+                  className="cursor-pointer text-red-600 focus:text-red-600"
+                >
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -333,6 +423,15 @@ export const Pages = () => {
               {/* Page Rows */}
               <div>
                 {pages.map(page => renderPageRow(page))}
+                
+                {/* Download entire site link */}
+                <div className="px-3 py-4 border-t border-gray-200">
+                  <div className="flex justify-end" style={{ paddingRight: '12px' }}>
+                    <button className="text-[#5A4FFF] text-sm font-medium hover:underline">
+                      Download entire site
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </TabsContent>
@@ -343,6 +442,29 @@ export const Pages = () => {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Page</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete "{pageToDelete?.title}" and its subpages? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setDeleteDialogOpen(false)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={confirmDeletePage}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
