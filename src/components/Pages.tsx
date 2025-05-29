@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { PageSettings } from "@/components/PageSettings";
 
 interface PageItem {
   id: string;
@@ -91,6 +92,8 @@ export const Pages = () => {
   const [showPageForm, setShowPageForm] = useState(false);
   const [newPageTitle, setNewPageTitle] = useState("");
   const [newPageSlug, setNewPageSlug] = useState("");
+  const [pageSettingsOpen, setPageSettingsOpen] = useState(false);
+  const [selectedPage, setSelectedPage] = useState<PageItem | null>(null);
 
   const togglePageExpansion = (pageId: string) => {
     setPages(prevPages => 
@@ -180,6 +183,16 @@ export const Pages = () => {
     }
   };
 
+  const handlePageSettings = (page: PageItem) => {
+    setSelectedPage(page);
+    setPageSettingsOpen(true);
+  };
+
+  const handleClosePageSettings = () => {
+    setPageSettingsOpen(false);
+    setSelectedPage(null);
+  };
+
   const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
     const color = score === "Good" ? "bg-green-500" : score === "Medium" ? "bg-yellow-500" : "bg-red-500";
     
@@ -261,6 +274,7 @@ export const Pages = () => {
               size="sm" 
               className="p-1 h-auto hover:bg-gray-200"
               aria-label="Page settings"
+              onClick={() => handlePageSettings(page)}
             >
               <Settings className="w-4 h-4 text-gray-400" />
             </Button>
@@ -624,6 +638,12 @@ export const Pages = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {/* Page Settings Side Panel */}
+        <PageSettings 
+          isOpen={pageSettingsOpen}
+          onClose={handleClosePageSettings}
+        />
       </div>
     </div>
   );
