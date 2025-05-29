@@ -9,6 +9,7 @@ import BuyDomain from "./pages/BuyDomain";
 import FreeDomain from "./pages/FreeDomain";
 import ImportDomain from "./pages/ImportDomain";
 import DomainSettings from "./pages/DomainSettings";
+import Pages from "./pages/Pages";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/free-domain" element={<FreeDomain />} />
           <Route path="/import-domain" element={<ImportDomain />} />
           <Route path="/domain-settings" element={<DomainSettings />} />
+          <Route path="/pages" element={<Pages />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
