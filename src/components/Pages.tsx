@@ -1,11 +1,16 @@
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Trash } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
 
 export const Pages = () => {
   const [activeTab, setActiveTab] = useState("estonian");
+  const [isPubliclyVisible, setIsPubliclyVisible] = useState(true);
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12">
@@ -38,8 +43,90 @@ export const Pages = () => {
                   Language settings
                 </AccordionTrigger>
                 <AccordionContent className="pb-4 pt-2">
-                  <div className="text-[#666]">
-                    Language settings content will be displayed here when expanded.
+                  <div className="space-y-4">
+                    {/* Language name */}
+                    <div className="space-y-2">
+                      <label className="text-sm text-[#1A1A1A] font-medium">Language name</label>
+                      <Select defaultValue="english">
+                        <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="english">English</SelectItem>
+                          <SelectItem value="estonian">Estonian</SelectItem>
+                          <SelectItem value="finnish">Finnish</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Region */}
+                    <div className="space-y-2">
+                      <label className="text-sm text-[#1A1A1A] font-medium">Region</label>
+                      <Select defaultValue="global">
+                        <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="global">Global</SelectItem>
+                          <SelectItem value="europe">Europe</SelectItem>
+                          <SelectItem value="north-america">North America</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Name in menu */}
+                    <div className="space-y-2">
+                      <label className="text-sm text-[#1A1A1A] font-medium">Name in menu</label>
+                      <Input 
+                        placeholder="Eng" 
+                        className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm"
+                      />
+                    </div>
+
+                    {/* Is this language publicly visible */}
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm text-[#1A1A1A] font-medium">Is this language publicly visible?</label>
+                      <Switch 
+                        checked={isPubliclyVisible}
+                        onCheckedChange={setIsPubliclyVisible}
+                      />
+                    </div>
+
+                    {/* Which language visitors see */}
+                    <div className="space-y-2">
+                      <label className="text-sm text-[#1A1A1A] font-medium">Which language visitors see?</label>
+                      <Select defaultValue="detect-location">
+                        <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="detect-location">Detect by location</SelectItem>
+                          <SelectItem value="browser-language">Browser language</SelectItem>
+                          <SelectItem value="default">Default language</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Website title */}
+                    <div className="space-y-2">
+                      <label className="text-sm text-[#1A1A1A] font-medium">Website title</label>
+                      <Input 
+                        defaultValue="Finn & Cross" 
+                        className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm"
+                      />
+                    </div>
+
+                    {/* Delete button - right aligned */}
+                    <div className="flex justify-end pt-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        disabled={true} // Disabled as it's the last remaining language
+                        className="text-gray-400 hover:text-gray-600 p-2"
+                      >
+                        <Trash className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 </AccordionContent>
               </AccordionItem>
