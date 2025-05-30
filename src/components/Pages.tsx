@@ -53,7 +53,6 @@ const mockPages: PageItem[] = [
     slug: "/",
     pageType: "Front Page",
     seoScore: "Good",
-    translationStatus: "Untranslated",
     isVisible: true
   },
   {
@@ -127,6 +126,7 @@ export const Pages = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [pageToDelete, setPageToDelete] = useState<PageItem | null>(null);
   const [homeVisibilityDialogOpen, setHomeVisibilityDialogOpen] = useState(false);
+  const [homeVisibilityAction, setHomeVisibilityAction] = useState<'show' | 'hide'>('hide');
   const [languageDeleteDialogOpen, setLanguageDeleteDialogOpen] = useState(false);
   const [languageVisibilityDialogOpen, setLanguageVisibilityDialogOpen] = useState(false);
   const [languageVisibilityAction, setLanguageVisibilityAction] = useState<'enable' | 'disable'>('disable');
@@ -158,6 +158,8 @@ export const Pages = () => {
   const togglePageVisibility = (pageId: string) => {
     // Check if it's the home page
     if (pageId === "1") {
+      const homePage = pages.find(p => p.id === "1");
+      setHomeVisibilityAction(homePage?.isVisible ? 'hide' : 'show');
       setHomeVisibilityDialogOpen(true);
       return;
     }
@@ -356,25 +358,27 @@ export const Pages = () => {
   const renderDropZone = (pageId: string, position: 'before' | 'after' | 'nested') => {
     const isActive = dragState.dropZone?.pageId === pageId && dragState.dropZone?.position === position;
     
-    if (!dragState.isDragging || !isActive) return null;
+    if (!dragState.isDragging) return null;
     
     const baseClasses = "w-full transition-all duration-200";
     
     if (position === 'nested') {
       return (
         <div 
-          className={`${baseClasses} h-8 ml-8 bg-blue-100 border-2 border-dashed border-blue-400 rounded-md flex items-center justify-center`}
+          className={`${baseClasses} h-8 ml-8 ${isActive ? 'bg-blue-100 border-2 border-dashed border-blue-400' : 'bg-gray-50 border-2 border-dashed border-gray-300'} rounded-md flex items-center justify-center`}
           onDragOver={(e) => handleDragOver(e, pageId, position)}
           onDrop={handleDrop}
         >
-          <span className="text-blue-600 text-sm font-medium">Drop here to add as subpage</span>
+          <span className={`text-sm font-medium ${isActive ? 'text-blue-600' : 'text-gray-400'}`}>
+            Drop here to add as subpage
+          </span>
         </div>
       );
     }
     
     return (
       <div 
-        className={`${baseClasses} h-1 bg-blue-500 rounded-full`}
+        className={`${baseClasses} h-1 ${isActive ? 'bg-blue-500' : 'bg-gray-300'} rounded-full`}
         onDragOver={(e) => handleDragOver(e, pageId, position)}
         onDrop={handleDrop}
       />
@@ -386,6 +390,7 @@ export const Pages = () => {
     const paddingLeft = level * 24;
     const isDraggedPage = dragState.draggedPageId === page.id;
     const isHomePage = page.id === "1";
+    const isUntranslated = page.translationStatus === "Untranslated";
 
     return (
       <div key={page.id}>
@@ -445,11 +450,11 @@ export const Pages = () => {
           <div className="flex-1 min-w-0 mr-4">
             <div className="flex items-center gap-2 mb-1">
               <span className={`text-sm font-medium text-gray-900 ${
-                page.translationStatus === "Untranslated" ? 'italic text-gray-500' : ''
+                isUntranslated ? 'italic opacity-50' : ''
               }`}>
                 {page.title}
               </span>
-              {page.translationStatus === "Untranslated" && (
+              {isUntranslated && (
                 <Badge variant="secondary" className="text-xs px-2 py-0 bg-gray-100 text-gray-600 border-0">
                   Untranslated
                 </Badge>
@@ -459,46 +464,62 @@ export const Pages = () => {
 
           {/* Slug */}
           <div className="w-48 px-4">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(page.slug, '_blank');
-              }}
-              className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
-              aria-label={`Open ${page.slug} in new tab`}
-            >
-              <span className="truncate">{page.slug}</span>
-              <ExternalLink className="w-3 h-3 flex-shrink-0" />
-            </button>
+            {!isUntranslated ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(page.slug, '_blank');
+                }}
+                className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                aria-label={`Open ${page.slug} in new tab`}
+              >
+                <span className="truncate">{page.slug}</span>
+                <ExternalLink className="w-3 h-3 flex-shrink-0" />
+              </button>
+            ) : (
+              <span className="text-xs text-transparent">-</span>
+            )}
           </div>
 
           {/* Page Type */}
           <div className="w-32 px-4">
-            <span className="text-sm text-gray-600">{page.pageType}</span>
+            {!isUntranslated ? (
+              <span className="text-sm text-gray-600">{page.pageType}</span>
+            ) : (
+              <span className="text-sm text-transparent">-</span>
+            )}
           </div>
 
           {/* SEO Score */}
           <div className="w-24 px-4">
-            <div aria-label={`SEO Score: ${page.seoScore}`}>
-              {renderSeoScore(page.seoScore)}
-            </div>
+            {!isUntranslated ? (
+              <div aria-label={`SEO Score: ${page.seoScore}`}>
+                {renderSeoScore(page.seoScore)}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-transparent" />
+              </div>
+            )}
           </div>
 
           {/* Visibility */}
           <div className="w-24 px-4">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePageVisibility(page.id);
-              }}
-              className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1"
-              aria-label={page.isVisible ? `Hide ${page.title}` : `Show ${page.title}`}
-            >
-              {page.isVisible ? 
-                <Eye className="w-4 h-4" /> : 
-                <EyeOff className="w-4 h-4 text-red-500" />
-              }
-            </button>
+            {!isUntranslated ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePageVisibility(page.id);
+                }}
+                className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1"
+                aria-label={page.isVisible ? `Hide ${page.title}` : `Show ${page.title}`}
+              >
+                {page.isVisible ? 
+                  <Eye className="w-4 h-4" /> : 
+                  <EyeOff className="w-4 h-4 text-red-500" />
+                }
+              </button>
+            ) : null}
           </div>
 
           {/* Actions - Always visible */}
@@ -579,10 +600,10 @@ export const Pages = () => {
         {/* Header outside the card */}
         <h1 className="text-[28px] font-semibold text-[#1A1A1A] mb-6">Pages</h1>
         
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
           {/* Language Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <div className="flex items-center justify-between mb-6 -mx-6 px-6">
+            <div className="flex items-center justify-between mb-6 px-6 pt-6">
               <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none flex-1">
                 {availableTabs.includes("english") && (
                   <TabsTrigger 
@@ -607,7 +628,10 @@ export const Pages = () => {
               </button>
             </div>
 
-            <TabsContent value="english" className="mt-0">
+            {/* Border line that spans full width */}
+            <div className="border-b border-gray-200 -mx-6"></div>
+
+            <TabsContent value="english" className="mt-0 px-6">
               {/* Language Settings Accordion */}
               <Accordion type="single" collapsible className="w-full mb-6">
                 <AccordionItem value="language-settings" className="border-b-0">
@@ -723,12 +747,13 @@ export const Pages = () => {
                           <label htmlFor="publicly-visible" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
                             Is this language publicly visible?
                           </label>
-                          <Switch
-                            id="publicly-visible"
-                            checked={languageVisible}
-                            onCheckedChange={handleLanguageVisibilityToggle}
-                            className="flex-1"
-                          />
+                          <div className="w-auto">
+                            <Switch
+                              id="publicly-visible"
+                              checked={languageVisible}
+                              onCheckedChange={handleLanguageVisibilityToggle}
+                            />
+                          </div>
                         </div>
 
                         {/* Which language visitors see */}
@@ -754,15 +779,15 @@ export const Pages = () => {
               </Accordion>
 
               {/* Page Structure Table */}
-              <div className="overflow-hidden">
+              <div className="border border-gray-200 rounded-lg overflow-hidden">
                 {/* Table Header */}
                 <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
                   <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '52px' }}>
                     <div className="flex-1 mr-4">Menu title</div>
-                    <div className="w-48 px-4">Page URL</div>
+                    <div className="w-48 px-4">Slug</div>
                     <div className="w-32 px-4">Page type</div>
-                    <div className="w-24 px-4">SEO Score</div>
-                    <div className="w-24 px-4">Visibility</div>
+                    <div className="w-24 px-4 text-center">SEO Score</div>
+                    <div className="w-24 px-4 text-center">Visibility</div>
                     <div className="w-24"></div>
                   </div>
                 </div>
@@ -783,7 +808,7 @@ export const Pages = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="estonian" className="mt-0">
+            <TabsContent value="estonian" className="mt-0 px-6">
               <div className="text-[#666]">
                 Estonian tab content will be displayed here.
               </div>
@@ -818,9 +843,14 @@ export const Pages = () => {
         <AlertDialog open={homeVisibilityDialogOpen} onOpenChange={setHomeVisibilityDialogOpen}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Hide Home Page</AlertDialogTitle>
+              <AlertDialogTitle>
+                {homeVisibilityAction === 'hide' ? 'Hide Home Page' : 'Show Home Page'}
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                This will disable visitors from seeing the entire site in this language. Are you sure you want to continue?
+                {homeVisibilityAction === 'hide' 
+                  ? 'This will disable visitors from seeing the entire site in this language. Are you sure you want to continue?'
+                  : 'This will make the home page and all its subpages visible to visitors. Are you sure you want to continue?'
+                }
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -829,9 +859,9 @@ export const Pages = () => {
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={confirmHomeVisibilityToggle}
-                className="bg-red-600 hover:bg-red-700"
+                className={homeVisibilityAction === 'hide' ? 'bg-red-600 hover:bg-red-700' : ''}
               >
-                Hide Home Page
+                {homeVisibilityAction === 'hide' ? 'Hide Home Page' : 'Show Home Page'}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

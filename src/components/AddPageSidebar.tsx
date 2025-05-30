@@ -145,7 +145,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           <Button 
             onClick={handleCreatePage}
             disabled={!title || !urlSlug}
-            className="w-full bg-gray-800 hover:bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5A4FFF] focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-describedby={!title || !urlSlug ? "create-button-help" : undefined}
           >
             Create this page
