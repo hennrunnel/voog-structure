@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, Eye, EyeOff, MoreVertical, GripVertical, Settings, Copy, FileText } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -604,7 +603,7 @@ export const Pages = () => {
           {/* Language Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex items-center justify-between mb-6 px-6 pt-6">
-              <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none flex-1">
+              <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none">
                 {availableTabs.includes("english") && (
                   <TabsTrigger 
                     value="english" 
