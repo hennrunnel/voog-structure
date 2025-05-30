@@ -1,17 +1,13 @@
-
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Trash, Plus, Pencil, Settings, MoreVertical, GripVertical, X, ExternalLink, Eye, EyeOff } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, Eye, EyeOff, MoreVertical, GripVertical } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
@@ -230,6 +226,11 @@ export const Pages = () => {
     setPageSettingsOpen(true);
   };
 
+  const handleEditPage = (page: PageItem) => {
+    // Navigate to page editor - for now just log
+    console.log(`Edit page: ${page.title}`);
+  };
+
   const handleClosePageSettings = () => {
     setPageSettingsOpen(false);
     setSelectedPage(null);
@@ -314,12 +315,23 @@ export const Pages = () => {
     
     if (!dragState.isDragging || !isActive) return null;
     
-    const positionClass = position === 'nested' ? 'ml-8 bg-blue-100' : 'bg-blue-500';
-    const height = position === 'nested' ? 'h-8' : 'h-0.5';
+    const baseClasses = "w-full transition-all duration-200";
+    
+    if (position === 'nested') {
+      return (
+        <div 
+          className={`${baseClasses} h-8 ml-8 bg-blue-100 border-2 border-dashed border-blue-400 rounded-md flex items-center justify-center`}
+          onDragOver={(e) => handleDragOver(e, pageId, position)}
+          onDrop={handleDrop}
+        >
+          <span className="text-blue-600 text-sm font-medium">Drop here to add as subpage</span>
+        </div>
+      );
+    }
     
     return (
       <div 
-        className={`${positionClass} ${height} w-full transition-all duration-200`}
+        className={`${baseClasses} h-1 bg-blue-500 rounded-full`}
         onDragOver={(e) => handleDragOver(e, pageId, position)}
         onDrop={handleDrop}
       />
@@ -337,16 +349,29 @@ export const Pages = () => {
         {renderDropZone(page.id, 'before')}
         
         <div 
-          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''}`}
+          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors cursor-pointer ${
+            isDraggedPage ? 'opacity-50' : ''
+          } ${!page.isVisible ? 'opacity-50' : ''}`}
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }}
           draggable={!isHomePage}
           onDragStart={(e) => handleDragStart(e, page.id)}
           onDragEnd={handleDragEnd}
+          onClick={() => handleEditPage(page)}
           role="row"
           tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleEditPage(page);
+            }
+          }}
+          aria-label={`Edit ${page.title} page`}
         >
           {/* Drag handle */}
-          <div className={`mr-3 cursor-move ${isHomePage ? 'opacity-30 cursor-not-allowed' : ''}`}>
+          <div 
+            className={`mr-3 ${isHomePage ? 'opacity-30 cursor-not-allowed' : 'cursor-move'}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <GripVertical 
               className="w-4 h-4 text-gray-400" 
               aria-hidden="true"
@@ -357,7 +382,10 @@ export const Pages = () => {
           <div className="w-5 flex justify-center mr-2">
             {hasChildren && (
               <button
-                onClick={() => togglePageExpansion(page.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePageExpansion(page.id);
+                }}
                 className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
                 aria-label={page.isExpanded ? `Collapse ${page.title}` : `Expand ${page.title}`}
                 aria-expanded={page.isExpanded}
@@ -370,8 +398,8 @@ export const Pages = () => {
             )}
           </div>
 
-          {/* Title and Slug */}
-          <div className="flex-1 min-w-0">
+          {/* Title */}
+          <div className="flex-1 min-w-0 mr-4">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-sm font-medium text-gray-900">{page.title}</span>
               {page.translationStatus === "Not translated" && (
@@ -380,13 +408,20 @@ export const Pages = () => {
                 </Badge>
               )}
             </div>
+          </div>
+
+          {/* Slug */}
+          <div className="w-48 px-4">
             <button
-              onClick={() => window.open(page.slug, '_blank')}
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(page.slug, '_blank');
+              }}
               className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
               aria-label={`Open ${page.slug} in new tab`}
             >
-              <span>{page.slug}</span>
-              <ExternalLink className="w-3 h-3" />
+              <span className="truncate">{page.slug}</span>
+              <ExternalLink className="w-3 h-3 flex-shrink-0" />
             </button>
           </div>
 
@@ -405,7 +440,10 @@ export const Pages = () => {
           {/* Visibility */}
           <div className="w-24 px-4">
             <button
-              onClick={() => togglePageVisibility(page.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePageVisibility(page.id);
+              }}
               className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1"
               aria-label={page.isVisible ? `Hide ${page.title}` : `Show ${page.title}`}
             >
@@ -416,25 +454,8 @@ export const Pages = () => {
             </button>
           </div>
 
-          {/* Actions - Show on hover */}
-          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="p-1 h-auto hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              aria-label={`Edit ${page.title} content`}
-            >
-              <Pencil className="w-4 h-4 text-gray-400" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="p-1 h-auto hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              aria-label={`${page.title} settings`}
-              onClick={() => handlePageSettings(page)}
-            >
-              <Settings className="w-4 h-4 text-gray-400" />
-            </Button>
+          {/* Actions - Always visible */}
+          <div className="flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button 
@@ -442,25 +463,44 @@ export const Pages = () => {
                   size="sm" 
                   className="p-1 h-auto hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                   aria-label={`More options for ${page.title}`}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <MoreVertical className="w-4 h-4 text-gray-400" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border">
                 <DropdownMenuItem 
-                  onClick={() => handleDuplicatePage(page)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePageSettings(page);
+                  }}
+                  className="cursor-pointer"
+                >
+                  Page settings
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDuplicatePage(page);
+                  }}
                   className="cursor-pointer"
                 >
                   Duplicate page
                 </DropdownMenuItem>
                 <DropdownMenuItem 
-                  onClick={() => handleAddNestedPage(page)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddNestedPage(page);
+                  }}
                   className="cursor-pointer"
                 >
                   Add subpage
                 </DropdownMenuItem>
                 <DropdownMenuItem 
-                  onClick={() => handleDeletePage(page)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeletePage(page);
+                  }}
                   className="cursor-pointer text-red-600 focus:text-red-600"
                 >
                   Delete
@@ -540,6 +580,7 @@ export const Pages = () => {
                   </Popover>
                 </div>
                 <AccordionContent className="pb-4 pt-2">
+                  {/* ... keep existing code (language settings form) */}
                   <div className="relative">
                     {/* Trash icon in top-right */}
                     <div className="absolute top-0 right-0">
@@ -659,7 +700,8 @@ export const Pages = () => {
               {/* Table Header */}
               <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
                 <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '52px' }}>
-                  <div className="flex-1">Menu title</div>
+                  <div className="flex-1 mr-4">Menu title</div>
+                  <div className="w-48 px-4">Page URL</div>
                   <div className="w-32 px-4">Page type</div>
                   <div className="w-24 px-4">SEO Score</div>
                   <div className="w-24 px-4">Visibility</div>
