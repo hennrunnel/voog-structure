@@ -12,6 +12,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
+
 interface PageItem {
   id: string;
   title: string;
@@ -300,9 +301,11 @@ export const Pages = () => {
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/plain", pageId);
   };
+
   const handleDragOver = (e: React.DragEvent, targetPageId: string, position: 'before' | 'after' | 'nested') => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
+    
     if (dragState.draggedPageId && dragState.draggedPageId !== targetPageId) {
       setDragState(prev => ({
         ...prev,
@@ -313,6 +316,7 @@ export const Pages = () => {
       }));
     }
   };
+
   const handleDragEnd = () => {
     setDragState({
       isDragging: false,
@@ -320,47 +324,77 @@ export const Pages = () => {
       dropZone: null
     });
   };
-  const handleDrop = (e: React.DragEvent) => {
+
+  const handleDrop = (e: React.DragEvent, targetPageId: string, position: 'before' | 'after' | 'nested') => {
     e.preventDefault();
+    
+    if (dragState.draggedPageId && dragState.draggedPageId !== targetPageId) {
+      // Here you would implement the actual page reordering logic
+      console.log(`Moving page ${dragState.draggedPageId} ${position} page ${targetPageId}`);
+    }
+    
     handleDragEnd();
   };
+
   const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
     const color = score === "Good" ? "bg-green-500" : score === "Medium" ? "bg-yellow-500" : "bg-red-500";
     return <div className="flex items-center justify-center">
         <div className={`w-2 h-2 rounded-full ${color}`} />
       </div>;
   };
+
   const renderDropZone = (pageId: string, position: 'before' | 'after' | 'nested') => {
     const isActive = dragState.dropZone?.pageId === pageId && dragState.dropZone?.position === position;
     if (!dragState.isDragging) return null;
+
     const baseClasses = "w-full transition-all duration-200";
+    
     if (position === 'nested') {
-      return <div className={`${baseClasses} h-8 ml-8 ${isActive ? 'bg-blue-100 border-2 border-dashed border-blue-400' : 'bg-gray-50 border-2 border-dashed border-gray-300'} rounded-md flex items-center justify-center`} onDragOver={e => handleDragOver(e, pageId, position)} onDrop={handleDrop}>
-          <span className={`text-sm font-medium ${isActive ? 'text-blue-600' : 'text-gray-400'}`}>
-            Drop here to add as subpage
-          </span>
-        </div>;
+      return <div 
+        className={`${baseClasses} h-8 ml-8 ${isActive ? 'bg-blue-100 border-2 border-dashed border-blue-400' : 'bg-gray-50 border-2 border-dashed border-gray-300'} rounded-md flex items-center justify-center`} 
+        onDragOver={e => handleDragOver(e, pageId, position)} 
+        onDrop={e => handleDrop(e, pageId, position)}
+      >
+        <span className={`text-sm font-medium ${isActive ? 'text-blue-600' : 'text-gray-400'}`}>
+          Drop here to add as subpage
+        </span>
+      </div>;
     }
-    return <div className={`${baseClasses} h-1 ${isActive ? 'bg-blue-500' : 'bg-gray-300'} rounded-full`} onDragOver={e => handleDragOver(e, pageId, position)} onDrop={handleDrop} />;
+    
+    return <div 
+      className={`${baseClasses} h-1 ${isActive ? 'bg-blue-500' : 'bg-gray-300'} rounded-full`} 
+      onDragOver={e => handleDragOver(e, pageId, position)} 
+      onDrop={e => handleDrop(e, pageId, position)} 
+    />;
   };
+
   const renderPageRow = (page: PageItem, level: number = 0) => {
     const hasChildren = page.children && page.children.length > 0;
     const paddingLeft = level * 24;
     const isDraggedPage = dragState.draggedPageId === page.id;
     const isHomePage = page.id === "1";
     const isUntranslated = page.translationStatus === "Untranslated";
+
     return <div key={page.id}>
         {renderDropZone(page.id, 'before')}
         
-        <div className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors cursor-pointer ${isDraggedPage ? 'opacity-50' : ''}`} style={{
-        paddingLeft: `${paddingLeft + 12}px`,
-        paddingRight: '12px'
-      }} draggable={!isHomePage} onDragStart={e => handleDragStart(e, page.id)} onDragEnd={handleDragEnd} onClick={() => handleEditPage(page)} role="row" tabIndex={0} onKeyDown={e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleEditPage(page);
-        }
-      }} aria-label={`Edit ${page.title} page`}>
+        <div 
+          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''} ${!isHomePage ? 'cursor-move' : 'cursor-pointer'}`} 
+          style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
+          draggable={!isHomePage} 
+          onDragStart={e => handleDragStart(e, page.id)} 
+          onDragEnd={handleDragEnd} 
+          onClick={() => handleEditPage(page)} 
+          role="row" 
+          tabIndex={0} 
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleEditPage(page);
+            }
+          }} 
+          aria-label={`Edit ${page.title} page`}
+        >
           {/* Drag handle */}
           <div className={`mr-3 ${isHomePage ? 'opacity-30 cursor-not-allowed' : 'cursor-move'}`} onClick={e => e.stopPropagation()}>
             <GripVertical className="w-4 h-4 text-gray-400" aria-hidden="true" />
@@ -376,10 +410,10 @@ export const Pages = () => {
               </button>}
           </div>
 
-          {/* Title */}
+          {/* Title - matching header width */}
           <div className="flex-1 min-w-0 mr-4">
             <div className="flex items-center gap-2 mb-1">
-              <span className={`text-sm font-medium text-gray-900 ${isUntranslated ? 'italic opacity-50' : ''}`}>
+              <span className={`text-sm font-medium ${isUntranslated ? 'italic text-gray-400' : page.isVisible ? 'text-gray-900' : 'text-gray-500'}`}>
                 {page.title}
               </span>
               {isUntranslated && <Badge variant="secondary" className="text-xs px-2 py-0 bg-gray-100 text-gray-600 border-0">
@@ -388,7 +422,7 @@ export const Pages = () => {
             </div>
           </div>
 
-          {/* Slug */}
+          {/* Slug - matching header width */}
           <div className="w-48 px-4">
             {!isUntranslated ? <button onClick={e => {
             e.stopPropagation();
@@ -396,24 +430,24 @@ export const Pages = () => {
           }} className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded" aria-label={`Open ${page.slug} in new tab`}>
                 <span className="truncate">{page.slug}</span>
                 <ExternalLink className="w-3 h-3 flex-shrink-0" />
-              </button> : <span className="text-xs text-transparent">-</span>}
+              </button> : <span className="text-xs text-gray-400">-</span>}
           </div>
 
-          {/* Page Type */}
+          {/* Page Type - matching header width */}
           <div className="w-32 px-4">
-            {!isUntranslated ? <span className="text-sm text-gray-600">{page.pageType}</span> : <span className="text-sm text-transparent">-</span>}
+            {!isUntranslated ? <span className="text-sm text-gray-600">{page.pageType}</span> : <span className="text-sm text-gray-400">-</span>}
           </div>
 
-          {/* SEO Score */}
+          {/* SEO Score - matching header width */}
           <div className="w-24 px-4">
             {!isUntranslated ? <div aria-label={`SEO Score: ${page.seoScore}`}>
                 {renderSeoScore(page.seoScore)}
               </div> : <div className="flex items-center justify-center">
-                <div className="w-2 h-2 rounded-full bg-transparent" />
+                <div className="w-2 h-2 rounded-full bg-gray-300" />
               </div>}
           </div>
 
-          {/* Visibility */}
+          {/* Visibility - matching header width */}
           <div className="w-24 px-4">
             {!isUntranslated ? <button onClick={e => {
             e.stopPropagation();
@@ -423,8 +457,8 @@ export const Pages = () => {
               </button> : null}
           </div>
 
-          {/* Actions - Always visible */}
-          <div className="flex items-center gap-2">
+          {/* Actions - matching header spacing */}
+          <div className="w-16 flex items-center justify-center">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="p-1 h-auto hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" aria-label={`More options for ${page.title}`} onClick={e => e.stopPropagation()}>
@@ -473,10 +507,9 @@ export const Pages = () => {
         {renderDropZone(page.id, 'after')}
       </div>;
   };
+
   return <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12">
-      <div className="w-full" style={{
-      maxWidth: '992px'
-    }}>
+      <div className="w-full" style={{ maxWidth: '992px' }}>
         {/* Header outside the card */}
         <h1 className="text-[28px] font-semibold text-[#1A1A1A] mb-6">Pages</h1>
         
@@ -594,7 +627,7 @@ export const Pages = () => {
                           <label htmlFor="publicly-visible" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
                             Is this language publicly visible?
                           </label>
-                          <div className="w-auto">
+                          <div className="flex-shrink-0">
                             <Switch id="publicly-visible" checked={languageVisible} onCheckedChange={handleLanguageVisibilityToggle} />
                           </div>
                         </div>
@@ -623,17 +656,15 @@ export const Pages = () => {
 
               {/* Page Structure Table */}
               <div className="border border-gray-200 rounded-lg overflow-hidden">
-                {/* Table Header */}
+                {/* Table Header - Fixed column widths to match content */}
                 <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
-                  <div className="flex items-center text-sm font-medium text-gray-700" style={{
-                  paddingLeft: '52px'
-                }}>
-                    <div className="flex-1 mr-4">Menu title</div>
+                  <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '52px' }}>
+                    <div className="flex-1 min-w-0 mr-4">Menu title</div>
                     <div className="w-48 px-4">Slug</div>
                     <div className="w-32 px-4">Page type</div>
                     <div className="w-24 px-4 text-center">SEO</div>
                     <div className="w-24 px-4 text-center">Visibility</div>
-                    <div className="w-24"></div>
+                    <div className="w-16"></div>
                   </div>
                 </div>
 
@@ -643,9 +674,7 @@ export const Pages = () => {
                   
                   {/* Download entire site link */}
                   <div className="px-3 py-4 border-t border-gray-200">
-                    <div className="flex justify-end" style={{
-                    paddingRight: '12px'
-                  }}>
+                    <div className="flex justify-end" style={{ paddingRight: '12px' }}>
                       <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded">
                         Download entire site
                       </button>
