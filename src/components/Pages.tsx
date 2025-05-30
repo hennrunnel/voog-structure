@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Trash, Plus, Pencil, Settings, MoreVertical, GripVertical, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, Pencil, Settings, MoreVertical, GripVertical, X, ExternalLink, Eye, EyeOff } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -22,6 +23,7 @@ interface PageItem {
   pageType: string;
   seoScore: "Good" | "Medium" | "Poor";
   translationStatus?: "Not translated" | "Hidden";
+  isVisible: boolean;
   children?: PageItem[];
   isExpanded?: boolean;
 }
@@ -30,6 +32,12 @@ interface LayoutOption {
   id: string;
   title: string;
   icon: string;
+}
+
+interface DragState {
+  isDragging: boolean;
+  draggedPageId: string | null;
+  dropZone: { pageId: string; position: 'before' | 'after' | 'nested' } | null;
 }
 
 const layoutOptions: LayoutOption[] = [
@@ -47,7 +55,8 @@ const mockPages: PageItem[] = [
     slug: "/",
     pageType: "Front Page",
     seoScore: "Good",
-    translationStatus: "Not translated"
+    translationStatus: "Not translated",
+    isVisible: true
   },
   {
     id: "2", 
@@ -55,6 +64,7 @@ const mockPages: PageItem[] = [
     slug: "/products",
     pageType: "Product List",
     seoScore: "Good",
+    isVisible: true,
     isExpanded: true,
     children: []
   },
@@ -64,14 +74,16 @@ const mockPages: PageItem[] = [
     slug: "/about", 
     pageType: "Common Page",
     seoScore: "Poor",
-    translationStatus: "Hidden"
+    translationStatus: "Not translated",
+    isVisible: false
   },
   {
     id: "4",
     title: "News",
     slug: "/news",
     pageType: "Blog & News", 
-    seoScore: "Medium"
+    seoScore: "Medium",
+    isVisible: true
   },
   {
     id: "5",
@@ -79,6 +91,7 @@ const mockPages: PageItem[] = [
     slug: "/contact",
     pageType: "Common Page",
     seoScore: "Good",
+    isVisible: true,
     isExpanded: true,
     children: [
       {
@@ -86,14 +99,25 @@ const mockPages: PageItem[] = [
         title: "Support",
         slug: "/contact/support",
         pageType: "Common Page",
-        seoScore: "Good"
+        seoScore: "Good",
+        isVisible: true
       },
       {
         id: "5-2",
         title: "Sales",
         slug: "/contact/sales",
         pageType: "Common Page",
-        seoScore: "Medium"
+        seoScore: "Medium",
+        isVisible: true
+      },
+      {
+        id: "5-3",
+        title: "Technical Support",
+        slug: "/contact/technical",
+        pageType: "Common Page",
+        seoScore: "Good",
+        translationStatus: "Not translated",
+        isVisible: true
       }
     ]
   }
@@ -109,6 +133,13 @@ export const Pages = () => {
   const [selectedLayout, setSelectedLayout] = useState<string | null>(null);
   const [pageSettingsOpen, setPageSettingsOpen] = useState(false);
   const [selectedPage, setSelectedPage] = useState<PageItem | null>(null);
+  const [websiteTitle, setWebsiteTitle] = useState("Finn & Cross");
+  const [nameInMenu, setNameInMenu] = useState("Eng");
+  const [dragState, setDragState] = useState<DragState>({
+    isDragging: false,
+    draggedPageId: null,
+    dropZone: null
+  });
 
   const togglePageExpansion = (pageId: string) => {
     setPages(prevPages => 
@@ -118,6 +149,22 @@ export const Pages = () => {
           : page
       )
     );
+  };
+
+  const togglePageVisibility = (pageId: string) => {
+    const updatePageVisibility = (pages: PageItem[]): PageItem[] => {
+      return pages.map(page => {
+        if (page.id === pageId) {
+          return { ...page, isVisible: !page.isVisible };
+        }
+        if (page.children) {
+          return { ...page, children: updatePageVisibility(page.children) };
+        }
+        return page;
+      });
+    };
+    
+    setPages(prevPages => updatePageVisibility(prevPages));
   };
 
   const handleDeletePage = (page: PageItem) => {
@@ -138,7 +185,8 @@ export const Pages = () => {
       ...page,
       id: Date.now().toString(),
       title: `${page.title} (Copy)`,
-      slug: `${page.slug}-copy`
+      slug: `${page.slug}-copy`,
+      isVisible: true
     };
     setPages(prevPages => [...prevPages, newPage]);
   };
@@ -149,7 +197,8 @@ export const Pages = () => {
       title: "New Page",
       slug: `${parentPage.slug}/new-page`,
       pageType: "Common Page",
-      seoScore: "Good" as const
+      seoScore: "Good" as const,
+      isVisible: true
     };
     
     setPages(prevPages => 
@@ -167,7 +216,6 @@ export const Pages = () => {
 
   const handleLayoutSelect = (layoutId: string) => {
     if (layoutId === "link-navigation") {
-      // Handle link in navigation differently
       setAddPagePopoverOpen(false);
       return;
     }
@@ -200,13 +248,55 @@ export const Pages = () => {
         title: pageData.title,
         slug: pageData.slug.startsWith('/') ? pageData.slug : `/${pageData.slug}`,
         pageType: layoutOption?.title || "Common Page",
-        seoScore: "Good" as const
+        seoScore: "Good" as const,
+        isVisible: true
       };
       
       setPages(prevPages => [...prevPages, newPage]);
       setAddPageSidebarOpen(false);
       setSelectedLayout(null);
     }
+  };
+
+  // Drag and drop functionality
+  const handleDragStart = (e: React.DragEvent, pageId: string) => {
+    if (pageId === "1") return; // Prevent dragging Home page
+    
+    setDragState({
+      isDragging: true,
+      draggedPageId: pageId,
+      dropZone: null
+    });
+    
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", pageId);
+  };
+
+  const handleDragOver = (e: React.DragEvent, targetPageId: string, position: 'before' | 'after' | 'nested') => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    
+    if (dragState.draggedPageId && dragState.draggedPageId !== targetPageId) {
+      setDragState(prev => ({
+        ...prev,
+        dropZone: { pageId: targetPageId, position }
+      }));
+    }
+  };
+
+  const handleDragEnd = () => {
+    setDragState({
+      isDragging: false,
+      draggedPageId: null,
+      dropZone: null
+    });
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    // Drag and drop logic would be implemented here
+    // For now, just reset the drag state
+    handleDragEnd();
   };
 
   const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
@@ -219,26 +309,58 @@ export const Pages = () => {
     );
   };
 
+  const renderDropZone = (pageId: string, position: 'before' | 'after' | 'nested') => {
+    const isActive = dragState.dropZone?.pageId === pageId && dragState.dropZone?.position === position;
+    
+    if (!dragState.isDragging || !isActive) return null;
+    
+    const positionClass = position === 'nested' ? 'ml-8 bg-blue-100' : 'bg-blue-500';
+    const height = position === 'nested' ? 'h-8' : 'h-0.5';
+    
+    return (
+      <div 
+        className={`${positionClass} ${height} w-full transition-all duration-200`}
+        onDragOver={(e) => handleDragOver(e, pageId, position)}
+        onDrop={handleDrop}
+      />
+    );
+  };
+
   const renderPageRow = (page: PageItem, level: number = 0) => {
     const hasChildren = page.children && page.children.length > 0;
     const paddingLeft = level * 24;
+    const isDraggedPage = dragState.draggedPageId === page.id;
+    const isHomePage = page.id === "1";
 
     return (
       <div key={page.id}>
+        {renderDropZone(page.id, 'before')}
+        
         <div 
-          className="group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors"
+          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''}`}
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }}
+          draggable={!isHomePage}
+          onDragStart={(e) => handleDragStart(e, page.id)}
+          onDragEnd={handleDragEnd}
+          role="row"
+          tabIndex={0}
         >
           {/* Drag handle */}
-          <GripVertical className="w-4 h-4 text-gray-400 mr-3 cursor-move" />
+          <div className={`mr-3 cursor-move ${isHomePage ? 'opacity-30 cursor-not-allowed' : ''}`}>
+            <GripVertical 
+              className="w-4 h-4 text-gray-400" 
+              aria-hidden="true"
+            />
+          </div>
           
           {/* Expand/collapse button for pages with children */}
           <div className="w-5 flex justify-center mr-2">
             {hasChildren && (
               <button
                 onClick={() => togglePageExpansion(page.id)}
-                className="text-gray-400 hover:text-gray-600"
-                aria-label={page.isExpanded ? "Collapse" : "Expand"}
+                className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                aria-label={page.isExpanded ? `Collapse ${page.title}` : `Expand ${page.title}`}
+                aria-expanded={page.isExpanded}
               >
                 {page.isExpanded ? 
                   <ChevronDown className="w-4 h-4" /> : 
@@ -248,14 +370,24 @@ export const Pages = () => {
             )}
           </div>
 
-          {/* Title */}
+          {/* Title and Slug */}
           <div className="flex-1 min-w-0">
-            <span className="text-sm font-medium text-gray-900">{page.title}</span>
-          </div>
-
-          {/* Slug */}
-          <div className="w-32 px-4">
-            <span className="text-sm text-gray-600">{page.slug}</span>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-sm font-medium text-gray-900">{page.title}</span>
+              {page.translationStatus === "Not translated" && (
+                <Badge variant="secondary" className="text-xs px-2 py-0 bg-gray-100 text-gray-600 border-0">
+                  Not translated
+                </Badge>
+              )}
+            </div>
+            <button
+              onClick={() => window.open(page.slug, '_blank')}
+              className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+              aria-label={`Open ${page.slug} in new tab`}
+            >
+              <span>{page.slug}</span>
+              <ExternalLink className="w-3 h-3" />
+            </button>
           </div>
 
           {/* Page Type */}
@@ -265,14 +397,23 @@ export const Pages = () => {
 
           {/* SEO Score */}
           <div className="w-24 px-4">
-            {renderSeoScore(page.seoScore)}
+            <div aria-label={`SEO Score: ${page.seoScore}`}>
+              {renderSeoScore(page.seoScore)}
+            </div>
           </div>
 
-          {/* Translation Status */}
-          <div className="w-32 px-4">
-            {page.translationStatus && (
-              <span className="text-sm text-gray-500">{page.translationStatus}</span>
-            )}
+          {/* Visibility */}
+          <div className="w-24 px-4">
+            <button
+              onClick={() => togglePageVisibility(page.id)}
+              className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1"
+              aria-label={page.isVisible ? `Hide ${page.title}` : `Show ${page.title}`}
+            >
+              {page.isVisible ? 
+                <Eye className="w-4 h-4" /> : 
+                <EyeOff className="w-4 h-4" />
+              }
+            </button>
           </div>
 
           {/* Actions - Show on hover */}
@@ -280,16 +421,16 @@ export const Pages = () => {
             <Button 
               variant="ghost" 
               size="sm" 
-              className="p-1 h-auto hover:bg-gray-200"
-              aria-label="Edit page content"
+              className="p-1 h-auto hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              aria-label={`Edit ${page.title} content`}
             >
               <Pencil className="w-4 h-4 text-gray-400" />
             </Button>
             <Button 
               variant="ghost" 
               size="sm" 
-              className="p-1 h-auto hover:bg-gray-200"
-              aria-label="Page settings"
+              className="p-1 h-auto hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              aria-label={`${page.title} settings`}
               onClick={() => handlePageSettings(page)}
             >
               <Settings className="w-4 h-4 text-gray-400" />
@@ -299,8 +440,8 @@ export const Pages = () => {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="p-1 h-auto hover:bg-gray-200"
-                  aria-label="More options"
+                  className="p-1 h-auto hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  aria-label={`More options for ${page.title}`}
                 >
                   <MoreVertical className="w-4 h-4 text-gray-400" />
                 </Button>
@@ -316,7 +457,7 @@ export const Pages = () => {
                   onClick={() => handleAddNestedPage(page)}
                   className="cursor-pointer"
                 >
-                  Add nested page
+                  Add subpage
                 </DropdownMenuItem>
                 <DropdownMenuItem 
                   onClick={() => handleDeletePage(page)}
@@ -329,10 +470,14 @@ export const Pages = () => {
           </div>
         </div>
 
+        {renderDropZone(page.id, 'nested')}
+
         {/* Render children if expanded */}
         {hasChildren && page.isExpanded && page.children?.map(child => 
           renderPageRow(child, level + 1)
         )}
+
+        {renderDropZone(page.id, 'after')}
       </div>
     );
   };
@@ -381,7 +526,8 @@ export const Pages = () => {
                           <button
                             key={option.id}
                             onClick={() => handleLayoutSelect(option.id)}
-                            className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors"
+                            className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-50 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                            aria-label={`Create ${option.title} page`}
                           >
                             <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-sm">
                               {option.icon}
@@ -394,15 +540,15 @@ export const Pages = () => {
                   </Popover>
                 </div>
                 <AccordionContent className="pb-4 pt-2">
-                  {/* ... keep existing code (language settings form) */}
                   <div className="relative">
                     {/* Trash icon in top-right */}
                     <div className="absolute top-0 right-0">
                       <Button
                         variant="ghost"
                         size="sm"
-                        disabled={true} // Disabled as it's the last remaining language
+                        disabled={true}
                         className="text-gray-400 hover:text-gray-600 p-2"
+                        aria-label="Delete language (disabled)"
                       >
                         <Trash className="w-4 h-4" />
                       </Button>
@@ -410,11 +556,26 @@ export const Pages = () => {
 
                     {/* Form fields in two-column layout */}
                     <div className="grid grid-cols-2 gap-x-8 gap-y-4 pr-12">
+                      {/* Website title - moved to first position */}
+                      <div className="flex items-center">
+                        <label htmlFor="website-title" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+                          Website title
+                        </label>
+                        <Input
+                          id="website-title"
+                          value={websiteTitle}
+                          onChange={(e) => setWebsiteTitle(e.target.value)}
+                          className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1"
+                        />
+                      </div>
+
                       {/* Language name */}
                       <div className="flex items-center">
-                        <label className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">Language name</label>
+                        <label htmlFor="language-name" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+                          Language name
+                        </label>
                         <Select defaultValue="english">
-                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1">
+                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" id="language-name">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -427,9 +588,11 @@ export const Pages = () => {
 
                       {/* Region */}
                       <div className="flex items-center">
-                        <label className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">Region</label>
+                        <label htmlFor="region" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+                          Region
+                        </label>
                         <Select defaultValue="global">
-                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1">
+                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" id="region">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -440,26 +603,26 @@ export const Pages = () => {
                         </Select>
                       </div>
 
-                      {/* Name in menu */}
+                      {/* Name in menu - changed to freeform text input */}
                       <div className="flex items-center">
-                        <label className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">Name in menu</label>
-                        <Select defaultValue="eng">
-                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="eng">Eng</SelectItem>
-                            <SelectItem value="est">Est</SelectItem>
-                            <SelectItem value="fin">Fin</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <label htmlFor="name-in-menu" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+                          Name in menu
+                        </label>
+                        <Input
+                          id="name-in-menu"
+                          value={nameInMenu}
+                          onChange={(e) => setNameInMenu(e.target.value)}
+                          className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1"
+                        />
                       </div>
 
                       {/* Is this language publicly visible */}
                       <div className="flex items-center">
-                        <label className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">Is this language publicly visible?</label>
+                        <label htmlFor="publicly-visible" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+                          Is this language publicly visible?
+                        </label>
                         <Select defaultValue="yes">
-                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1">
+                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" id="publicly-visible">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -471,29 +634,17 @@ export const Pages = () => {
 
                       {/* Which language visitors see */}
                       <div className="flex items-center">
-                        <label className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">Which language visitors see?</label>
+                        <label htmlFor="visitor-language" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+                          Which language visitors see?
+                        </label>
                         <Select defaultValue="detect-location">
-                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1">
+                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" id="visitor-language">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="detect-location">Detect by location</SelectItem>
                             <SelectItem value="browser-language">Browser language</SelectItem>
                             <SelectItem value="default">Default language</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Website title */}
-                      <div className="flex items-center">
-                        <label className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">Website title</label>
-                        <Select defaultValue="finn-cross">
-                          <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="finn-cross">Finn & Cross</SelectItem>
-                            <SelectItem value="custom">Custom Title</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -508,23 +659,22 @@ export const Pages = () => {
               {/* Table Header */}
               <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
                 <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '52px' }}>
-                  <div className="flex-1">Title in the menu</div>
-                  <div className="w-32 px-4">Slug</div>
+                  <div className="flex-1">Menu title</div>
                   <div className="w-32 px-4">Page type</div>
                   <div className="w-24 px-4">SEO Score</div>
-                  <div className="w-32 px-4"></div>
+                  <div className="w-24 px-4">Visibility</div>
                   <div className="w-24"></div>
                 </div>
               </div>
 
               {/* Page Rows */}
-              <div>
+              <div role="table" aria-label="Pages list">
                 {pages.map(page => renderPageRow(page))}
                 
                 {/* Download entire site link */}
                 <div className="px-3 py-4 border-t border-gray-200">
                   <div className="flex justify-end" style={{ paddingRight: '12px' }}>
-                    <button className="text-[#5A4FFF] text-sm font-medium hover:underline">
+                    <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded">
                       Download entire site
                     </button>
                   </div>

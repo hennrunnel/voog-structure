@@ -29,7 +29,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const [title, setTitle] = useState("Products");
   const [urlSlug, setUrlSlug] = useState("/products");
   const [menuTitle, setMenuTitle] = useState("Home");
-  const [visibleInNavigation, setVisibleInNavigation] = useState(true);
+  const [showInMenu, setShowInMenu] = useState(true);
   const [access, setAccess] = useState("public");
   const [layout, setLayout] = useState("front-page");
 
@@ -38,38 +38,47 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
       <SheetContent 
         className="w-[420px] max-w-[420px] p-0 bg-white border-l border-gray-200 shadow-lg"
         side="right"
+        role="dialog"
+        aria-labelledby="page-settings-title"
       >
         {/* Header */}
         <div className="px-8 py-8 pb-6 border-b border-gray-100">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900">Page settings</h2>
+            <h2 id="page-settings-title" className="text-2xl font-semibold text-gray-900">Page settings</h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              aria-label="Close page settings"
             >
               <X className="w-5 h-5 text-gray-500" />
             </button>
           </div>
           
           {/* Tabs */}
-          <div className="flex space-x-8">
+          <div className="flex space-x-8" role="tablist">
             <button
               onClick={() => setActiveTab("general")}
-              className={`pb-2 text-sm font-medium transition-colors ${
+              className={`pb-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-t ${
                 activeTab === "general"
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-600 hover:text-gray-900"
               }`}
+              role="tab"
+              aria-selected={activeTab === "general"}
+              aria-controls="general-panel"
             >
               General
             </button>
             <button
               onClick={() => setActiveTab("seo")}
-              className={`pb-2 text-sm font-medium transition-colors ${
+              className={`pb-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-t ${
                 activeTab === "seo"
                   ? "text-blue-600 border-b-2 border-blue-600"
                   : "text-gray-600 hover:text-gray-900"
               }`}
+              role="tab"
+              aria-selected={activeTab === "seo"}
+              aria-controls="seo-panel"
             >
               SEO
             </button>
@@ -79,7 +88,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
         {/* Content */}
         <div className="px-8 py-6 flex-1 overflow-y-auto">
           {activeTab === "general" && (
-            <div className="space-y-6">
+            <div id="general-panel" role="tabpanel" className="space-y-6">
               {/* Page title */}
               <div>
                 <Label htmlFor="title" className="text-sm font-medium text-[#1A1A1A] block mb-2">
@@ -90,6 +99,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5"
+                  aria-describedby="title-description"
                 />
               </div>
 
@@ -103,11 +113,12 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   value={urlSlug}
                   onChange={(e) => setUrlSlug(e.target.value)}
                   className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5 border-2 border-blue-500"
+                  aria-describedby="url-slug-description"
                 />
-                <p className="text-sm text-gray-600 mt-1">The unique location slug for this page.</p>
+                <p id="url-slug-description" className="text-sm text-gray-600 mt-1">The unique location slug for this page.</p>
               </div>
 
-              {/* Menu title and Visible in navigation */}
+              {/* Menu title and Show in menu */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="menu-title" className="text-sm font-medium text-[#1A1A1A] block mb-2">
@@ -123,14 +134,18 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                 
                 <div>
                   <Label className="text-sm font-medium text-[#1A1A1A] block mb-2">
-                    Visible in the navigation
+                    Show in menu
                   </Label>
                   <div className="flex items-center mt-4">
                     <Switch
-                      checked={visibleInNavigation}
-                      onCheckedChange={setVisibleInNavigation}
+                      checked={showInMenu}
+                      onCheckedChange={setShowInMenu}
                       className="data-[state=checked]:bg-blue-600"
+                      aria-describedby="show-in-menu-description"
                     />
+                    <span className="sr-only" id="show-in-menu-description">
+                      Toggle whether this page appears in the navigation menu
+                    </span>
                   </div>
                 </div>
               </div>
@@ -141,7 +156,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   Access
                 </Label>
                 <Select value={access} onValueChange={setAccess}>
-                  <SelectTrigger className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5">
+                  <SelectTrigger className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5" id="access">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -158,7 +173,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   Layout
                 </Label>
                 <Select value={layout} onValueChange={setLayout}>
-                  <SelectTrigger className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5">
+                  <SelectTrigger className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5" id="layout">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -181,7 +196,10 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                     alt="Social media preview" 
                     className="w-full h-48 object-cover rounded-lg"
                   />
-                  <button className="absolute top-2 right-2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-1.5 rounded-md transition-colors">
+                  <button 
+                    className="absolute top-2 right-2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-1.5 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                    aria-label="Remove social media image"
+                  >
                     <X className="w-4 h-4" />
                   </button>
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
@@ -198,7 +216,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
           )}
 
           {activeTab === "seo" && (
-            <div className="py-4">
+            <div id="seo-panel" role="tabpanel" className="py-4">
               <p className="text-gray-600">SEO settings would go here...</p>
             </div>
           )}
@@ -206,10 +224,14 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
         {/* Action buttons */}
         <div className="px-8 py-6 border-t border-gray-100 flex space-x-3">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
             Save
           </Button>
-          <Button variant="ghost" onClick={onClose} className="px-6 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100">
+          <Button 
+            variant="ghost" 
+            onClick={onClose} 
+            className="px-6 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+          >
             Cancel
           </Button>
         </div>
