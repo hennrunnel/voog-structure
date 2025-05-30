@@ -259,7 +259,7 @@ export const Pages = () => {
     }
   };
 
-  // Drag and drop functionality
+  // Updated drag and drop functionality
   const handleDragStart = (e: React.DragEvent, pageId: string) => {
     if (pageId === "1") return; // Prevent dragging Home page
     
@@ -281,6 +281,20 @@ export const Pages = () => {
       setDragState(prev => ({
         ...prev,
         dropZone: { pageId: targetPageId, position }
+      }));
+    }
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    // Only clear if leaving the entire drop area
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+      setDragState(prev => ({
+        ...prev,
+        dropZone: null
       }));
     }
   };
@@ -310,29 +324,43 @@ export const Pages = () => {
     );
   };
 
+  // Updated renderDropZone function
   const renderDropZone = (pageId: string, position: 'before' | 'after' | 'nested') => {
-    const isActive = dragState.dropZone?.pageId === pageId && dragState.dropZone?.position === position;
+    // Only show drop zones when actively dragging
+    if (!dragState.isDragging || dragState.draggedPageId === pageId) return null;
     
-    if (!dragState.isDragging || !isActive) return null;
-    
-    const baseClasses = "w-full transition-all duration-200";
+    const isActiveDropZone = dragState.dropZone?.pageId === pageId && dragState.dropZone?.position === position;
     
     if (position === 'nested') {
       return (
         <div 
-          className={`${baseClasses} h-8 ml-8 bg-blue-100 border-2 border-dashed border-blue-400 rounded-md flex items-center justify-center`}
+          className={`w-full transition-all duration-200 h-8 ml-8 rounded-md flex items-center justify-center ${
+            isActiveDropZone 
+              ? 'bg-blue-100 border-2 border-dashed border-blue-400' 
+              : 'bg-blue-50 border border-dashed border-blue-300'
+          }`}
           onDragOver={(e) => handleDragOver(e, pageId, position)}
+          onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <span className="text-blue-600 text-sm font-medium">Drop here to add as subpage</span>
+          <span className={`text-sm font-medium ${
+            isActiveDropZone ? 'text-blue-600' : 'text-blue-500'
+          }`}>
+            {isActiveDropZone ? 'Drop here to add as subpage' : 'Drop as subpage'}
+          </span>
         </div>
       );
     }
     
     return (
       <div 
-        className={`${baseClasses} h-1 bg-blue-500 rounded-full`}
+        className={`w-full transition-all duration-200 rounded-full ${
+          isActiveDropZone 
+            ? 'h-2 bg-blue-500' 
+            : 'h-1 bg-blue-300'
+        }`}
         onDragOver={(e) => handleDragOver(e, pageId, position)}
+        onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       />
     );
@@ -580,7 +608,6 @@ export const Pages = () => {
                   </Popover>
                 </div>
                 <AccordionContent className="pb-4 pt-2">
-                  {/* ... keep existing code (language settings form) */}
                   <div className="relative">
                     {/* Trash icon in top-right */}
                     <div className="absolute top-0 right-0">
