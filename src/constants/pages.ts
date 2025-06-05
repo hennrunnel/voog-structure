@@ -97,6 +97,14 @@ export const mockPages: PageItem[] = [
   },
   {
     id: "5",
+    title: "External Resource",
+    slug: "https://www.example.com/external-resource",
+    pageType: "Link",
+    seoScore: "Good",
+    isVisible: true
+  },
+  {
+    id: "6",
     title: "Contact",
     slug: "/contact",
     pageType: "Common Page",
@@ -105,7 +113,7 @@ export const mockPages: PageItem[] = [
     isExpanded: true,
     children: [
       {
-        id: "5-1",
+        id: "6-1",
         title: "Support",
         slug: "/contact/support",
         pageType: "Common Page",
@@ -114,7 +122,7 @@ export const mockPages: PageItem[] = [
         isExpanded: true,
         children: [
           {
-            id: "5-1-1",
+            id: "6-1-1",
             title: "Technical Support Documentation",
             slug: "/contact/support/technical-docs",
             pageType: "Common Page",
@@ -122,7 +130,7 @@ export const mockPages: PageItem[] = [
             isVisible: true
           },
           {
-            id: "5-1-2",
+            id: "6-1-2",
             title: "Private Client Area",
             slug: "/contact/support/client-area",
             pageType: "Common Page",
@@ -133,7 +141,7 @@ export const mockPages: PageItem[] = [
         ]
       },
       {
-        id: "5-2",
+        id: "6-2",
         title: "Sales",
         slug: "/contact/sales",
         pageType: "Common Page",
@@ -141,7 +149,7 @@ export const mockPages: PageItem[] = [
         isVisible: true
       },
       {
-        id: "5-3",
+        id: "6-3",
         title: "Technical Support",
         slug: "/contact/technical",
         pageType: "Common Page",

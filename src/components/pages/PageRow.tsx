@@ -1,6 +1,6 @@
 
 import React from "react";
-import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, MoreVertical, Settings, Copy, FileText, Lock, Move } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, MoreVertical, Settings, Copy, FileText, Lock, Move } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -30,6 +30,13 @@ const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
   );
 };
 
+const ExternalLinkIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.5961 9.3181C16.9867 8.92757 16.9867 8.29441 16.5961 7.90388C16.2056 7.51336 15.5725 7.51336 15.1819 7.90388L6.69665 16.3892C6.30613 16.7797 6.30613 17.4129 6.69665 17.8034C7.08717 18.1939 7.72034 18.1939 8.11086 17.8034L16.5961 9.3181Z" fill="#1B2124"/>
+    <path d="M8.1109 8.90381C7.55862 8.90381 7.1109 8.45609 7.1109 7.90381C7.1109 7.35152 7.55862 6.90381 8.1109 6.90381H16.5962C17.1316 6.90381 17.572 7.32549 17.5952 7.86037L17.9488 15.9921C17.9728 16.5439 17.5449 17.0106 16.9932 17.0346C16.4414 17.0586 15.9747 16.6307 15.9507 16.079L15.6387 8.90381H8.1109Z" fill="#1B2124"/>
+  </svg>
+);
+
 export const PageRow: React.FC<PageRowProps> = ({
   page,
   level = 0,
@@ -46,6 +53,7 @@ export const PageRow: React.FC<PageRowProps> = ({
   const paddingLeft = level * 24;
   const isHomePage = page.id === "1";
   const isUntranslated = page.translationStatus === "Untranslated";
+  const isExternalLink = page.pageType === "Link";
 
   const handleRowClick = () => {
     if (page.translationStatus === "Untranslated") {
@@ -89,7 +97,7 @@ export const PageRow: React.FC<PageRowProps> = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span 
-                    className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'italic text-gray-400' : 'text-gray-900'}`}
+                    className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'italic text-gray-400' : 'text-[#1B2124]'}`}
                   >
                     {page.title}
                   </span>
@@ -101,6 +109,10 @@ export const PageRow: React.FC<PageRowProps> = ({
               
               {page.isPasswordProtected && (
                 <Lock className="w-3 h-3 text-gray-500" />
+              )}
+              
+              {isExternalLink && (
+                <ExternalLinkIcon />
               )}
               
               {isUntranslated && (
@@ -116,17 +128,9 @@ export const PageRow: React.FC<PageRowProps> = ({
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <button 
-                    onClick={e => {
-                      e.stopPropagation();
-                      window.open(page.slug, '_blank');
-                    }} 
-                    className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded max-w-full" 
-                    aria-label={`Open ${page.slug} in new tab`}
-                  >
-                    <span className="truncate">{page.slug}</span>
-                    <ExternalLink className="w-3 h-3 flex-shrink-0" />
-                  </button>
+                  <span className="text-xs text-gray-500 truncate block max-w-full">
+                    {page.slug}
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{page.slug}</p>
@@ -140,7 +144,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           {/* Layout */}
           <div className="w-32 px-4">
             {!isUntranslated ? (
-              <span className="text-sm text-gray-600">{page.pageType}</span>
+              <span className="text-sm text-[#1B2124]">{page.pageType}</span>
             ) : (
               <span className="text-sm text-gray-400">-</span>
             )}
