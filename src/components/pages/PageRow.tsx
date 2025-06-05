@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -111,8 +112,8 @@ export const PageRow: React.FC<PageRowProps> = ({
         <div 
           className="group flex items-center border-b hover:bg-gray-50 transition-colors cursor-pointer" 
           style={{ 
-            paddingLeft: `${paddingLeft + 12}px`, 
-            paddingRight: '12px',
+            paddingLeft: `${paddingLeft + 24}px`, 
+            paddingRight: '24px',
             height: '64px',
             borderBottomColor: '#EFEFEF',
             borderBottomWidth: '1px'
