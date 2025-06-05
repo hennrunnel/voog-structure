@@ -141,13 +141,13 @@ export const Pages = () => {
         </h1>
         
         <div 
-          className="bg-white rounded-lg shadow-sm"
+          className="bg-white"
           style={{
             width: '992px',
-            background: 'white',
-            boxShadow: '0px 17px 17.700000762939453px rgba(0, 0, 0, 0.01)',
             borderRadius: '10px',
-            border: '0.50px rgba(24, 24, 27, 0.10) solid'
+            border: '0.5px solid rgba(24, 24, 27, 0.10)',
+            background: 'var(--Primary-White, #FFF)',
+            boxShadow: '0px 0.5px 1px 0px var(--shadow-dark, rgba(24, 24, 27, 0.05)), 0px 2px 5px 0px rgba(0, 0, 0, 0.05), 0px 17px 17.7px 0px rgba(0, 0, 0, 0.01)'
           }}
         >
           {/* Language Tabs */}
