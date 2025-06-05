@@ -238,7 +238,19 @@ export const Pages = () => {
     setPageSettingsOpen(true);
   };
   const handleEditPage = (page: PageItem) => {
-    console.log(`Edit page: ${page.title}`);
+    if (page.translationStatus === "Untranslated") {
+      // Open create page sidebar with prefilled data
+      setSelectedLayout("common-page");
+      setAddPageSidebarOpen(true);
+    } else {
+      // Open page settings
+      handlePageSettings(page);
+    }
+  };
+  const handleTranslatePage = (page: PageItem) => {
+    // Open create page sidebar with prefilled data for translation
+    setSelectedLayout("common-page");
+    setAddPageSidebarOpen(true);
   };
   const handleClosePageSettings = () => {
     setPageSettingsOpen(false);
@@ -379,11 +391,8 @@ export const Pages = () => {
         {renderDropZone(page.id, 'before')}
         
         <div 
-          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''} ${!isHomePage ? 'cursor-move' : 'cursor-pointer'}`} 
+          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors cursor-pointer ${isDraggedPage ? 'opacity-50' : ''}`} 
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
-          draggable={!isHomePage} 
-          onDragStart={e => handleDragStart(e, page.id)} 
-          onDragEnd={handleDragEnd} 
           onClick={() => handleEditPage(page)} 
           role="row" 
           tabIndex={0} 
@@ -396,7 +405,13 @@ export const Pages = () => {
           aria-label={`Edit ${page.title} page`}
         >
           {/* Drag handle */}
-          <div className={`mr-3 ${isHomePage ? 'opacity-30 cursor-not-allowed' : 'cursor-move'}`} onClick={e => e.stopPropagation()}>
+          <div 
+            className={`mr-3 ${isHomePage ? 'opacity-30 cursor-not-allowed' : 'cursor-move'}`} 
+            draggable={!isHomePage}
+            onDragStart={e => handleDragStart(e, page.id)}
+            onDragEnd={handleDragEnd}
+            onClick={e => e.stopPropagation()}
+          >
             <GripVertical className="w-4 h-4 text-gray-400" aria-hidden="true" />
           </div>
           
@@ -466,31 +481,43 @@ export const Pages = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border">
+                {isUntranslated ? (
+                  <DropdownMenuItem onClick={e => {
+                    e.stopPropagation();
+                    handleTranslatePage(page);
+                  }} className="cursor-pointer">
+                    <FileText className="w-4 h-4 mr-2" />
+                    Translate page
+                  </DropdownMenuItem>
+                ) : (
+                  <>
+                    <DropdownMenuItem onClick={e => {
+                      e.stopPropagation();
+                      handlePageSettings(page);
+                    }} className="cursor-pointer">
+                      <Settings className="w-4 h-4 mr-2" />
+                      Page settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={e => {
+                      e.stopPropagation();
+                      handleDuplicatePage(page);
+                    }} className="cursor-pointer">
+                      <Copy className="w-4 h-4 mr-2" />
+                      Duplicate page
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={e => {
+                      e.stopPropagation();
+                      handleAddNestedPage(page);
+                    }} className="cursor-pointer">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add subpage
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuItem onClick={e => {
-                e.stopPropagation();
-                handlePageSettings(page);
-              }} className="cursor-pointer">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Page settings
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={e => {
-                e.stopPropagation();
-                handleDuplicatePage(page);
-              }} className="cursor-pointer">
-                  <Copy className="w-4 h-4 mr-2" />
-                  Duplicate page
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={e => {
-                e.stopPropagation();
-                handleAddNestedPage(page);
-              }} className="cursor-pointer">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add subpage
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={e => {
-                e.stopPropagation();
-                handleDeletePage(page);
-              }} className="cursor-pointer text-red-600 focus:text-red-600">
+                  e.stopPropagation();
+                  handleDeletePage(page);
+                }} className="cursor-pointer text-red-600 focus:text-red-600">
                   <Trash className="w-4 h-4 mr-2" />
                   Delete
                 </DropdownMenuItem>
