@@ -171,7 +171,10 @@ export const PageRow: React.FC<PageRowProps> = ({
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="text-xs text-[#1B2124] truncate block max-w-full">
+                  <span 
+                    className="text-[#1B2124] truncate block max-w-full"
+                    style={{ fontSize: '16px' }}
+                  >
                     {page.slug}
                   </span>
                 </TooltipTrigger>
@@ -180,7 +183,12 @@ export const PageRow: React.FC<PageRowProps> = ({
                 </TooltipContent>
               </Tooltip>
             ) : (
-              <span className="text-xs text-gray-400">-</span>
+              <span 
+                className="text-gray-400"
+                style={{ fontSize: '16px' }}
+              >
+                -
+              </span>
             )}
           </div>
 

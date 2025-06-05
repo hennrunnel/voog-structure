@@ -17,6 +17,20 @@ interface LanguageSettingsProps {
   onLanguageDelete: () => void;
 }
 
+const LanguageChevronIcon = ({ isExpanded }: { isExpanded: boolean }) => (
+  <svg 
+    width="16" 
+    height="16" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
+    className="transition-transform duration-200 ml-2"
+  >
+    <path d="M8.29289 17.2929C7.90237 17.6834 7.90237 18.3166 8.29289 18.7071C8.68342 19.0976 9.31658 19.0976 9.70711 18.7071L15.7071 12.7071C16.0857 12.3285 16.0989 11.7189 15.7372 11.3243L10.2372 5.32428C9.86396 4.91716 9.23139 4.88965 8.82427 5.26285C8.41716 5.63604 8.38965 6.26861 8.76285 6.67572L13.6159 11.9699L8.29289 17.2929Z" fill="#1B2124"/>
+  </svg>
+);
+
 export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
   websiteTitle,
   setWebsiteTitle,
@@ -30,8 +44,16 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
     <Accordion type="single" collapsible className="w-full mb-6">
       <AccordionItem value="language-settings" className="border-b-0">
         <div className="flex items-center justify-between">
-          <AccordionTrigger className="text-base font-medium text-[#1A1A1A] hover:no-underline py-3 px-0 flex-1">
-            Language settings
+          <AccordionTrigger 
+            className="hover:no-underline py-3 px-0 flex-1 flex items-center justify-start [&>svg]:hidden"
+            style={{
+              fontSize: '16px',
+              fontWeight: 'medium',
+              color: '#1A1A1A'
+            }}
+          >
+            <span>Language settings</span>
+            <LanguageChevronIcon isExpanded={false} />
           </AccordionTrigger>
         </div>
         <AccordionContent className="pb-4 pt-2">

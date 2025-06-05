@@ -127,7 +127,18 @@ export const Pages = () => {
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12 font-sans">
       <div className="w-full" style={{ maxWidth: '992px' }}>
         {/* Header outside the card */}
-        <h1 className="text-[28px] font-semibold text-[#1A1A1A] mb-6">Pages</h1>
+        <h1 
+          className="text-[#1A1A1A] mb-6"
+          style={{
+            fontFamily: '"Avenir Next"',
+            fontSize: '40px',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            lineHeight: '39px'
+          }}
+        >
+          Pages
+        </h1>
         
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
           {/* Language Tabs */}
@@ -174,7 +185,22 @@ export const Pages = () => {
                 
                 <Button 
                   onClick={handleAddPageClick}
-                  className="bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white px-4 py-2 rounded-xl text-sm font-medium"
+                  className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  style={{
+                    padding: '8px 16px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '8px',
+                    borderRadius: '8px',
+                    background: '#453DFF',
+                    color: '#FFF',
+                    textAlign: 'center',
+                    fontFamily: '"Avenir Next"',
+                    fontSize: '14px',
+                    fontStyle: 'normal',
+                    fontWeight: 600,
+                    lineHeight: '24px'
+                  }}
                 >
                   Add page
                 </Button>
