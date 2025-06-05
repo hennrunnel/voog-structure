@@ -190,6 +190,7 @@ export const Pages = () => {
                     <div className="w-32 px-4">Layout</div>
                     <div className="w-24 px-4 text-center">SEO</div>
                     <div className="w-24 px-4 text-center">In menu</div>
+                    <div className="w-8 px-1"></div>
                     <div className="w-16"></div>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 
 import React from "react";
-import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, MoreVertical, Settings, Copy, FileText, Lock } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, MoreVertical, Settings, Copy, FileText, Lock, Move } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -174,6 +174,17 @@ export const PageRow: React.FC<PageRowProps> = ({
                 className="data-[state=checked]:bg-[#443DF6] data-[state=unchecked]:bg-[#443DF6] data-[state=unchecked]:opacity-10 w-8 h-4 [&>span]:w-3 [&>span]:h-3 [&>span]:data-[state=checked]:translate-x-4 [&>span]:data-[state=unchecked]:translate-x-0"
               />
             ) : null}
+          </div>
+
+          {/* Move Icon */}
+          <div className="w-8 px-1 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <button 
+              onClick={(e) => e.stopPropagation()}
+              className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1" 
+              aria-label={`Move ${page.title}`}
+            >
+              <Move className="w-3 h-3" />
+            </button>
           </div>
 
           {/* Actions */}
