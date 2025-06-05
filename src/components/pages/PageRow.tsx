@@ -30,7 +30,7 @@ const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
 };
 
 const ExternalLinkIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M16.5961 9.3181C16.9867 8.92757 16.9867 8.29441 16.5961 7.90388C16.2056 7.51336 15.5725 7.51336 15.1819 7.90388L6.69665 16.3892C6.30613 16.7797 6.30613 17.4129 6.69665 17.8034C7.08717 18.1939 7.72034 18.1939 8.11086 17.8034L16.5961 9.3181Z" fill="#1B2124"/>
     <path d="M8.1109 8.90381C7.55862 8.90381 7.1109 8.45609 7.1109 7.90381C7.1109 7.35152 7.55862 6.90381 8.1109 6.90381H16.5962C17.1316 6.90381 17.572 7.32549 17.5952 7.86037L17.9488 15.9921C17.9728 16.5439 17.5449 17.0106 16.9932 17.0346C16.4414 17.0586 15.9747 16.6307 15.9507 16.079L15.6387 8.90381H8.1109Z" fill="#1B2124"/>
   </svg>
@@ -38,8 +38,8 @@ const ExternalLinkIcon = () => (
 
 const ChevronIcon = ({ isExpanded }: { isExpanded: boolean }) => (
   <svg 
-    width="24" 
-    height="24" 
+    width="16" 
+    height="16" 
     viewBox="0 0 24 24" 
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
@@ -51,21 +51,21 @@ const ChevronIcon = ({ isExpanded }: { isExpanded: boolean }) => (
 );
 
 const LockIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M7.866 10.3225L1.50004 16.5L1.50005 19.5L4.50004 19.5L4.50005 17.5L6.44182 17.5L6.44182 15.5H8.50004L10.6845 13.141L7.866 10.3225Z" fill="#1B2124"/>
     <path fillRule="evenodd" clipRule="evenodd" d="M8.24265 12.7279C5.8995 10.3848 5.8995 6.58579 8.24265 4.24264C10.5858 1.89949 14.3848 1.89949 16.7279 4.24264C19.0711 6.58579 19.0711 10.3848 16.7279 12.7279C14.3848 15.0711 10.5858 15.0711 8.24265 12.7279ZM12.5607 8.68198C13.1465 9.26777 14.0962 9.26777 14.682 8.68198C15.2678 8.09619 15.2678 7.14645 14.682 6.56066C14.0962 5.97487 13.1465 5.97487 12.5607 6.56066C11.9749 7.14645 11.9749 8.09619 12.5607 8.68198Z" fill="#1B2124"/>
   </svg>
 );
 
 const EyeVisibleIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
     <path d="M3 12C3 12 5.45455 6 12 6C16.9091 6 21 12 21 12C21 12 16.9091 18 12 18C5.45455 18 3 12 3 12Z" fill="#1B2124"/>
     <path fillRule="evenodd" clipRule="evenodd" d="M12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15Z" fill="white"/>
   </svg>
 );
 
 const EyeHiddenIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
     <path d="M19.2079 9.84839C20.3304 11.0179 21 12 21 12C21 12 16.9091 18 12 18C11.6894 18 11.3879 17.9865 11.0955 17.9608L19.2079 9.84839Z" fill="#1B2124"/>
     <path d="M14.5051 6.49485L12 9C10.3431 9 9 10.3431 9 12L5.52661 15.4734C3.75006 13.8335 3 12 3 12C3 12 5.45455 6 12 6C12.8665 6 13.7076 6.18695 14.5051 6.49485Z" fill="#1B2124"/>
     <path opacity="0.3" d="M18.535 5.00003L5.09998 18.4351L6.51419 19.8493L19.9492 6.41424L18.535 5.00003Z" fill="#1B2124"/>
@@ -73,7 +73,7 @@ const EyeHiddenIcon = () => (
 );
 
 const KebabIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
     <path d="M12 7C13.1046 7 14 6.10457 14 5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5C10 6.10457 10.8954 7 12 7Z" fill="#1B2124"/>
     <path d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z" fill="#1B2124"/>
     <path d="M12 21C13.1046 21 14 20.1046 14 19C14 17.8954 13.1046 17 12 17C10.8954 17 10 17.8954 10 19C10 20.1046 10.8954 21 12 21Z" fill="#1B2124"/>
