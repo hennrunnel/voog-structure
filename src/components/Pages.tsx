@@ -124,7 +124,7 @@ export const Pages = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12">
+    <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12 font-sans">
       <div className="w-full" style={{ maxWidth: '992px' }}>
         {/* Header outside the card */}
         <h1 className="text-[28px] font-semibold text-[#1A1A1A] mb-6">Pages</h1>
@@ -137,7 +137,7 @@ export const Pages = () => {
                 {availableTabs.includes("english") && (
                   <TabsTrigger 
                     value="english" 
-                    className="text-base px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent"
+                    className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent"
                   >
                     English
                   </TabsTrigger>
@@ -145,14 +145,14 @@ export const Pages = () => {
                 {availableTabs.includes("estonian") && (
                   <TabsTrigger 
                     value="estonian" 
-                    className="text-base px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent"
+                    className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent"
                   >
                     Estonian
                   </TabsTrigger>
                 )}
               </TabsList>
               
-              <button className="text-[#5A4FFF] text-base font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
+              <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
                 Add language
               </button>
             </div>
@@ -184,7 +184,7 @@ export const Pages = () => {
               <div className="overflow-hidden">
                 {/* Table Header */}
                 <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
-                  <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '32px' }}>
+                  <div className="flex items-center text-xs font-medium text-[#8d9091]" style={{ paddingLeft: '32px' }}>
                     <div className="flex-1 min-w-0 mr-4">Menu title</div>
                     <div className="w-48 px-4">Slug</div>
                     <div className="w-32 px-4">Layout</div>
@@ -226,7 +226,7 @@ export const Pages = () => {
             </TabsContent>
 
             <TabsContent value="estonian" className="mt-0 px-6">
-              <div className="text-[#666]">
+              <div className="text-[#1B2124] text-sm">
                 Estonian tab content will be displayed here.
               </div>
             </TabsContent>

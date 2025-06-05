@@ -52,7 +52,7 @@ const ChevronIcon = ({ isExpanded }: { isExpanded: boolean }) => (
 );
 
 const LockIcon = () => (
-  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M7.866 10.3225L1.50004 16.5L1.50005 19.5L4.50004 19.5L4.50005 17.5L6.44182 17.5L6.44182 15.5H8.50004L10.6845 13.141L7.866 10.3225Z" fill="#1B2124"/>
     <path fillRule="evenodd" clipRule="evenodd" d="M8.24265 12.7279C5.8995 10.3848 5.8995 6.58579 8.24265 4.24264C10.5858 1.89949 14.3848 1.89949 16.7279 4.24264C19.0711 6.58579 19.0711 10.3848 16.7279 12.7279C14.3848 15.0711 10.5858 15.0711 8.24265 12.7279ZM12.5607 8.68198C13.1465 9.26777 14.0962 9.26777 14.682 8.68198C15.2678 8.09619 15.2678 7.14645 14.682 6.56066C14.0962 5.97487 13.1465 5.97487 12.5607 6.56066C11.9749 7.14645 11.9749 8.09619 12.5607 8.68198Z" fill="#1B2124"/>
   </svg>
@@ -101,7 +101,7 @@ export const PageRow: React.FC<PageRowProps> = ({
 
   return (
     <TooltipProvider>
-      <div key={page.id}>
+      <div key={page.id} className="font-sans">
         <div 
           className="group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors cursor-pointer" 
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
@@ -164,7 +164,7 @@ export const PageRow: React.FC<PageRowProps> = ({
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="text-xs text-gray-500 truncate block max-w-full">
+                  <span className="text-xs text-[#1B2124] truncate block max-w-full">
                     {page.slug}
                   </span>
                 </TooltipTrigger>
@@ -241,14 +241,14 @@ export const PageRow: React.FC<PageRowProps> = ({
                   <KebabIcon />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border">
+              <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
                 {isUntranslated ? (
                   <DropdownMenuItem 
                     onClick={e => {
                       e.stopPropagation();
                       onTranslatePage(page);
                     }} 
-                    className="cursor-pointer"
+                    className="cursor-pointer text-sm text-[#1B2124]"
                   >
                     <FileText className="w-4 h-4 mr-2" />
                     Translate page
@@ -260,7 +260,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onPageSettings(page);
                       }} 
-                      className="cursor-pointer"
+                      className="cursor-pointer text-sm text-[#1B2124]"
                     >
                       <Settings className="w-4 h-4 mr-2" />
                       Page settings
@@ -270,7 +270,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onDuplicatePage(page);
                       }} 
-                      className="cursor-pointer"
+                      className="cursor-pointer text-sm text-[#1B2124]"
                     >
                       <Copy className="w-4 h-4 mr-2" />
                       Duplicate page
@@ -280,7 +280,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onAddNestedPage(page);
                       }} 
-                      className="cursor-pointer"
+                      className="cursor-pointer text-sm text-[#1B2124]"
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       Add subpage
@@ -292,7 +292,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                     e.stopPropagation();
                     onDeletePage(page);
                   }} 
-                  className="cursor-pointer text-red-600 focus:text-red-600"
+                  className="cursor-pointer text-sm text-red-600 focus:text-red-600"
                 >
                   <Trash className="w-4 h-4 mr-2" />
                   Delete
