@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageSettings } from "@/components/PageSettings";
@@ -8,7 +9,6 @@ import { PageDialogs } from "@/components/pages/PageDialogs";
 import { LanguageSettings } from "@/components/pages/LanguageSettings";
 import { PageItem } from "@/types/pages";
 import { layoutOptions } from "@/constants/pages";
-import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Pages = () => {
@@ -174,9 +174,8 @@ export const Pages = () => {
                 
                 <Button 
                   onClick={handleAddPageClick}
-                  className="bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2"
+                  className="bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white px-4 py-2 rounded-xl text-sm font-medium"
                 >
-                  <Plus className="w-4 h-4" />
                   Add page
                 </Button>
               </div>

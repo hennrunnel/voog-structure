@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -60,13 +59,6 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
         <div className="px-8 py-8 pb-6 border-b border-gray-100">
           <div className="flex items-center justify-between mb-6">
             <h2 id="add-page-title" className="text-2xl font-semibold text-gray-900">Add new page</h2>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              aria-label="Close add page dialog"
-            >
-              <X className="w-5 h-5 text-gray-500" />
-            </button>
           </div>
         </div>
 

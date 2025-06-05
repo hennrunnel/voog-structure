@@ -1,6 +1,6 @@
 
 import React from "react";
-import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, MoreVertical, Settings, Copy, FileText, Move, Lock } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, MoreVertical, Settings, Copy, FileText, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -47,17 +47,26 @@ export const PageRow: React.FC<PageRowProps> = ({
   const isHomePage = page.id === "1";
   const isUntranslated = page.translationStatus === "Untranslated";
 
+  const handleRowClick = () => {
+    if (page.translationStatus === "Untranslated") {
+      onEditPage(page);
+    } else {
+      onPageSettings(page);
+    }
+  };
+
   return (
     <TooltipProvider>
       <div key={page.id}>
         <div 
-          className="group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors" 
+          className="group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors cursor-pointer" 
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
           role="row" 
           tabIndex={0} 
           aria-label={`${page.title} page row`}
+          onClick={handleRowClick}
         >
-          {/* Expand/collapse button OR move icon */}
+          {/* Expand/collapse button */}
           <div className="w-5 flex justify-center mr-2">
             {hasChildren ? (
               <button 
@@ -71,9 +80,7 @@ export const PageRow: React.FC<PageRowProps> = ({
               >
                 {page.isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               </button>
-            ) : (
-              <Move className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-move" />
-            )}
+            ) : null}
           </div>
 
           {/* Title */}
@@ -82,21 +89,7 @@ export const PageRow: React.FC<PageRowProps> = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span 
-                    className={`text-sm font-medium cursor-pointer hover:text-blue-600 truncate max-w-[300px] inline-block ${isUntranslated ? 'italic text-gray-400' : 'text-gray-900'}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onEditPage(page);
-                    }}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onEditPage(page);
-                      }
-                    }}
-                    tabIndex={0}
-                    role="button"
-                    aria-label={`Edit ${page.title} page`}
+                    className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'italic text-gray-400' : 'text-gray-900'}`}
                   >
                     {page.title}
                   </span>
@@ -144,7 +137,7 @@ export const PageRow: React.FC<PageRowProps> = ({
             )}
           </div>
 
-          {/* Layout (was Page Type) */}
+          {/* Layout */}
           <div className="w-32 px-4">
             {!isUntranslated ? (
               <span className="text-sm text-gray-600">{page.pageType}</span>
