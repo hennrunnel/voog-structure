@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { PageItem, DragState } from "@/types/pages";
+import { PageItem } from "@/types/pages";
 
 interface PageRowProps {
   page: PageItem;
   level: number;
-  dragState: DragState;
   onToggleExpansion: (pageId: string) => void;
   onToggleVisibility: (pageId: string) => void;
   onDeletePage: (page: PageItem) => void;
@@ -19,11 +18,6 @@ interface PageRowProps {
   onPageSettings: (page: PageItem) => void;
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
-  onDragStart: (e: React.DragEvent, pageId: string) => void;
-  onDragOver: (e: React.DragEvent, pageId: string, position: 'before' | 'after' | 'nested') => void;
-  onDragEnd: () => void;
-  onDrop: (e: React.DragEvent, pageId: string, position: 'before' | 'after' | 'nested') => void;
-  renderDropZone: (pageId: string, position: 'before' | 'after' | 'nested') => React.ReactNode;
 }
 
 const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
@@ -38,7 +32,6 @@ const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
 export const PageRow: React.FC<PageRowProps> = ({
   page,
   level = 0,
-  dragState,
   onToggleExpansion,
   onToggleVisibility,
   onDeletePage,
@@ -46,47 +39,21 @@ export const PageRow: React.FC<PageRowProps> = ({
   onAddNestedPage,
   onPageSettings,
   onEditPage,
-  onTranslatePage,
-  onDragStart,
-  onDragOver,
-  onDragEnd,
-  onDrop,
-  renderDropZone
+  onTranslatePage
 }) => {
   const hasChildren = page.children && page.children.length > 0;
   const paddingLeft = level * 24;
-  const isDraggedPage = dragState.draggedPageId === page.id;
   const isHomePage = page.id === "1";
   const isUntranslated = page.translationStatus === "Untranslated";
 
   return (
     <div key={page.id}>
-      {renderDropZone(page.id, 'before')}
-      
       <div 
-        className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''}`} 
+        className="group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors" 
         style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
         role="row" 
         tabIndex={0} 
         aria-label={`${page.title} page row`}
-        draggable={!isHomePage}
-        onDragStart={e => {
-          if (!isHomePage) {
-            onDragStart(e, page.id);
-          }
-        }}
-        onDragEnd={onDragEnd}
-        onDragOver={e => {
-          if (dragState.isDragging && dragState.draggedPageId !== page.id) {
-            e.preventDefault();
-            onDragOver(e, page.id, 'after');
-          }
-        }}
-        onDrop={e => {
-          if (dragState.isDragging && dragState.draggedPageId !== page.id) {
-            onDrop(e, page.id, 'after');
-          }
-        }}
       >
         {/* Expand/collapse button */}
         <div className="w-5 flex justify-center mr-2">
@@ -268,15 +235,12 @@ export const PageRow: React.FC<PageRowProps> = ({
         </div>
       </div>
 
-      {renderDropZone(page.id, 'nested')}
-
       {/* Render children if expanded */}
       {hasChildren && page.isExpanded && page.children?.map(child => (
         <PageRow
           key={child.id}
           page={child}
           level={level + 1}
-          dragState={dragState}
           onToggleExpansion={onToggleExpansion}
           onToggleVisibility={onToggleVisibility}
           onDeletePage={onDeletePage}
@@ -285,15 +249,8 @@ export const PageRow: React.FC<PageRowProps> = ({
           onPageSettings={onPageSettings}
           onEditPage={onEditPage}
           onTranslatePage={onTranslatePage}
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          onDragEnd={onDragEnd}
-          onDrop={onDrop}
-          renderDropZone={renderDropZone}
         />
       ))}
-
-      {renderDropZone(page.id, 'after')}
     </div>
   );
 };

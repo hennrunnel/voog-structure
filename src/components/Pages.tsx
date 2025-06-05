@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
 import { usePageManagement } from "@/hooks/usePageManagement";
-import { useDragAndDrop } from "@/hooks/useDragAndDrop";
 import { PageRow } from "@/components/pages/PageRow";
 import { PageDialogs } from "@/components/pages/PageDialogs";
 import { LanguageSettings } from "@/components/pages/LanguageSettings";
@@ -43,14 +42,6 @@ export const Pages = () => {
     confirmHomeVisibilityToggle,
     handleDuplicatePage
   } = usePageManagement();
-
-  const {
-    dragState,
-    handleDragStart,
-    handleDragOver,
-    handleDragEnd,
-    handleDrop
-  } = useDragAndDrop(pages, setPages);
 
   const handleAddNestedPage = (parentPage: PageItem) => {
     setSelectedLayout("common-page");
@@ -138,35 +129,6 @@ export const Pages = () => {
     setLanguageVisibilityDialogOpen(false);
   };
 
-  const renderDropZone = (pageId: string, position: 'before' | 'after' | 'nested') => {
-    const isActive = dragState.dropZone?.pageId === pageId && dragState.dropZone?.position === position;
-    if (!dragState.isDragging) return null;
-
-    const baseClasses = "w-full transition-all duration-200";
-    
-    if (position === 'nested') {
-      return (
-        <div 
-          className={`${baseClasses} h-8 ml-8 ${isActive ? 'bg-blue-100 border-2 border-dashed border-blue-400' : 'bg-gray-50 border-2 border-dashed border-gray-300'} rounded-md flex items-center justify-center`} 
-          onDragOver={e => handleDragOver(e, pageId, position)} 
-          onDrop={e => handleDrop(e, pageId, position)}
-        >
-          <span className={`text-sm font-medium ${isActive ? 'text-blue-600' : 'text-gray-400'}`}>
-            Drop here to add as subpage
-          </span>
-        </div>
-      );
-    }
-    
-    return (
-      <div 
-        className={`${baseClasses} h-1 ${isActive ? 'bg-blue-500' : 'bg-gray-300'} rounded-full`} 
-        onDragOver={e => handleDragOver(e, pageId, position)} 
-        onDrop={e => handleDrop(e, pageId, position)} 
-      />
-    );
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12">
       <div className="w-full" style={{ maxWidth: '992px' }}>
@@ -244,7 +206,6 @@ export const Pages = () => {
                       key={page.id}
                       page={page}
                       level={0}
-                      dragState={dragState}
                       onToggleExpansion={togglePageExpansion}
                       onToggleVisibility={togglePageVisibility}
                       onDeletePage={handleDeletePage}
@@ -253,11 +214,6 @@ export const Pages = () => {
                       onPageSettings={handlePageSettings}
                       onEditPage={handleEditPage}
                       onTranslatePage={handleTranslatePage}
-                      onDragStart={handleDragStart}
-                      onDragOver={handleDragOver}
-                      onDragEnd={handleDragEnd}
-                      onDrop={handleDrop}
-                      renderDropZone={renderDropZone}
                     />
                   ))}
                   

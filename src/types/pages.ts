@@ -16,12 +16,3 @@ export interface LayoutOption {
   title: string;
   icon: string;
 }
-
-export interface DragState {
-  isDragging: boolean;
-  draggedPageId: string | null;
-  dropZone: {
-    pageId: string;
-    position: 'before' | 'after' | 'nested';
-  } | null;
-}
