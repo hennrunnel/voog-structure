@@ -24,6 +24,13 @@ interface AddPageSidebarProps {
   selectedLayout: string | null;
 }
 
+const CloseIcon = () => (
+  <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.5564 5.65683L5.65687 15.5563C5.26635 15.9468 5.26635 16.58 5.65687 16.9705C6.0474 17.3611 6.68056 17.3611 7.07109 16.9705L16.9706 7.07104C17.3611 6.68052 17.3611 6.04735 16.9706 5.65683C16.5801 5.2663 15.9469 5.2663 15.5564 5.65683Z" fill="#1B2124"/>
+    <path d="M16.9706 15.5563L7.07106 5.65681C6.68054 5.26629 6.04737 5.26629 5.65685 5.65681C5.26632 6.04734 5.26632 6.6805 5.65685 7.07103L15.5563 16.9705C15.9469 17.361 16.58 17.361 16.9706 16.9705C17.3611 16.58 17.3611 15.9468 16.9706 15.5563Z" fill="#1B2124"/>
+  </svg>
+);
+
 export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }: AddPageSidebarProps) => {
   const [title, setTitle] = useState("");
   const [urlSlug, setUrlSlug] = useState("");
@@ -50,7 +57,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
-        className="w-[420px] max-w-[420px] p-0 bg-white border-l border-gray-200 shadow-lg"
+        className="w-[420px] max-w-[420px] p-0 bg-white border-l border-gray-200 shadow-lg [&>button]:hidden"
         side="right"
         role="dialog"
         aria-labelledby="add-page-title"
@@ -59,6 +66,13 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
         <div className="px-8 py-8 pb-6 border-b border-gray-100">
           <div className="flex items-center justify-between mb-6">
             <h2 id="add-page-title" className="text-2xl font-semibold text-gray-900">Add new page</h2>
+            <button 
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1"
+              aria-label="Close sidebar"
+            >
+              <CloseIcon />
+            </button>
           </div>
         </div>
 
