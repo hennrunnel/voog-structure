@@ -462,14 +462,20 @@ export const Pages = () => {
               </div>}
           </div>
 
-          {/* Visibility - matching header width */}
-          <div className="w-24 px-4">
-            {!isUntranslated ? <button onClick={e => {
-            e.stopPropagation();
-            togglePageVisibility(page.id);
-          }} className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1" aria-label={page.isVisible ? `Hide ${page.title}` : `Show ${page.title}`}>
-                {page.isVisible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4 text-red-500" />}
-              </button> : null}
+          {/* Menu Visibility Toggle - matching header width */}
+          <div className="w-24 px-4 flex justify-center">
+            {!isUntranslated ? (
+              <Switch 
+                checked={page.isVisible} 
+                onCheckedChange={(checked) => {
+                  const e = window.event as Event;
+                  e?.stopPropagation();
+                  togglePageVisibility(page.id);
+                }}
+                onClick={(e) => e.stopPropagation()}
+                aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
+              />
+            ) : null}
           </div>
 
           {/* Actions - matching header spacing */}
@@ -688,7 +694,7 @@ export const Pages = () => {
                     <div className="w-48 px-4">Slug</div>
                     <div className="w-32 px-4">Page type</div>
                     <div className="w-24 px-4 text-center">SEO</div>
-                    <div className="w-24 px-4 text-center">Visibility</div>
+                    <div className="w-24 px-4 text-center">Visible in menu</div>
                     <div className="w-16"></div>
                   </div>
                 </div>
