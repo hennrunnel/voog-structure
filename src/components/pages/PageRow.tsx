@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -110,8 +109,14 @@ export const PageRow: React.FC<PageRowProps> = ({
     <TooltipProvider>
       <div key={page.id} className="font-sans">
         <div 
-          className="group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors cursor-pointer" 
-          style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
+          className="group flex items-center border-b hover:bg-gray-50 transition-colors cursor-pointer" 
+          style={{ 
+            paddingLeft: `${paddingLeft + 12}px`, 
+            paddingRight: '12px',
+            height: '64px',
+            borderBottomColor: '#EFEFEF',
+            borderBottomWidth: '1px'
+          }} 
           role="row" 
           tabIndex={0} 
           aria-label={`${page.title} page row`}
