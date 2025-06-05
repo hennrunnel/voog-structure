@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageSettings } from "@/components/PageSettings";
@@ -7,16 +6,16 @@ import { usePageManagement } from "@/hooks/usePageManagement";
 import { PageRow } from "@/components/pages/PageRow";
 import { PageDialogs } from "@/components/pages/PageDialogs";
 import { LanguageSettings } from "@/components/pages/LanguageSettings";
-import { AddPagePopover } from "@/components/pages/AddPagePopover";
 import { PageItem } from "@/types/pages";
 import { layoutOptions } from "@/constants/pages";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const Pages = () => {
   const [activeTab, setActiveTab] = useState("english");
   const [languageDeleteDialogOpen, setLanguageDeleteDialogOpen] = useState(false);
   const [languageVisibilityDialogOpen, setLanguageVisibilityDialogOpen] = useState(false);
   const [languageVisibilityAction, setLanguageVisibilityAction] = useState<'enable' | 'disable'>('disable');
-  const [addPagePopoverOpen, setAddPagePopoverOpen] = useState(false);
   const [addPageSidebarOpen, setAddPageSidebarOpen] = useState(false);
   const [selectedLayout, setSelectedLayout] = useState<string | null>(null);
   const [pageSettingsOpen, setPageSettingsOpen] = useState(false);
@@ -48,13 +47,8 @@ export const Pages = () => {
     setAddPageSidebarOpen(true);
   };
 
-  const handleLayoutSelect = (layoutId: string) => {
-    if (layoutId === "link-navigation") {
-      setAddPagePopoverOpen(false);
-      return;
-    }
-    setSelectedLayout(layoutId);
-    setAddPagePopoverOpen(false);
+  const handleAddPageClick = () => {
+    setSelectedLayout("common-page");
     setAddPageSidebarOpen(true);
   };
 
@@ -178,11 +172,13 @@ export const Pages = () => {
                   onLanguageDelete={handleLanguageDelete}
                 />
                 
-                <AddPagePopover
-                  isOpen={addPagePopoverOpen}
-                  setIsOpen={setAddPagePopoverOpen}
-                  onLayoutSelect={handleLayoutSelect}
-                />
+                <Button 
+                  onClick={handleAddPageClick}
+                  className="bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add page
+                </Button>
               </div>
 
               {/* Page Structure Table */}
@@ -192,7 +188,7 @@ export const Pages = () => {
                   <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '32px' }}>
                     <div className="flex-1 min-w-0 mr-4">Menu title</div>
                     <div className="w-48 px-4">Slug</div>
-                    <div className="w-32 px-4">Page type</div>
+                    <div className="w-32 px-4">Layout</div>
                     <div className="w-24 px-4 text-center">SEO</div>
                     <div className="w-24 px-4 text-center">In menu</div>
                     <div className="w-16"></div>

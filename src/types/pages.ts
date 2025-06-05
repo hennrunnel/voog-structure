@@ -9,6 +9,7 @@ export interface PageItem {
   isVisible: boolean;
   children?: PageItem[];
   isExpanded?: boolean;
+  isPasswordProtected?: boolean;
 }
 
 export interface LayoutOption {
