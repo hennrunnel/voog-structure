@@ -140,7 +140,16 @@ export const Pages = () => {
           Pages
         </h1>
         
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div 
+          className="bg-white rounded-lg shadow-sm"
+          style={{
+            width: '992px',
+            background: 'white',
+            boxShadow: '0px 17px 17.700000762939453px rgba(0, 0, 0, 0.01)',
+            borderRadius: '10px',
+            border: '0.50px rgba(24, 24, 27, 0.10) solid'
+          }}
+        >
           {/* Language Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex items-center justify-between mb-6 px-6 pt-6">

@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Trash } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -21,13 +21,13 @@ const LanguageChevronIcon = ({ isExpanded }: { isExpanded: boolean }) => (
   <svg 
     width="16" 
     height="16" 
-    viewBox="0 0 24 24" 
+    viewBox="0 0 16 16" 
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
     style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
     className="transition-transform duration-200 ml-2"
   >
-    <path d="M8.29289 17.2929C7.90237 17.6834 7.90237 18.3166 8.29289 18.7071C8.68342 19.0976 9.31658 19.0976 9.70711 18.7071L15.7071 12.7071C16.0857 12.3285 16.0989 11.7189 15.7372 11.3243L10.2372 5.32428C9.86396 4.91716 9.23139 4.88965 8.82427 5.26285C8.41716 5.63604 8.38965 6.26861 8.76285 6.67572L13.6159 11.9699L8.29289 17.2929Z" fill="#1B2124"/>
+    <path d="M5.52859 11.5286C5.26824 11.7889 5.26824 12.2111 5.52859 12.4714C5.78894 12.7317 6.21106 12.7317 6.47141 12.4714L10.4714 8.47141C10.7238 8.219 10.7326 7.81264 10.4915 7.54953L6.8248 3.54953C6.57597 3.27811 6.15426 3.25977 5.88284 3.5086C5.61143 3.75743 5.59309 4.17914 5.84192 4.45055L9.07726 7.97993L5.52859 11.5286Z" fill="#1B2124"/>
   </svg>
 );
 
@@ -40,20 +40,22 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
   onLanguageVisibilityToggle,
   onLanguageDelete
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
-    <Accordion type="single" collapsible className="w-full mb-6">
+    <Accordion type="single" collapsible className="w-full mb-6" onValueChange={(value) => setIsExpanded(value === "language-settings")}>
       <AccordionItem value="language-settings" className="border-b-0">
         <div className="flex items-center justify-between">
           <AccordionTrigger 
             className="hover:no-underline py-3 px-0 flex-1 flex items-center justify-start [&>svg]:hidden"
             style={{
-              fontSize: '16px',
+              fontSize: '14px',
               fontWeight: 'medium',
               color: '#1A1A1A'
             }}
           >
             <span>Language settings</span>
-            <LanguageChevronIcon isExpanded={false} />
+            <LanguageChevronIcon isExpanded={isExpanded} />
           </AccordionTrigger>
         </div>
         <AccordionContent className="pb-4 pt-2">
