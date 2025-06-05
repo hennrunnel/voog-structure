@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, Edit } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -33,6 +33,11 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const [access, setAccess] = useState("public");
   const [layout, setLayout] = useState("front-page");
 
+  const handleEditPage = () => {
+    // This would open the page editor
+    console.log("Opening page editor...");
+  };
+
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
@@ -52,6 +57,17 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
             >
               <X className="w-5 h-5 text-gray-500" />
             </button>
+          </div>
+
+          {/* Edit Page Button */}
+          <div className="mb-6">
+            <Button 
+              onClick={handleEditPage}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 justify-center"
+            >
+              <Edit className="w-4 h-4" />
+              Edit page
+            </Button>
           </div>
           
           {/* Tabs */}

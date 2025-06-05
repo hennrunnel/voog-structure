@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, Eye, EyeOff, MoreVertical, GripVertical, Settings, Copy, FileText } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash, Plus, ExternalLink, MoreVertical, Settings, Copy, FileText } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -391,7 +391,7 @@ export const Pages = () => {
         {renderDropZone(page.id, 'before')}
         
         <div 
-          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors cursor-pointer ${isDraggedPage ? 'opacity-50' : ''}`} 
+          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''} ${isHomePage ? 'cursor-pointer' : 'cursor-move'}`} 
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
           onClick={() => handleEditPage(page)} 
           role="row" 
@@ -403,18 +403,10 @@ export const Pages = () => {
             }
           }} 
           aria-label={`Edit ${page.title} page`}
+          draggable={!isHomePage}
+          onDragStart={e => handleDragStart(e, page.id)}
+          onDragEnd={handleDragEnd}
         >
-          {/* Drag handle */}
-          <div 
-            className={`mr-3 ${isHomePage ? 'opacity-30 cursor-not-allowed' : 'cursor-move'}`} 
-            draggable={!isHomePage}
-            onDragStart={e => handleDragStart(e, page.id)}
-            onDragEnd={handleDragEnd}
-            onClick={e => e.stopPropagation()}
-          >
-            <GripVertical className="w-4 h-4 text-gray-400" aria-hidden="true" />
-          </div>
-          
           {/* Expand/collapse button for pages with children */}
           <div className="w-5 flex justify-center mr-2">
             {hasChildren && <button onClick={e => {
@@ -474,6 +466,7 @@ export const Pages = () => {
                 }}
                 onClick={(e) => e.stopPropagation()}
                 aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
+                className="data-[state=checked]:bg-blue-600"
               />
             ) : null}
           </div>
@@ -689,12 +682,12 @@ export const Pages = () => {
               <div className="overflow-hidden">
                 {/* Table Header */}
                 <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
-                  <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '52px' }}>
+                  <div className="flex items-center text-sm font-medium text-gray-700" style={{ paddingLeft: '32px' }}>
                     <div className="flex-1 min-w-0 mr-4">Menu title</div>
                     <div className="w-48 px-4">Slug</div>
                     <div className="w-32 px-4">Page type</div>
                     <div className="w-24 px-4 text-center">SEO</div>
-                    <div className="w-24 px-4 text-center">Visible in menu</div>
+                    <div className="w-24 px-4 text-center">In menu</div>
                     <div className="w-16"></div>
                   </div>
                 </div>
