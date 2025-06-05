@@ -391,21 +391,24 @@ export const Pages = () => {
         {renderDropZone(page.id, 'before')}
         
         <div 
-          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''} ${isHomePage ? 'cursor-pointer' : 'cursor-move'}`} 
+          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''} ${isHomePage ? '' : 'cursor-move'}`} 
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
-          onClick={() => handleEditPage(page)} 
           role="row" 
           tabIndex={0} 
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleEditPage(page);
-            }
-          }} 
-          aria-label={`Edit ${page.title} page`}
+          aria-label={`${page.title} page row`}
           draggable={!isHomePage}
           onDragStart={e => handleDragStart(e, page.id)}
           onDragEnd={handleDragEnd}
+          onDragOver={e => {
+            if (dragState.isDragging && dragState.draggedPageId !== page.id) {
+              e.preventDefault();
+            }
+          }}
+          onDrop={e => {
+            if (dragState.isDragging && dragState.draggedPageId !== page.id) {
+              handleDrop(e, page.id, 'after');
+            }
+          }}
         >
           {/* Expand/collapse button for pages with children */}
           <div className="w-5 flex justify-center mr-2">
@@ -420,7 +423,23 @@ export const Pages = () => {
           {/* Title - matching header width */}
           <div className="flex-1 min-w-0 mr-4">
             <div className="flex items-center gap-2 mb-1">
-              <span className={`text-sm font-medium ${isUntranslated ? 'italic text-gray-400' : page.isVisible ? 'text-gray-900' : 'text-gray-500'}`}>
+              <span 
+                className={`text-sm font-medium cursor-pointer hover:text-blue-600 ${isUntranslated ? 'italic text-gray-400' : 'text-gray-900'}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditPage(page);
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleEditPage(page);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Edit ${page.title} page`}
+              >
                 {page.title}
               </span>
               {isUntranslated && <Badge variant="secondary" className="text-xs px-2 py-0 bg-gray-100 text-gray-600 border-0">
