@@ -485,7 +485,7 @@ export const Pages = () => {
                 }}
                 onClick={(e) => e.stopPropagation()}
                 aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
-                className="data-[state=checked]:bg-blue-600"
+                className="data-[state=checked]:bg-[#443DF6] data-[state=unchecked]:bg-[#443DF6] data-[state=unchecked]:opacity-10 w-8 h-4 [&>span]:w-3 [&>span]:h-3 [&>span]:data-[state=checked]:translate-x-4 [&>span]:data-[state=unchecked]:translate-x-0"
               />
             ) : null}
           </div>
