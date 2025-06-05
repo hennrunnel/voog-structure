@@ -145,7 +145,7 @@ export const Pages = () => {
           style={{
             width: '992px',
             borderRadius: '10px',
-            border: '0.5px solid rgba(24, 24, 27, 0.10)',
+            border: 'none',
             background: 'var(--Primary-White, #FFF)',
             boxShadow: '0px 0.5px 1px 0px var(--shadow-dark, rgba(24, 24, 27, 0.05)), 0px 2px 5px 0px rgba(0, 0, 0, 0.05), 0px 17px 17.7px 0px rgba(0, 0, 0, 0.01)'
           }}
@@ -180,39 +180,41 @@ export const Pages = () => {
             {/* Border line that spans full width */}
             <div className="border-b border-gray-200 -mx-6"></div>
 
-            <TabsContent value="english" className="mt-0 px-6">
-              <div className="flex items-center justify-between mb-6">
-                <LanguageSettings
-                  websiteTitle={websiteTitle}
-                  setWebsiteTitle={setWebsiteTitle}
-                  nameInMenu={nameInMenu}
-                  setNameInMenu={setNameInMenu}
-                  languageVisible={languageVisible}
-                  onLanguageVisibilityToggle={handleLanguageVisibilityToggle}
-                  onLanguageDelete={handleLanguageDelete}
-                />
-                
-                <Button 
-                  onClick={handleAddPageClick}
-                  className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                  style={{
-                    padding: '8px 16px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '8px',
-                    borderRadius: '8px',
-                    background: '#453DFF',
-                    color: '#FFF',
-                    textAlign: 'center',
-                    fontFamily: '"Avenir Next"',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
-                    fontWeight: 600,
-                    lineHeight: '24px'
-                  }}
-                >
-                  Add page
-                </Button>
+            <TabsContent value="english" className="mt-0 px-0">
+              <div className="px-8">
+                <div className="flex items-center justify-between mb-6">
+                  <LanguageSettings
+                    websiteTitle={websiteTitle}
+                    setWebsiteTitle={setWebsiteTitle}
+                    nameInMenu={nameInMenu}
+                    setNameInMenu={setNameInMenu}
+                    languageVisible={languageVisible}
+                    onLanguageVisibilityToggle={handleLanguageVisibilityToggle}
+                    onLanguageDelete={handleLanguageDelete}
+                  />
+                  
+                  <Button 
+                    onClick={handleAddPageClick}
+                    className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                    style={{
+                      padding: '8px 16px',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      gap: '8px',
+                      borderRadius: '8px',
+                      background: '#453DFF',
+                      color: '#FFF',
+                      textAlign: 'center',
+                      fontFamily: '"Avenir Next"',
+                      fontSize: '14px',
+                      fontStyle: 'normal',
+                      fontWeight: 600,
+                      lineHeight: '24px'
+                    }}
+                  >
+                    Add page
+                  </Button>
+                </div>
               </div>
 
               {/* Page Structure Table */}
@@ -260,9 +262,11 @@ export const Pages = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="estonian" className="mt-0 px-6">
-              <div className="text-[#1B2124] text-sm">
-                Estonian tab content will be displayed here.
+            <TabsContent value="estonian" className="mt-0 px-0">
+              <div className="px-8">
+                <div className="text-[#1B2124] text-sm">
+                  Estonian tab content will be displayed here.
+                </div>
               </div>
             </TabsContent>
           </Tabs>
