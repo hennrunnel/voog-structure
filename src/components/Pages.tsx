@@ -152,7 +152,7 @@ export const Pages = () => {
         >
           {/* Language Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <div className="flex items-center justify-between mb-6 px-6 pt-6">
+            <div className="flex items-center justify-between mb-6 px-8 pt-6">
               <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none">
                 {availableTabs.includes("english") && (
                   <TabsTrigger 
@@ -221,13 +221,32 @@ export const Pages = () => {
               <div className="overflow-hidden">
                 {/* Table Header */}
                 <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
-                  <div className="flex items-center text-xs font-medium text-[#8d9091]" style={{ paddingLeft: '32px' }}>
-                    <div className="flex-1 min-w-0 mr-4">Menu title</div>
+                  <div 
+                    className="flex items-center text-xs font-medium text-[#8d9091]" 
+                    style={{ 
+                      paddingLeft: '24px',
+                      paddingRight: '24px'
+                    }}
+                  >
+                    {/* Expand/collapse space + Title */}
+                    <div className="flex items-center mr-4" style={{ minWidth: 0, flex: 1 }}>
+                      <div className="w-5 mr-2"></div>
+                      <span>Menu title</span>
+                    </div>
+                    
+                    {/* Slug */}
                     <div className="w-48 px-4">Slug</div>
+                    
+                    {/* Layout */}
                     <div className="w-32 px-4">Layout</div>
+                    
+                    {/* SEO */}
                     <div className="w-24 px-4 text-center">SEO</div>
+                    
+                    {/* In menu */}
                     <div className="w-24 px-4 text-center">In menu</div>
-                    <div className="w-8 px-1"></div>
+                    
+                    {/* Actions */}
                     <div className="w-16"></div>
                   </div>
                 </div>
