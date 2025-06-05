@@ -341,8 +341,72 @@ export const Pages = () => {
     e.preventDefault();
     
     if (dragState.draggedPageId && dragState.draggedPageId !== targetPageId) {
-      // Here you would implement the actual page reordering logic
       console.log(`Moving page ${dragState.draggedPageId} ${position} page ${targetPageId}`);
+      
+      // Implement actual page reordering
+      const reorderPages = (pages: PageItem[], draggedId: string, targetId: string, pos: 'before' | 'after' | 'nested'): PageItem[] => {
+        // Find the dragged page and remove it from its current position
+        let draggedPage: PageItem | null = null;
+        
+        const removePageRecursive = (pageList: PageItem[]): PageItem[] => {
+          return pageList.filter(page => {
+            if (page.id === draggedId) {
+              draggedPage = page;
+              return false;
+            }
+            if (page.children) {
+              page.children = removePageRecursive(page.children);
+            }
+            return true;
+          });
+        };
+        
+        const updatedPages = removePageRecursive([...pages]);
+        
+        if (!draggedPage) return pages;
+        
+        // Insert the dragged page in the new position
+        const insertPageRecursive = (pageList: PageItem[]): PageItem[] => {
+          const result: PageItem[] = [];
+          
+          for (let i = 0; i < pageList.length; i++) {
+            const page = pageList[i];
+            
+            if (page.id === targetId) {
+              if (pos === 'before') {
+                result.push(draggedPage);
+                result.push(page);
+              } else if (pos === 'after') {
+                result.push(page);
+                result.push(draggedPage);
+              } else if (pos === 'nested') {
+                const updatedPage = {
+                  ...page,
+                  children: [...(page.children || []), draggedPage],
+                  isExpanded: true
+                };
+                result.push(updatedPage);
+              }
+            } else {
+              if (page.children && page.children.length > 0) {
+                const updatedChildren = insertPageRecursive(page.children);
+                result.push({
+                  ...page,
+                  children: updatedChildren
+                });
+              } else {
+                result.push(page);
+              }
+            }
+          }
+          
+          return result;
+        };
+        
+        return insertPageRecursive(updatedPages);
+      };
+      
+      setPages(prevPages => reorderPages(prevPages, dragState.draggedPageId!, targetPageId, position));
     }
     
     handleDragEnd();
@@ -391,17 +455,22 @@ export const Pages = () => {
         {renderDropZone(page.id, 'before')}
         
         <div 
-          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''} ${isHomePage ? '' : 'cursor-move'}`} 
+          className={`group flex items-center border-b border-gray-200 py-3 hover:bg-gray-50 transition-colors ${isDraggedPage ? 'opacity-50' : ''}`} 
           style={{ paddingLeft: `${paddingLeft + 12}px`, paddingRight: '12px' }} 
           role="row" 
           tabIndex={0} 
           aria-label={`${page.title} page row`}
           draggable={!isHomePage}
-          onDragStart={e => handleDragStart(e, page.id)}
+          onDragStart={e => {
+            if (!isHomePage) {
+              handleDragStart(e, page.id);
+            }
+          }}
           onDragEnd={handleDragEnd}
           onDragOver={e => {
             if (dragState.isDragging && dragState.draggedPageId !== page.id) {
               e.preventDefault();
+              handleDragOver(e, page.id, 'after');
             }
           }}
           onDrop={e => {
