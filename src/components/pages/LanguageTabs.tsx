@@ -1,5 +1,5 @@
 
-import { TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PageTable } from "@/components/pages/PageTable";
 import { AddLanguageSidebar } from "@/components/pages/AddLanguageSidebar";
@@ -65,40 +65,42 @@ export const LanguageTabs = ({
   return (
     <TooltipProvider>
       <div className="w-full">
-        <LanguageTabsHeader
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          availableTabs={availableTabs}
-          englishVisible={englishVisible}
-          estonianVisible={estonianVisible}
-          onAddLanguageClick={handleAddLanguageClick}
-        />
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <LanguageTabsHeader
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            availableTabs={availableTabs}
+            englishVisible={englishVisible}
+            estonianVisible={estonianVisible}
+            onAddLanguageClick={handleAddLanguageClick}
+          />
 
-        <LanguageTabsActions
-          activeTab={activeTab}
-          englishVisible={englishVisible}
-          estonianVisible={estonianVisible}
-          onLanguageSettings={onLanguageSettings}
-          onAddPageClick={onAddPageClick}
-          onLanguagePublishToggle={onLanguagePublishToggle}
-          onLanguageDelete={onLanguageDelete}
-        />
+          <LanguageTabsActions
+            activeTab={activeTab}
+            englishVisible={englishVisible}
+            estonianVisible={estonianVisible}
+            onLanguageSettings={onLanguageSettings}
+            onAddPageClick={onAddPageClick}
+            onLanguagePublishToggle={onLanguagePublishToggle}
+            onLanguageDelete={onLanguageDelete}
+          />
 
-        {availableTabs.map(tab => (
-          <TabsContent key={tab} value={tab} className="mt-0">
-            <PageTable 
-              pages={pages} 
-              onToggleExpansion={onToggleExpansion} 
-              onToggleVisibility={onToggleVisibility} 
-              onDeletePage={onDeletePage} 
-              onDuplicatePage={onDuplicatePage} 
-              onAddNestedPage={onAddNestedPage} 
-              onPageSettings={onPageSettings} 
-              onEditPage={onEditPage} 
-              onTranslatePage={onTranslatePage} 
-            />
-          </TabsContent>
-        ))}
+          {availableTabs.map(tab => (
+            <TabsContent key={tab} value={tab} className="mt-0">
+              <PageTable 
+                pages={pages} 
+                onToggleExpansion={onToggleExpansion} 
+                onToggleVisibility={onToggleVisibility} 
+                onDeletePage={onDeletePage} 
+                onDuplicatePage={onDuplicatePage} 
+                onAddNestedPage={onAddNestedPage} 
+                onPageSettings={onPageSettings} 
+                onEditPage={onEditPage} 
+                onTranslatePage={onTranslatePage} 
+              />
+            </TabsContent>
+          ))}
+        </Tabs>
       </div>
 
       <AddLanguageSidebar 
