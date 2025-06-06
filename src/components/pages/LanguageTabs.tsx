@@ -28,18 +28,11 @@ interface LanguageTabsProps {
   onAddLanguage: (languageData: any) => void;
 }
 
-const PlusIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 11H5C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11Z" fill="#1B2124"/>
-    <path d="M13 19L13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5L11 19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19Z" fill="#1B2124"/>
-  </svg>
-);
-
 const KebabIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="8" cy="2" r="1.5" fill="#1B2124"/>
-    <circle cx="8" cy="8" r="1.5" fill="#1B2124"/>
-    <circle cx="8" cy="14" r="1.5" fill="#1B2124"/>
+    <circle cx="8" cy="2" r="1.5" fill="currentColor"/>
+    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+    <circle cx="8" cy="14" r="1.5" fill="currentColor"/>
   </svg>
 );
 
@@ -78,43 +71,49 @@ export const LanguageTabs = ({
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="flex items-center justify-between mb-6 px-8 pt-6">
           <div className="flex items-center gap-6">
-            <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none">
-              {availableTabs.map((tab) => (
-                <div key={tab} className="flex items-center">
-                  <TabsTrigger 
-                    value={tab} 
-                    className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize"
-                  >
-                    {tab}
-                    {tab === "estonian" && !estonianVisible && (
-                      <span className="ml-2 text-xs text-[#666]">(hidden)</span>
-                    )}
-                  </TabsTrigger>
-                  
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <button
-                        onClick={onLanguageSettings}
-                        className="text-[#666] hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-2 transition-colors ml-1"
-                        aria-label={`${tab} language settings`}
-                      >
-                        <KebabIcon />
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Language settings</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-              ))}
-            </TabsList>
-            
-            <button 
-              onClick={handleAddLanguageClick}
-              className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded transition-colors"
-            >
-              + Add language
-            </button>
+            <div className="flex items-center">
+              <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none">
+                {availableTabs.map((tab) => (
+                  <div key={tab} className="flex items-center">
+                    <TabsTrigger 
+                      value={tab} 
+                      className="text-sm px-4 py-3 pr-2 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize group"
+                    >
+                      <span className="flex items-center gap-2">
+                        {tab}
+                        {tab === "estonian" && !estonianVisible && (
+                          <span className="text-sm text-[#666]">(hidden)</span>
+                        )}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onLanguageSettings?.();
+                              }}
+                              className="text-[#666] hover:text-[#5A4FFF] group-data-[state=active]:hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1 transition-colors ml-1"
+                              aria-label={`${tab} language settings`}
+                            >
+                              <KebabIcon />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Language settings</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </span>
+                    </TabsTrigger>
+                  </div>
+                ))}
+              </TabsList>
+              
+              <button 
+                onClick={handleAddLanguageClick}
+                className="text-[#1B2124] text-sm font-medium hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded transition-colors ml-6"
+              >
+                + Add language
+              </button>
+            </div>
           </div>
           
           <div className="flex items-center gap-3">
