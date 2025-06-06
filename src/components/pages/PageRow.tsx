@@ -114,8 +114,15 @@ export const PageRow: React.FC<PageRowProps> = ({
 
   const handleSlugClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Handle slug click - could navigate to the page or show preview
     console.log('Slug clicked:', page.slug);
+  };
+
+  const handleVisibilityClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // For home page, do nothing - no confirmation modals
+    if (!isHomePage) {
+      onToggleVisibility(page.id);
+    }
   };
 
   return (
@@ -211,8 +218,8 @@ export const PageRow: React.FC<PageRowProps> = ({
             </div>
           </div>
 
-          {/* Slug */}
-          <div className="w-48 px-4">
+          {/* Slug - hidden on small screens */}
+          <div className="w-48 px-4 hidden lg:block">
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -238,8 +245,8 @@ export const PageRow: React.FC<PageRowProps> = ({
             )}
           </div>
 
-          {/* Layout */}
-          <div className="w-32 px-4">
+          {/* Layout - hidden on tablet and smaller */}
+          <div className="w-32 px-4 hidden xl:block">
             {!isUntranslated ? (
               <span className="text-sm text-[#1B2124]">{page.pageType}</span>
             ) : (
@@ -260,14 +267,11 @@ export const PageRow: React.FC<PageRowProps> = ({
             )}
           </div>
 
-          {/* Menu Visibility Toggle */}
-          <div className="w-24 px-4 flex justify-center">
+          {/* Menu Visibility Toggle - hidden on tablet and smaller */}
+          <div className="w-24 px-4 flex justify-center hidden xl:block">
             {!isUntranslated ? (
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onToggleVisibility(page.id);
-                }}
+                onClick={handleVisibilityClick}
                 aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
                 className="outline-none focus:outline-none focus:ring-0 rounded"
               >
@@ -276,10 +280,12 @@ export const PageRow: React.FC<PageRowProps> = ({
             ) : null}
           </div>
 
-          {/* Move handle - only visible on hover */}
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity mr-2">
-            <MoveIcon />
-          </div>
+          {/* Move handle - only visible on hover and not for home page */}
+          {!isHomePage && (
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity mr-2">
+              <MoveIcon />
+            </div>
+          )}
 
           {/* Actions */}
           <div className="w-16 flex items-center justify-center">
@@ -341,16 +347,33 @@ export const PageRow: React.FC<PageRowProps> = ({
                     </DropdownMenuItem>
                   </>
                 )}
-                <DropdownMenuItem 
-                  onClick={e => {
-                    e.stopPropagation();
-                    onDeletePage(page);
-                  }} 
-                  className="cursor-pointer text-sm text-red-600 focus:text-red-600"
-                >
-                  <Trash className="w-4 h-4 mr-2" />
-                  Delete
-                </DropdownMenuItem>
+                {/* Delete option - disabled for home page and pages with children */}
+                {!isHomePage && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div>
+                        <DropdownMenuItem 
+                          onClick={e => {
+                            e.stopPropagation();
+                            if (!hasChildren) {
+                              onDeletePage(page);
+                            }
+                          }} 
+                          disabled={hasChildren}
+                          className={`cursor-pointer text-sm ${hasChildren ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 focus:text-red-600'}`}
+                        >
+                          <Trash className="w-4 h-4 mr-2" />
+                          Delete
+                        </DropdownMenuItem>
+                      </div>
+                    </TooltipTrigger>
+                    {hasChildren && (
+                      <TooltipContent>
+                        <p>Cannot delete page with subpages</p>
+                      </TooltipContent>
+                    )}
+                  </Tooltip>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
