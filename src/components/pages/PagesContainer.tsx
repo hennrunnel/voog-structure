@@ -1,4 +1,3 @@
-
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
 import { usePageManagement } from "@/hooks/usePageManagement";
@@ -132,8 +131,7 @@ export const PagesContainer = () => {
 
         <PageSettings 
           isOpen={pageSettingsOpen} 
-          onClose={handleClosePageSettings} 
-          page={selectedPage}
+          onClose={handleClosePageSettings}
         />
 
         <AddPageSidebar 

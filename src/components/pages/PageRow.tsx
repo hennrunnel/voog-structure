@@ -121,7 +121,9 @@ export const PageRow: React.FC<PageRowProps> = ({
   const handleVisibilityToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     // For Home page, directly toggle without confirmation
-    onToggleVisibility(page.id);
+    if (!isHomePage) {
+      onToggleVisibility(page.id);
+    }
   };
 
   return (
@@ -268,7 +270,7 @@ export const PageRow: React.FC<PageRowProps> = ({
 
           {/* Menu Visibility Toggle */}
           <div className="w-24 px-4 flex justify-center">
-            {!isUntranslated ? (
+            {!isUntranslated && !isHomePage ? (
               <button
                 onClick={handleVisibilityToggle}
                 aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
@@ -279,12 +281,10 @@ export const PageRow: React.FC<PageRowProps> = ({
             ) : null}
           </div>
 
-          {/* Move handle - only visible on hover and not for Home page */}
-          {!isHomePage && (
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity mr-2">
-              <MoveIcon />
-            </div>
-          )}
+          {/* Move handle - invisible placeholder for Home page to maintain spacing */}
+          <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity mr-2`}>
+            <MoveIcon />
+          </div>
 
           {/* Actions */}
           <div className="w-16 flex items-center justify-center">
@@ -344,39 +344,39 @@ export const PageRow: React.FC<PageRowProps> = ({
                       <Plus className="w-4 h-4 mr-2" />
                       Add subpage
                     </DropdownMenuItem>
+                    {/* Delete option - not shown for Home page, disabled with tooltip for pages with children */}
+                    {!isHomePage && (
+                      hasChildren ? (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div>
+                              <DropdownMenuItem 
+                                disabled
+                                className="cursor-not-allowed text-sm text-gray-400"
+                              >
+                                <Trash className="w-4 h-4 mr-2" />
+                                Delete
+                              </DropdownMenuItem>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Cannot delete page with subpages</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      ) : (
+                        <DropdownMenuItem 
+                          onClick={e => {
+                            e.stopPropagation();
+                            onDeletePage(page);
+                          }} 
+                          className="cursor-pointer text-sm text-red-600 focus:text-red-600"
+                        >
+                          <Trash className="w-4 h-4 mr-2" />
+                          Delete
+                        </DropdownMenuItem>
+                      )
+                    )}
                   </>
-                )}
-                {/* Delete option - not shown for Home page, disabled with tooltip for pages with children */}
-                {!isHomePage && (
-                  hasChildren ? (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div>
-                          <DropdownMenuItem 
-                            disabled
-                            className="cursor-not-allowed text-sm text-gray-400"
-                          >
-                            <Trash className="w-4 h-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Cannot delete page with subpages</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  ) : (
-                    <DropdownMenuItem 
-                      onClick={e => {
-                        e.stopPropagation();
-                        onDeletePage(page);
-                      }} 
-                      className="cursor-pointer text-sm text-red-600 focus:text-red-600"
-                    >
-                      <Trash className="w-4 h-4 mr-2" />
-                      Delete
-                    </DropdownMenuItem>
-                  )
                 )}
               </DropdownMenuContent>
             </DropdownMenu>

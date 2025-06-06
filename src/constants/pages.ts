@@ -40,8 +40,8 @@ export const mockPages: PageItem[] = [
   },
   {
     id: "2",
-    title: "Contactless delivery solution for restaurants and cafes",
-    slug: "/contactless",
+    title: "Digital ordering platform for restaurants and cafes",
+    slug: "/digital-ordering",
     pageType: "Product List",
     seoScore: "Good",
     isVisible: true,
@@ -49,8 +49,8 @@ export const mockPages: PageItem[] = [
     children: [
       {
         id: "2-1",
-        title: "Sign up for Fleet Complete with very long title that should be cut off",
-        slug: "/contactless/sign-up-for-fleet-complete-with-very-long-url-that-should-be-truncated",
+        title: "Sign up for our restaurant management system with very long title that should be cut off",
+        slug: "/digital-ordering/sign-up-for-restaurant-management-with-very-long-url-that-should-be-truncated",
         pageType: "Common Page",
         seoScore: "Good",
         isVisible: true
