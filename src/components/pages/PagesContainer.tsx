@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Plus, MoreVertical, Download, Trash, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -97,11 +96,29 @@ export const PagesContainer = () => {
     setAddLanguageSidebarOpen(false);
   };
 
-  const getCurrentLanguageVisible = () => {
-    if (activeTab === "english") return englishLanguageVisible;
-    if (activeTab === "estonian") return estonianLanguageVisible;
-    return true;
+  const getCurrentLanguageSettings = () => {
+    if (activeTab === "english") {
+      return {
+        websiteTitle: englishWebsiteTitle,
+        setWebsiteTitle: setEnglishWebsiteTitle,
+        nameInMenu: englishNameInMenu,
+        setNameInMenu: setEnglishNameInMenu,
+        languageVisible: englishLanguageVisible,
+        onLanguageVisibilityToggle: handleEnglishLanguageVisibilityToggle
+      };
+    } else {
+      return {
+        websiteTitle: estonianWebsiteTitle,
+        setWebsiteTitle: setEstonianWebsiteTitle,
+        nameInMenu: estonianNameInMenu,
+        setNameInMenu: setEstonianNameInMenu,
+        languageVisible: estonianLanguageVisible,
+        onLanguageVisibilityToggle: handleEstonianLanguageVisibilityToggle
+      };
+    }
   };
+
+  const currentSettings = getCurrentLanguageSettings();
 
   return (
     <div className="min-h-screen bg-white">
@@ -221,20 +238,14 @@ export const PagesContainer = () => {
         <LanguageSettingsSidebar
           isOpen={languageSettingsOpen}
           onClose={() => setLanguageSettingsOpen(false)}
-          activeTab={activeTab}
-          englishWebsiteTitle={englishWebsiteTitle}
-          setEnglishWebsiteTitle={setEnglishWebsiteTitle}
-          englishNameInMenu={englishNameInMenu}
-          setEnglishNameInMenu={setEnglishNameInMenu}
-          englishLanguageVisible={englishLanguageVisible}
-          onEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
-          estonianWebsiteTitle={estonianWebsiteTitle}
-          setEstonianWebsiteTitle={setEstonianWebsiteTitle}
-          estonianNameInMenu={estonianNameInMenu}
-          setEstonianNameInMenu={setEstonianNameInMenu}
-          estonianLanguageVisible={estonianLanguageVisible}
-          onEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
+          websiteTitle={currentSettings.websiteTitle}
+          setWebsiteTitle={currentSettings.setWebsiteTitle}
+          nameInMenu={currentSettings.nameInMenu}
+          setNameInMenu={currentSettings.setNameInMenu}
+          languageVisible={currentSettings.languageVisible}
+          onLanguageVisibilityToggle={currentSettings.onLanguageVisibilityToggle}
           onLanguageDelete={handleLanguageDelete}
+          activeTab={activeTab}
         />
       </div>
     </div>
