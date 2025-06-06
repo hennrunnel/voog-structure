@@ -72,7 +72,7 @@ export const mockPages: PageItem[] = [
         title: "Cik šāds risinājums maksā un kādas ir cenas",
         slug: "/about/pricing-long-url",
         pageType: "Common Page",
-        seoScore: "Medium",
+        seoScore: "Needs attention",
         translationStatus: "Untranslated",
         isVisible: true
       },
@@ -92,7 +92,7 @@ export const mockPages: PageItem[] = [
     title: "News",
     slug: "/news",
     pageType: "Blog & News",
-    seoScore: "Medium",
+    seoScore: "Needs attention",
     isVisible: true
   },
   {
@@ -134,7 +134,7 @@ export const mockPages: PageItem[] = [
             title: "Private Client Area",
             slug: "/contact/support/client-area",
             pageType: "Common Page",
-            seoScore: "Medium",
+            seoScore: "Needs attention",
             isVisible: true,
             isPasswordProtected: true
           }
@@ -145,7 +145,7 @@ export const mockPages: PageItem[] = [
         title: "Sales",
         slug: "/contact/sales",
         pageType: "Common Page",
-        seoScore: "Medium",
+        seoScore: "Needs attention",
         isVisible: true
       },
       {
