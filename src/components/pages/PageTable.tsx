@@ -26,7 +26,7 @@ export const PageTable = ({
   onTranslatePage
 }: PageTableProps) => {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden border-t border-gray-200">
       {/* Table Header */}
       <div className="bg-white px-3 py-3 border-b border-gray-200">
         <div 
@@ -86,7 +86,7 @@ export const PageTable = ({
         ))}
         
         {/* Download entire site link */}
-        <div className="px-3 py-4 border-t border-gray-200">
+        <div className="px-3 py-4">
           <div className="flex justify-end" style={{ paddingRight: '12px' }}>
             <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded">
               Download entire site
