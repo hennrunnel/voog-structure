@@ -20,7 +20,7 @@ export const useLanguageManagement = () => {
   const [languageVisibilityDialogOpen, setLanguageVisibilityDialogOpen] = useState(false);
   const [languageVisibilityAction, setLanguageVisibilityAction] = useState<'enable' | 'disable'>('disable');
 
-  const handleLanguageDelete = () => {
+  const handleLanguageDelete = (language?: string) => {
     setLanguageDeleteDialogOpen(true);
   };
 
@@ -33,6 +33,14 @@ export const useLanguageManagement = () => {
       setActiveTab(nextTab);
     }
     setLanguageDeleteDialogOpen(false);
+  };
+
+  const handleLanguagePublishToggle = (language: string, published: boolean) => {
+    if (language === "english") {
+      setEnglishLanguageVisible(published);
+    } else if (language === "estonian") {
+      setEstonianLanguageVisible(published);
+    }
   };
 
   const handleEnglishLanguageVisibilityToggle = (newValue: boolean) => {
@@ -75,6 +83,7 @@ export const useLanguageManagement = () => {
     languageVisibilityAction,
     handleLanguageDelete,
     confirmLanguageDelete,
+    handleLanguagePublishToggle,
     handleEnglishLanguageVisibilityToggle,
     handleEstonianLanguageVisibilityToggle,
     confirmLanguageVisibilityToggle

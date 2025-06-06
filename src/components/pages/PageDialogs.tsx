@@ -1,6 +1,14 @@
 
-import React from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { PageItem } from "@/types/pages";
 
 interface PageDialogsProps {
@@ -8,10 +16,6 @@ interface PageDialogsProps {
   setDeleteDialogOpen: (open: boolean) => void;
   pageToDelete: PageItem | null;
   onConfirmDelete: () => void;
-  homeVisibilityDialogOpen: boolean;
-  setHomeVisibilityDialogOpen: (open: boolean) => void;
-  homeVisibilityAction: 'show' | 'hide';
-  onConfirmHomeVisibilityToggle: () => void;
   languageDeleteDialogOpen: boolean;
   setLanguageDeleteDialogOpen: (open: boolean) => void;
   onConfirmLanguageDelete: () => void;
@@ -21,15 +25,11 @@ interface PageDialogsProps {
   onConfirmLanguageVisibilityToggle: () => void;
 }
 
-export const PageDialogs: React.FC<PageDialogsProps> = ({
+export const PageDialogs = ({
   deleteDialogOpen,
   setDeleteDialogOpen,
   pageToDelete,
   onConfirmDelete,
-  homeVisibilityDialogOpen,
-  setHomeVisibilityDialogOpen,
-  homeVisibilityAction,
-  onConfirmHomeVisibilityToggle,
   languageDeleteDialogOpen,
   setLanguageDeleteDialogOpen,
   onConfirmLanguageDelete,
@@ -37,22 +37,20 @@ export const PageDialogs: React.FC<PageDialogsProps> = ({
   setLanguageVisibilityDialogOpen,
   languageVisibilityAction,
   onConfirmLanguageVisibilityToggle
-}) => {
+}: PageDialogsProps) => {
   return (
     <>
-      {/* Delete Page Confirmation Dialog */}
+      {/* Page Delete Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Page</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{pageToDelete?.title}" and its subpages? This action cannot be undone.
+              Are you sure you want to delete "{pageToDelete?.title}"? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={onConfirmDelete} className="bg-red-600 hover:bg-red-700">
               Delete
             </AlertDialogAction>
@@ -60,47 +58,17 @@ export const PageDialogs: React.FC<PageDialogsProps> = ({
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Home Page Visibility Confirmation Dialog */}
-      <AlertDialog open={homeVisibilityDialogOpen} onOpenChange={setHomeVisibilityDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {homeVisibilityAction === 'hide' ? 'Hide Home Page' : 'Show Home Page'}
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {homeVisibilityAction === 'hide' 
-                ? 'This will disable visitors from seeing the entire site in this language. Are you sure you want to continue?' 
-                : 'This will make the home page and all its subpages visible to visitors. Are you sure you want to continue?'
-              }
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setHomeVisibilityDialogOpen(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={onConfirmHomeVisibilityToggle} 
-              className={homeVisibilityAction === 'hide' ? 'bg-red-600 hover:bg-red-700' : ''}
-            >
-              {homeVisibilityAction === 'hide' ? 'Hide Home Page' : 'Show Home Page'}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      {/* Language Delete Confirmation Dialog */}
+      {/* Language Delete Dialog */}
       <AlertDialog open={languageDeleteDialogOpen} onOpenChange={setLanguageDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Language</AlertDialogTitle>
             <AlertDialogDescription>
-              This will delete the entire language and all its content. Are you sure you want to continue? This action cannot be undone.
+              Are you sure you want to delete this language? This action cannot be undone and all content in this language will be permanently lost.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setLanguageDeleteDialogOpen(false)}>
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={onConfirmLanguageDelete} className="bg-red-600 hover:bg-red-700">
               Delete Language
             </AlertDialogAction>
@@ -108,29 +76,24 @@ export const PageDialogs: React.FC<PageDialogsProps> = ({
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Language Visibility Confirmation Dialog */}
+      {/* Language Visibility Dialog */}
       <AlertDialog open={languageVisibilityDialogOpen} onOpenChange={setLanguageVisibilityDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {languageVisibilityAction === 'disable' ? 'Make Language Private' : 'Make Language Public'}
+              {languageVisibilityAction === 'enable' ? 'Enable Language' : 'Disable Language'}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              {languageVisibilityAction === 'disable' 
-                ? 'This will make the entire language not accessible to the public/visitors. Are you sure you want to continue?' 
-                : 'This will make the entire language accessible to the public/visitors. Are you sure you want to continue?'
+              {languageVisibilityAction === 'enable' 
+                ? 'Are you sure you want to enable this language? It will become visible to visitors.'
+                : 'Are you sure you want to disable this language? It will no longer be visible to visitors.'
               }
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setLanguageVisibilityDialogOpen(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={onConfirmLanguageVisibilityToggle} 
-              className={languageVisibilityAction === 'disable' ? 'bg-red-600 hover:bg-red-700' : ''}
-            >
-              {languageVisibilityAction === 'disable' ? 'Make Private' : 'Make Public'}
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={onConfirmLanguageVisibilityToggle}>
+              {languageVisibilityAction === 'enable' ? 'Enable' : 'Disable'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

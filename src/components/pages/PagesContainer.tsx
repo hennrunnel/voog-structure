@@ -16,14 +16,10 @@ export const PagesContainer = () => {
     deleteDialogOpen,
     setDeleteDialogOpen,
     pageToDelete,
-    homeVisibilityDialogOpen,
-    setHomeVisibilityDialogOpen,
-    homeVisibilityAction,
     togglePageExpansion,
     togglePageVisibility,
     handleDeletePage,
     confirmDeletePage,
-    confirmHomeVisibilityToggle,
     handleDuplicatePage
   } = usePageManagement();
 
@@ -48,6 +44,7 @@ export const PagesContainer = () => {
     languageVisibilityAction,
     handleLanguageDelete,
     confirmLanguageDelete,
+    handleLanguagePublishToggle,
     handleEnglishLanguageVisibilityToggle,
     handleEstonianLanguageVisibilityToggle,
     confirmLanguageVisibilityToggle
@@ -101,9 +98,10 @@ export const PagesContainer = () => {
               setEstonianWebsiteTitle={setEstonianWebsiteTitle}
               estonianNameInMenu={estonianNameInMenu}
               setEstonianNameInMenu={setEstonianNameInMenu}
+              handleLanguageDelete={handleLanguageDelete}
+              handleLanguagePublishToggle={handleLanguagePublishToggle}
               handleEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
               handleEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
-              handleLanguageDelete={handleLanguageDelete}
               onAddPageClick={handleAddPageClick}
               pages={pages}
               onToggleExpansion={togglePageExpansion}
@@ -123,10 +121,6 @@ export const PagesContainer = () => {
           setDeleteDialogOpen={setDeleteDialogOpen}
           pageToDelete={pageToDelete}
           onConfirmDelete={confirmDeletePage}
-          homeVisibilityDialogOpen={homeVisibilityDialogOpen}
-          setHomeVisibilityDialogOpen={setHomeVisibilityDialogOpen}
-          homeVisibilityAction={homeVisibilityAction}
-          onConfirmHomeVisibilityToggle={confirmHomeVisibilityToggle}
           languageDeleteDialogOpen={languageDeleteDialogOpen}
           setLanguageDeleteDialogOpen={setLanguageDeleteDialogOpen}
           onConfirmLanguageDelete={confirmLanguageDelete}
@@ -136,7 +130,11 @@ export const PagesContainer = () => {
           onConfirmLanguageVisibilityToggle={confirmLanguageVisibilityToggle}
         />
 
-        <PageSettings isOpen={pageSettingsOpen} onClose={handleClosePageSettings} />
+        <PageSettings 
+          isOpen={pageSettingsOpen} 
+          onClose={handleClosePageSettings} 
+          page={selectedPage}
+        />
 
         <AddPageSidebar 
           isOpen={addPageSidebarOpen} 

@@ -26,6 +26,8 @@ interface LanguageTabsProps {
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
   onAddLanguage: (languageData: any) => void;
+  onLanguagePublishToggle?: (language: string, published: boolean) => void;
+  onLanguageDelete?: (language: string) => void;
 }
 
 const EyeHiddenIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-60">
@@ -61,7 +63,9 @@ export const LanguageTabs = ({
   onPageSettings,
   onEditPage,
   onTranslatePage,
-  onAddLanguage
+  onAddLanguage,
+  onLanguagePublishToggle,
+  onLanguageDelete
 }: LanguageTabsProps) => {
   const [addLanguageSidebarOpen, setAddLanguageSidebarOpen] = useState(false);
 
@@ -76,6 +80,21 @@ export const LanguageTabs = ({
 
   const handleDownloadSite = () => {
     console.log("Download entire site clicked");
+  };
+
+  const handleLanguagePublishToggle = () => {
+    const isCurrentlyPublished = activeTab === "english" ? englishVisible : estonianVisible;
+    onLanguagePublishToggle?.(activeTab, !isCurrentlyPublished);
+  };
+
+  const handleLanguageDelete = () => {
+    onLanguageDelete?.(activeTab);
+  };
+
+  const isCurrentLanguagePublished = () => {
+    if (activeTab === "english") return englishVisible;
+    if (activeTab === "estonian") return estonianVisible;
+    return true;
   };
 
   return (
@@ -95,6 +114,7 @@ export const LanguageTabs = ({
                       <span className="flex items-center gap-2">
                         {tab}
                         {tab === "estonian" && !estonianVisible && <EyeHiddenIcon />}
+                        {tab === "english" && !englishVisible && <EyeHiddenIcon />}
                       </span>
                     </TabsTrigger>
                   </div>
@@ -173,6 +193,18 @@ export const LanguageTabs = ({
                   className="cursor-pointer text-sm text-[#1B2124]"
                 >
                   Download entire site
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={handleLanguagePublishToggle} 
+                  className="cursor-pointer text-sm text-[#1B2124]"
+                >
+                  {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={handleLanguageDelete} 
+                  className="cursor-pointer text-sm text-red-600 focus:text-red-600"
+                >
+                  Delete language
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

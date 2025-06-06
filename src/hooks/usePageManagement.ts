@@ -7,8 +7,6 @@ export const usePageManagement = () => {
   const [pages, setPages] = useState<PageItem[]>(mockPages);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [pageToDelete, setPageToDelete] = useState<PageItem | null>(null);
-  const [homeVisibilityDialogOpen, setHomeVisibilityDialogOpen] = useState(false);
-  const [homeVisibilityAction, setHomeVisibilityAction] = useState<'show' | 'hide'>('hide');
 
   const togglePageExpansion = (pageId: string) => {
     setPages(prevPages => prevPages.map(page => 
@@ -17,13 +15,6 @@ export const usePageManagement = () => {
   };
 
   const togglePageVisibility = (pageId: string) => {
-    if (pageId === "1") {
-      const homePage = pages.find(p => p.id === "1");
-      setHomeVisibilityAction(homePage?.isVisible ? 'hide' : 'show');
-      setHomeVisibilityDialogOpen(true);
-      return;
-    }
-
     const updatePageVisibility = (pages: PageItem[]): PageItem[] => {
       return pages.map(page => {
         if (page.id === pageId) {
@@ -58,19 +49,6 @@ export const usePageManagement = () => {
     }
   };
 
-  const confirmHomeVisibilityToggle = () => {
-    const updatePageVisibility = (pages: PageItem[]): PageItem[] => {
-      return pages.map(page => {
-        if (page.id === "1") {
-          return { ...page, isVisible: !page.isVisible };
-        }
-        return page;
-      });
-    };
-    setPages(prevPages => updatePageVisibility(prevPages));
-    setHomeVisibilityDialogOpen(false);
-  };
-
   const handleDuplicatePage = (page: PageItem) => {
     const newPage = {
       ...page,
@@ -88,14 +66,10 @@ export const usePageManagement = () => {
     deleteDialogOpen,
     setDeleteDialogOpen,
     pageToDelete,
-    homeVisibilityDialogOpen,
-    setHomeVisibilityDialogOpen,
-    homeVisibilityAction,
     togglePageExpansion,
     togglePageVisibility,
     handleDeletePage,
     confirmDeletePage,
-    confirmHomeVisibilityToggle,
     handleDuplicatePage
   };
 };

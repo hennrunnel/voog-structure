@@ -20,6 +20,7 @@ interface PagesContentProps {
   setEstonianNameInMenu: (name: string) => void;
   estonianLanguageVisible: boolean;
   handleLanguageDelete: () => void;
+  handleLanguagePublishToggle: (language: string, published: boolean) => void;
   handleEnglishLanguageVisibilityToggle: (visible: boolean) => void;
   handleEstonianLanguageVisibilityToggle: (visible: boolean) => void;
   onAddPageClick: () => void;
@@ -49,6 +50,7 @@ export const PagesContent = ({
   setEstonianNameInMenu,
   estonianLanguageVisible,
   handleLanguageDelete,
+  handleLanguagePublishToggle,
   handleEnglishLanguageVisibilityToggle,
   handleEstonianLanguageVisibilityToggle,
   onAddPageClick,
@@ -69,8 +71,6 @@ export const PagesContent = ({
 
   const handleAddLanguage = (languageData: any) => {
     console.log("Adding new language:", languageData);
-    // This is where you would typically add the language to your state
-    // For now, we'll just log it
   };
 
   const getCurrentLanguageSettings = () => {
@@ -117,6 +117,8 @@ export const PagesContent = ({
         onEditPage={onEditPage}
         onTranslatePage={onTranslatePage}
         onAddLanguage={handleAddLanguage}
+        onLanguagePublishToggle={handleLanguagePublishToggle}
+        onLanguageDelete={handleLanguageDelete}
       />
 
       <LanguageSettingsSidebar

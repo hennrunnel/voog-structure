@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -114,8 +115,13 @@ export const PageRow: React.FC<PageRowProps> = ({
 
   const handleSlugClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Handle slug click - could navigate to the page or show preview
     console.log('Slug clicked:', page.slug);
+  };
+
+  const handleVisibilityToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // For Home page, directly toggle without confirmation
+    onToggleVisibility(page.id);
   };
 
   return (
@@ -264,10 +270,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           <div className="w-24 px-4 flex justify-center">
             {!isUntranslated ? (
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onToggleVisibility(page.id);
-                }}
+                onClick={handleVisibilityToggle}
                 aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
                 className="outline-none focus:outline-none focus:ring-0 rounded"
               >
@@ -276,10 +279,12 @@ export const PageRow: React.FC<PageRowProps> = ({
             ) : null}
           </div>
 
-          {/* Move handle - only visible on hover */}
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity mr-2">
-            <MoveIcon />
-          </div>
+          {/* Move handle - only visible on hover and not for Home page */}
+          {!isHomePage && (
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity mr-2">
+              <MoveIcon />
+            </div>
+          )}
 
           {/* Actions */}
           <div className="w-16 flex items-center justify-center">
@@ -341,16 +346,38 @@ export const PageRow: React.FC<PageRowProps> = ({
                     </DropdownMenuItem>
                   </>
                 )}
-                <DropdownMenuItem 
-                  onClick={e => {
-                    e.stopPropagation();
-                    onDeletePage(page);
-                  }} 
-                  className="cursor-pointer text-sm text-red-600 focus:text-red-600"
-                >
-                  <Trash className="w-4 h-4 mr-2" />
-                  Delete
-                </DropdownMenuItem>
+                {/* Delete option - not shown for Home page, disabled with tooltip for pages with children */}
+                {!isHomePage && (
+                  hasChildren ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <DropdownMenuItem 
+                            disabled
+                            className="cursor-not-allowed text-sm text-gray-400"
+                          >
+                            <Trash className="w-4 h-4 mr-2" />
+                            Delete
+                          </DropdownMenuItem>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Cannot delete page with subpages</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <DropdownMenuItem 
+                      onClick={e => {
+                        e.stopPropagation();
+                        onDeletePage(page);
+                      }} 
+                      className="cursor-pointer text-sm text-red-600 focus:text-red-600"
+                    >
+                      <Trash className="w-4 h-4 mr-2" />
+                      Delete
+                    </DropdownMenuItem>
+                  )
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
