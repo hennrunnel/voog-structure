@@ -1,8 +1,6 @@
 
-import { TabsContent } from "@/components/ui/tabs";
 import { LanguageTabs } from "@/components/pages/LanguageTabs";
 import { LanguageSettingsSidebar } from "@/components/pages/LanguageSettingsSidebar";
-import { PageTable } from "@/components/pages/PageTable";
 import { PageItem } from "@/types/pages";
 import { useState } from "react";
 
@@ -24,6 +22,7 @@ interface PagesContentProps {
   handleLanguageDelete: () => void;
   handleEnglishLanguageVisibilityToggle: (visible: boolean) => void;
   handleEstonianLanguageVisibilityToggle: (visible: boolean) => void;
+  onAddPageClick: () => void;
   onToggleExpansion: (pageId: string) => void;
   onToggleVisibility: (pageId: string) => void;
   onDeletePage: (page: PageItem) => void;
@@ -52,6 +51,7 @@ export const PagesContent = ({
   handleLanguageDelete,
   handleEnglishLanguageVisibilityToggle,
   handleEstonianLanguageVisibilityToggle,
+  onAddPageClick,
   onToggleExpansion,
   onToggleVisibility,
   onDeletePage,
@@ -100,35 +100,17 @@ export const PagesContent = ({
         englishVisible={englishLanguageVisible}
         estonianVisible={estonianLanguageVisible}
         onLanguageSettings={handleLanguageSettings}
-      >
-        <TabsContent value="english" className="mt-0">
-          <PageTable
-            pages={pages}
-            onToggleExpansion={onToggleExpansion}
-            onToggleVisibility={onToggleVisibility}
-            onDeletePage={onDeletePage}
-            onDuplicatePage={onDuplicatePage}
-            onAddNestedPage={onAddNestedPage}
-            onPageSettings={onPageSettings}
-            onEditPage={onEditPage}
-            onTranslatePage={onTranslatePage}
-          />
-        </TabsContent>
-
-        <TabsContent value="estonian" className="mt-0">
-          <PageTable
-            pages={pages}
-            onToggleExpansion={onToggleExpansion}
-            onToggleVisibility={onToggleVisibility}
-            onDeletePage={onDeletePage}
-            onDuplicatePage={onDuplicatePage}
-            onAddNestedPage={onAddNestedPage}
-            onPageSettings={onPageSettings}
-            onEditPage={onEditPage}
-            onTranslatePage={onTranslatePage}
-          />
-        </TabsContent>
-      </LanguageTabs>
+        onAddPageClick={onAddPageClick}
+        pages={pages}
+        onToggleExpansion={onToggleExpansion}
+        onToggleVisibility={onToggleVisibility}
+        onDeletePage={onDeletePage}
+        onDuplicatePage={onDuplicatePage}
+        onAddNestedPage={onAddNestedPage}
+        onPageSettings={onPageSettings}
+        onEditPage={onEditPage}
+        onTranslatePage={onTranslatePage}
+      />
 
       <LanguageSettingsSidebar
         isOpen={languageSettingsOpen}

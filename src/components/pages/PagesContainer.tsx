@@ -86,9 +86,9 @@ export const PagesContainer = () => {
           setEstonianWebsiteTitle={setEstonianWebsiteTitle}
           estonianNameInMenu={estonianNameInMenu}
           setEstonianNameInMenu={setEstonianNameInMenu}
-          onEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
-          onEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
-          onLanguageDelete={handleLanguageDelete}
+          handleEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
+          handleEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
+          handleLanguageDelete={handleLanguageDelete}
           onAddPageClick={handleAddPageClick}
           pages={pages}
           onToggleExpansion={togglePageExpansion}

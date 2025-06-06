@@ -1,18 +1,25 @@
-
 import { Settings } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { PageItem } from "@/types/pages";
 
 interface LanguageTabsProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   availableTabs: string[];
-  children: React.ReactNode;
   englishVisible?: boolean;
   estonianVisible?: boolean;
-  onEnglishVisibilityToggle?: (visible: boolean) => void;
-  onEstonianVisibilityToggle?: (visible: boolean) => void;
   onLanguageSettings?: () => void;
+  onAddPageClick: () => void;
+  pages: PageItem[];
+  onToggleExpansion: (pageId: string) => void;
+  onToggleVisibility: (pageId: string) => void;
+  onDeletePage: (page: PageItem) => void;
+  onDuplicatePage: (page: PageItem) => void;
+  onAddNestedPage: (page: PageItem) => void;
+  onPageSettings: (page: PageItem) => void;
+  onEditPage: (page: PageItem) => void;
+  onTranslatePage: (page: PageItem) => void;
 }
 
 const EyeHiddenIcon = () => (
@@ -27,12 +34,19 @@ export const LanguageTabs = ({
   activeTab, 
   setActiveTab, 
   availableTabs, 
-  children,
   englishVisible = true,
   estonianVisible = true,
-  onEnglishVisibilityToggle,
-  onEstonianVisibilityToggle,
-  onLanguageSettings
+  onLanguageSettings,
+  onAddPageClick,
+  pages,
+  onToggleExpansion,
+  onToggleVisibility,
+  onDeletePage,
+  onDuplicatePage,
+  onAddNestedPage,
+  onPageSettings,
+  onEditPage,
+  onTranslatePage
 }: LanguageTabsProps) => {
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -61,22 +75,70 @@ export const LanguageTabs = ({
           <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
             Add language
           </button>
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={onLanguageSettings}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100"
-            aria-label="Language settings"
+            className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2"
           >
-            <Settings className="w-4 h-4" />
-          </Button>
+            Settings
+          </button>
         </div>
       </div>
 
       {/* Border line that spans full width */}
       <div className="border-b border-gray-200 -mx-6"></div>
 
-      {children}
+      {/* Add page button section */}
+      <div className="px-8 py-6">
+        <Button 
+          onClick={onAddPageClick}
+          className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          style={{
+            padding: '8px 16px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '8px',
+            borderRadius: '8px',
+            background: '#453DFF',
+            color: '#FFF',
+            textAlign: 'center',
+            fontFamily: '"Avenir Next"',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: 600,
+            lineHeight: '24px'
+          }}
+        >
+          Add page
+        </Button>
+      </div>
+
+      <TabsContent value="english" className="mt-0">
+        <PageTable
+          pages={pages}
+          onToggleExpansion={onToggleExpansion}
+          onToggleVisibility={onToggleVisibility}
+          onDeletePage={onDeletePage}
+          onDuplicatePage={onDuplicatePage}
+          onAddNestedPage={onAddNestedPage}
+          onPageSettings={onPageSettings}
+          onEditPage={onEditPage}
+          onTranslatePage={onTranslatePage}
+        />
+      </TabsContent>
+
+      <TabsContent value="estonian" className="mt-0">
+        <PageTable
+          pages={pages}
+          onToggleExpansion={onToggleExpansion}
+          onToggleVisibility={onToggleVisibility}
+          onDeletePage={onDeletePage}
+          onDuplicatePage={onDuplicatePage}
+          onAddNestedPage={onAddNestedPage}
+          onPageSettings={onPageSettings}
+          onEditPage={onEditPage}
+          onTranslatePage={onTranslatePage}
+        />
+      </TabsContent>
     </Tabs>
   );
 };
