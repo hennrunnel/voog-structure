@@ -67,6 +67,12 @@ export const PagesContent = ({
     setLanguageSettingsOpen(true);
   };
 
+  const handleAddLanguage = (languageData: any) => {
+    console.log("Adding new language:", languageData);
+    // This is where you would typically add the language to your state
+    // For now, we'll just log it
+  };
+
   const getCurrentLanguageSettings = () => {
     if (activeTab === "english") {
       return {
@@ -110,6 +116,7 @@ export const PagesContent = ({
         onPageSettings={onPageSettings}
         onEditPage={onEditPage}
         onTranslatePage={onTranslatePage}
+        onAddLanguage={handleAddLanguage}
       />
 
       <LanguageSettingsSidebar

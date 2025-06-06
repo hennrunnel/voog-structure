@@ -4,7 +4,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { PageTable } from "@/components/pages/PageTable";
+import { AddLanguageSidebar } from "@/components/pages/AddLanguageSidebar";
 import { PageItem } from "@/types/pages";
+import { useState } from "react";
 
 interface LanguageTabsProps {
   activeTab: string;
@@ -23,6 +25,7 @@ interface LanguageTabsProps {
   onPageSettings: (page: PageItem) => void;
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
+  onAddLanguage: (languageData: any) => void;
 }
 
 const EyeHiddenIcon = () => (
@@ -49,28 +52,33 @@ export const LanguageTabs = ({
   onAddNestedPage,
   onPageSettings,
   onEditPage,
-  onTranslatePage
+  onTranslatePage,
+  onAddLanguage
 }: LanguageTabsProps) => {
+  const [addLanguageSidebarOpen, setAddLanguageSidebarOpen] = useState(false);
+
+  const handleAddLanguageClick = () => {
+    setAddLanguageSidebarOpen(true);
+  };
+
+  const handleAddLanguage = (languageData: any) => {
+    onAddLanguage(languageData);
+    setAddLanguageSidebarOpen(false);
+  };
+
   return (
     <TooltipProvider>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="flex items-center justify-between mb-6 px-8 pt-6">
           <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none">
-            {availableTabs.includes("english") && (
+            {availableTabs.map((tab) => (
               <TabsTrigger 
-                value="english" 
-                className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent"
+                key={tab}
+                value={tab} 
+                className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize"
               >
-                English
-              </TabsTrigger>
-            )}
-            {availableTabs.includes("estonian") && (
-              <TabsTrigger 
-                value="estonian" 
-                className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center"
-              >
-                Estonian
-                {!estonianVisible && (
+                {tab}
+                {tab === "estonian" && !estonianVisible && (
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span>
@@ -83,11 +91,14 @@ export const LanguageTabs = ({
                   </Tooltip>
                 )}
               </TabsTrigger>
-            )}
+            ))}
           </TabsList>
           
           <div className="flex items-center gap-3">
-            <button className="text-[#666] text-sm font-medium hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
+            <button 
+              onClick={handleAddLanguageClick}
+              className="text-[#666] text-sm font-medium hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2"
+            >
               Add language
             </button>
             <button
@@ -120,34 +131,28 @@ export const LanguageTabs = ({
           </div>
         </div>
 
-        <TabsContent value="english" className="mt-0">
-          <PageTable
-            pages={pages}
-            onToggleExpansion={onToggleExpansion}
-            onToggleVisibility={onToggleVisibility}
-            onDeletePage={onDeletePage}
-            onDuplicatePage={onDuplicatePage}
-            onAddNestedPage={onAddNestedPage}
-            onPageSettings={onPageSettings}
-            onEditPage={onEditPage}
-            onTranslatePage={onTranslatePage}
-          />
-        </TabsContent>
-
-        <TabsContent value="estonian" className="mt-0">
-          <PageTable
-            pages={pages}
-            onToggleExpansion={onToggleExpansion}
-            onToggleVisibility={onToggleVisibility}
-            onDeletePage={onDeletePage}
-            onDuplicatePage={onDuplicatePage}
-            onAddNestedPage={onAddNestedPage}
-            onPageSettings={onPageSettings}
-            onEditPage={onEditPage}
-            onTranslatePage={onTranslatePage}
-          />
-        </TabsContent>
+        {availableTabs.map((tab) => (
+          <TabsContent key={tab} value={tab} className="mt-0">
+            <PageTable
+              pages={pages}
+              onToggleExpansion={onToggleExpansion}
+              onToggleVisibility={onToggleVisibility}
+              onDeletePage={onDeletePage}
+              onDuplicatePage={onDuplicatePage}
+              onAddNestedPage={onAddNestedPage}
+              onPageSettings={onPageSettings}
+              onEditPage={onEditPage}
+              onTranslatePage={onTranslatePage}
+            />
+          </TabsContent>
+        ))}
       </Tabs>
+
+      <AddLanguageSidebar
+        isOpen={addLanguageSidebarOpen}
+        onClose={() => setAddLanguageSidebarOpen(false)}
+        onAddLanguage={handleAddLanguage}
+      />
     </TooltipProvider>
   );
 };

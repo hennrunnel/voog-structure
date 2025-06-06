@@ -146,7 +146,7 @@ export const PageRow: React.FC<PageRowProps> = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span 
-                    className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'italic text-gray-400' : 'text-[#1B2124]'}`}
+                    className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-[#1B2124]'}`}
                   >
                     {page.title}
                   </span>
@@ -183,9 +183,19 @@ export const PageRow: React.FC<PageRowProps> = ({
               )}
               
               {isUntranslated && (
-                <Badge variant="secondary" className="text-xs px-2 py-0 bg-gray-100 text-gray-600 border-0">
+                <span 
+                  className="text-xs px-2 py-0 text-black font-medium text-center"
+                  style={{
+                    borderRadius: '5px',
+                    opacity: 0.34,
+                    background: '#FFD74B',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    lineHeight: '16px'
+                  }}
+                >
                   Untranslated
-                </Badge>
+                </span>
               )}
             </div>
           </div>
