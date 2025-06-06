@@ -29,10 +29,18 @@ interface LanguageTabsProps {
 }
 
 const KebabIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="8" cy="2" r="1.5" fill="currentColor"/>
     <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
     <circle cx="8" cy="14" r="1.5" fill="currentColor"/>
+  </svg>
+);
+
+const EyeHiddenIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-60">
+    <path d="M19.2079 9.84839C20.3304 11.0179 21 12 21 12C21 12 16.9091 18 12 18C11.1894 18 10.3879 17.8865 9.59549 17.6609L19.2079 9.84839Z" fill="#666"/>
+    <path d="M14.505 6.49483L12 9C10.3431 9 9 10.3431 9 12L5.52661 15.4734C3.75006 13.8335 3 12 3 12C3 12 5.45455 6 12 6C12.8665 6 13.7076 6.18695 14.505 6.49483Z" fill="#666"/>
+    <path opacity="0.3" d="M18.535 5.00003L5.09998 18.435L6.51498 19.85L19.95 6.41523L18.535 5.00003Z" fill="#666"/>
   </svg>
 );
 
@@ -82,7 +90,7 @@ export const LanguageTabs = ({
                       <span className="flex items-center gap-2">
                         {tab}
                         {tab === "estonian" && !estonianVisible && (
-                          <span className="text-sm text-[#666]">(hidden)</span>
+                          <EyeHiddenIcon />
                         )}
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -109,7 +117,7 @@ export const LanguageTabs = ({
               
               <button 
                 onClick={handleAddLanguageClick}
-                className="text-[#1B2124] text-sm font-medium hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded transition-colors ml-6"
+                className="text-sm px-4 py-3 text-[#666] hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded transition-colors"
               >
                 + Add language
               </button>
