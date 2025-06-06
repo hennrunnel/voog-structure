@@ -63,7 +63,7 @@ export const PageTable = ({
           </div>
           
           {/* Actions */}
-          <div className="w-16"></div>
+          <div className="w-6"></div>
         </div>
       </div>
 

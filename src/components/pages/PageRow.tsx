@@ -282,7 +282,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           </div>
 
           {/* Actions */}
-          <div className="w-16 flex items-center justify-center">
+          <div className="w-6 flex items-center justify-center">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button 
