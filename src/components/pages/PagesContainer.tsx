@@ -29,7 +29,7 @@ export const PagesContainer = () => {
   // Estonian language settings
   const [estonianWebsiteTitle, setEstonianWebsiteTitle] = useState("Finn & Cross");
   const [estonianNameInMenu, setEstonianNameInMenu] = useState("Est");
-  const [estonianLanguageVisible, setEstonianLanguageVisible] = useState(true);
+  const [estonianLanguageVisible, setEstonianLanguageVisible] = useState(false);
   
   const [availableTabs, setAvailableTabs] = useState(["english", "estonian"]);
 
