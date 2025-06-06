@@ -38,8 +38,13 @@ export const LanguageTabsHeader = ({
             <div key={tab} className="flex items-center" style={{ marginRight: index < availableTabs.length - 1 ? '24px' : '0px' }}>
               <TabsTrigger 
                 value={tab} 
-                className="text-sm px-0 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize outline-none focus:outline-none focus-visible:outline-none"
-                style={{ paddingBottom: '16px', paddingTop: '0px' }}
+                className="text-sm text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize outline-none focus:outline-none focus-visible:outline-none"
+                style={{ 
+                  paddingBottom: '16px', 
+                  paddingTop: '0px',
+                  paddingLeft: '8px',
+                  paddingRight: '8px'
+                }}
               >
                 <span className="flex items-center gap-2">
                   {tab}
@@ -56,9 +61,10 @@ export const LanguageTabsHeader = ({
         onClick={onAddLanguageClick} 
         className="text-sm text-[#5A4FFF] hover:underline outline-none focus:outline-none capitalize"
         style={{ 
-          marginRight: '24px',
+          marginRight: '32px',
           paddingBottom: '16px',
-          paddingTop: '0px'
+          paddingTop: '0px',
+          fontWeight: 500
         }}
       >
         Add language

@@ -42,7 +42,13 @@ export const LanguageTabsActions = ({
   };
 
   return (
-    <div className="flex items-center justify-between px-8 mb-4" style={{ marginTop: '24px' }}>
+    <div 
+      className="flex items-center justify-between px-8" 
+      style={{ 
+        paddingTop: '16px',
+        paddingBottom: '16px'
+      }}
+    >
       <div className="flex items-center gap-3">
         {/* Empty div to push buttons to the right */}
       </div>
@@ -58,7 +64,8 @@ export const LanguageTabsActions = ({
             fontWeight: 600,
             lineHeight: '24px',
             backgroundColor: 'rgba(90, 79, 255, 0.1)',
-            color: '#5A4FFF'
+            color: '#5A4FFF',
+            height: '24px'
           }}
         >
           Language settings
@@ -80,7 +87,8 @@ export const LanguageTabsActions = ({
             fontSize: '14px',
             fontStyle: 'normal',
             fontWeight: 600,
-            lineHeight: '24px'
+            lineHeight: '24px',
+            height: '24px'
           }}
         >
           New page
