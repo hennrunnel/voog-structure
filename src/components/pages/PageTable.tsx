@@ -43,16 +43,24 @@ export const PageTable = ({
           </div>
           
           {/* Slug */}
-          <div className="w-48 px-4">Slug</div>
+          <div className="w-48 px-4">
+            <span>Slug</span>
+          </div>
           
           {/* Layout */}
-          <div className="w-32 px-4">Layout</div>
+          <div className="w-32 px-4">
+            <span>Layout</span>
+          </div>
           
           {/* SEO */}
-          <div className="w-24 px-4 text-center">SEO</div>
+          <div className="w-24 px-4">
+            <span>SEO</span>
+          </div>
           
           {/* In menu */}
-          <div className="w-24 px-4 text-center">In menu</div>
+          <div className="w-24 px-4">
+            <span>In menu</span>
+          </div>
           
           {/* Actions */}
           <div className="w-16"></div>

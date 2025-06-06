@@ -192,7 +192,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   className="text-xs px-2 py-0 text-black font-medium text-center"
                   style={{
                     borderRadius: '5px',
-                    background: '#FFD74B',
+                    background: 'rgba(255, 215, 75, 0.3)',
                     fontSize: '12px',
                     fontWeight: 500,
                     lineHeight: '16px'
@@ -211,7 +211,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleSlugClick}
-                    className="text-[#1B2124] hover:text-[#5A4FFF] truncate block max-w-full text-left transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                    className="text-[#1B2124] hover:text-[#5A4FFF] hover:underline truncate block max-w-full text-left transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
                     style={{ fontSize: '14px' }}
                   >
                     {page.slug}
