@@ -28,7 +28,7 @@ export const PageTable = ({
   return (
     <div className="overflow-hidden">
       {/* Table Header */}
-      <div className="bg-white px-3 py-3 border-b border-gray-200">
+      <div className="bg-gray-50 px-3 py-3 border-b border-gray-200">
         <div 
           className="flex items-center text-xs font-medium text-[#8d9091]" 
           style={{ 

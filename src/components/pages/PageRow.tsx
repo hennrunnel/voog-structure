@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -97,9 +98,6 @@ export const PageRow: React.FC<PageRowProps> = ({
   const isUntranslated = page.translationStatus === "Untranslated";
   const isExternalLink = page.pageType === "Link";
 
-  // Adjust padding for Home to align with chevron icon's left edge
-  const adjustedPaddingLeft = isHomePage && level === 0 ? paddingLeft + 7 : paddingLeft + 24;
-
   const handleRowClick = () => {
     if (page.translationStatus === "Untranslated") {
       onEditPage(page);
@@ -114,7 +112,7 @@ export const PageRow: React.FC<PageRowProps> = ({
         <div 
           className="group flex items-center border-b border-l-2 border-l-transparent hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
           style={{ 
-            paddingLeft: `${adjustedPaddingLeft}px`, 
+            paddingLeft: `${paddingLeft + 24}px`, 
             paddingRight: '24px',
             height: '64px',
             borderBottomColor: '#EFEFEF',
