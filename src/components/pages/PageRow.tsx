@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -79,6 +80,14 @@ const KebabIcon = () => (
   </svg>
 );
 
+const MoveIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-60 cursor-move">
+    <path d="M3 5H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M3 8H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M3 11H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
 export const PageRow: React.FC<PageRowProps> = ({
   page,
   level = 0,
@@ -136,7 +145,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   e.stopPropagation();
                   onToggleExpansion(page.id);
                 }} 
-                className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded" 
+                className="text-gray-400 hover:text-gray-600 outline-none focus:outline-none focus:ring-0 rounded" 
                 aria-label={page.isExpanded ? `Collapse ${page.title}` : `Expand ${page.title}`} 
                 aria-expanded={page.isExpanded}
               >
@@ -211,7 +220,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleSlugClick}
-                    className="text-[#1B2124] hover:text-[#5A4FFF] hover:underline truncate block max-w-full text-left transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                    className="text-[#1B2124] hover:text-[#5A4FFF] hover:underline truncate block max-w-full text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded"
                     style={{ fontSize: '14px' }}
                   >
                     {page.slug}
@@ -262,11 +271,16 @@ export const PageRow: React.FC<PageRowProps> = ({
                   onToggleVisibility(page.id);
                 }}
                 aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
-                className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+                className="outline-none focus:outline-none focus:ring-0 rounded"
               >
                 {page.isVisible ? <EyeVisibleIcon /> : <EyeHiddenIcon />}
               </button>
             ) : null}
+          </div>
+
+          {/* Move handle - only visible on hover */}
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity mr-2">
+            <MoveIcon />
           </div>
 
           {/* Actions */}
@@ -276,7 +290,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="p-1 h-auto hover:bg-transparent focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                  className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0" 
                   aria-label={`More options for ${page.title}`} 
                   onClick={e => e.stopPropagation()}
                 >

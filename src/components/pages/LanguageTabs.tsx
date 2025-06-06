@@ -28,14 +28,6 @@ interface LanguageTabsProps {
   onAddLanguage: (languageData: any) => void;
 }
 
-const KebabIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="8" cy="2" r="1.5" fill="currentColor"/>
-    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-    <circle cx="8" cy="14" r="1.5" fill="currentColor"/>
-  </svg>
-);
-
 const EyeHiddenIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-60">
     <path d="M19.2079 9.84839C20.3304 11.0179 21 12 21 12C21 12 16.9091 18 12 18C11.1894 18 10.3879 17.8865 9.59549 17.6609L19.2079 9.84839Z" fill="#666"/>
@@ -85,30 +77,13 @@ export const LanguageTabs = ({
                   <div key={tab} className="flex items-center">
                     <TabsTrigger 
                       value={tab} 
-                      className="text-sm px-4 py-3 pr-2 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize group"
+                      className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize outline-none focus:outline-none focus:ring-0"
                     >
                       <span className="flex items-center gap-2">
                         {tab}
                         {tab === "estonian" && !estonianVisible && (
                           <EyeHiddenIcon />
                         )}
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                onLanguageSettings?.();
-                              }}
-                              className="text-[#666] hover:text-[#5A4FFF] group-data-[state=active]:hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded p-1 transition-colors ml-1"
-                              aria-label={`${tab} language settings`}
-                            >
-                              <KebabIcon />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Language settings</p>
-                          </TooltipContent>
-                        </Tooltip>
                       </span>
                     </TabsTrigger>
                   </div>
@@ -117,17 +92,32 @@ export const LanguageTabs = ({
               
               <button 
                 onClick={handleAddLanguageClick}
-                className="text-sm px-4 py-3 text-[#666] hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded transition-colors"
+                className="text-sm px-4 py-3 text-[#666] hover:text-[#5A4FFF] outline-none focus:outline-none focus:ring-0 rounded transition-colors"
               >
-                + Add language
+                Add language
               </button>
             </div>
           </div>
           
           <div className="flex items-center gap-3">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={onLanguageSettings}
+                  className="text-[#666] hover:text-[#5A4FFF] outline-none focus:outline-none focus:ring-0 rounded p-1 transition-colors"
+                  aria-label="Language settings"
+                >
+                  <Settings size={24} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Language settings</p>
+              </TooltipContent>
+            </Tooltip>
+            
             <Button 
               onClick={onAddPageClick}
-              className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="text-white font-semibold hover:bg-[#4A3FFF] outline-none focus:outline-none focus:ring-0"
               style={{
                 padding: '8px 16px',
                 justifyContent: 'center',
