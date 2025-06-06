@@ -13,7 +13,7 @@ export const PagesHeader = () => {
         lineHeight: '39px'
       }}
     >
-      Pages
+      Site structure
     </h1>
   );
 };

@@ -7,6 +7,7 @@ import { usePageActions } from "@/hooks/usePageActions";
 import { PageDialogs } from "@/components/pages/PageDialogs";
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { PagesContent } from "@/components/pages/PagesContent";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const PagesContainer = () => {
   const {
@@ -72,34 +73,38 @@ export const PagesContainer = () => {
       <div className="w-full" style={{ maxWidth: '992px' }}>
         <PagesHeader />
         
-        <PagesContent
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          availableTabs={availableTabs}
-          englishLanguageVisible={englishLanguageVisible}
-          estonianLanguageVisible={estonianLanguageVisible}
-          englishWebsiteTitle={englishWebsiteTitle}
-          setEnglishWebsiteTitle={setEnglishWebsiteTitle}
-          englishNameInMenu={englishNameInMenu}
-          setEnglishNameInMenu={setEnglishNameInMenu}
-          estonianWebsiteTitle={estonianWebsiteTitle}
-          setEstonianWebsiteTitle={setEstonianWebsiteTitle}
-          estonianNameInMenu={estonianNameInMenu}
-          setEstonianNameInMenu={setEstonianNameInMenu}
-          handleEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
-          handleEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
-          handleLanguageDelete={handleLanguageDelete}
-          onAddPageClick={handleAddPageClick}
-          pages={pages}
-          onToggleExpansion={togglePageExpansion}
-          onToggleVisibility={togglePageVisibility}
-          onDeletePage={handleDeletePage}
-          onDuplicatePage={handleDuplicatePage}
-          onAddNestedPage={handleAddNestedPage}
-          onPageSettings={handlePageSettings}
-          onEditPage={handleEditPage}
-          onTranslatePage={handleTranslatePage}
-        />
+        <Card className="bg-white shadow-sm border border-gray-200">
+          <CardContent className="p-0">
+            <PagesContent
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              availableTabs={availableTabs}
+              englishLanguageVisible={englishLanguageVisible}
+              estonianLanguageVisible={estonianLanguageVisible}
+              englishWebsiteTitle={englishWebsiteTitle}
+              setEnglishWebsiteTitle={setEnglishWebsiteTitle}
+              englishNameInMenu={englishNameInMenu}
+              setEnglishNameInMenu={setEnglishNameInMenu}
+              estonianWebsiteTitle={estonianWebsiteTitle}
+              setEstonianWebsiteTitle={setEstonianWebsiteTitle}
+              estonianNameInMenu={estonianNameInMenu}
+              setEstonianNameInMenu={setEstonianNameInMenu}
+              handleEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
+              handleEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
+              handleLanguageDelete={handleLanguageDelete}
+              onAddPageClick={handleAddPageClick}
+              pages={pages}
+              onToggleExpansion={togglePageExpansion}
+              onToggleVisibility={togglePageVisibility}
+              onDeletePage={handleDeletePage}
+              onDuplicatePage={handleDuplicatePage}
+              onAddNestedPage={handleAddNestedPage}
+              onPageSettings={handlePageSettings}
+              onEditPage={handleEditPage}
+              onTranslatePage={handleTranslatePage}
+            />
+          </CardContent>
+        </Card>
 
         <PageDialogs
           deleteDialogOpen={deleteDialogOpen}
