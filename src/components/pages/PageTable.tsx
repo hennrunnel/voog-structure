@@ -38,6 +38,7 @@ export const PageTable = ({
         >
           {/* Expand/collapse space + Title */}
           <div className="flex items-center mr-4" style={{ minWidth: 0, flex: 1 }}>
+            {/* Space for expand button (20px width + 8px margin) */}
             <div className="w-5 mr-2"></div>
             <span>Menu title</span>
           </div>
@@ -61,6 +62,9 @@ export const PageTable = ({
           <div className="w-24 px-4">
             <span>In menu</span>
           </div>
+
+          {/* Space for move handle */}
+          <div className="mr-2" style={{ width: '16px' }}></div>
           
           {/* Actions */}
           <div className="w-6"></div>
