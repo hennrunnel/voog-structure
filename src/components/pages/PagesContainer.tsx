@@ -19,6 +19,8 @@ export const PagesContainer = () => {
     homeVisibilityDialogOpen,
     setHomeVisibilityDialogOpen,
     homeVisibilityAction,
+    viewMode,
+    setViewMode,
     togglePageExpansion,
     togglePageVisibility,
     handleDeletePage,
@@ -93,6 +95,8 @@ export const PagesContainer = () => {
               availableTabs={availableTabs}
               englishLanguageVisible={englishLanguageVisible}
               estonianLanguageVisible={estonianLanguageVisible}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
               englishWebsiteTitle={englishWebsiteTitle}
               setEnglishWebsiteTitle={setEnglishWebsiteTitle}
               englishNameInMenu={englishNameInMenu}

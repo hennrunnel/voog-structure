@@ -6,7 +6,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { PageTable } from "@/components/pages/PageTable";
 import { AddLanguageSidebar } from "@/components/pages/AddLanguageSidebar";
 import { PageItem } from "@/types/pages";
+import { ViewMode } from "@/hooks/usePageManagement";
 import { useState } from "react";
+import { Monitor, Smartphone } from "lucide-react";
 
 interface LanguageTabsProps {
   activeTab: string;
@@ -14,6 +16,8 @@ interface LanguageTabsProps {
   availableTabs: string[];
   englishVisible?: boolean;
   estonianVisible?: boolean;
+  viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
   onLanguageSettings?: () => void;
   onAddPageClick: () => void;
   pages: PageItem[];
@@ -50,6 +54,8 @@ export const LanguageTabs = ({
   availableTabs,
   englishVisible = true,
   estonianVisible = true,
+  viewMode,
+  onViewModeChange,
   onLanguageSettings,
   onAddPageClick,
   pages,
@@ -114,7 +120,40 @@ export const LanguageTabs = ({
         {/* Actions row between tabs and content */}
         <div className="flex items-center justify-between px-8 mb-4">
           <div className="flex items-center gap-3">
-            {/* Empty div to push buttons to the right */}
+            {/* View mode toggle */}
+            <div className="flex items-center rounded-lg border border-gray-200 p-1">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={viewMode === 'desktop' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => onViewModeChange('desktop')}
+                    className="px-2 py-1 h-auto text-xs"
+                  >
+                    <Monitor className="w-4 h-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Desktop view</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={viewMode === 'mobile' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => onViewModeChange('mobile')}
+                    className="px-2 py-1 h-auto text-xs"
+                  >
+                    <Smartphone className="w-4 h-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Mobile view</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
           </div>
           
           <div className="flex items-center gap-3">
@@ -182,7 +221,8 @@ export const LanguageTabs = ({
         {availableTabs.map(tab => (
           <TabsContent key={tab} value={tab} className="mt-0">
             <PageTable 
-              pages={pages} 
+              pages={pages}
+              viewMode={viewMode}
               onToggleExpansion={onToggleExpansion} 
               onToggleVisibility={onToggleVisibility} 
               onDeletePage={onDeletePage} 

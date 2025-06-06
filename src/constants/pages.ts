@@ -49,8 +49,8 @@ export const mockPages: PageItem[] = [
     children: [
       {
         id: "2-1",
-        title: "Sign up for Fleet Complete with very long title that should be cut off",
-        slug: "/contactless/sign-up-for-fleet-complete-with-very-long-url-that-should-be-truncated",
+        title: "Sign up for our service with very long title that should be cut off",
+        slug: "/contactless/sign-up-for-service-with-very-long-url-that-should-be-truncated",
         pageType: "Common Page",
         seoScore: "Good",
         isVisible: true
