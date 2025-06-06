@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -106,6 +105,12 @@ export const PageRow: React.FC<PageRowProps> = ({
     }
   };
 
+  const handleSlugClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Handle slug click - could navigate to the page or show preview
+    console.log('Slug clicked:', page.slug);
+  };
+
   return (
     <TooltipProvider>
       <div key={page.id} className="font-sans">
@@ -187,7 +192,6 @@ export const PageRow: React.FC<PageRowProps> = ({
                   className="text-xs px-2 py-0 text-black font-medium text-center"
                   style={{
                     borderRadius: '5px',
-                    opacity: 0.34,
                     background: '#FFD74B',
                     fontSize: '12px',
                     fontWeight: 500,
@@ -205,12 +209,13 @@ export const PageRow: React.FC<PageRowProps> = ({
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span 
-                    className="text-[#1B2124] truncate block max-w-full"
+                  <button
+                    onClick={handleSlugClick}
+                    className="text-[#1B2124] hover:text-[#5A4FFF] truncate block max-w-full text-left transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
                     style={{ fontSize: '14px' }}
                   >
                     {page.slug}
-                  </span>
+                  </button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{page.slug}</p>
