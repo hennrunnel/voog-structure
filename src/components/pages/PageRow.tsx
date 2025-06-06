@@ -157,11 +157,29 @@ export const PageRow: React.FC<PageRowProps> = ({
               </Tooltip>
               
               {page.isPasswordProtected && (
-                <LockIcon />
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span>
+                      <LockIcon />
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Password protected</p>
+                  </TooltipContent>
+                </Tooltip>
               )}
               
               {isExternalLink && (
-                <ExternalLinkIcon />
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span>
+                      <ExternalLinkIcon />
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>External link</p>
+                  </TooltipContent>
+                </Tooltip>
               )}
               
               {isUntranslated && (

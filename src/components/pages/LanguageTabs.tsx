@@ -1,6 +1,7 @@
 import { Settings } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { PageTable } from "@/components/pages/PageTable";
 import { PageItem } from "@/types/pages";
 
@@ -50,96 +51,107 @@ export const LanguageTabs = ({
   onTranslatePage
 }: LanguageTabsProps) => {
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-      <div className="flex items-center justify-between mb-6 px-8 pt-6">
-        <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none">
-          {availableTabs.includes("english") && (
-            <TabsTrigger 
-              value="english" 
-              className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent"
+    <TooltipProvider>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <div className="flex items-center justify-between mb-6 px-8 pt-6">
+          <TabsList className="bg-transparent h-auto p-0 border-b border-gray-200 rounded-none">
+            {availableTabs.includes("english") && (
+              <TabsTrigger 
+                value="english" 
+                className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent"
+              >
+                English
+              </TabsTrigger>
+            )}
+            {availableTabs.includes("estonian") && (
+              <TabsTrigger 
+                value="estonian" 
+                className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center"
+              >
+                Estonian
+                {!estonianVisible && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span>
+                        <EyeHiddenIcon />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Language hidden</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+              </TabsTrigger>
+            )}
+          </TabsList>
+          
+          <div className="flex items-center gap-3">
+            <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
+              Add language
+            </button>
+            <button
+              onClick={onLanguageSettings}
+              className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2"
             >
-              English
-            </TabsTrigger>
-          )}
-          {availableTabs.includes("estonian") && (
-            <TabsTrigger 
-              value="estonian" 
-              className="text-sm px-4 py-3 text-[#666] data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center"
-            >
-              Estonian
-              {!estonianVisible && <EyeHiddenIcon />}
-            </TabsTrigger>
-          )}
-        </TabsList>
-        
-        <div className="flex items-center gap-3">
-          <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
-            Add language
-          </button>
-          <button
-            onClick={onLanguageSettings}
-            className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2"
-          >
-            Settings
-          </button>
+              Settings
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Border line that spans full width */}
-      <div className="border-b border-gray-200 -mx-6"></div>
+        <div className="border-b border-gray-200 -mx-6"></div>
 
-      {/* Add page button section */}
-      <div className="px-8 py-6">
-        <Button 
-          onClick={onAddPageClick}
-          className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          style={{
-            padding: '8px 16px',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '8px',
-            borderRadius: '8px',
-            background: '#453DFF',
-            color: '#FFF',
-            textAlign: 'center',
-            fontFamily: '"Avenir Next"',
-            fontSize: '14px',
-            fontStyle: 'normal',
-            fontWeight: 600,
-            lineHeight: '24px'
-          }}
-        >
-          Add page
-        </Button>
-      </div>
+        <div className="px-8 py-6">
+          <Button 
+            onClick={onAddPageClick}
+            className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            style={{
+              padding: '8px 16px',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '8px',
+              borderRadius: '8px',
+              background: '#453DFF',
+              color: '#FFF',
+              textAlign: 'center',
+              fontFamily: '"Avenir Next"',
+              fontSize: '14px',
+              fontStyle: 'normal',
+              fontWeight: 600,
+              lineHeight: '24px'
+            }}
+          >
+            Add page
+          </Button>
+        </div>
 
-      <TabsContent value="english" className="mt-0">
-        <PageTable
-          pages={pages}
-          onToggleExpansion={onToggleExpansion}
-          onToggleVisibility={onToggleVisibility}
-          onDeletePage={onDeletePage}
-          onDuplicatePage={onDuplicatePage}
-          onAddNestedPage={onAddNestedPage}
-          onPageSettings={onPageSettings}
-          onEditPage={onEditPage}
-          onTranslatePage={onTranslatePage}
-        />
-      </TabsContent>
+        <TabsContent value="english" className="mt-0">
+          <PageTable
+            pages={pages}
+            onToggleExpansion={onToggleExpansion}
+            onToggleVisibility={onToggleVisibility}
+            onDeletePage={onDeletePage}
+            onDuplicatePage={onDuplicatePage}
+            onAddNestedPage={onAddNestedPage}
+            onPageSettings={onPageSettings}
+            onEditPage={onEditPage}
+            onTranslatePage={onTranslatePage}
+          />
+        </TabsContent>
 
-      <TabsContent value="estonian" className="mt-0">
-        <PageTable
-          pages={pages}
-          onToggleExpansion={onToggleExpansion}
-          onToggleVisibility={onToggleVisibility}
-          onDeletePage={onDeletePage}
-          onDuplicatePage={onDuplicatePage}
-          onAddNestedPage={onAddNestedPage}
-          onPageSettings={onPageSettings}
-          onEditPage={onEditPage}
-          onTranslatePage={onTranslatePage}
-        />
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="estonian" className="mt-0">
+          <PageTable
+            pages={pages}
+            onToggleExpansion={onToggleExpansion}
+            onToggleVisibility={onToggleVisibility}
+            onDeletePage={onDeletePage}
+            onDuplicatePage={onDuplicatePage}
+            onAddNestedPage={onAddNestedPage}
+            onPageSettings={onPageSettings}
+            onEditPage={onEditPage}
+            onTranslatePage={onTranslatePage}
+          />
+        </TabsContent>
+      </Tabs>
+    </TooltipProvider>
   );
 };
