@@ -1,5 +1,3 @@
-
-
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EyeHiddenIcon } from "./LanguageTabsIcons";
 
