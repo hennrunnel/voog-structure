@@ -96,33 +96,28 @@ export const LanguageTabs = ({
             >
               Language settings
             </button>
+            <Button 
+              onClick={onAddPageClick}
+              className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              style={{
+                padding: '8px 16px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '8px',
+                borderRadius: '8px',
+                background: '#453DFF',
+                color: '#FFF',
+                textAlign: 'center',
+                fontFamily: '"Avenir Next"',
+                fontSize: '14px',
+                fontStyle: 'normal',
+                fontWeight: 600,
+                lineHeight: '24px'
+              }}
+            >
+              Add page
+            </Button>
           </div>
-        </div>
-
-        <div className="border-b border-gray-200 -mx-6"></div>
-
-        <div className="px-8 py-6">
-          <Button 
-            onClick={onAddPageClick}
-            className="text-white font-semibold hover:bg-[#4A3FFF] focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-            style={{
-              padding: '8px 16px',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '8px',
-              borderRadius: '8px',
-              background: '#453DFF',
-              color: '#FFF',
-              textAlign: 'center',
-              fontFamily: '"Avenir Next"',
-              fontSize: '14px',
-              fontStyle: 'normal',
-              fontWeight: 600,
-              lineHeight: '24px'
-            }}
-          >
-            Add page
-          </Button>
         </div>
 
         <TabsContent value="english" className="mt-0">
