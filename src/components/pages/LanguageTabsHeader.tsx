@@ -59,7 +59,7 @@ export const LanguageTabsHeader = ({
       
       <button 
         onClick={onAddLanguageClick} 
-        className="text-sm text-[#5A4FFF] hover:underline outline-none focus:outline-none capitalize"
+        className="text-sm text-[#5A4FFF] hover:underline outline-none focus:outline-none"
         style={{ 
           marginRight: '32px',
           paddingBottom: '16px',
