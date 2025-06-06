@@ -54,12 +54,12 @@ export const PageTable = ({
           </div>
           
           {/* SEO */}
-          <div className="w-24 px-4">
+          <div className="w-24 px-4 flex justify-center">
             <span>SEO</span>
           </div>
           
           {/* In menu */}
-          <div className="w-24 px-4">
+          <div className="w-24 px-4 flex justify-center">
             <span>In menu</span>
           </div>
 
