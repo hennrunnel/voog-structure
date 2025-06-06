@@ -1,4 +1,3 @@
-
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EyeHiddenIcon } from "./LanguageTabsIcons";
 
@@ -46,7 +45,7 @@ export const LanguageTabsHeader = ({
                   paddingRight: '8px'
                 }}
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-4">
                   {tab}
                   {tab === "estonian" && !estonianVisible && <EyeHiddenIcon />}
                   {tab === "english" && !englishVisible && <EyeHiddenIcon />}
