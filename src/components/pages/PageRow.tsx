@@ -110,7 +110,7 @@ export const PageRow: React.FC<PageRowProps> = ({
     <TooltipProvider>
       <div key={page.id} className="font-sans">
         <div 
-          className="group flex items-center border-b hover:bg-gray-50 transition-colors cursor-pointer" 
+          className="group flex items-center border-b hover:bg-[#FBFBFF] hover:border-l-2 hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
           style={{ 
             paddingLeft: `${paddingLeft + 24}px`, 
             paddingRight: '24px',

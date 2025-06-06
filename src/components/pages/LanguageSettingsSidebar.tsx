@@ -1,13 +1,20 @@
 
-import React, { useState } from "react";
-import { Trash } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import React from "react";
+import { X, Trash } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 
-interface LanguageSettingsProps {
+interface LanguageSettingsSidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
   websiteTitle: string;
   setWebsiteTitle: (title: string) => void;
   nameInMenu: string;
@@ -15,65 +22,57 @@ interface LanguageSettingsProps {
   languageVisible: boolean;
   onLanguageVisibilityToggle: (visible: boolean) => void;
   onLanguageDelete: () => void;
+  activeTab: string;
 }
 
-const LanguageChevronIcon = ({ isExpanded }: { isExpanded: boolean }) => (
-  <svg 
-    width="16" 
-    height="16" 
-    viewBox="0 0 16 16" 
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg"
-    style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
-    className="transition-transform duration-200 ml-2"
-  >
-    <path d="M5.52859 11.5286C5.26824 11.7889 5.26824 12.2111 5.52859 12.4714C5.78894 12.7317 6.21106 12.7317 6.47141 12.4714L10.4714 8.47141C10.7238 8.219 10.7326 7.81264 10.4915 7.54953L6.8248 3.54953C6.57597 3.27811 6.15426 3.25977 5.88284 3.5086C5.61143 3.75743 5.59309 4.17914 5.84192 4.45055L9.07726 7.97993L5.52859 11.5286Z" fill="#1B2124"/>
-  </svg>
-);
-
-export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
+export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = ({
+  isOpen,
+  onClose,
   websiteTitle,
   setWebsiteTitle,
   nameInMenu,
   setNameInMenu,
   languageVisible,
   onLanguageVisibilityToggle,
-  onLanguageDelete
+  onLanguageDelete,
+  activeTab
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const languageName = activeTab === "english" ? "English" : "Estonian";
 
   return (
-    <Accordion type="single" collapsible className="w-full mb-6" onValueChange={(value) => setIsExpanded(value === "language-settings")}>
-      <AccordionItem value="language-settings" className="border-b-0">
-        <div className="flex items-center justify-between">
-          <AccordionTrigger 
-            className="hover:no-underline py-3 px-0 flex-1 flex items-center justify-start [&>svg]:hidden"
-            style={{
-              fontSize: '14px',
-              fontWeight: 'medium',
-              color: '#1A1A1A'
-            }}
-          >
-            <span>Language settings</span>
-            <LanguageChevronIcon isExpanded={isExpanded} />
-          </AccordionTrigger>
-        </div>
-        <AccordionContent className="pb-4 pt-2">
-          {/* Trash icon in top-right */}
-          <div className="absolute top-0 right-0">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={onLanguageDelete} 
-              className="text-gray-400 hover:text-gray-600 p-2" 
-              aria-label="Delete language"
-            >
-              <Trash className="w-4 h-4" />
-            </Button>
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent 
+        className="w-[420px] max-w-[420px] p-0 bg-white border-l border-gray-200 shadow-lg"
+        side="right"
+      >
+        {/* Header */}
+        <div className="px-8 py-8 pb-6 border-b border-gray-100">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold text-gray-900">Language settings</h2>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={onLanguageDelete} 
+                className="text-gray-400 hover:text-gray-600 p-2" 
+                aria-label="Delete language"
+              >
+                <Trash className="w-4 h-4" />
+              </Button>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                aria-label="Close language settings"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
           </div>
+        </div>
 
-          {/* Form fields in two-column layout */}
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4 pr-12">
+        {/* Content */}
+        <div className="px-8 py-6 flex-1 overflow-y-auto">
+          <div className="space-y-6">
             {/* Website title */}
             <div className="flex items-center">
               <label htmlFor="website-title" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
@@ -83,7 +82,7 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
                 id="website-title" 
                 value={websiteTitle} 
                 onChange={e => setWebsiteTitle(e.target.value)} 
-                className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" 
+                className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" 
               />
             </div>
 
@@ -92,8 +91,8 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
               <label htmlFor="language-name" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
                 Language name
               </label>
-              <Select defaultValue="english">
-                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" id="language-name">
+              <Select defaultValue={activeTab}>
+                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" id="language-name">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -110,7 +109,7 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
                 Region
               </label>
               <Select defaultValue="global">
-                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" id="region">
+                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" id="region">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -130,7 +129,7 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
                 id="name-in-menu" 
                 value={nameInMenu} 
                 onChange={e => setNameInMenu(e.target.value)} 
-                className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" 
+                className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" 
               />
             </div>
 
@@ -139,7 +138,7 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
               <label htmlFor="publicly-visible" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
                 Is this language publicly visible?
               </label>
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 ml-4">
                 <Switch 
                   id="publicly-visible" 
                   checked={languageVisible} 
@@ -154,7 +153,7 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
                 Which language visitors see?
               </label>
               <Select defaultValue="detect-location">
-                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1" id="visitor-language">
+                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" id="visitor-language">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -165,8 +164,22 @@ export const LanguageSettings: React.FC<LanguageSettingsProps> = ({
               </Select>
             </div>
           </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+        </div>
+
+        {/* Action buttons */}
+        <div className="px-8 py-6 border-t border-gray-100 flex space-x-3">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            Save
+          </Button>
+          <Button 
+            variant="ghost" 
+            onClick={onClose} 
+            className="px-6 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+          >
+            Cancel
+          </Button>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };

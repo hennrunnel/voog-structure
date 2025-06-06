@@ -1,5 +1,7 @@
 
+import { Settings } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 interface LanguageTabsProps {
   activeTab: string;
@@ -10,6 +12,7 @@ interface LanguageTabsProps {
   estonianVisible?: boolean;
   onEnglishVisibilityToggle?: (visible: boolean) => void;
   onEstonianVisibilityToggle?: (visible: boolean) => void;
+  onLanguageSettings?: () => void;
 }
 
 const EyeHiddenIcon = () => (
@@ -28,7 +31,8 @@ export const LanguageTabs = ({
   englishVisible = true,
   estonianVisible = true,
   onEnglishVisibilityToggle,
-  onEstonianVisibilityToggle
+  onEstonianVisibilityToggle,
+  onLanguageSettings
 }: LanguageTabsProps) => {
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -53,9 +57,20 @@ export const LanguageTabs = ({
           )}
         </TabsList>
         
-        <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
-          Add language
-        </button>
+        <div className="flex items-center gap-3">
+          <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
+            Add language
+          </button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onLanguageSettings}
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+            aria-label="Language settings"
+          >
+            <Settings className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Border line that spans full width */}
