@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -58,17 +57,17 @@ const LockIcon = () => (
 );
 
 const EyeVisibleIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
-    <path d="M2 8C2 8 3.63636 4 8 4C11.2727 4 14 8 14 8C14 8 11.2727 12 8 12C3.63636 12 2 8 2 8Z" fill="#1B2124"/>
-    <path fillRule="evenodd" clipRule="evenodd" d="M8 10C6.89543 10 6 9.10457 6 8C6 6.89543 6.89543 6 8 6C9.10457 6 10 6.89543 10 8C10 9.10457 9.10457 10 8 10Z" fill="white"/>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
+    <path d="M3 12C3 12 5.45455 6 12 6C16.9091 6 21 12 21 12C21 12 16.9091 18 12 18C5.45455 18 3 12 3 12Z" fill="#1B2124"/>
+    <path fillRule="evenodd" clipRule="evenodd" d="M12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15Z" fill="white"/>
   </svg>
 );
 
 const EyeHiddenIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
-    <path d="M12.8053 6.56559C13.5536 7.34527 14 8 14 8C14 8 11.2727 12 8 12C7.79293 12 7.59193 11.991 7.39699 11.9739L12.8053 6.56559Z" fill="#1B2124"/>
-    <path d="M9.67007 4.32989L8 6C6.89543 6 6 6.89543 6 8L3.68441 10.3156C2.50004 9.22233 2 8 2 8C2 8 3.63636 4 8 4C8.57767 4 9.13841 4.12463 9.67007 4.32989Z" fill="#1B2124"/>
-    <path opacity="0.3" d="M12.3567 3.33335L3.39998 12.29L4.34332 13.2333L13.3 4.27682L12.3567 3.33335Z" fill="#1B2124"/>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
+    <path d="M19.2079 9.84839C20.3304 11.0179 21 12 21 12C21 12 16.9091 18 12 18C11.1894 18 10.3879 17.8865 9.59549 17.6609L19.2079 9.84839Z" fill="#1B2124"/>
+    <path d="M14.505 6.49483L12 9C10.3431 9 9 10.3431 9 12L5.52661 15.4734C3.75006 13.8335 3 12 3 12C3 12 5.45455 6 12 6C12.8665 6 13.7076 6.18695 14.505 6.49483Z" fill="#1B2124"/>
+    <path opacity="0.3" d="M18.535 5.00003L5.09998 18.435L6.51498 19.85L19.95 6.41523L18.535 5.00003Z" fill="#1B2124"/>
   </svg>
 );
 

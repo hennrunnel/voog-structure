@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { TabsContent } from "@/components/ui/tabs";
 import { PageSettings } from "@/components/PageSettings";
@@ -10,6 +9,7 @@ import { layoutOptions } from "@/constants/pages";
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { LanguageTabs } from "@/components/pages/LanguageTabs";
 import { EnglishTabContent } from "@/components/pages/EnglishTabContent";
+import { EstonianTabContent } from "@/components/pages/EstonianTabContent";
 
 export const PagesContainer = () => {
   const [activeTab, setActiveTab] = useState("english");
@@ -20,9 +20,17 @@ export const PagesContainer = () => {
   const [selectedLayout, setSelectedLayout] = useState<string | null>(null);
   const [pageSettingsOpen, setPageSettingsOpen] = useState(false);
   const [selectedPage, setSelectedPage] = useState<PageItem | null>(null);
-  const [websiteTitle, setWebsiteTitle] = useState("Finn & Cross");
-  const [nameInMenu, setNameInMenu] = useState("Eng");
-  const [languageVisible, setLanguageVisible] = useState(true);
+  
+  // English language settings
+  const [englishWebsiteTitle, setEnglishWebsiteTitle] = useState("Finn & Cross");
+  const [englishNameInMenu, setEnglishNameInMenu] = useState("Eng");
+  const [englishLanguageVisible, setEnglishLanguageVisible] = useState(true);
+  
+  // Estonian language settings
+  const [estonianWebsiteTitle, setEstonianWebsiteTitle] = useState("Finn & Cross");
+  const [estonianNameInMenu, setEstonianNameInMenu] = useState("Est");
+  const [estonianLanguageVisible, setEstonianLanguageVisible] = useState(true);
+  
   const [availableTabs, setAvailableTabs] = useState(["english", "estonian"]);
 
   const {
@@ -113,13 +121,22 @@ export const PagesContainer = () => {
     setLanguageDeleteDialogOpen(false);
   };
 
-  const handleLanguageVisibilityToggle = (newValue: boolean) => {
+  const handleEnglishLanguageVisibilityToggle = (newValue: boolean) => {
+    setLanguageVisibilityAction(newValue ? 'enable' : 'disable');
+    setLanguageVisibilityDialogOpen(true);
+  };
+
+  const handleEstonianLanguageVisibilityToggle = (newValue: boolean) => {
     setLanguageVisibilityAction(newValue ? 'enable' : 'disable');
     setLanguageVisibilityDialogOpen(true);
   };
 
   const confirmLanguageVisibilityToggle = () => {
-    setLanguageVisible(languageVisibilityAction === 'enable');
+    if (activeTab === "english") {
+      setEnglishLanguageVisible(languageVisibilityAction === 'enable');
+    } else if (activeTab === "estonian") {
+      setEstonianLanguageVisible(languageVisibilityAction === 'enable');
+    }
     setLanguageVisibilityDialogOpen(false);
   };
 
@@ -142,14 +159,18 @@ export const PagesContainer = () => {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             availableTabs={availableTabs}
+            englishVisible={englishLanguageVisible}
+            estonianVisible={estonianLanguageVisible}
+            onEnglishVisibilityToggle={handleEnglishLanguageVisibilityToggle}
+            onEstonianVisibilityToggle={handleEstonianLanguageVisibilityToggle}
           >
             <EnglishTabContent
-              websiteTitle={websiteTitle}
-              setWebsiteTitle={setWebsiteTitle}
-              nameInMenu={nameInMenu}
-              setNameInMenu={setNameInMenu}
-              languageVisible={languageVisible}
-              onLanguageVisibilityToggle={handleLanguageVisibilityToggle}
+              websiteTitle={englishWebsiteTitle}
+              setWebsiteTitle={setEnglishWebsiteTitle}
+              nameInMenu={englishNameInMenu}
+              setNameInMenu={setEnglishNameInMenu}
+              languageVisible={englishLanguageVisible}
+              onLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
               onLanguageDelete={handleLanguageDelete}
               onAddPageClick={handleAddPageClick}
               pages={pages}
@@ -163,13 +184,25 @@ export const PagesContainer = () => {
               onTranslatePage={handleTranslatePage}
             />
 
-            <TabsContent value="estonian" className="mt-0 px-0">
-              <div className="px-8">
-                <div className="text-[#1B2124] text-sm">
-                  Estonian tab content will be displayed here.
-                </div>
-              </div>
-            </TabsContent>
+            <EstonianTabContent
+              websiteTitle={estonianWebsiteTitle}
+              setWebsiteTitle={setEstonianWebsiteTitle}
+              nameInMenu={estonianNameInMenu}
+              setNameInMenu={setEstonianNameInMenu}
+              languageVisible={estonianLanguageVisible}
+              onLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
+              onLanguageDelete={handleLanguageDelete}
+              onAddPageClick={handleAddPageClick}
+              pages={pages}
+              onToggleExpansion={togglePageExpansion}
+              onToggleVisibility={togglePageVisibility}
+              onDeletePage={handleDeletePage}
+              onDuplicatePage={handleDuplicatePage}
+              onAddNestedPage={handleAddNestedPage}
+              onPageSettings={handlePageSettings}
+              onEditPage={handleEditPage}
+              onTranslatePage={handleTranslatePage}
+            />
           </LanguageTabs>
         </div>
 
