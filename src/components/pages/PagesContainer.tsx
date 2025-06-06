@@ -69,9 +69,11 @@ export const PagesContainer = () => {
   } = usePageActions(setPages);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-12 font-sans">
+    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '80px' }}>
       <div className="w-full" style={{ maxWidth: '992px' }}>
-        <PagesHeader />
+        <div style={{ marginBottom: '48px' }}>
+          <PagesHeader />
+        </div>
         
         <Card 
           className="bg-white"
@@ -79,7 +81,8 @@ export const PagesContainer = () => {
             borderRadius: '10px',
             border: '0.5px solid rgba(24, 24, 27, 0.10)',
             background: 'var(--Primary-White, #FFF)',
-            boxShadow: '0px 0.5px 1px 0px var(--shadow-dark, rgba(24, 24, 27, 0.05)), 0px 2px 5px 0px rgba(0, 0, 0, 0.05), 0px 17px 17.7px 0px rgba(0, 0, 0, 0.01)'
+            boxShadow: '0px 0.5px 1px 0px var(--shadow-dark, rgba(24, 24, 27, 0.05)), 0px 2px 5px 0px rgba(0, 0, 0, 0.05), 0px 17px 17.7px 0px rgba(0, 0, 0, 0.01)',
+            paddingBottom: '32px'
           }}
         >
           <CardContent className="p-0">
