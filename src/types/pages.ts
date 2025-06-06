@@ -4,7 +4,7 @@ export interface PageItem {
   title: string;
   slug: string;
   pageType: string;
-  seoScore: "Good" | "Needs attention" | "Poor";
+  seoScore: "Good" | "Medium" | "Poor";
   translationStatus?: "Untranslated" | "Hidden";
   isVisible: boolean;
   children?: PageItem[];
