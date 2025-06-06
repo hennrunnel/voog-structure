@@ -1,5 +1,11 @@
 
-import { DomainResult } from "@/pages/BuyDomain";
+interface DomainResult {
+  name: string;
+  tld: string;
+  price: string;
+  status: 'available' | 'taken' | 'in-cart' | 'error';
+  errorMessage?: string;
+}
 
 interface DomainResultsProps {
   results: DomainResult[];
