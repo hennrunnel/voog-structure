@@ -1,10 +1,7 @@
-import { Lock, LockOpen, Settings, MoreVertical, Trash2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+
+import { Lock, LockOpen, MoreVertical } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { RemoveConfirmationModal } from "./RemoveConfirmationModal";
-import { toast } from "sonner";
 
 interface Domain {
   name: string;
@@ -17,6 +14,7 @@ interface Domain {
   isExternal: boolean;
   isPrimary?: boolean;
 }
+
 interface DomainItemProps {
   domain: Domain;
   onAddToCart: (domain: string) => void;
@@ -24,6 +22,7 @@ interface DomainItemProps {
   onRemoveDomain: (domainName: string) => void;
   isFirst?: boolean;
 }
+
 export const DomainItem = ({
   domain,
   onAddToCart,
@@ -31,9 +30,6 @@ export const DomainItem = ({
   onRemoveDomain,
   isFirst = false
 }: DomainItemProps) => {
-  const navigate = useNavigate();
-  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
-
   const getTypeColor = (type: string) => {
     if (type === "COM") return "bg-blue-50 text-blue-700 border-blue-200";
     if (type === "EE") return "bg-yellow-50 text-yellow-700 border-yellow-200";
@@ -47,59 +43,18 @@ export const DomainItem = ({
     if (type === "Free Voog domain") return "";
     return type.substring(0, 3).toUpperCase();
   };
-  
-  const getExpiryDateColor = (expiryDate: string) => {
-    // Only red if already expired (past dates)
-    if (expiryDate.includes("Expired") || expiryDate.includes("Domain is not registered")) return "text-red-600";
-    return "text-gray-600";
-  };
-
-  // Check if we should show the type badge (only for domains with "free" in the type)
-  const shouldShowTypeBadge = domain.type.toLowerCase().includes("free");
-
-  // Show notes only for redirected domains (first domain in this case)
-  const shouldShowNotes = domain.notes && domain.notes.includes("Redirected");
 
   const handleSettingsClick = () => {
-    navigate(`/domain-settings?domain=${encodeURIComponent(domain.name)}`);
+    console.log(`Domain settings functionality simplified for: ${domain.name}`);
   };
 
   const handleRenewClick = () => {
-    // Show informational toast about Renew functionality
-    toast.info("Clicking Renew takes the user to store.voog.com", {
-      duration: 4000,
-      position: "bottom-right",
-    });
-    
-    onAddToCart(domain.name);
+    console.log(`Domain renew functionality removed for: ${domain.name}`);
   };
 
   const handleRemoveClick = () => {
-    setIsRemoveModalOpen(true);
+    console.log(`Domain remove functionality simplified for: ${domain.name}`);
   };
-
-  const handleConfirmRemove = () => {
-    console.log(`Removing domain: ${domain.name}`);
-    onRemoveDomain(domain.name);
-    setIsRemoveModalOpen(false);
-  };
-
-  const handleRegisterClick = () => {
-    console.log(`Register domain: ${domain.name}`);
-    // Placeholder for register functionality
-  };
-
-  // Check if domain has pricing (to show renew option)
-  const hasPricing = domain.expiry.includes("€") && !domain.expiry.includes("External") && !domain.expiry.includes("Free");
-
-  // Check if domain is about to expire (within 30 days)
-  const isAboutToExpire = domain.expiryDate.toLowerCase().includes("expires") && !domain.expiryDate.toLowerCase().includes("2026");
-
-  // Check if domain is not registered
-  const isNotRegistered = domain.expiryDate.includes("Domain is not registered");
-
-  // Check if domain is "Free Forever"
-  const isFreeForever = domain.expiry === "Free forever";
 
   return (
     <TooltipProvider delayDuration={300}>
@@ -125,12 +80,7 @@ export const DomainItem = ({
                   )}
                 </TooltipTrigger>
                 <TooltipContent side="top" align="center">
-                  <p>
-                    {domain.sslActive 
-                      ? "SSL certificate for this domain is valid" 
-                      : "This domain does not have an SSL certificate. You can upload your own or auto-activate a free certificate in SSL certificates."
-                    }
-                  </p>
+                  <p>SSL management has been simplified</p>
                 </TooltipContent>
               </Tooltip>
               
@@ -142,47 +92,20 @@ export const DomainItem = ({
               )}
             </div>
             
-            {/* Domain is not registered text - moved here */}
-            {isNotRegistered && (
-              <p className="text-xs text-red-600 mb-1">Domain is not registered</p>
-            )}
-            
-            {/* Type Badge - only show for free domains */}
-            {shouldShowTypeBadge}
-            
-            {/* Notes - only show for redirected domains */}
-            {shouldShowNotes && <p className="text-xs text-gray-600 mt-2">{domain.notes}</p>}
+            <p className="text-xs text-gray-500">Domain management functionality has been simplified</p>
           </div>
         </div>
 
-        {/* Right Side - Expiry and Actions */}
+        {/* Right Side - Simplified Info and Actions */}
         <div className="flex items-center space-x-4">
           <div className="text-right">
-            {/* Handle not registered domains specially */}
-            {isNotRegistered ? (
-              <button 
-                onClick={handleRegisterClick}
-                className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer transition-colors"
-              >
-                Register
-              </button>
-            ) : (
-              <>
-                {domain.expiry && (
-                  <p className="font-medium text-sm text-gray-600">
-                    {domain.expiry}
-                  </p>
-                )}
-                {domain.expiryDate && (
-                  <p className={`text-xs ${getExpiryDateColor(domain.expiryDate)}`}>
-                    {domain.expiryDate}
-                  </p>
-                )}
-              </>
+            <p className="font-medium text-sm text-gray-600">{domain.expiry}</p>
+            {domain.expiryDate && (
+              <p className="text-xs text-gray-600">{domain.expiryDate}</p>
             )}
           </div>
           
-          {/* Kebab Menu */}
+          {/* Simplified Kebab Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
@@ -191,27 +114,18 @@ export const DomainItem = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleSettingsClick}>
-                Settings
+                Settings (simplified)
               </DropdownMenuItem>
-              {hasPricing && (
-                <DropdownMenuItem onClick={handleRenewClick}>
-                  Renew
-                </DropdownMenuItem>
-              )}
+              <DropdownMenuItem onClick={handleRenewClick}>
+                Renew (console log)
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={handleRemoveClick} className="text-red-600 focus:text-red-600">
-                Remove
+                Remove (console log)
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
-
-      <RemoveConfirmationModal
-        isOpen={isRemoveModalOpen}
-        onClose={() => setIsRemoveModalOpen(false)}
-        onConfirm={handleConfirmRemove}
-        domainName={domain.name}
-      />
     </TooltipProvider>
   );
 };

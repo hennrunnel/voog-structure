@@ -1,64 +1,16 @@
 
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { SuccessModal } from "@/components/SuccessModal";
 
 const FreeDomain = () => {
   const [subdomain, setSubdomain] = useState("");
-  const [validationMessage, setValidationMessage] = useState("");
-  const [isValidating, setIsValidating] = useState(false);
-  const [cartItems, setCartItems] = useState<string[]>([]);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const navigate = useNavigate();
 
-  const validateSubdomain = async (value: string) => {
-    if (!value.trim()) {
-      setValidationMessage("");
-      return;
-    }
-    setIsValidating(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      // Mock validation - some subdomains are "taken"
-      const takenSubdomains = ["test", "demo", "admin", "www", "mail"];
-      if (takenSubdomains.includes(value.toLowerCase())) {
-        setValidationMessage("This subdomain is already taken");
-      } else {
-        setValidationMessage("Great! This subdomain is available");
-      }
-      setIsValidating(false);
-    }, 500);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
-    setSubdomain(value);
-    if (value) {
-      validateSubdomain(value);
-    } else {
-      setValidationMessage("");
-    }
-  };
-
-  const handleTakeIt = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (subdomain && validationMessage.includes("available")) {
-      const domainName = `${subdomain}.voog.com`;
-      setCartItems(prev => [...prev, domainName]);
-      setShowSuccessModal(true);
-    }
+    console.log(`Free domain functionality simplified. Subdomain: ${subdomain}.voog.com`);
   };
-
-  const handleViewDomains = () => {
-    setShowSuccessModal(false);
-    navigate("/");
-  };
-
-  const isAvailable = validationMessage.includes("available");
-  const isTaken = validationMessage.includes("taken");
 
   return (
     <div className="min-h-screen bg-white">
@@ -86,60 +38,37 @@ const FreeDomain = () => {
               </div>
             </div>
 
-            <div className="mb-8">
-              <form onSubmit={handleTakeIt} className="space-y-4">
-                <div>
-                  <div className="mt-2 flex gap-3">
-                    <div className="flex-1 relative">
-                      <Input 
-                        id="subdomain-search" 
-                        type="text" 
-                        value={subdomain} 
-                        onChange={handleInputChange} 
-                        placeholder="yourdomain" 
-                        className="pr-20" 
-                      />
-                      <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600">
-                        .voog.com
-                      </span>
-                    </div>
-                    <button 
-                      type="submit" 
-                      disabled={!isAvailable} 
-                      className="bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 rounded-md font-medium transition-colors"
-                    >
-                      Take it!
-                    </button>
-                  </div>
+            {/* Simplified Form */}
+            <form onSubmit={handleSubmit} className="mb-8">
+              <div className="flex gap-3">
+                <div className="flex-1 relative">
+                  <Input 
+                    value={subdomain}
+                    onChange={(e) => setSubdomain(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+                    placeholder="yourdomain"
+                    className="pr-20"
+                  />
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600">
+                    .voog.com
+                  </span>
                 </div>
-              </form>
-              
-              {/* Validation Message */}
-              {validationMessage && (
-                <div className={`mt-3 text-sm ${isAvailable ? 'text-green-600' : isTaken ? 'text-red-600' : ''}`}>
-                  {validationMessage}
-                </div>
-              )}
-              
-              {isValidating && (
-                <div className="mt-3 text-sm text-gray-600">
-                  Checking availability...
-                </div>
-              )}
+                <button 
+                  type="submit"
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-md font-medium transition-colors"
+                >
+                  Take it!
+                </button>
+              </div>
+            </form>
+
+            {/* Placeholder Message */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+              <p className="text-gray-700 mb-2">Free domain functionality has been simplified.</p>
+              <p className="text-sm text-gray-500">Enter a subdomain and click "Take it!" to see a console log message.</p>
             </div>
           </div>
         </div>
       </div>
-
-      <SuccessModal
-        isOpen={showSuccessModal}
-        title="Free domain added successfully!"
-        description={`${subdomain}.voog.com has been added to your account and is ready to use.`}
-        primaryAction={{
-          label: "View your domains",
-          onClick: handleViewDomains
-        }}
-      />
     </div>
   );
 };

@@ -1,26 +1,18 @@
 
-import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DomainSettingsGeneral } from "@/components/DomainSettingsGeneral";
-import { DomainSettingsDns } from "@/components/DomainSettingsDns";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const DomainSettings = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const domainName = searchParams.get('domain') || 'example.com';
-  const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState(tabParam === 'dns' ? 'dns' : 'general');
-
-  useEffect(() => {
-    if (tabParam === 'dns') {
-      setActiveTab('dns');
-    }
-  }, [tabParam]);
 
   const handleBackToDomains = () => {
     navigate('/');
+  };
+
+  const handleSaveSettings = () => {
+    console.log(`Domain settings save functionality simplified for: ${domainName}`);
   };
 
   return (
@@ -30,7 +22,7 @@ const DomainSettings = () => {
         <div className="w-full" style={{ maxWidth: '992px' }}>
           <div className="flex justify-between items-center mb-8">
             <div>
-              {/* More prominent back link */}
+              {/* Back link */}
               <div className="mb-6">
                 <button 
                   onClick={handleBackToDomains} 
@@ -50,41 +42,38 @@ const DomainSettings = () => {
         {/* Main Content Card - 992px width, centered */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm w-full" style={{ maxWidth: '992px' }}>
           <div className="p-8">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              {/* Updated Tab styling to match screenshot */}
-              <div className="border-b border-gray-200 mb-8">
-                <div className="flex space-x-12">
-                  <button 
-                    onClick={() => setActiveTab("general")} 
-                    className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
-                      activeTab === "general" 
-                        ? "text-blue-600 border-blue-600" 
-                        : "text-gray-500 border-transparent hover:text-gray-700"
-                    }`}
-                  >
-                    General
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab("dns")} 
-                    className={`pb-4 text-sm font-medium border-b-2 transition-colors ${
-                      activeTab === "dns" 
-                        ? "text-blue-600 border-blue-600" 
-                        : "text-gray-500 border-transparent hover:text-gray-700"
-                    }`}
-                  >
-                    DNS Settings
-                  </button>
-                </div>
+            {/* Tab headers */}
+            <div className="border-b border-gray-200 mb-8">
+              <div className="flex space-x-12">
+                <button className="pb-4 text-sm font-medium border-b-2 text-blue-600 border-blue-600">
+                  General
+                </button>
+                <button className="pb-4 text-sm font-medium border-b-2 text-gray-500 border-transparent hover:text-gray-700">
+                  DNS Settings
+                </button>
+              </div>
+            </div>
+
+            {/* Simplified Content */}
+            <div className="space-y-6">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                <h3 className="font-medium text-gray-900 mb-2">Domain Settings Simplified</h3>
+                <p className="text-sm text-gray-700 mb-4">
+                  The domain settings functionality has been simplified for demonstration purposes. 
+                  Complex form handling, DNS management, and SSL configuration have been removed.
+                </p>
+                <p className="text-xs text-gray-500">
+                  Click the button below to see a console log message instead of actual settings save.
+                </p>
               </div>
 
-              <TabsContent value="general" className="space-y-0">
-                <DomainSettingsGeneral domainName={domainName} />
-              </TabsContent>
-
-              <TabsContent value="dns" className="space-y-0">
-                <DomainSettingsDns domainName={domainName} />
-              </TabsContent>
-            </Tabs>
+              <button 
+                onClick={handleSaveSettings}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium transition-colors"
+              >
+                Save settings (console log)
+              </button>
+            </div>
           </div>
         </div>
       </div>

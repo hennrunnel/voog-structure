@@ -1,54 +1,15 @@
 
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { SuccessModal } from "@/components/SuccessModal";
 
 const ImportDomain = () => {
   const [domain, setDomain] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [cartItems, setCartItems] = useState<string[]>([]);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const navigate = useNavigate();
-
-  const validateDomain = (value: string) => {
-    // Basic domain validation
-    const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/;
-    if (!value.trim()) {
-      setErrorMessage("");
-      return false;
-    }
-    if (!domainRegex.test(value)) {
-      setErrorMessage("Please enter a valid domain name (e.g., example.com)");
-      return false;
-    }
-    setErrorMessage("");
-    return true;
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toLowerCase();
-    setDomain(value);
-    validateDomain(value);
-  };
 
   const handleImport = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateDomain(domain)) {
-      setCartItems(prev => [...prev, domain]);
-      setShowSuccessModal(true);
-    }
-  };
-
-  const handleViewDomains = () => {
-    setShowSuccessModal(false);
-    navigate("/");
-  };
-
-  const handleConfigureDns = () => {
-    setShowSuccessModal(false);
-    navigate(`/domain-settings?domain=${encodeURIComponent(domain)}&tab=dns`);
+    console.log(`Domain import functionality simplified. Domain: ${domain}`);
   };
 
   return (
@@ -77,53 +38,32 @@ const ImportDomain = () => {
               </div>
             </div>
 
-            <div className="mb-8">
-              <form onSubmit={handleImport} className="space-y-4">
-                <div>
-                  <div className="mt-2 flex gap-3">
-                    <Input 
-                      id="domain-import" 
-                      type="text" 
-                      value={domain} 
-                      onChange={handleInputChange} 
-                      placeholder="Type your domain name here..." 
-                      className="flex-1" 
-                    />
-                    <button 
-                      type="submit" 
-                      disabled={!domain || !!errorMessage} 
-                      className="bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-2 rounded-md font-medium transition-colors"
-                    >
-                      Import
-                    </button>
-                  </div>
-                </div>
-              </form>
-              
-              {/* Error Message */}
-              {errorMessage && (
-                <div className="mt-3 text-sm text-red-600">
-                  {errorMessage}
-                </div>
-              )}
+            {/* Simplified Form */}
+            <form onSubmit={handleImport} className="mb-8">
+              <div className="flex gap-3">
+                <Input 
+                  value={domain}
+                  onChange={(e) => setDomain(e.target.value.toLowerCase())}
+                  placeholder="Type your domain name here..."
+                  className="flex-1"
+                />
+                <button 
+                  type="submit"
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-md font-medium transition-colors"
+                >
+                  Import
+                </button>
+              </div>
+            </form>
+
+            {/* Placeholder Message */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+              <p className="text-gray-700 mb-2">Domain import functionality has been simplified.</p>
+              <p className="text-sm text-gray-500">Enter a domain name and click import to see a console log message.</p>
             </div>
           </div>
         </div>
       </div>
-
-      <SuccessModal
-        isOpen={showSuccessModal}
-        title="Domain imported successfully!"
-        description={`${domain} has been added to your account. Configure DNS settings to point your domain to Voog's hosting infrastructure, or view your domains list.`}
-        primaryAction={{
-          label: "Configure DNS settings",
-          onClick: handleConfigureDns
-        }}
-        secondaryAction={{
-          label: "View domains list",
-          onClick: handleViewDomains
-        }}
-      />
     </div>
   );
 };
