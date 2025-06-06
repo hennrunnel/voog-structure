@@ -1,12 +1,9 @@
 
 import { PageRow } from "@/components/pages/PageRow";
-import { PageTableMobile } from "@/components/pages/PageTableMobile";
 import { PageItem } from "@/types/pages";
-import { ViewMode } from "@/hooks/usePageManagement";
 
 interface PageTableProps {
   pages: PageItem[];
-  viewMode: ViewMode;
   onToggleExpansion: (pageId: string) => void;
   onToggleVisibility: (pageId: string) => void;
   onDeletePage: (page: PageItem) => void;
@@ -19,7 +16,6 @@ interface PageTableProps {
 
 export const PageTable = ({
   pages,
-  viewMode,
   onToggleExpansion,
   onToggleVisibility,
   onDeletePage,
@@ -29,22 +25,6 @@ export const PageTable = ({
   onEditPage,
   onTranslatePage
 }: PageTableProps) => {
-  if (viewMode === 'mobile') {
-    return (
-      <PageTableMobile
-        pages={pages}
-        onToggleExpansion={onToggleExpansion}
-        onToggleVisibility={onToggleVisibility}
-        onDeletePage={onDeletePage}
-        onDuplicatePage={onDuplicatePage}
-        onAddNestedPage={onAddNestedPage}
-        onPageSettings={onPageSettings}
-        onEditPage={onEditPage}
-        onTranslatePage={onTranslatePage}
-      />
-    );
-  }
-
   return (
     <div className="overflow-hidden border-t border-gray-200">
       {/* Table Header */}

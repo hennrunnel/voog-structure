@@ -3,15 +3,12 @@ import { useState } from "react";
 import { PageItem } from "@/types/pages";
 import { mockPages } from "@/constants/pages";
 
-export type ViewMode = 'desktop' | 'mobile';
-
 export const usePageManagement = () => {
   const [pages, setPages] = useState<PageItem[]>(mockPages);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [pageToDelete, setPageToDelete] = useState<PageItem | null>(null);
   const [homeVisibilityDialogOpen, setHomeVisibilityDialogOpen] = useState(false);
   const [homeVisibilityAction, setHomeVisibilityAction] = useState<'show' | 'hide'>('hide');
-  const [viewMode, setViewMode] = useState<ViewMode>('desktop');
 
   const togglePageExpansion = (pageId: string) => {
     setPages(prevPages => prevPages.map(page => 
@@ -94,8 +91,6 @@ export const usePageManagement = () => {
     homeVisibilityDialogOpen,
     setHomeVisibilityDialogOpen,
     homeVisibilityAction,
-    viewMode,
-    setViewMode,
     togglePageExpansion,
     togglePageVisibility,
     handleDeletePage,

@@ -2,7 +2,6 @@
 import { LanguageTabs } from "@/components/pages/LanguageTabs";
 import { LanguageSettingsSidebar } from "@/components/pages/LanguageSettingsSidebar";
 import { PageItem } from "@/types/pages";
-import { ViewMode } from "@/hooks/usePageManagement";
 import { useState } from "react";
 
 interface PagesContentProps {
@@ -10,8 +9,6 @@ interface PagesContentProps {
   setActiveTab: (tab: string) => void;
   availableTabs: string[];
   pages: PageItem[];
-  viewMode: ViewMode;
-  onViewModeChange: (mode: ViewMode) => void;
   englishWebsiteTitle: string;
   setEnglishWebsiteTitle: (title: string) => void;
   englishNameInMenu: string;
@@ -41,8 +38,6 @@ export const PagesContent = ({
   setActiveTab,
   availableTabs,
   pages,
-  viewMode,
-  onViewModeChange,
   englishWebsiteTitle,
   setEnglishWebsiteTitle,
   englishNameInMenu,
@@ -110,8 +105,6 @@ export const PagesContent = ({
         availableTabs={availableTabs}
         englishVisible={englishLanguageVisible}
         estonianVisible={estonianLanguageVisible}
-        viewMode={viewMode}
-        onViewModeChange={onViewModeChange}
         onLanguageSettings={handleLanguageSettings}
         onAddPageClick={onAddPageClick}
         pages={pages}
