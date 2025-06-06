@@ -64,8 +64,7 @@ export const LanguageTabsActions = ({
             fontWeight: 600,
             lineHeight: '24px',
             backgroundColor: 'rgba(90, 79, 255, 0.1)',
-            color: '#5A4FFF',
-            height: '24px'
+            color: '#5A4FFF'
           }}
         >
           Language settings
@@ -87,8 +86,7 @@ export const LanguageTabsActions = ({
             fontSize: '14px',
             fontStyle: 'normal',
             fontWeight: 600,
-            lineHeight: '24px',
-            height: '24px'
+            lineHeight: '24px'
           }}
         >
           New page

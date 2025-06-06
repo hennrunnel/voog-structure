@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -120,10 +119,7 @@ export const PageRow: React.FC<PageRowProps> = ({
 
   const handleVisibilityToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // For Home page, directly toggle without confirmation
-    if (!isHomePage) {
-      onToggleVisibility(page.id);
-    }
+    onToggleVisibility(page.id);
   };
 
   return (
@@ -270,7 +266,7 @@ export const PageRow: React.FC<PageRowProps> = ({
 
           {/* Menu Visibility Toggle */}
           <div className="w-24 px-4 flex justify-center">
-            {!isUntranslated && !isHomePage ? (
+            {!isUntranslated ? (
               <button
                 onClick={handleVisibilityToggle}
                 aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
