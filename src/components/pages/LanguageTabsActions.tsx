@@ -105,16 +105,16 @@ export const LanguageTabsActions = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
             <DropdownMenuItem 
-              onClick={handleDownloadSite} 
-              className="cursor-pointer text-sm text-[#1B2124]"
-            >
-              Download entire site
-            </DropdownMenuItem>
-            <DropdownMenuItem 
               onClick={handleLanguagePublishToggle} 
               className="cursor-pointer text-sm text-[#1B2124]"
             >
               {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={handleDownloadSite} 
+              className="cursor-pointer text-sm text-[#1B2124]"
+            >
+              Download entire site
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleLanguageDelete} 
