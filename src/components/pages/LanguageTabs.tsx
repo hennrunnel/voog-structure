@@ -33,18 +33,6 @@ const EyeHiddenIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill
     <path opacity="0.3" d="M18.535 5.00003L5.09998 18.435L6.51498 19.85L19.95 6.41523L18.535 5.00003Z" fill="#666" />
   </svg>;
 
-const PreferencesIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clipPath="url(#clip0_85_13)">
-      <path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M4.5 7H9.5C10.3284 7 11 7.67157 11 8.5C11 9.32843 10.3284 10 9.5 10H4.5C3.67157 10 3 9.32843 3 8.5C3 7.67157 3.67157 7 4.5 7ZM13.5 15H18.5C19.3284 15 20 15.6716 20 16.5C20 17.3284 19.3284 18 18.5 18H13.5C12.6716 18 12 17.3284 12 16.5C12 15.6716 12.6716 15 13.5 15Z" fill="#666" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M17 11C15.3431 11 14 9.65685 14 8C14 6.34315 15.3431 5 17 5C18.6569 5 20 6.34315 20 8C20 9.65685 18.6569 11 17 11ZM6 19C4.34315 19 3 17.6569 3 16C3 14.3431 4.34315 13 6 13C7.65685 13 9 14.3431 9 16C9 17.6569 7.65685 19 6 19Z" fill="#666" />
-    </g>
-    <defs>
-      <clipPath id="clip0_85_13">
-        <rect width="24" height="24" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>;
-
 export const LanguageTabs = ({
   activeTab,
   setActiveTab,
@@ -136,12 +124,14 @@ export const LanguageTabs = ({
             <Button
               onClick={onLanguageSettings}
               variant="outline"
-              className="text-[#666] border-[#E5E5E5] hover:text-[#5A4FFF] hover:border-[#5A4FFF] bg-white hover:bg-white font-semibold outline-none focus:outline-none"
+              className="text-[#5A4FFF] border-none font-semibold outline-none focus:outline-none"
               style={{
                 padding: '8px 16px',
                 fontSize: '14px',
                 fontWeight: 600,
-                lineHeight: '24px'
+                lineHeight: '24px',
+                backgroundColor: 'rgba(90, 79, 255, 0.2)',
+                color: '#5A4FFF'
               }}
             >
               Language settings
