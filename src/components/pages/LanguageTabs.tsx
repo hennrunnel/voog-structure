@@ -1,3 +1,4 @@
+
 import { Settings } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -86,14 +87,14 @@ export const LanguageTabs = ({
           </TabsList>
           
           <div className="flex items-center gap-3">
-            <button className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
+            <button className="text-[#666] text-sm font-medium hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2">
               Add language
             </button>
             <button
               onClick={onLanguageSettings}
-              className="text-[#5A4FFF] text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2"
+              className="text-[#666] text-sm font-medium hover:text-[#5A4FFF] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded px-2"
             >
-              Settings
+              Language settings
             </button>
           </div>
         </div>
