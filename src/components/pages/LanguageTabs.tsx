@@ -105,7 +105,7 @@ export const LanguageTabs = ({
           
           <button 
             onClick={handleAddLanguageClick} 
-            className="text-[#5A4FFF] hover:underline outline-none focus:outline-none"
+            className="text-sm px-4 py-3 text-[#5A4FFF] hover:underline outline-none focus:outline-none capitalize"
           >
             Add language
           </button>
