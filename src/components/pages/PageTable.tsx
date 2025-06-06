@@ -26,9 +26,9 @@ export const PageTable = ({
   onTranslatePage
 }: PageTableProps) => {
   return (
-    <div className="overflow-hidden border-t border-gray-200">
+    <div className="overflow-hidden" style={{ borderTop: '1px solid #EFEFEF' }}>
       {/* Table Header */}
-      <div className="bg-white px-3 py-3 border-b border-gray-200">
+      <div className="bg-white px-3 py-3" style={{ borderBottom: '1px solid #EFEFEF' }}>
         <div 
           className="flex items-center text-xs font-medium text-[#8d9091]" 
           style={{ 

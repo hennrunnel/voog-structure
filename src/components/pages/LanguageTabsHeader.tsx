@@ -1,4 +1,5 @@
 
+
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EyeHiddenIcon } from "./LanguageTabsIcons";
 
@@ -21,12 +22,13 @@ export const LanguageTabsHeader = ({
 }: LanguageTabsHeaderProps) => {
   return (
     <div 
-      className="flex items-center justify-between border-b border-gray-200"
+      className="flex items-center justify-between"
       style={{ 
         paddingTop: '24px',
         paddingBottom: '0px',
         marginLeft: '0px',
-        marginRight: '0px'
+        marginRight: '0px',
+        borderBottom: '1px solid #EFEFEF'
       }}
     >
       <div className="flex items-center">

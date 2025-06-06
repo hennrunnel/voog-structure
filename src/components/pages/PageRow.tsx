@@ -126,13 +126,12 @@ export const PageRow: React.FC<PageRowProps> = ({
     <TooltipProvider>
       <div key={page.id} className="font-sans">
         <div 
-          className="group flex items-center border-b border-l-2 border-l-transparent hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
+          className="group flex items-center border-l-2 border-l-transparent hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
           style={{ 
             paddingLeft: `${paddingLeft + 24}px`, 
             paddingRight: '24px',
             height: '64px',
-            borderBottomColor: '#EFEFEF',
-            borderBottomWidth: '1px'
+            borderBottom: '1px solid #EFEFEF'
           }} 
           role="row" 
           tabIndex={0} 
