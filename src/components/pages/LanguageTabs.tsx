@@ -1,6 +1,7 @@
 import { Settings } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { PageTable } from "@/components/pages/PageTable";
 import { PageItem } from "@/types/pages";
 
 interface LanguageTabsProps {
