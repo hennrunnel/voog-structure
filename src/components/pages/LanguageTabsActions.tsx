@@ -43,10 +43,12 @@ export const LanguageTabsActions = ({
 
   return (
     <div 
-      className="flex items-center justify-between px-8" 
+      className="flex items-center justify-between" 
       style={{ 
         paddingTop: '16px',
-        paddingBottom: '16px'
+        paddingBottom: '16px',
+        paddingLeft: '24px',
+        paddingRight: '24px'
       }}
     >
       <div className="flex items-center gap-3">
