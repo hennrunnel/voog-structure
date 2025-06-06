@@ -42,13 +42,13 @@ export const PageTable = ({
             <span>Menu title</span>
           </div>
           
-          {/* Slug - hidden on small screens */}
-          <div className="w-48 px-4 hidden lg:block">
+          {/* Slug */}
+          <div className="w-48 px-4">
             <span>Slug</span>
           </div>
           
-          {/* Layout - hidden on tablet and smaller */}
-          <div className="w-32 px-4 hidden xl:block">
+          {/* Layout */}
+          <div className="w-32 px-4">
             <span>Layout</span>
           </div>
           
@@ -57,8 +57,8 @@ export const PageTable = ({
             <span>SEO</span>
           </div>
           
-          {/* In menu - hidden on tablet and smaller */}
-          <div className="w-24 px-4 hidden xl:block">
+          {/* In menu */}
+          <div className="w-24 px-4">
             <span>In menu</span>
           </div>
           

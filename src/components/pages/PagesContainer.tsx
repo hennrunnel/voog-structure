@@ -1,17 +1,13 @@
-import { useState } from "react";
-import { Plus, MoreVertical, Download, Trash, Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+
+import { PageSettings } from "@/components/PageSettings";
+import { AddPageSidebar } from "@/components/AddPageSidebar";
+import { usePageManagement } from "@/hooks/usePageManagement";
+import { useLanguageManagement } from "@/hooks/useLanguageManagement";
+import { usePageActions } from "@/hooks/usePageActions";
+import { PageDialogs } from "@/components/pages/PageDialogs";
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { PagesContent } from "@/components/pages/PagesContent";
-import { PageDialogs } from "@/components/pages/PageDialogs";
-import { AddPageSidebar } from "@/components/AddPageSidebar";
-import { PageSettings } from "@/components/PageSettings";
-import { AddLanguageSidebar } from "@/components/pages/AddLanguageSidebar";
-import { LanguageSettingsSidebar } from "@/components/pages/LanguageSettingsSidebar";
-import { usePageManagement } from "@/hooks/usePageManagement";
-import { usePageActions } from "@/hooks/usePageActions";
-import { useLanguageManagement } from "@/hooks/useLanguageManagement";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const PagesContainer = () => {
   const {
@@ -30,21 +26,6 @@ export const PagesContainer = () => {
     confirmHomeVisibilityToggle,
     handleDuplicatePage
   } = usePageManagement();
-
-  const {
-    addPageSidebarOpen,
-    selectedLayout,
-    pageSettingsOpen,
-    selectedPage,
-    handleAddNestedPage,
-    handleAddPageClick,
-    handlePageSettings,
-    handleEditPage,
-    handleTranslatePage,
-    handleClosePageSettings,
-    handleCloseAddPageSidebar,
-    handleCreatePage
-  } = usePageActions(setPages);
 
   const {
     activeTab,
@@ -72,131 +53,70 @@ export const PagesContainer = () => {
     confirmLanguageVisibilityToggle
   } = useLanguageManagement();
 
-  const [addLanguageSidebarOpen, setAddLanguageSidebarOpen] = useState(false);
-  const [languageSettingsOpen, setLanguageSettingsOpen] = useState(false);
-
-  const handleDownloadSite = () => {
-    console.log("Download entire site functionality");
-  };
-
-  const handleDeleteLanguage = () => {
-    handleLanguageDelete();
-  };
-
-  const handleToggleLanguagePublish = () => {
-    if (activeTab === "english") {
-      handleEnglishLanguageVisibilityToggle(!englishLanguageVisible);
-    } else if (activeTab === "estonian") {
-      handleEstonianLanguageVisibilityToggle(!estonianLanguageVisible);
-    }
-  };
-
-  const handleAddLanguage = (languageData: any) => {
-    console.log("Adding new language:", languageData);
-    setAddLanguageSidebarOpen(false);
-  };
-
-  const getCurrentLanguageSettings = () => {
-    if (activeTab === "english") {
-      return {
-        websiteTitle: englishWebsiteTitle,
-        setWebsiteTitle: setEnglishWebsiteTitle,
-        nameInMenu: englishNameInMenu,
-        setNameInMenu: setEnglishNameInMenu,
-        languageVisible: englishLanguageVisible,
-        onLanguageVisibilityToggle: handleEnglishLanguageVisibilityToggle
-      };
-    } else {
-      return {
-        websiteTitle: estonianWebsiteTitle,
-        setWebsiteTitle: setEstonianWebsiteTitle,
-        nameInMenu: estonianNameInMenu,
-        setNameInMenu: setEstonianNameInMenu,
-        languageVisible: estonianLanguageVisible,
-        onLanguageVisibilityToggle: handleEstonianLanguageVisibilityToggle
-      };
-    }
-  };
-
-  const currentSettings = getCurrentLanguageSettings();
+  const {
+    addPageSidebarOpen,
+    selectedLayout,
+    pageSettingsOpen,
+    selectedPage,
+    handleAddNestedPage,
+    handleAddPageClick,
+    handlePageSettings,
+    handleEditPage,
+    handleTranslatePage,
+    handleClosePageSettings,
+    handleCloseAddPageSidebar,
+    handleCreatePage
+  } = usePageActions(setPages);
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex justify-between items-start mb-8">
+    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '80px' }}>
+      <div className="w-full" style={{ maxWidth: '992px' }}>
+        <div style={{ marginBottom: '48px' }}>
           <PagesHeader />
-          
-          <div className="flex gap-3">
-            <Button
-              onClick={handleAddPageClick}
-              className="bg-[#5A4FFF] hover:bg-[#4A3FFF] text-white px-4 py-2 rounded-md text-sm font-medium"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add page
-            </Button>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="p-2">
-                  <MoreVertical className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem onClick={handleDownloadSite}>
-                  <Download className="w-4 h-4 mr-2" />
-                  Download entire site
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleToggleLanguagePublish}>
-                  {getCurrentLanguageVisible() ? (
-                    <>
-                      <EyeOff className="w-4 h-4 mr-2" />
-                      Unpublish this language
-                    </>
-                  ) : (
-                    <>
-                      <Eye className="w-4 h-4 mr-2" />
-                      Publish this language
-                    </>
-                  )}
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleDeleteLanguage} className="text-red-600">
-                  <Trash className="w-4 h-4 mr-2" />
-                  Delete language
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
         </div>
-
-        <PagesContent 
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          availableTabs={availableTabs}
-          pages={pages}
-          englishWebsiteTitle={englishWebsiteTitle}
-          setEnglishWebsiteTitle={setEnglishWebsiteTitle}
-          englishNameInMenu={englishNameInMenu}
-          setEnglishNameInMenu={setEnglishNameInMenu}
-          englishLanguageVisible={englishLanguageVisible}
-          estonianWebsiteTitle={estonianWebsiteTitle}
-          setEstonianWebsiteTitle={setEstonianWebsiteTitle}
-          estonianNameInMenu={estonianNameInMenu}
-          setEstonianNameInMenu={setEstonianNameInMenu}
-          estonianLanguageVisible={estonianLanguageVisible}
-          handleLanguageDelete={handleLanguageDelete}
-          handleEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
-          handleEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
-          onAddPageClick={handleAddPageClick}
-          onToggleExpansion={togglePageExpansion}
-          onToggleVisibility={togglePageVisibility}
-          onDeletePage={handleDeletePage}
-          onDuplicatePage={handleDuplicatePage}
-          onAddNestedPage={handleAddNestedPage}
-          onPageSettings={handlePageSettings}
-          onEditPage={handleEditPage}
-          onTranslatePage={handleTranslatePage}
-        />
+        
+        <Card 
+          className="bg-white"
+          style={{
+            borderRadius: '10px',
+            border: '0.5px solid rgba(24, 24, 27, 0.10)',
+            background: 'var(--Primary-White, #FFF)',
+            boxShadow: '0px 0.5px 1px 0px var(--shadow-dark, rgba(24, 24, 27, 0.05)), 0px 2px 5px 0px rgba(0, 0, 0, 0.05), 0px 17px 17.7px 0px rgba(0, 0, 0, 0.01)',
+            paddingBottom: '32px',
+            marginBottom: '32px'
+          }}
+        >
+          <CardContent className="p-0">
+            <PagesContent
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              availableTabs={availableTabs}
+              englishLanguageVisible={englishLanguageVisible}
+              estonianLanguageVisible={estonianLanguageVisible}
+              englishWebsiteTitle={englishWebsiteTitle}
+              setEnglishWebsiteTitle={setEnglishWebsiteTitle}
+              englishNameInMenu={englishNameInMenu}
+              setEnglishNameInMenu={setEnglishNameInMenu}
+              estonianWebsiteTitle={estonianWebsiteTitle}
+              setEstonianWebsiteTitle={setEstonianWebsiteTitle}
+              estonianNameInMenu={estonianNameInMenu}
+              setEstonianNameInMenu={setEstonianNameInMenu}
+              handleEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
+              handleEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
+              handleLanguageDelete={handleLanguageDelete}
+              onAddPageClick={handleAddPageClick}
+              pages={pages}
+              onToggleExpansion={togglePageExpansion}
+              onToggleVisibility={togglePageVisibility}
+              onDeletePage={handleDeletePage}
+              onDuplicatePage={handleDuplicatePage}
+              onAddNestedPage={handleAddNestedPage}
+              onPageSettings={handlePageSettings}
+              onEditPage={handleEditPage}
+              onTranslatePage={handleTranslatePage}
+            />
+          </CardContent>
+        </Card>
 
         <PageDialogs
           deleteDialogOpen={deleteDialogOpen}
@@ -216,36 +136,13 @@ export const PagesContainer = () => {
           onConfirmLanguageVisibilityToggle={confirmLanguageVisibilityToggle}
         />
 
-        <AddPageSidebar
-          isOpen={addPageSidebarOpen}
-          onClose={handleCloseAddPageSidebar}
-          selectedLayout={selectedLayout}
-          onCreatePage={handleCreatePage}
-        />
+        <PageSettings isOpen={pageSettingsOpen} onClose={handleClosePageSettings} />
 
-        <PageSettings
-          page={selectedPage}
-          isOpen={pageSettingsOpen}
-          onClose={handleClosePageSettings}
-        />
-
-        <AddLanguageSidebar
-          isOpen={addLanguageSidebarOpen}
-          onClose={() => setAddLanguageSidebarOpen(false)}
-          onAddLanguage={handleAddLanguage}
-        />
-
-        <LanguageSettingsSidebar
-          isOpen={languageSettingsOpen}
-          onClose={() => setLanguageSettingsOpen(false)}
-          websiteTitle={currentSettings.websiteTitle}
-          setWebsiteTitle={currentSettings.setWebsiteTitle}
-          nameInMenu={currentSettings.nameInMenu}
-          setNameInMenu={currentSettings.setNameInMenu}
-          languageVisible={currentSettings.languageVisible}
-          onLanguageVisibilityToggle={currentSettings.onLanguageVisibilityToggle}
-          onLanguageDelete={handleLanguageDelete}
-          activeTab={activeTab}
+        <AddPageSidebar 
+          isOpen={addPageSidebarOpen} 
+          onClose={handleCloseAddPageSidebar} 
+          onCreatePage={handleCreatePage} 
+          selectedLayout={selectedLayout} 
         />
       </div>
     </div>
