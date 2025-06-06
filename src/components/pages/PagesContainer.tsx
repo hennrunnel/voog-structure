@@ -1,9 +1,9 @@
 
+import { useState } from "react";
 import { Plus, MoreVertical, Download, Trash, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { PagesHeader } from "@/components/pages/PagesHeader";
-import { LanguageTabs } from "@/components/pages/LanguageTabs";
 import { PagesContent } from "@/components/pages/PagesContent";
 import { PageDialogs } from "@/components/pages/PageDialogs";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
@@ -81,11 +81,26 @@ export const PagesContainer = () => {
   };
 
   const handleDeleteLanguage = () => {
-    console.log("Delete language functionality");
+    handleLanguageDelete();
   };
 
   const handleToggleLanguagePublish = () => {
-    console.log("Toggle language publish status");
+    if (activeTab === "english") {
+      handleEnglishLanguageVisibilityToggle(!englishLanguageVisible);
+    } else if (activeTab === "estonian") {
+      handleEstonianLanguageVisibilityToggle(!estonianLanguageVisible);
+    }
+  };
+
+  const handleAddLanguage = (languageData: any) => {
+    console.log("Adding new language:", languageData);
+    setAddLanguageSidebarOpen(false);
+  };
+
+  const getCurrentLanguageVisible = () => {
+    if (activeTab === "english") return englishLanguageVisible;
+    if (activeTab === "estonian") return estonianLanguageVisible;
+    return true;
   };
 
   return (
@@ -116,8 +131,17 @@ export const PagesContainer = () => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleToggleLanguagePublish}>
-                  <Eye className="w-4 h-4 mr-2" />
-                  Publish this language
+                  {getCurrentLanguageVisible() ? (
+                    <>
+                      <EyeOff className="w-4 h-4 mr-2" />
+                      Unpublish this language
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="w-4 h-4 mr-2" />
+                      Publish this language
+                    </>
+                  )}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleDeleteLanguage} className="text-red-600">
                   <Trash className="w-4 h-4 mr-2" />
@@ -128,16 +152,25 @@ export const PagesContainer = () => {
           </div>
         </div>
 
-        <LanguageTabs
+        <PagesContent 
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           availableTabs={availableTabs}
-          onAddLanguage={() => setAddLanguageSidebarOpen(true)}
-          onLanguageSettings={() => setLanguageSettingsOpen(true)}
-        />
-
-        <PagesContent 
           pages={pages}
+          englishWebsiteTitle={englishWebsiteTitle}
+          setEnglishWebsiteTitle={setEnglishWebsiteTitle}
+          englishNameInMenu={englishNameInMenu}
+          setEnglishNameInMenu={setEnglishNameInMenu}
+          englishLanguageVisible={englishLanguageVisible}
+          estonianWebsiteTitle={estonianWebsiteTitle}
+          setEstonianWebsiteTitle={setEstonianWebsiteTitle}
+          estonianNameInMenu={estonianNameInMenu}
+          setEstonianNameInMenu={setEstonianNameInMenu}
+          estonianLanguageVisible={estonianLanguageVisible}
+          handleLanguageDelete={handleLanguageDelete}
+          handleEnglishLanguageVisibilityToggle={handleEnglishLanguageVisibilityToggle}
+          handleEstonianLanguageVisibilityToggle={handleEstonianLanguageVisibilityToggle}
+          onAddPageClick={handleAddPageClick}
           onToggleExpansion={togglePageExpansion}
           onToggleVisibility={togglePageVisibility}
           onDeletePage={handleDeletePage}
@@ -182,6 +215,7 @@ export const PagesContainer = () => {
         <AddLanguageSidebar
           isOpen={addLanguageSidebarOpen}
           onClose={() => setAddLanguageSidebarOpen(false)}
+          onAddLanguage={handleAddLanguage}
         />
 
         <LanguageSettingsSidebar
