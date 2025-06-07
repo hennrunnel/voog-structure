@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { LockIcon } from "@/components/icons/LockIcon";
@@ -61,7 +60,8 @@ export const PageTitle: React.FC<PageTitleProps> = ({
         
         {isUntranslated && (
           <span 
-            className="text-xs px-2 py-0.5 text-black font-medium bg-yellow-200 rounded-md leading-tight"
+            style={{ backgroundColor: "rgba(255, 215, 75, 0.34)" }}
+            className="text-xs px-2 py-0.5 text-black font-medium rounded-md leading-tight"
           >
             Untranslated
           </span>

@@ -66,7 +66,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           aria-label={`${page.title} page row`}
           onClick={handleRowClick}
           style={{ height: '63px' }}
-          className="group border-l-2 border-l-transparent hover:bg-primary-blue-2 hover:border-l-primary-blue transition-colors cursor-pointer border-b border-subtle"
+          className="group hover:bg-primary-blue-2 transition-colors cursor-pointer border-b border-subtle"
         >
           {/* Title with expand/collapse */}
           <TableCell className="p-0 align-middle">

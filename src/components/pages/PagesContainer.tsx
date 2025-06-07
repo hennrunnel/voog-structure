@@ -78,7 +78,6 @@ export const PagesContainer = () => {
             border: '0.5px solid rgba(24, 24, 27, 0.10)',
             background: 'var(--Primary-White, #FFF)',
             boxShadow: '0px 0.5px 1px 0px var(--shadow-dark, rgba(24, 24, 27, 0.05)), 0px 2px 5px 0px rgba(0, 0, 0, 0.05), 0px 17px 17.7px 0px rgba(0, 0, 0, 0.01)',
-            paddingBottom: '32px',
             marginBottom: '32px'
           }}
         >
