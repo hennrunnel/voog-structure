@@ -181,7 +181,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           {/* Layout */}
           <TableCell className="w-32 px-4 align-middle">
             {!isUntranslated ? (
-              <span className="text-sm text-black">{page.pageType}</span>
+              <span className="text-sm text-black whitespace-nowrap">{page.pageType}</span>
             ) : (
               <span className="text-sm text-gray-400">-</span>
             )}

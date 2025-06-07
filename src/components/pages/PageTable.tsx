@@ -35,24 +35,24 @@ export const PageTable = ({
               <div className="flex items-center text-xs font-medium text-muted">
                 {/* Space for expand button (20px width + 8px margin) */}
                 <div className="w-5 mr-2"></div>
-                <span>Menu title</span>
+                <span className="whitespace-nowrap">Menu title</span>
               </div>
             </TableHead>
             
             <TableHead className="h-12 px-4 text-left w-48">
-              <span className="text-xs font-medium text-muted">Slug</span>
+              <span className="text-xs font-medium text-muted whitespace-nowrap">Slug</span>
             </TableHead>
             
             <TableHead className="h-12 px-4 text-left w-32">
-              <span className="text-xs font-medium text-muted">Layout</span>
+              <span className="text-xs font-medium text-muted whitespace-nowrap">Layout</span>
             </TableHead>
             
             <TableHead className="h-12 px-4 text-center w-24">
-              <span className="text-xs font-medium text-muted">SEO</span>
+              <span className="text-xs font-medium text-muted whitespace-nowrap">SEO</span>
             </TableHead>
             
             <TableHead className="h-12 px-4 text-center w-24">
-              <span className="text-xs font-medium text-muted">In menu</span>
+              <span className="text-xs font-medium text-muted whitespace-nowrap">In menu</span>
             </TableHead>
 
             {/* Space for move handle */}
