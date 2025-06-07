@@ -1,6 +1,7 @@
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { KebabIcon } from "@/components/icons/KebabIcon";
+import { KebabIcon } from "./LanguageTabsIcons";
 
 interface LanguageTabsActionsProps {
   activeTab: string;
@@ -41,7 +42,15 @@ export const LanguageTabsActions = ({
   };
 
   return (
-    <div className="flex items-center justify-between py-4 px-6">
+    <div 
+      className="flex items-center justify-between" 
+      style={{ 
+        paddingTop: '16px',
+        paddingBottom: '16px',
+        paddingLeft: '24px',
+        paddingRight: '24px'
+      }}
+    >
       <div className="flex items-center gap-3">
         {/* Empty div to push buttons to the right */}
       </div>
@@ -49,14 +58,38 @@ export const LanguageTabsActions = ({
       <div className="flex items-center gap-3">
         <Button
           onClick={onLanguageSettings}
-          className="text-primary-blue bg-primary-blue-10 hover:bg-primary-blue-20 hover:text-primary-blue font-medium outline-none focus:outline-none px-4 py-2 text-sm rounded-lg border-none"
+          variant="outline"
+          className="text-[#5A4FFF] border-none font-semibold outline-none focus:outline-none"
+          style={{
+            padding: '8px 16px',
+            fontSize: '14px',
+            fontWeight: 600,
+            lineHeight: '24px',
+            backgroundColor: 'rgba(90, 79, 255, 0.1)',
+            color: '#5A4FFF'
+          }}
         >
           Language settings
         </Button>
         
         <Button 
           onClick={onAddPageClick} 
-          className="text-white font-medium bg-primary-blue hover:bg-primary-blue-overlay outline-none focus:outline-none px-4 py-2 text-sm rounded-lg"
+          className="text-white font-semibold hover:bg-[#4A3FFF] outline-none focus:outline-none" 
+          style={{
+            padding: '8px 16px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '8px',
+            borderRadius: '8px',
+            background: '#453DFF',
+            color: '#FFF',
+            textAlign: 'center',
+            fontFamily: '"Avenir Next"',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: 600,
+            lineHeight: '24px'
+          }}
         >
           New page
         </Button>
@@ -66,22 +99,22 @@ export const LanguageTabsActions = ({
             <Button 
               variant="ghost" 
               size="sm" 
-              className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0 text-black" 
+              className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0" 
               aria-label="More options"
             >
-              <KebabIcon size={24} />
+              <KebabIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
             <DropdownMenuItem 
               onClick={handleLanguagePublishToggle} 
-              className="cursor-pointer text-sm text-black"
+              className="cursor-pointer text-sm text-[#1B2124]"
             >
               {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleDownloadSite} 
-              className="cursor-pointer text-sm text-black"
+              className="cursor-pointer text-sm text-[#1B2124]"
             >
               Download entire site
             </DropdownMenuItem>
