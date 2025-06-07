@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { KebabIcon } from "@/components/icons/KebabIcon";
@@ -50,8 +49,7 @@ export const LanguageTabsActions = ({
       <div className="flex items-center gap-3">
         <Button
           onClick={onLanguageSettings}
-          variant="ghost"
-          className="text-primary-blue bg-primary-blue-10 hover:bg-primary-blue-20 font-medium outline-none focus:outline-none px-4 py-2 text-sm rounded-lg border-none"
+          className="text-primary-blue bg-primary-blue-10 hover:bg-primary-blue-20 hover:text-primary-blue font-medium outline-none focus:outline-none px-4 py-2 text-sm rounded-lg border-none"
         >
           Language settings
         </Button>
