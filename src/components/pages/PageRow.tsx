@@ -61,12 +61,12 @@ export const PageRow: React.FC<PageRowProps> = ({
     <TooltipProvider>
       <>
         <TableRow 
-          className="group border-l-2 border-l-transparent hover:bg-primary-blue-2 hover:border-l-primary-blue transition-colors cursor-pointer border-b border-subtle" 
           role="row" 
           tabIndex={0} 
           aria-label={`${page.title} page row`}
           onClick={handleRowClick}
           style={{ height: '63px' }}
+          className="group border-l-2 border-l-transparent hover:bg-primary-blue-2 hover:border-l-primary-blue transition-colors cursor-pointer border-b border-subtle"
         >
           {/* Title with expand/collapse */}
           <TableCell className="p-0 align-middle">
