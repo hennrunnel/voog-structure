@@ -50,15 +50,14 @@ export const LanguageTabsActions = ({
       <div className="flex items-center gap-3">
         <Button
           onClick={onLanguageSettings}
-          variant="outline"
-          className="text-primary-brand border-primary-brand/20 hover:bg-primary-brand/10 font-medium outline-none focus:outline-none bg-transparent px-4 py-2 text-sm rounded-lg"
+          className="text-primary-blue bg-primary-blue-10 hover:bg-primary-blue-20 font-medium outline-none focus:outline-none px-4 py-2 text-sm rounded-lg border-none"
         >
           Language settings
         </Button>
         
         <Button 
           onClick={onAddPageClick} 
-          className="text-white font-medium hover:bg-primary-brand-hover outline-none focus:outline-none bg-primary-brand px-4 py-2 text-sm rounded-lg"
+          className="text-white font-medium bg-primary-blue hover:bg-primary-blue-overlay outline-none focus:outline-none px-4 py-2 text-sm rounded-lg"
         >
           New page
         </Button>
@@ -68,7 +67,7 @@ export const LanguageTabsActions = ({
             <Button 
               variant="ghost" 
               size="sm" 
-              className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0 text-primary" 
+              className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0 text-black" 
               aria-label="More options"
             >
               <KebabIcon size={24} />
@@ -77,13 +76,13 @@ export const LanguageTabsActions = ({
           <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
             <DropdownMenuItem 
               onClick={handleLanguagePublishToggle} 
-              className="cursor-pointer text-sm text-primary"
+              className="cursor-pointer text-sm text-black"
             >
               {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleDownloadSite} 
-              className="cursor-pointer text-sm text-primary"
+              className="cursor-pointer text-sm text-black"
             >
               Download entire site
             </DropdownMenuItem>

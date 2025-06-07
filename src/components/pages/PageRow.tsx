@@ -76,7 +76,7 @@ export const PageRow: React.FC<PageRowProps> = ({
     <TooltipProvider>
       <>
         <TableRow 
-          className="group border-l-2 border-l-transparent hover:bg-hover hover:border-l-primary-brand transition-colors cursor-pointer border-b border-subtle" 
+          className="group border-l-2 border-l-transparent hover:bg-primary-blue-2 hover:border-l-primary-blue transition-colors cursor-pointer border-b border-subtle" 
           role="row" 
           tabIndex={0} 
           aria-label={`${page.title} page row`}
@@ -94,7 +94,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                       e.stopPropagation();
                       onToggleExpansion(page.id);
                     }} 
-                    className="text-secondary hover:text-primary transition-colors outline-none focus:outline-none focus:ring-0 rounded" 
+                    className="text-black hover:text-primary-blue transition-colors outline-none focus:outline-none focus:ring-0 rounded" 
                     aria-label={page.isExpanded ? `Collapse ${page.title}` : `Expand ${page.title}`} 
                     aria-expanded={page.isExpanded}
                   >
@@ -109,7 +109,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span 
-                        className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-primary'}`}
+                        className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-black'}`}
                       >
                         {page.title}
                       </span>
@@ -122,7 +122,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   {page.isPasswordProtected && (
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span className="text-primary">
+                        <span className="text-black">
                           <LockIcon />
                         </span>
                       </TooltipTrigger>
@@ -135,7 +135,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   {isExternalLink && (
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span className="text-primary">
+                        <span className="text-black">
                           <ExternalLinkIcon />
                         </span>
                       </TooltipTrigger>
@@ -147,7 +147,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   
                   {isUntranslated && (
                     <span 
-                      className="text-xs px-2 py-0.5 text-warning font-medium bg-warning rounded-md leading-tight"
+                      className="text-xs px-2 py-0.5 text-black font-medium bg-yellow-200 rounded-md leading-tight"
                     >
                       Untranslated
                     </span>
@@ -164,7 +164,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleSlugClick}
-                    className="text-primary hover:text-primary-brand hover:underline truncate block w-full max-w-44 text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
+                    className="text-black hover:text-primary-blue hover:underline truncate block w-full max-w-44 text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
                   >
                     {page.slug}
                   </button>
@@ -181,7 +181,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           {/* Layout */}
           <TableCell className="w-32 px-4 align-middle">
             {!isUntranslated ? (
-              <span className="text-sm text-primary">{page.pageType}</span>
+              <span className="text-sm text-black">{page.pageType}</span>
             ) : (
               <span className="text-sm text-gray-400">-</span>
             )}
@@ -207,7 +207,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                 <button
                   onClick={handleVisibilityToggle}
                   aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
-                  className="outline-none focus:outline-none focus:ring-0 rounded text-primary"
+                  className="outline-none focus:outline-none focus:ring-0 rounded text-black"
                 >
                   {page.isVisible ? <EyeVisibleIcon /> : <EyeHiddenIcon />}
                 </button>
@@ -217,7 +217,7 @@ export const PageRow: React.FC<PageRowProps> = ({
 
           {/* Move handle */}
           <TableCell className="w-4 pr-2 align-middle">
-            <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity text-secondary`}>
+            <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity text-black`}>
               <MoveIcon />
             </div>
           </TableCell>
@@ -230,7 +230,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0 text-primary" 
+                    className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0 text-black" 
                     aria-label={`More options for ${page.title}`} 
                     onClick={e => e.stopPropagation()}
                   >
@@ -244,7 +244,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onTranslatePage(page);
                       }} 
-                      className="cursor-pointer text-sm text-primary"
+                      className="cursor-pointer text-sm text-black"
                     >
                       <FileText className="w-4 h-4 mr-2" />
                       Translate page
@@ -256,7 +256,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                           e.stopPropagation();
                           onPageSettings(page);
                         }} 
-                        className="cursor-pointer text-sm text-primary"
+                        className="cursor-pointer text-sm text-black"
                       >
                         <Settings className="w-4 h-4 mr-2" />
                         Page settings
@@ -266,7 +266,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                           e.stopPropagation();
                           onDuplicatePage(page);
                         }} 
-                        className="cursor-pointer text-sm text-primary"
+                        className="cursor-pointer text-sm text-black"
                       >
                         <Copy className="w-4 h-4 mr-2" />
                         Duplicate page
@@ -276,7 +276,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                           e.stopPropagation();
                           onAddNestedPage(page);
                         }} 
-                        className="cursor-pointer text-sm text-primary"
+                        className="cursor-pointer text-sm text-black"
                       >
                         <Plus className="w-4 h-4 mr-2" />
                         Add subpage

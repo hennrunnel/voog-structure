@@ -31,7 +31,7 @@ export const LanguageTabsHeader = ({
             <div key={tab} className="flex items-center" style={{ marginRight: index < availableTabs.length - 1 ? '24px' : '0px' }}>
               <TabsTrigger 
                 value={tab} 
-                className="text-sm text-secondary data-[state=active]:text-primary-brand data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary-brand data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize outline-none focus:outline-none focus-visible:outline-none pb-4 pt-0 px-2"
+                className="text-sm text-black data-[state=active]:text-primary-blue data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary-blue data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize outline-none focus:outline-none focus-visible:outline-none pb-4 pt-0 px-2"
               >
                 <span className="flex items-center gap-2">
                   {tab}
@@ -46,7 +46,7 @@ export const LanguageTabsHeader = ({
       
       <button 
         onClick={onAddLanguageClick} 
-        className="text-sm text-primary-brand hover:underline outline-none focus:outline-none mr-8 pb-4 pt-0 font-medium"
+        className="text-sm text-primary-blue hover:underline outline-none focus:outline-none mr-8 pb-4 pt-0 font-medium"
       >
         Add language
       </button>

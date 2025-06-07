@@ -44,16 +44,11 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Fixed semantic tokens to match original colors exactly */
-    --color-primary-brand: 251 79% 67%; /* #5A4FFF */
-    --color-primary-brand-hover: 251 79% 60%; /* #4A3FFF */
-    --color-text-primary: 210 9% 11%; /* #1B2124 */
-    --color-text-secondary: 0 0% 40%; /* #666 */
-    --color-text-muted: 210 5% 55%; /* #8d9091 */
+    /* Updated semantic tokens with exact specifications */
+    --color-primary-blue: 250 79% 61%; /* #443DF6 */
+    --color-text-black: 0 0% 0%; /* #000000 */
+    --color-text-muted: 210 5% 55%; /* #8D9091 */
     --color-border-subtle: 0 0% 94%; /* #EFEFEF */
-    --color-background-hover: 251 100% 98%; /* #FBFBFF */
-    --color-warning-bg: 44 100% 85%; /* rgba(255, 215, 75, 0.3) */
-    --color-warning-text: 0 0% 0%; /* black */
   }
 
   .dark {
@@ -106,24 +101,32 @@
 }
 
 @layer utilities {
-  .text-primary-brand {
-    color: hsl(var(--color-primary-brand));
+  .text-primary-blue {
+    color: hsl(var(--color-primary-blue));
   }
   
-  .bg-primary-brand {
-    background-color: hsl(var(--color-primary-brand));
+  .bg-primary-blue {
+    background-color: hsl(var(--color-primary-blue));
   }
   
-  .hover\:bg-primary-brand-hover:hover {
-    background-color: hsl(var(--color-primary-brand-hover));
+  .bg-primary-blue-10 {
+    background-color: hsl(var(--color-primary-blue) / 0.1);
   }
   
-  .text-primary {
-    color: hsl(var(--color-text-primary));
+  .bg-primary-blue-2 {
+    background-color: hsl(var(--color-primary-blue) / 0.02);
   }
   
-  .text-secondary {
-    color: hsl(var(--color-text-secondary));
+  .hover\:bg-primary-blue-20:hover {
+    background-color: hsl(var(--color-primary-blue) / 0.2);
+  }
+  
+  .hover\:bg-primary-blue-overlay:hover {
+    background-color: color-mix(in srgb, hsl(var(--color-primary-blue)), white 15%);
+  }
+  
+  .text-black {
+    color: hsl(var(--color-text-black));
   }
   
   .text-muted {
@@ -134,15 +137,11 @@
     border-color: hsl(var(--color-border-subtle));
   }
   
-  .bg-hover {
-    background-color: hsl(var(--color-background-hover));
+  .border-primary-blue {
+    border-color: hsl(var(--color-primary-blue));
   }
   
-  .bg-warning {
-    background-color: hsl(var(--color-warning-bg));
-  }
-  
-  .text-warning {
-    color: hsl(var(--color-warning-text));
+  .hover\:border-primary-blue:hover {
+    border-color: hsl(var(--color-primary-blue));
   }
 }
