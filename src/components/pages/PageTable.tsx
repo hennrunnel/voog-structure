@@ -1,6 +1,7 @@
 
 import { PageRow } from "@/components/pages/PageRow";
 import { PageItem } from "@/types/pages";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface PageTableProps {
   pages: PageItem[];
@@ -26,69 +27,60 @@ export const PageTable = ({
   onTranslatePage
 }: PageTableProps) => {
   return (
-    <div className="overflow-hidden" style={{ borderTop: '1px solid #EFEFEF' }}>
-      {/* Table Header */}
-      <div className="bg-white py-3" style={{ borderBottom: '1px solid #EFEFEF' }}>
-        <div 
-          className="flex items-center text-xs font-medium text-[#8d9091]" 
-          style={{ 
-            paddingLeft: '24px',
-            paddingRight: '24px'
-          }}
-        >
-          {/* Expand/collapse space + Title */}
-          <div className="flex items-center mr-4" style={{ minWidth: 0, flex: 1 }}>
-            {/* Space for expand button (20px width + 8px margin) */}
-            <div className="w-5 mr-2"></div>
-            <span>Menu title</span>
-          </div>
-          
-          {/* Slug */}
-          <div className="w-48 px-4">
-            <span>Slug</span>
-          </div>
-          
-          {/* Layout */}
-          <div className="w-32 px-4">
-            <span>Layout</span>
-          </div>
-          
-          {/* SEO */}
-          <div className="w-24 px-4 flex justify-center">
-            <span>SEO</span>
-          </div>
-          
-          {/* In menu */}
-          <div className="w-24 px-4 flex justify-center">
-            <span>In menu</span>
-          </div>
+    <div className="overflow-hidden border-t border-subtle">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-white border-b border-subtle hover:bg-white">
+            <TableHead className="h-12 px-6 text-left">
+              <div className="flex items-center text-xs font-medium text-muted">
+                {/* Space for expand button (20px width + 8px margin) */}
+                <div className="w-5 mr-2"></div>
+                <span>Menu title</span>
+              </div>
+            </TableHead>
+            
+            <TableHead className="h-12 px-4 text-left w-48">
+              <span className="text-xs font-medium text-muted">Slug</span>
+            </TableHead>
+            
+            <TableHead className="h-12 px-4 text-left w-32">
+              <span className="text-xs font-medium text-muted">Layout</span>
+            </TableHead>
+            
+            <TableHead className="h-12 px-4 text-center w-24">
+              <span className="text-xs font-medium text-muted">SEO</span>
+            </TableHead>
+            
+            <TableHead className="h-12 px-4 text-center w-24">
+              <span className="text-xs font-medium text-muted">In menu</span>
+            </TableHead>
 
-          {/* Space for move handle */}
-          <div className="mr-2" style={{ width: '16px' }}></div>
-          
-          {/* Actions */}
-          <div className="w-6"></div>
-        </div>
-      </div>
+            {/* Space for move handle */}
+            <TableHead className="h-12 w-4"></TableHead>
+            
+            {/* Actions */}
+            <TableHead className="h-12 w-6"></TableHead>
+          </TableRow>
+        </TableHeader>
 
-      {/* Page Rows */}
-      <div role="table" aria-label="Pages list">
-        {pages.map(page => (
-          <PageRow
-            key={page.id}
-            page={page}
-            level={0}
-            onToggleExpansion={onToggleExpansion}
-            onToggleVisibility={onToggleVisibility}
-            onDeletePage={onDeletePage}
-            onDuplicatePage={onDuplicatePage}
-            onAddNestedPage={onAddNestedPage}
-            onPageSettings={onPageSettings}
-            onEditPage={onEditPage}
-            onTranslatePage={onTranslatePage}
-          />
-        ))}
-      </div>
+        <TableBody>
+          {pages.map(page => (
+            <PageRow
+              key={page.id}
+              page={page}
+              level={0}
+              onToggleExpansion={onToggleExpansion}
+              onToggleVisibility={onToggleVisibility}
+              onDeletePage={onDeletePage}
+              onDuplicatePage={onDuplicatePage}
+              onAddNestedPage={onAddNestedPage}
+              onPageSettings={onPageSettings}
+              onEditPage={onEditPage}
+              onTranslatePage={onTranslatePage}
+            />
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };

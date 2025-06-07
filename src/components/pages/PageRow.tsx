@@ -1,10 +1,18 @@
+
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { TableCell, TableRow } from "@/components/ui/table";
 import { PageItem } from "@/types/pages";
+import { ChevronIcon } from "@/components/icons/ChevronIcon";
+import { EyeVisibleIcon } from "@/components/icons/EyeVisibleIcon";
+import { EyeHiddenIcon } from "@/components/icons/EyeHiddenIcon";
+import { KebabIcon } from "@/components/icons/KebabIcon";
+import { ExternalLinkIcon } from "@/components/icons/ExternalLinkIcon";
+import { LockIcon } from "@/components/icons/LockIcon";
+import { MoveIcon } from "@/components/icons/MoveIcon";
 
 interface PageRowProps {
   page: PageItem;
@@ -27,64 +35,6 @@ const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
     </div>
   );
 };
-
-const ExternalLinkIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M11.0641 6.21207C11.3244 5.95172 11.3244 5.52961 11.0641 5.26926C10.8037 5.00891 10.3816 5.00891 10.1213 5.26926L4.46443 10.9261C4.20408 11.1865 4.20408 11.6086 4.46443 11.8689C4.72478 12.1293 5.14689 12.1293 5.40724 11.8689L11.0641 6.21207Z" fill="#1B2124"/>
-    <path d="M5.40726 5.93587C5.03908 5.93587 4.74059 5.63739 4.74059 5.26921C4.74059 4.90102 5.03908 4.60254 5.40726 4.60254H11.0641C11.4211 4.60254 11.7147 4.88366 11.7301 5.24025L11.9659 10.6614C11.9819 11.0293 11.6966 11.3404 11.3288 11.3564C10.9609 11.3724 10.6498 11.0871 10.6338 10.7193L10.4258 5.93587H5.40726Z" fill="#1B2124"/>
-  </svg>
-);
-
-const ChevronIcon = ({ isExpanded }: { isExpanded: boolean }) => (
-  <svg 
-    width="16" 
-    height="16" 
-    viewBox="0 0 16 16" 
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg"
-    style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
-    className="transition-transform duration-200"
-  >
-    <path d="M5.52859 11.5286C5.26824 11.7889 5.26824 12.2111 5.52859 12.4714C5.78894 12.7317 6.21106 12.7317 6.47141 12.4714L10.4714 8.47141C10.7238 8.219 10.7326 7.81264 10.4915 7.54953L6.8248 3.54953C6.57597 3.27811 6.15426 3.25977 5.88284 3.5086C5.61143 3.75743 5.59309 4.17914 5.84192 4.45055L9.07726 7.97993L5.52859 11.5286Z" fill="#1B2124"/>
-  </svg>
-);
-
-const LockIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M5.24399 6.88167L1.00003 11L1.00003 13L2.66669 13L2.66669 11.6667L4.29455 11.6667L4.29455 10.3333H5.66669L7.12299 8.76067L5.24399 6.88167Z" fill="#1B2124"/>
-    <path fillRule="evenodd" clipRule="evenodd" d="M5.49509 8.48527C3.93299 6.92317 3.93299 4.39053 5.49509 2.82843C7.05719 1.26633 9.58984 1.26633 11.1519 2.82843C12.714 4.39053 12.714 6.92317 11.1519 8.48527C9.58984 10.0474 7.05719 10.0474 5.49509 8.48527ZM8.37378 5.78799C8.76431 6.17851 9.39747 6.17851 9.78799 5.78799C10.1785 5.39747 10.1785 4.7643 9.78799 4.37378C9.39747 3.98325 8.76431 3.98325 8.37378 4.37378C7.98326 4.7643 7.98326 5.39747 8.37378 5.78799Z" fill="#1B2124"/>
-  </svg>
-);
-
-const EyeVisibleIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
-    <path d="M3 12C3 12 5.45455 6 12 6C16.9091 6 21 12 21 12C21 12 16.9091 18 12 18C5.45455 18 3 12 3 12Z" fill="#1B2124"/>
-    <path fillRule="evenodd" clipRule="evenodd" d="M12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15Z" fill="white"/>
-  </svg>
-);
-
-const EyeHiddenIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
-    <path d="M19.2079 9.84839C20.3304 11.0179 21 12 21 12C21 12 16.9091 18 12 18C11.1894 18 10.3879 17.8865 9.59549 17.6609L19.2079 9.84839Z" fill="#1B2124"/>
-    <path d="M14.505 6.49483L12 9C10.3431 9 9 10.3431 9 12L5.52661 15.4734C3.75006 13.8335 3 12 3 12C3 12 5.45455 6 12 6C12.8665 6 13.7076 6.18695 14.505 6.49483Z" fill="#1B2124"/>
-    <path opacity="0.3" d="M18.535 5.00003L5.09998 18.435L6.51498 19.85L19.95 6.41523L18.535 5.00003Z" fill="#1B2124"/>
-  </svg>
-);
-
-const KebabIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-100 hover:opacity-50 transition-opacity">
-    <path d="M8 4.66667C8.73638 4.66667 9.33333 4.06971 9.33333 3.33333C9.33333 2.59695 8.73638 2 8 2C7.26362 2 6.66667 2.59695 6.66667 3.33333C6.66667 4.06971 7.26362 4.66667 8 4.66667Z" fill="#1B2124"/>
-    <path d="M8 9.33333C8.73638 9.33333 9.33333 8.73638 9.33333 8C9.33333 7.26362 8.73638 6.66667 8 6.66667C7.26362 6.66667 6.66667 7.26362 6.66667 8C6.66667 8.73638 7.26362 9.33333 8 9.33333Z" fill="#1B2124"/>
-    <path d="M8 14C8.73638 14 9.33333 13.4031 9.33333 12.6667C9.33333 11.9303 8.73638 11.3333 8 11.3333C7.26362 11.3333 6.66667 11.9303 6.66667 12.6667C6.66667 13.4031 7.26362 14 8 14Z" fill="#1B2124"/>
-  </svg>
-);
-
-const MoveIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-move" style={{ color: '#666' }}>
-    <path fillRule="evenodd" clipRule="evenodd" d="M11.3799 13.005L5.4953 13.005C5.04657 13.005 4.6828 12.6412 4.6828 12.1925C4.6828 11.7438 5.04657 11.38 5.4953 11.38L11.3799 11.38L11.3799 4.26465C11.3799 3.81592 11.7437 3.45215 12.1924 3.45215C12.6412 3.45215 13.0049 3.81592 13.0049 4.26465L13.0049 11.38L20.1203 11.38C20.569 11.38 20.9328 11.7438 20.9328 12.1925C20.9328 12.6412 20.569 13.005 20.1203 13.005L13.0049 13.005L13.0049 18.8896C13.0049 19.3384 12.6412 19.7021 12.1924 19.7021C11.7437 19.7021 11.3799 19.3384 11.3799 18.8896L11.3799 13.005Z" fill="#666"/>
-    <path d="M12.1924 19.0867L13.916 17.3631C14.3647 17.0458 14.7477 17.0458 15.065 17.3631C15.3823 17.6804 15.3823 18.0634 15.065 18.5121L12.1924 21.3848L9.31977 18.5121C8.93675 18.1291 8.93675 17.7461 9.31977 17.3631C9.70278 16.9801 10.0858 16.9801 10.4688 17.3631L12.1924 19.0867ZM19.0867 12.1924L17.3631 10.4688C17.0458 10.0201 17.0458 9.63706 17.3631 9.31976C17.6804 9.00246 18.0634 9.00246 18.5122 9.31976L21.3848 12.1924L18.5122 15.065C18.1291 15.448 17.7461 15.448 17.3631 15.065C16.9801 14.682 16.9801 14.299 17.3631 13.916L19.0867 12.1924ZM12.1924 5.29809L10.4688 7.02166C10.0201 7.33897 9.63707 7.33897 9.31977 7.02166C9.00247 6.70436 9.00247 6.32135 9.31977 5.87262L12.1924 2.99999L15.065 5.87262C15.448 6.25563 15.448 6.63865 15.065 7.02166C14.682 7.40468 14.299 7.40468 13.916 7.02166L12.1924 5.29809ZM5.2981 12.1924L7.02167 13.916C7.33897 14.3647 7.33897 14.7477 7.02167 15.065C6.70437 15.3823 6.32135 15.3823 5.87262 15.065L3 12.1924L5.87262 9.31976C6.25564 8.93675 6.63865 8.93675 7.02167 9.31976C7.40469 9.70278 7.40469 10.0858 7.02167 10.4688L5.2981 12.1924Z" fill="#666"/>
-  </svg>
-);
 
 export const PageRow: React.FC<PageRowProps> = ({
   page,
@@ -124,105 +74,101 @@ export const PageRow: React.FC<PageRowProps> = ({
 
   return (
     <TooltipProvider>
-      <div key={page.id} className="font-sans">
-        <div 
-          className="group flex items-center border-l-2 border-l-transparent hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
-          style={{ 
-            paddingLeft: `${paddingLeft + 24}px`, 
-            paddingRight: '24px',
-            height: '64px',
-            borderBottom: '1px solid #EFEFEF'
-          }} 
+      <>
+        <TableRow 
+          className="group border-l-2 border-l-transparent hover:bg-hover hover:border-l-primary-brand transition-colors cursor-pointer h-16 border-b border-subtle" 
           role="row" 
           tabIndex={0} 
           aria-label={`${page.title} page row`}
           onClick={handleRowClick}
         >
-          {/* Expand/collapse button */}
-          <div className="w-5 flex justify-center mr-2">
-            {hasChildren ? (
-              <button 
-                onClick={e => {
-                  e.stopPropagation();
-                  onToggleExpansion(page.id);
-                }} 
-                className="text-gray-400 hover:text-gray-600 outline-none focus:outline-none focus:ring-0 rounded" 
-                aria-label={page.isExpanded ? `Collapse ${page.title}` : `Expand ${page.title}`} 
-                aria-expanded={page.isExpanded}
-              >
-                <ChevronIcon isExpanded={page.isExpanded} />
-              </button>
-            ) : null}
-          </div>
-
-          {/* Title */}
-          <div className="flex-1 min-w-0 mr-4">
-            <div className="flex items-center gap-2 mb-1">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span 
-                    className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-[#1B2124]'}`}
+          {/* Title with expand/collapse */}
+          <TableCell className="p-0">
+            <div className="flex items-center h-16" style={{ paddingLeft: `${paddingLeft + 24}px` }}>
+              {/* Expand/collapse button */}
+              <div className="w-5 flex justify-center mr-2">
+                {hasChildren ? (
+                  <button 
+                    onClick={e => {
+                      e.stopPropagation();
+                      onToggleExpansion(page.id);
+                    }} 
+                    className="text-secondary hover:text-primary transition-colors outline-none focus:outline-none focus:ring-0 rounded" 
+                    aria-label={page.isExpanded ? `Collapse ${page.title}` : `Expand ${page.title}`} 
+                    aria-expanded={page.isExpanded}
                   >
-                    {page.title}
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{page.title}</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              {page.isPasswordProtected && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <span>
-                      <LockIcon />
+                    <ChevronIcon isExpanded={page.isExpanded} />
+                  </button>
+                ) : null}
+              </div>
+
+              {/* Title and badges */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span 
+                        className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-primary'}`}
+                      >
+                        {page.title}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{page.title}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  
+                  {page.isPasswordProtected && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="text-primary">
+                          <LockIcon />
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Password protected</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                  
+                  {isExternalLink && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="text-primary">
+                          <ExternalLinkIcon />
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>External link</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                  
+                  {isUntranslated && (
+                    <span 
+                      className="text-xs px-2 py-0 text-warning font-medium text-center bg-warning rounded-md"
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 500,
+                        lineHeight: '16px'
+                      }}
+                    >
+                      Untranslated
                     </span>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Password protected</p>
-                  </TooltipContent>
-                </Tooltip>
-              )}
-              
-              {isExternalLink && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <span>
-                      <ExternalLinkIcon />
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>External link</p>
-                  </TooltipContent>
-                </Tooltip>
-              )}
-              
-              {isUntranslated && (
-                <span 
-                  className="text-xs px-2 py-0 text-black font-medium text-center"
-                  style={{
-                    borderRadius: '5px',
-                    background: 'rgba(255, 215, 75, 0.3)',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    lineHeight: '16px'
-                  }}
-                >
-                  Untranslated
-                </span>
-              )}
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          </TableCell>
 
           {/* Slug */}
-          <div className="w-48 px-4">
+          <TableCell className="w-48 px-4">
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleSlugClick}
-                    className="text-[#1B2124] hover:text-[#5A4FFF] hover:underline truncate block max-w-full text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded"
-                    style={{ fontSize: '14px' }}
+                    className="text-primary hover:text-primary-brand hover:underline truncate block max-w-full text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
                   >
                     {page.slug}
                   </button>
@@ -232,26 +178,21 @@ export const PageRow: React.FC<PageRowProps> = ({
                 </TooltipContent>
               </Tooltip>
             ) : (
-              <span 
-                className="text-gray-400"
-                style={{ fontSize: '14px' }}
-              >
-                -
-              </span>
+              <span className="text-gray-400 text-sm">-</span>
             )}
-          </div>
+          </TableCell>
 
           {/* Layout */}
-          <div className="w-32 px-4">
+          <TableCell className="w-32 px-4">
             {!isUntranslated ? (
-              <span className="text-sm text-[#1B2124]">{page.pageType}</span>
+              <span className="text-sm text-primary">{page.pageType}</span>
             ) : (
               <span className="text-sm text-gray-400">-</span>
             )}
-          </div>
+          </TableCell>
 
           {/* SEO Score */}
-          <div className="w-24 px-4">
+          <TableCell className="w-24 px-4">
             {!isUntranslated ? (
               <div aria-label={`SEO Score: ${page.seoScore}`}>
                 {renderSeoScore(page.seoScore)}
@@ -261,122 +202,127 @@ export const PageRow: React.FC<PageRowProps> = ({
                 <div className="w-2 h-2 rounded-full bg-gray-300" />
               </div>
             )}
-          </div>
+          </TableCell>
 
           {/* Menu Visibility Toggle */}
-          <div className="w-24 px-4 flex justify-center">
-            {!isUntranslated ? (
-              <button
-                onClick={handleVisibilityToggle}
-                aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
-                className="outline-none focus:outline-none focus:ring-0 rounded"
-              >
-                {page.isVisible ? <EyeVisibleIcon /> : <EyeHiddenIcon />}
-              </button>
-            ) : null}
-          </div>
+          <TableCell className="w-24 px-4">
+            <div className="flex justify-center">
+              {!isUntranslated ? (
+                <button
+                  onClick={handleVisibilityToggle}
+                  aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
+                  className="outline-none focus:outline-none focus:ring-0 rounded text-primary"
+                >
+                  {page.isVisible ? <EyeVisibleIcon /> : <EyeHiddenIcon />}
+                </button>
+              ) : null}
+            </div>
+          </TableCell>
 
-          {/* Move handle - invisible placeholder for Home page to maintain spacing */}
-          <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity mr-2`}>
-            <MoveIcon />
-          </div>
+          {/* Move handle */}
+          <TableCell className="w-4 pr-2">
+            <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity text-secondary`}>
+              <MoveIcon />
+            </div>
+          </TableCell>
 
           {/* Actions */}
-          <div className="w-6 flex items-center justify-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0" 
-                  aria-label={`More options for ${page.title}`} 
-                  onClick={e => e.stopPropagation()}
-                >
-                  <KebabIcon />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
-                {isUntranslated ? (
-                  <DropdownMenuItem 
-                    onClick={e => {
-                      e.stopPropagation();
-                      onTranslatePage(page);
-                    }} 
-                    className="cursor-pointer text-sm text-[#1B2124]"
+          <TableCell className="w-6 pr-6">
+            <div className="flex items-center justify-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0 text-primary" 
+                    aria-label={`More options for ${page.title}`} 
+                    onClick={e => e.stopPropagation()}
                   >
-                    <FileText className="w-4 h-4 mr-2" />
-                    Translate page
-                  </DropdownMenuItem>
-                ) : (
-                  <>
+                    <KebabIcon />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
+                  {isUntranslated ? (
                     <DropdownMenuItem 
                       onClick={e => {
                         e.stopPropagation();
-                        onPageSettings(page);
+                        onTranslatePage(page);
                       }} 
-                      className="cursor-pointer text-sm text-[#1B2124]"
+                      className="cursor-pointer text-sm text-primary"
                     >
-                      <Settings className="w-4 h-4 mr-2" />
-                      Page settings
+                      <FileText className="w-4 h-4 mr-2" />
+                      Translate page
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={e => {
-                        e.stopPropagation();
-                        onDuplicatePage(page);
-                      }} 
-                      className="cursor-pointer text-sm text-[#1B2124]"
-                    >
-                      <Copy className="w-4 h-4 mr-2" />
-                      Duplicate page
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={e => {
-                        e.stopPropagation();
-                        onAddNestedPage(page);
-                      }} 
-                      className="cursor-pointer text-sm text-[#1B2124]"
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add subpage
-                    </DropdownMenuItem>
-                    {/* Delete option - not shown for Home page, disabled with tooltip for pages with children */}
-                    {!isHomePage && (
-                      hasChildren ? (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <div>
-                              <DropdownMenuItem 
-                                disabled
-                                className="cursor-not-allowed text-sm text-gray-400"
-                              >
-                                <Trash className="w-4 h-4 mr-2" />
-                                Delete
-                              </DropdownMenuItem>
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Cannot delete page with subpages</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      ) : (
-                        <DropdownMenuItem 
-                          onClick={e => {
-                            e.stopPropagation();
-                            onDeletePage(page);
-                          }} 
-                          className="cursor-pointer text-sm text-red-600 focus:text-red-600"
-                        >
-                          <Trash className="w-4 h-4 mr-2" />
-                          Delete
-                        </DropdownMenuItem>
-                      )
-                    )}
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
+                  ) : (
+                    <>
+                      <DropdownMenuItem 
+                        onClick={e => {
+                          e.stopPropagation();
+                          onPageSettings(page);
+                        }} 
+                        className="cursor-pointer text-sm text-primary"
+                      >
+                        <Settings className="w-4 h-4 mr-2" />
+                        Page settings
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={e => {
+                          e.stopPropagation();
+                          onDuplicatePage(page);
+                        }} 
+                        className="cursor-pointer text-sm text-primary"
+                      >
+                        <Copy className="w-4 h-4 mr-2" />
+                        Duplicate page
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={e => {
+                          e.stopPropagation();
+                          onAddNestedPage(page);
+                        }} 
+                        className="cursor-pointer text-sm text-primary"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add subpage
+                      </DropdownMenuItem>
+                      {!isHomePage && (
+                        hasChildren ? (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div>
+                                <DropdownMenuItem 
+                                  disabled
+                                  className="cursor-not-allowed text-sm text-gray-400"
+                                >
+                                  <Trash className="w-4 h-4 mr-2" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Cannot delete page with subpages</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        ) : (
+                          <DropdownMenuItem 
+                            onClick={e => {
+                              e.stopPropagation();
+                              onDeletePage(page);
+                            }} 
+                            className="cursor-pointer text-sm text-red-600 focus:text-red-600"
+                          >
+                            <Trash className="w-4 h-4 mr-2" />
+                            Delete
+                          </DropdownMenuItem>
+                        )
+                      )}
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </TableCell>
+        </TableRow>
 
         {/* Render children if expanded */}
         {hasChildren && page.isExpanded && page.children?.map(child => (
@@ -394,7 +340,7 @@ export const PageRow: React.FC<PageRowProps> = ({
             onTranslatePage={onTranslatePage}
           />
         ))}
-      </div>
+      </>
     </TooltipProvider>
   );
 };
