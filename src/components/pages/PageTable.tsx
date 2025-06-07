@@ -30,8 +30,8 @@ export const PageTable = ({
     <div className="overflow-hidden border-t border-subtle">
       <Table>
         <TableHeader>
-          <TableRow className="bg-white border-b border-subtle hover:bg-white h-12">
-            <TableHead className="h-12 px-6 text-left">
+          <TableRow className="bg-white border-b border-subtle hover:bg-white h-10">
+            <TableHead className="h-10 px-6 text-left">
               <div className="flex items-center text-xs font-medium text-muted">
                 {/* Space for expand button (20px width + 8px margin) */}
                 <div className="w-5 mr-2"></div>
@@ -39,27 +39,27 @@ export const PageTable = ({
               </div>
             </TableHead>
             
-            <TableHead className="h-12 px-4 text-left w-36">
+            <TableHead className="h-10 px-4 text-left w-32">
               <span className="text-xs font-medium text-muted whitespace-nowrap">Slug</span>
             </TableHead>
             
-            <TableHead className="h-12 px-4 text-left w-32">
+            <TableHead className="h-10 px-4 text-left w-32">
               <span className="text-xs font-medium text-muted whitespace-nowrap">Layout</span>
             </TableHead>
             
-            <TableHead className="h-12 px-4 text-center w-24">
+            <TableHead className="h-10 px-4 text-center w-24">
               <span className="text-xs font-medium text-muted whitespace-nowrap">SEO</span>
             </TableHead>
             
-            <TableHead className="h-12 px-4 text-center w-24">
+            <TableHead className="h-10 px-4 text-center w-24">
               <span className="text-xs font-medium text-muted whitespace-nowrap">In menu</span>
             </TableHead>
 
             {/* Space for move handle */}
-            <TableHead className="h-12 w-4"></TableHead>
+            <TableHead className="h-10 w-4"></TableHead>
             
             {/* Actions */}
-            <TableHead className="h-12 w-6"></TableHead>
+            <TableHead className="h-10 w-6"></TableHead>
           </TableRow>
         </TableHeader>
 
