@@ -1,17 +1,14 @@
+
 import React from "react";
-import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { PageItem } from "@/types/pages";
 import { ChevronIcon } from "@/components/icons/ChevronIcon";
-import { EyeVisibleIcon } from "@/components/icons/EyeVisibleIcon";
-import { EyeHiddenIcon } from "@/components/icons/EyeHiddenIcon";
-import { KebabIcon } from "@/components/icons/KebabIcon";
-import { ExternalLinkIcon } from "@/components/icons/ExternalLinkIcon";
-import { LockIcon } from "@/components/icons/LockIcon";
 import { MoveIcon } from "@/components/icons/MoveIcon";
+import { SeoScore } from "./SeoScore";
+import { VisibilityToggle } from "./VisibilityToggle";
+import { PageTitle } from "./PageTitle";
+import { PageActionsDropdown } from "./PageActionsDropdown";
 
 interface PageRowProps {
   page: PageItem;
@@ -25,15 +22,6 @@ interface PageRowProps {
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
 }
-
-const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
-  const color = score === "Good" ? "bg-green-500" : score === "Medium" ? "bg-yellow-500" : "bg-red-500";
-  return (
-    <div className="flex items-center justify-center">
-      <div className={`w-2 h-2 rounded-full ${color}`} />
-    </div>
-  );
-};
 
 export const PageRow: React.FC<PageRowProps> = ({
   page,
@@ -103,56 +91,12 @@ export const PageRow: React.FC<PageRowProps> = ({
               </div>
 
               {/* Title and badges */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <span 
-                        className={`text-sm font-medium truncate max-w-[200px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-black'}`}
-                      >
-                        {page.title}
-                      </span>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{page.title}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                  
-                  {page.isPasswordProtected && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span className="text-black">
-                          <LockIcon />
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Password protected</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-                  
-                  {isExternalLink && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span className="text-black">
-                          <ExternalLinkIcon />
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>External link</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-                  
-                  {isUntranslated && (
-                    <span 
-                      className="text-xs px-2 py-0.5 text-black font-medium bg-yellow-200 rounded-md leading-tight"
-                    >
-                      Untranslated
-                    </span>
-                  )}
-                </div>
-              </div>
+              <PageTitle 
+                title={page.title}
+                isUntranslated={isUntranslated}
+                isPasswordProtected={page.isPasswordProtected}
+                isExternalLink={isExternalLink}
+              />
             </div>
           </TableCell>
 
@@ -188,30 +132,17 @@ export const PageRow: React.FC<PageRowProps> = ({
 
           {/* SEO Score */}
           <TableCell className="w-24 px-4 align-middle">
-            {!isUntranslated ? (
-              <div aria-label={`SEO Score: ${page.seoScore}`}>
-                {renderSeoScore(page.seoScore)}
-              </div>
-            ) : (
-              <div className="flex items-center justify-center">
-                <div className="w-2 h-2 rounded-full bg-gray-300" />
-              </div>
-            )}
+            <SeoScore score={page.seoScore} isUntranslated={isUntranslated} />
           </TableCell>
 
           {/* Menu Visibility Toggle */}
           <TableCell className="w-24 px-4 align-middle">
-            <div className="flex justify-center">
-              {!isUntranslated ? (
-                <button
-                  onClick={handleVisibilityToggle}
-                  aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
-                  className="outline-none focus:outline-none focus:ring-0 rounded text-black"
-                >
-                  {page.isVisible ? <EyeVisibleIcon /> : <EyeHiddenIcon />}
-                </button>
-              ) : null}
-            </div>
+            <VisibilityToggle 
+              isVisible={page.isVisible}
+              isUntranslated={isUntranslated}
+              pageTitle={page.title}
+              onToggle={handleVisibilityToggle}
+            />
           </TableCell>
 
           {/* Move handle */}
@@ -223,99 +154,17 @@ export const PageRow: React.FC<PageRowProps> = ({
 
           {/* Actions */}
           <TableCell className="w-6 pr-6 align-middle">
-            <div className="flex items-center justify-center">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0 text-black" 
-                    aria-label={`More options for ${page.title}`} 
-                    onClick={e => e.stopPropagation()}
-                  >
-                    <KebabIcon />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
-                  {isUntranslated ? (
-                    <DropdownMenuItem 
-                      onClick={e => {
-                        e.stopPropagation();
-                        onTranslatePage(page);
-                      }} 
-                      className="cursor-pointer text-sm text-black"
-                    >
-                      <FileText className="w-4 h-4 mr-2" />
-                      Translate page
-                    </DropdownMenuItem>
-                  ) : (
-                    <>
-                      <DropdownMenuItem 
-                        onClick={e => {
-                          e.stopPropagation();
-                          onPageSettings(page);
-                        }} 
-                        className="cursor-pointer text-sm text-black"
-                      >
-                        <Settings className="w-4 h-4 mr-2" />
-                        Page settings
-                      </DropdownMenuItem>
-                      <DropdownMenuItem 
-                        onClick={e => {
-                          e.stopPropagation();
-                          onDuplicatePage(page);
-                        }} 
-                        className="cursor-pointer text-sm text-black"
-                      >
-                        <Copy className="w-4 h-4 mr-2" />
-                        Duplicate page
-                      </DropdownMenuItem>
-                      <DropdownMenuItem 
-                        onClick={e => {
-                          e.stopPropagation();
-                          onAddNestedPage(page);
-                        }} 
-                        className="cursor-pointer text-sm text-black"
-                      >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add subpage
-                      </DropdownMenuItem>
-                      {!isHomePage && (
-                        hasChildren ? (
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div>
-                                <DropdownMenuItem 
-                                  disabled
-                                  className="cursor-not-allowed text-sm text-gray-400"
-                                >
-                                  <Trash className="w-4 h-4 mr-2" />
-                                  Delete
-                                </DropdownMenuItem>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Cannot delete page with subpages</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        ) : (
-                          <DropdownMenuItem 
-                            onClick={e => {
-                              e.stopPropagation();
-                              onDeletePage(page);
-                            }} 
-                            className="cursor-pointer text-sm text-red-600 focus:text-red-600"
-                          >
-                            <Trash className="w-4 h-4 mr-2" />
-                            Delete
-                          </DropdownMenuItem>
-                        )
-                      )}
-                    </>
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            <PageActionsDropdown 
+              page={page}
+              isHomePage={isHomePage}
+              hasChildren={hasChildren}
+              isUntranslated={isUntranslated}
+              onPageSettings={onPageSettings}
+              onDuplicatePage={onDuplicatePage}
+              onAddNestedPage={onAddNestedPage}
+              onDeletePage={onDeletePage}
+              onTranslatePage={onTranslatePage}
+            />
           </TableCell>
         </TableRow>
 
