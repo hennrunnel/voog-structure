@@ -72,7 +72,7 @@ export const PageTable = ({
       </div>
 
       {/* Page Rows */}
-      <div role="table" aria-label="Pages list">
+      <div role="table" aria-label="Pages list" className="text-black">
         {pages.map(page => (
           <PageRow
             key={page.id}
