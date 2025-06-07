@@ -20,10 +20,15 @@ export const VisibilityToggle: React.FC<VisibilityToggleProps> = ({
     return null;
   }
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onToggle();
+  };
+
   return (
     <div className="flex justify-center">
       <button
-        onClick={onToggle}
+        onClick={handleClick}
         aria-label={isVisible ? `Hide ${pageTitle} from menu` : `Show ${pageTitle} in menu`}
         className="outline-none focus:outline-none focus:ring-0 rounded text-black"
       >

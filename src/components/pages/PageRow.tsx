@@ -1,4 +1,3 @@
-
 import React from "react";
 import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -54,8 +53,7 @@ export const PageRow: React.FC<PageRowProps> = ({
     console.log('Slug clicked:', page.slug);
   };
 
-  const handleVisibilityToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleVisibilityToggle = () => {
     onToggleVisibility(page.id);
   };
 
@@ -101,13 +99,13 @@ export const PageRow: React.FC<PageRowProps> = ({
           </TableCell>
 
           {/* Slug */}
-          <TableCell className="w-36 px-4 align-middle">
+          <TableCell className="w-28 px-4 align-middle">
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleSlugClick}
-                    className="text-black hover:text-primary-blue hover:underline truncate block w-full max-w-32 text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
+                    className="text-black hover:text-primary-blue hover:underline truncate block w-full max-w-24 text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
                   >
                     {page.slug}
                   </button>
