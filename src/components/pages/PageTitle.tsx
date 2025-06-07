@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { LockIcon } from "@/components/icons/LockIcon";
@@ -23,7 +22,7 @@ export const PageTitle: React.FC<PageTitleProps> = ({
         <Tooltip>
           <TooltipTrigger asChild>
             <span 
-              className={`text-sm font-medium truncate flex-1 ${isUntranslated ? 'text-gray-400' : 'text-black'}`}
+              className={`text-sm font-medium truncate max-w-[200px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-black'}`}
             >
               {title}
             </span>
