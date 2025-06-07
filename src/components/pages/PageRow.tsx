@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -109,7 +108,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span 
-                        className={`text-sm font-medium truncate max-w-[300px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-black'}`}
+                        className={`text-sm font-medium truncate max-w-[200px] inline-block ${isUntranslated ? 'text-gray-400' : 'text-black'}`}
                       >
                         {page.title}
                       </span>
@@ -158,13 +157,13 @@ export const PageRow: React.FC<PageRowProps> = ({
           </TableCell>
 
           {/* Slug */}
-          <TableCell className="w-48 px-4 align-middle">
+          <TableCell className="w-36 px-4 align-middle">
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleSlugClick}
-                    className="text-black hover:text-primary-blue hover:underline truncate block w-full max-w-44 text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
+                    className="text-black hover:text-primary-blue hover:underline truncate block w-full max-w-32 text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
                   >
                     {page.slug}
                   </button>

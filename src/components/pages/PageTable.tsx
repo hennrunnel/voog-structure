@@ -39,7 +39,7 @@ export const PageTable = ({
               </div>
             </TableHead>
             
-            <TableHead className="h-12 px-4 text-left w-48">
+            <TableHead className="h-12 px-4 text-left w-36">
               <span className="text-xs font-medium text-muted whitespace-nowrap">Slug</span>
             </TableHead>
             
