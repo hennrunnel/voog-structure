@@ -35,8 +35,12 @@ export const LanguageTabsHeader = ({
               >
                 <span className="flex items-center gap-2">
                   {tab}
-                  {tab === "estonian" && !estonianVisible && <EyeHiddenIcon className="text-muted" />}
-                  {tab === "english" && !englishVisible && <EyeHiddenIcon className="text-muted" />}
+                  {tab === "estonian" && !estonianVisible && (
+                    <EyeHiddenIcon className={activeTab === "estonian" ? "text-primary-blue" : "text-muted"} />
+                  )}
+                  {tab === "english" && !englishVisible && (
+                    <EyeHiddenIcon className={activeTab === "english" ? "text-primary-blue" : "text-muted"} />
+                  )}
                 </span>
               </TabsTrigger>
             </div>
