@@ -76,15 +76,16 @@ export const PageRow: React.FC<PageRowProps> = ({
     <TooltipProvider>
       <>
         <TableRow 
-          className="group border-l-2 border-l-transparent hover:bg-hover hover:border-l-primary-brand transition-colors cursor-pointer h-16 border-b border-subtle" 
+          className="group border-l-2 border-l-transparent hover:bg-hover hover:border-l-primary-brand transition-colors cursor-pointer border-b border-subtle" 
           role="row" 
           tabIndex={0} 
           aria-label={`${page.title} page row`}
           onClick={handleRowClick}
+          style={{ height: '63px' }}
         >
           {/* Title with expand/collapse */}
-          <TableCell className="p-0">
-            <div className="flex items-center h-16" style={{ paddingLeft: `${paddingLeft + 24}px` }}>
+          <TableCell className="p-0 align-middle">
+            <div className="flex items-center h-full" style={{ paddingLeft: `${paddingLeft + 24}px` }}>
               {/* Expand/collapse button */}
               <div className="w-5 flex justify-center mr-2">
                 {hasChildren ? (
@@ -104,7 +105,7 @@ export const PageRow: React.FC<PageRowProps> = ({
 
               {/* Title and badges */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span 
@@ -146,12 +147,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   
                   {isUntranslated && (
                     <span 
-                      className="text-xs px-2 py-0 text-warning font-medium text-center bg-warning rounded-md"
-                      style={{
-                        fontSize: '12px',
-                        fontWeight: 500,
-                        lineHeight: '16px'
-                      }}
+                      className="text-xs px-2 py-0.5 text-warning font-medium bg-warning rounded-md leading-tight"
                     >
                       Untranslated
                     </span>
@@ -162,13 +158,13 @@ export const PageRow: React.FC<PageRowProps> = ({
           </TableCell>
 
           {/* Slug */}
-          <TableCell className="w-48 px-4">
+          <TableCell className="w-48 px-4 align-middle">
             {!isUntranslated ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
                     onClick={handleSlugClick}
-                    className="text-primary hover:text-primary-brand hover:underline truncate block max-w-full text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
+                    className="text-primary hover:text-primary-brand hover:underline truncate block w-full max-w-44 text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded text-sm"
                   >
                     {page.slug}
                   </button>
@@ -183,7 +179,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           </TableCell>
 
           {/* Layout */}
-          <TableCell className="w-32 px-4">
+          <TableCell className="w-32 px-4 align-middle">
             {!isUntranslated ? (
               <span className="text-sm text-primary">{page.pageType}</span>
             ) : (
@@ -192,7 +188,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           </TableCell>
 
           {/* SEO Score */}
-          <TableCell className="w-24 px-4">
+          <TableCell className="w-24 px-4 align-middle">
             {!isUntranslated ? (
               <div aria-label={`SEO Score: ${page.seoScore}`}>
                 {renderSeoScore(page.seoScore)}
@@ -205,7 +201,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           </TableCell>
 
           {/* Menu Visibility Toggle */}
-          <TableCell className="w-24 px-4">
+          <TableCell className="w-24 px-4 align-middle">
             <div className="flex justify-center">
               {!isUntranslated ? (
                 <button
@@ -220,14 +216,14 @@ export const PageRow: React.FC<PageRowProps> = ({
           </TableCell>
 
           {/* Move handle */}
-          <TableCell className="w-4 pr-2">
+          <TableCell className="w-4 pr-2 align-middle">
             <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity text-secondary`}>
               <MoveIcon />
             </div>
           </TableCell>
 
           {/* Actions */}
-          <TableCell className="w-6 pr-6">
+          <TableCell className="w-6 pr-6 align-middle">
             <div className="flex items-center justify-center">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

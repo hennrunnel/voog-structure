@@ -30,7 +30,7 @@ export const PageTable = ({
     <div className="overflow-hidden border-t border-subtle">
       <Table>
         <TableHeader>
-          <TableRow className="bg-white border-b border-subtle hover:bg-white">
+          <TableRow className="bg-white border-b border-subtle hover:bg-white h-12">
             <TableHead className="h-12 px-6 text-left">
               <div className="flex items-center text-xs font-medium text-muted">
                 {/* Space for expand button (20px width + 8px margin) */}

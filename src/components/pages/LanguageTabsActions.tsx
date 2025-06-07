@@ -51,14 +51,14 @@ export const LanguageTabsActions = ({
         <Button
           onClick={onLanguageSettings}
           variant="outline"
-          className="text-primary-brand border-none font-semibold outline-none focus:outline-none bg-primary-brand/10 px-4 py-2 text-sm font-semibold leading-6"
+          className="text-primary-brand border-primary-brand/20 hover:bg-primary-brand/10 font-medium outline-none focus:outline-none bg-transparent px-4 py-2 text-sm rounded-lg"
         >
           Language settings
         </Button>
         
         <Button 
           onClick={onAddPageClick} 
-          className="text-white font-semibold hover:bg-primary-brand-hover outline-none focus:outline-none bg-primary-brand px-4 py-2 text-sm font-semibold leading-6 rounded-lg"
+          className="text-white font-medium hover:bg-primary-brand-hover outline-none focus:outline-none bg-primary-brand px-4 py-2 text-sm rounded-lg"
         >
           New page
         </Button>

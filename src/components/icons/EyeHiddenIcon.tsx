@@ -11,7 +11,7 @@ export const EyeHiddenIcon = ({ size = 20, className = "" }: EyeHiddenIconProps)
     viewBox="0 0 24 24" 
     fill="none" 
     xmlns="http://www.w3.org/2000/svg" 
-    className={`opacity-100 hover:opacity-50 transition-opacity ${className}`}
+    className={className}
   >
     <path 
       d="M19.2079 9.84839C20.3304 11.0179 21 12 21 12C21 12 16.9091 18 12 18C11.1894 18 10.3879 17.8865 9.59549 17.6609L19.2079 9.84839Z" 

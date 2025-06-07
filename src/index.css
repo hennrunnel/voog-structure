@@ -44,12 +44,12 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Custom semantic tokens */
+    /* Fixed semantic tokens to match original colors exactly */
     --color-primary-brand: 251 79% 67%; /* #5A4FFF */
     --color-primary-brand-hover: 251 79% 60%; /* #4A3FFF */
-    --color-text-primary: 0 0% 11%; /* #1B2124 */
+    --color-text-primary: 210 9% 11%; /* #1B2124 */
     --color-text-secondary: 0 0% 40%; /* #666 */
-    --color-text-muted: 0 0% 55%; /* #8d9091 */
+    --color-text-muted: 210 5% 55%; /* #8d9091 */
     --color-border-subtle: 0 0% 94%; /* #EFEFEF */
     --color-background-hover: 251 100% 98%; /* #FBFBFF */
     --color-warning-bg: 44 100% 85%; /* rgba(255, 215, 75, 0.3) */
