@@ -23,6 +23,13 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showDuplicateDialog, setShowDuplicateDialog] = useState(false);
 
+  // SEO state
+  const [seoTitle, setSeoTitle] = useState("Digital ordering platform for restaurants and cafes");
+  const [titleFormat, setTitleFormat] = useState("page-title-site-name");
+  const [customizeTitleFormat, setCustomizeTitleFormat] = useState(false);
+  const [metaDescription, setMetaDescription] = useState("Streamline your restaurant operations with our comprehensive digital ordering platform. Manage orders, inventory, and customer relationships all in one place.");
+  const [visibleToSearchEngines, setVisibleToSearchEngines] = useState(true);
+
   // Mock data to simulate if page has children - this would come from props in real implementation
   const pageHasChildren = false;
 
@@ -79,7 +86,21 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                 />
               )}
 
-              {activeTab === "seo" && <SeoTabContent />}
+              {activeTab === "seo" && (
+                <SeoTabContent
+                  seoTitle={seoTitle}
+                  setSeoTitle={setSeoTitle}
+                  titleFormat={titleFormat}
+                  setTitleFormat={setTitleFormat}
+                  customizeTitleFormat={customizeTitleFormat}
+                  setCustomizeTitleFormat={setCustomizeTitleFormat}
+                  metaDescription={metaDescription}
+                  setMetaDescription={setMetaDescription}
+                  visibleToSearchEngines={visibleToSearchEngines}
+                  setVisibleToSearchEngines={setVisibleToSearchEngines}
+                  pageTitle={title}
+                />
+              )}
             </div>
 
             <PageSettingsFooter
