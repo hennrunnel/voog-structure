@@ -47,7 +47,8 @@ export const PagesContainer = () => {
     handleLanguagePublishToggle,
     handleEnglishLanguageVisibilityToggle,
     handleEstonianLanguageVisibilityToggle,
-    confirmLanguageVisibilityToggle
+    confirmLanguageVisibilityToggle,
+    addLanguage
   } = useLanguageManagement();
 
   const {
@@ -112,6 +113,7 @@ export const PagesContainer = () => {
               onPageSettings={handlePageSettings}
               onEditPage={handleEditPage}
               onTranslatePage={handleTranslatePage}
+              addLanguage={addLanguage}
             />
           </CardContent>
         </Card>
