@@ -155,12 +155,12 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
                   Which language visitors see
                 </Label>
-                <Select defaultValue="detect-browser-language">
+                <Select defaultValue="detect-by-location">
                   <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="visitor-language">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="detect-browser-language">Auto-detect from browser language</SelectItem>
+                    <SelectItem value="detect-by-location">Detect by location</SelectItem>
                     <SelectItem value="always-this">Always this language</SelectItem>
                   </SelectContent>
                 </Select>
