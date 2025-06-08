@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Trash, Plus, Settings, Copy, FileText, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -58,7 +57,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                 e.stopPropagation();
                 onTranslatePage(page);
               }} 
-              className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+              className="cursor-pointer text-[#1B2124] transition-colors"
               style={{
                 height: '40px',
                 padding: '8px 16px',
@@ -67,8 +66,15 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                 margin: '0',
                 borderRadius: '0'
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#5A4FFF';
+                e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#1B2124';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
             >
-              <FileText className="w-4 h-4 mr-2" />
               Translate page
             </DropdownMenuItem>
           ) : (
@@ -78,7 +84,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.stopPropagation();
                   onEditPage(page);
                 }} 
-                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                className="cursor-pointer text-[#1B2124] transition-colors"
                 style={{
                   height: '40px',
                   padding: '8px 16px',
@@ -87,8 +93,15 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   margin: '0',
                   borderRadius: '0'
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
               >
-                <Edit className="w-4 h-4 mr-2" />
                 Edit page
               </DropdownMenuItem>
               <DropdownMenuItem 
@@ -96,7 +109,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.stopPropagation();
                   onPageSettings(page);
                 }} 
-                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                className="cursor-pointer text-[#1B2124] transition-colors"
                 style={{
                   height: '40px',
                   padding: '8px 16px',
@@ -105,8 +118,15 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   margin: '0',
                   borderRadius: '0'
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
               >
-                <Settings className="w-4 h-4 mr-2" />
                 Settings
               </DropdownMenuItem>
               <DropdownMenuItem 
@@ -114,7 +134,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.stopPropagation();
                   onDuplicatePage(page);
                 }} 
-                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                className="cursor-pointer text-[#1B2124] transition-colors"
                 style={{
                   height: '40px',
                   padding: '8px 16px',
@@ -123,8 +143,15 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   margin: '0',
                   borderRadius: '0'
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
               >
-                <Copy className="w-4 h-4 mr-2" />
                 Duplicate
               </DropdownMenuItem>
               <DropdownMenuItem 
@@ -132,7 +159,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.stopPropagation();
                   onAddNestedPage(page);
                 }} 
-                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                className="cursor-pointer text-[#1B2124] transition-colors"
                 style={{
                   height: '40px',
                   padding: '8px 16px',
@@ -141,8 +168,15 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   margin: '0',
                   borderRadius: '0'
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
               >
-                <Plus className="w-4 h-4 mr-2" />
                 Add subpage
               </DropdownMenuItem>
               {/* Delete option - not shown for Home page, disabled with tooltip for pages with children */}
@@ -163,7 +197,6 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                             borderRadius: '0'
                           }}
                         >
-                          <Trash className="w-4 h-4 mr-2" />
                           Delete
                         </DropdownMenuItem>
                       </div>
@@ -178,7 +211,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                       e.stopPropagation();
                       onDeletePage(page);
                     }} 
-                    className="cursor-pointer text-red-600 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                    className="cursor-pointer text-red-600 transition-colors"
                     style={{
                       height: '40px',
                       padding: '8px 16px',
@@ -187,8 +220,15 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                       margin: '0',
                       borderRadius: '0'
                     }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#5A4FFF';
+                      e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#DC2626';
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                    }}
                   >
-                    <Trash className="w-4 h-4 mr-2" />
                     Delete
                   </DropdownMenuItem>
                 )

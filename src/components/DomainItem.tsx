@@ -121,7 +121,7 @@ export const DomainItem = ({
             >
               <DropdownMenuItem 
                 onClick={handleSettingsClick}
-                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                className="cursor-pointer text-[#1B2124] transition-colors"
                 style={{
                   height: '40px',
                   padding: '8px 16px',
@@ -129,13 +129,21 @@ export const DomainItem = ({
                   lineHeight: '24px',
                   margin: '0',
                   borderRadius: '0'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
                 Settings (simplified)
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={handleRenewClick}
-                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                className="cursor-pointer text-[#1B2124] transition-colors"
                 style={{
                   height: '40px',
                   padding: '8px 16px',
@@ -144,12 +152,20 @@ export const DomainItem = ({
                   margin: '0',
                   borderRadius: '0'
                 }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
               >
                 Renew (console log)
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={handleRemoveClick} 
-                className="cursor-pointer text-red-600 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                className="cursor-pointer text-red-600 transition-colors"
                 style={{
                   height: '40px',
                   padding: '8px 16px',
@@ -157,6 +173,14 @@ export const DomainItem = ({
                   lineHeight: '24px',
                   margin: '0',
                   borderRadius: '0'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#DC2626';
+                  e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
                 Remove (console log)

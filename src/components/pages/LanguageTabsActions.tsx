@@ -115,7 +115,7 @@ export const LanguageTabsActions = ({
           >
             <DropdownMenuItem 
               onClick={handleLanguagePublishToggle} 
-              className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+              className="cursor-pointer text-[#1B2124] transition-colors"
               style={{
                 height: '40px',
                 padding: '8px 16px',
@@ -123,13 +123,21 @@ export const LanguageTabsActions = ({
                 lineHeight: '24px',
                 margin: '0',
                 borderRadius: '0'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#5A4FFF';
+                e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#1B2124';
+                e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
               {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleDownloadSite} 
-              className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+              className="cursor-pointer text-[#1B2124] transition-colors"
               style={{
                 height: '40px',
                 padding: '8px 16px',
@@ -138,12 +146,20 @@ export const LanguageTabsActions = ({
                 margin: '0',
                 borderRadius: '0'
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#5A4FFF';
+                e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#1B2124';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
             >
               Download entire site
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleLanguageDelete} 
-              className="cursor-pointer text-red-600 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+              className="cursor-pointer text-red-600 transition-colors"
               style={{
                 height: '40px',
                 padding: '8px 16px',
@@ -151,6 +167,14 @@ export const LanguageTabsActions = ({
                 lineHeight: '24px',
                 margin: '0',
                 borderRadius: '0'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#5A4FFF';
+                e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#DC2626';
+                e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
               Delete language
