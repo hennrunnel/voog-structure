@@ -171,6 +171,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           <Button 
             onClick={handleCreatePage}
             disabled={!title || !address}
+            variant="default"
             className="w-full rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             aria-describedby={!title || !address ? "create-button-help" : undefined}
           >
@@ -186,7 +187,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           <div className="text-center">
             <button 
               onClick={toggleMode}
-              className="text-muted-foreground hover:text-foreground hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded"
+              className="text-sm text-muted-foreground hover:text-foreground hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded"
             >
               {isLinkMode ? "Add a new page instead" : "Add a link instead"}
             </button>
