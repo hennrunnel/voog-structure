@@ -41,20 +41,19 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
-        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg"
+        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg flex flex-col"
         side="right"
         role="dialog"
         aria-labelledby="page-settings-title"
       >
         {/* Header */}
-        <div className="px-6 py-6 border-b border-border">
-          <h2 id="page-settings-title" className="text-xl font-semibold text-foreground mb-6">Page settings</h2>
-
-          {/* Edit Page Button */}
-          <div className="mb-6">
+        <div className="px-6 py-6 border-b border-border flex-shrink-0">
+          <div className="flex items-center justify-between mb-6">
+            <h2 id="page-settings-title" className="text-xl font-semibold text-foreground">Page settings</h2>
             <Button 
               onClick={handleEditPage}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium flex items-center gap-2 justify-center"
+              variant="secondary"
+              className="px-4 py-2 rounded-lg font-medium flex items-center gap-2"
             >
               <Edit className="w-4 h-4" />
               Edit page
@@ -92,7 +91,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
           </div>
         </div>
 
-        {/* Content */}
+        {/* Content - scrollable */}
         <div className="px-6 py-6 flex-1 overflow-y-auto">
           {activeTab === "general" && (
             <div id="general-panel" role="tabpanel" className="space-y-4">
@@ -110,7 +109,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                 />
               </div>
 
-              {/* URL slug */}
+              {/* URL slug - removed blue border */}
               <div>
                 <Label htmlFor="url-slug" className="text-sm font-medium text-foreground">
                   URL slug
@@ -119,7 +118,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   id="url-slug"
                   value={urlSlug}
                   onChange={(e) => setUrlSlug(e.target.value)}
-                  className="w-full border-border rounded-lg mt-2 border-2 border-primary"
+                  className="w-full border-border rounded-lg mt-2"
                   aria-describedby="url-slug-description"
                 />
                 <p id="url-slug-description" className="text-sm text-muted-foreground mt-1">The unique location slug for this page.</p>
@@ -229,7 +228,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
         </div>
 
         {/* Action buttons */}
-        <div className="px-6 py-6 border-t border-border flex space-x-3">
+        <div className="px-6 py-6 border-t border-border flex space-x-3 flex-shrink-0">
           <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium">
             Save
           </Button>

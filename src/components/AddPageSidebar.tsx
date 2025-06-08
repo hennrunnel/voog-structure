@@ -97,16 +97,6 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
         {/* Content */}
         <div className="px-6 py-6 flex-1 overflow-y-auto">
           <div className="space-y-4">
-            {/* Info Box */}
-            {!isLinkMode && (
-              <Alert>
-                <Info className="h-4 w-4" />
-                <AlertDescription>
-                  After creating your page, you can access additional settings like SEO options, access controls, and social media images in the page settings.
-                </AlertDescription>
-              </Alert>
-            )}
-
             {/* Page title */}
             <div>
               <Label htmlFor="title" className="text-sm font-medium text-foreground">
@@ -162,8 +152,20 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                   </Select>
                 </div>
 
-                {/* Show in menu - using same pattern as Page Settings */}
+                {/* Menu title and Show in menu - using same pattern as Page Settings */}
                 <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="menu-title" className="text-sm font-medium text-foreground">
+                      Menu title
+                    </Label>
+                    <Input
+                      id="menu-title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      className="w-full border-border rounded-lg mt-2"
+                    />
+                  </div>
+                  
                   <div>
                     <Label className="text-sm font-medium text-foreground">
                       Show in menu
@@ -179,30 +181,31 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                       </span>
                     </div>
                   </div>
-                  <div></div>
                 </div>
               </>
+            )}
+
+            {/* Info Box - moved above the button */}
+            {!isLinkMode && (
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertDescription>
+                  After creating your page, manage SEO, access, and social images in Page settings.
+                </AlertDescription>
+              </Alert>
             )}
           </div>
         </div>
 
-        {/* Action buttons - using horizontal layout like Page Settings */}
-        <div className="px-6 py-6 border-t border-border flex space-x-3">
+        {/* Action button - full width */}
+        <div className="px-6 py-6 border-t border-border">
           <Button 
             onClick={handleCreatePage}
             disabled={!title || !address}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
             aria-describedby={!title || !address ? "create-button-help" : undefined}
           >
             {isLinkMode ? "Add it" : "Create this page"}
-          </Button>
-          
-          <Button 
-            variant="ghost" 
-            onClick={onClose} 
-            className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
-          >
-            Cancel
           </Button>
           
           {!title || !address ? (
