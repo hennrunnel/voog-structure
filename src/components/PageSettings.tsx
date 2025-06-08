@@ -87,17 +87,20 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
             aria-labelledby="page-settings-title"
           >
             {/* Header */}
-            <div className="px-6 py-6 border-b border-border flex-shrink-0">
-              <div className="flex items-center justify-between mb-6">
-                <h2 id="page-settings-title" className="text-xl font-semibold text-foreground">Page settings</h2>
-                <Button 
-                  onClick={handleEditPage}
-                  variant="ghost"
-                  className="px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
-                >
-                  <Edit className="w-4 h-4 mr-2" />
-                  Edit page
-                </Button>
+            <div className="px-6 py-4 border-b border-border flex-shrink-0">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <h2 id="page-settings-title" className="text-xl font-semibold text-foreground">Page settings</h2>
+                  <Button 
+                    onClick={handleEditPage}
+                    variant="ghost"
+                    size="sm"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit page
+                  </Button>
+                </div>
               </div>
               
               {/* Tabs */}
@@ -134,9 +137,9 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
             {/* Content - scrollable */}
             <div className="px-6 py-6 flex-1 overflow-y-auto pb-24">
               {activeTab === "general" && (
-                <div id="general-panel" role="tabpanel" className="space-y-4">
+                <div id="general-panel" role="tabpanel" className="space-y-6">
                   {/* Page title */}
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="title" className="text-sm font-medium text-foreground">
                       Page title
                     </Label>
@@ -144,13 +147,13 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                       id="title"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className="w-full border-border rounded-lg mt-2"
+                      className="w-full border-border rounded-lg"
                       aria-describedby="title-description"
                     />
                   </div>
 
                   {/* URL slug */}
-                  <div>
+                  <div className="space-y-2">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Label htmlFor="url-slug" className="text-sm font-medium text-foreground cursor-help">
@@ -158,21 +161,24 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                         </Label>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p className="text-xs text-muted-foreground">The unique location slug for this page.</p>
+                        <p className="text-xs">The unique location slug for this page.</p>
                       </TooltipContent>
                     </Tooltip>
                     <Input
                       id="url-slug"
                       value={urlSlug}
                       onChange={(e) => setUrlSlug(e.target.value)}
-                      className="w-full border-border rounded-lg mt-2"
+                      className="w-full border-border rounded-lg"
                       aria-describedby="url-slug-description"
                     />
+                    <p className="text-xs text-muted-foreground">
+                      The unique location slug for this page.
+                    </p>
                   </div>
 
                   {/* Menu title and Show in menu */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="menu-title" className="text-sm font-medium text-foreground">
                         Menu title
                       </Label>
@@ -180,15 +186,15 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                         id="menu-title"
                         value={menuTitle}
                         onChange={(e) => setMenuTitle(e.target.value)}
-                        className="w-full border-border rounded-lg mt-2"
+                        className="w-full border-border rounded-lg"
                       />
                     </div>
                     
-                    <div>
+                    <div className="space-y-2">
                       <Label className="text-sm font-medium text-foreground">
                         Show in menu
                       </Label>
-                      <div className="flex items-center mt-4">
+                      <div className="flex items-center pt-2">
                         <Switch
                           checked={showInMenu}
                           onCheckedChange={setShowInMenu}
@@ -202,12 +208,12 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   </div>
 
                   {/* Access */}
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="access" className="text-sm font-medium text-foreground">
                       Access
                     </Label>
                     <Select value={access} onValueChange={setAccess}>
-                      <SelectTrigger className="w-full border-border rounded-lg mt-2" id="access">
+                      <SelectTrigger className="w-full border-border rounded-lg" id="access">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -219,12 +225,12 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   </div>
 
                   {/* Layout */}
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="layout" className="text-sm font-medium text-foreground">
                       Layout
                     </Label>
                     <Select value={layout} onValueChange={setLayout}>
-                      <SelectTrigger className="w-full border-border rounded-lg mt-2" id="layout">
+                      <SelectTrigger className="w-full border-border rounded-lg" id="layout">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -237,11 +243,11 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   </div>
 
                   {/* Social media image */}
-                  <div>
+                  <div className="space-y-2">
                     <Label className="text-sm font-medium text-foreground">
                       Social media image
                     </Label>
-                    <div className="relative mt-2 group">
+                    <div className="relative group">
                       <img 
                         src="/lovable-uploads/a3993143-33a0-4b8f-9cf9-3d7e86d827a7.png" 
                         alt="Social media preview" 
@@ -254,7 +260,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                         <X className="w-4 h-4" />
                       </button>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-muted-foreground">
                       The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
                     </p>
                   </div>
