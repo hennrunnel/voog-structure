@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -30,7 +29,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   const isUntranslated = page.translationStatus === "Untranslated";
 
   return (
-    <div className="w-6 flex items-center justify-center">
+    <div className="w-6 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button 
