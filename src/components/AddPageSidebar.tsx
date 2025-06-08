@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import {
   Sheet,
@@ -80,7 +81,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
-        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg"
+        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg flex flex-col"
         side="right"
         role="dialog"
         aria-labelledby="add-page-title"
@@ -92,7 +93,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           </h2>
         </div>
 
-        {/* Content */}
+        {/* Content - scrollable */}
         <div className="px-6 py-6 flex-1 overflow-y-auto">
           <div className="space-y-6">
             {/* Page title */}
@@ -192,33 +193,34 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           </div>
         </div>
 
-        {/* Action button - full width */}
-        <div className="px-6 py-6 border-t border-border">
-          <Button 
-            onClick={handleCreatePage}
-            disabled={!title || !address}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
-            aria-describedby={!title || !address ? "create-button-help" : undefined}
-          >
-            {isLinkMode ? "Add it" : "Create this page"}
-          </Button>
-          
-          {!title || !address ? (
-            <p id="create-button-help" className="sr-only">
-              Please fill in both page title and address
-            </p>
-          ) : null}
-        </div>
+        {/* Sticky bottom section with CTA buttons */}
+        <div className="sticky bottom-0 bg-background border-t border-border">
+          {/* Action buttons - with 16px spacing */}
+          <div className="px-6 py-6 flex flex-col gap-4">
+            <Button 
+              onClick={handleCreatePage}
+              disabled={!title || !address}
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
+              aria-describedby={!title || !address ? "create-button-help" : undefined}
+            >
+              {isLinkMode ? "Add it" : "Create this page"}
+            </Button>
+            
+            {!title || !address ? (
+              <p id="create-button-help" className="sr-only">
+                Please fill in both page title and address
+              </p>
+            ) : null}
 
-        {/* Toggle mode button */}
-        <div className="px-6 pb-6 text-center">
-          <Button 
-            onClick={toggleMode}
-            variant="ghost"
-            className="text-sm font-normal text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg px-3 py-2"
-          >
-            {isLinkMode ? "Add a new page instead" : "Add a link instead"}
-          </Button>
+            {/* Toggle mode button with outline style */}
+            <Button 
+              onClick={toggleMode}
+              variant="outline"
+              className="w-full text-sm font-normal text-muted-foreground hover:text-foreground px-3 py-2"
+            >
+              {isLinkMode ? "Add a new page instead" : "Add a link instead"}
+            </Button>
+          </div>
         </div>
       </SheetContent>
     </Sheet>
