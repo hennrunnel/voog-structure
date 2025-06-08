@@ -1,5 +1,4 @@
-
-import { PageRow } from "@/components/pages/PageRow";
+import { PageRowContainer } from "@/components/pages/PageRowContainer";
 import { PageItem } from "@/types/pages";
 
 interface PageTableProps {
@@ -76,7 +75,7 @@ export const PageTable = ({
       {/* Page Rows */}
       <div role="table" aria-label="Pages list" className="text-black">
         {pages.map(page => (
-          <PageRow
+          <PageRowContainer
             key={page.id}
             page={page}
             currentLanguage={currentLanguage}
