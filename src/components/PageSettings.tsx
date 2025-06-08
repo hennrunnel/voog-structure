@@ -45,6 +45,9 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const [layout, setLayout] = useState("front-page");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
+  // Mock data to simulate if page has children - this would come from props in real implementation
+  const pageHasChildren = false;
+
   const handleEditPage = () => {
     // This would open the page editor
     console.log("Opening page editor...");
@@ -56,7 +59,9 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   };
 
   const handleDeletePage = () => {
-    setShowDeleteDialog(true);
+    if (!pageHasChildren) {
+      setShowDeleteDialog(true);
+    }
   };
 
   const confirmDeletePage = () => {
@@ -140,9 +145,16 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
                   {/* URL slug */}
                   <div>
-                    <Label htmlFor="url-slug" className="text-sm font-medium text-foreground">
-                      URL slug
-                    </Label>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Label htmlFor="url-slug" className="text-sm font-medium text-foreground cursor-help">
+                          URL slug
+                        </Label>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs text-muted-foreground">The unique location slug for this page.</p>
+                      </TooltipContent>
+                    </Tooltip>
                     <Input
                       id="url-slug"
                       value={urlSlug}
@@ -150,7 +162,6 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                       className="w-full border-border rounded-lg mt-2"
                       aria-describedby="url-slug-description"
                     />
-                    <p id="url-slug-description" className="text-xs text-muted-foreground mt-1">The unique location slug for this page.</p>
                   </div>
 
                   {/* Menu title and Show in menu */}
@@ -221,26 +232,21 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
                   {/* Social media image */}
                   <div>
-                    <div className="flex items-center gap-2 mb-4">
-                      <Label className="text-sm font-medium text-foreground">
-                        Social media image
-                      </Label>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <div className="w-4 h-4 rounded-full bg-muted flex items-center justify-center text-xs text-muted-foreground cursor-help">
-                            ?
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent className="max-w-xs">
-                          <p className="text-xs text-muted-foreground">
-                            The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                    <div className="relative">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Label className="text-sm font-medium text-foreground cursor-help">
+                          Social media image
+                        </Label>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs text-muted-foreground">
+                          The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <div className="relative mt-2">
                       <img 
-                        src="/lovable-uploads/223be2a4-fb9d-455f-80ff-1b9aad4db19e.png" 
+                        src="/lovable-uploads/a3993143-33a0-4b8f-9cf9-3d7e86d827a7.png" 
                         alt="Social media preview" 
                         className="w-full h-48 object-cover rounded-lg"
                       />
@@ -304,14 +310,20 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                       variant="ghost" 
                       size="sm" 
                       onClick={handleDeletePage} 
-                      className="text-muted-foreground hover:text-foreground p-2" 
+                      disabled={pageHasChildren}
+                      className="text-muted-foreground hover:text-foreground p-2 disabled:opacity-50 disabled:cursor-not-allowed" 
                       aria-label="Delete page"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="text-xs">Delete page</p>
+                    <p className="text-xs">
+                      {pageHasChildren 
+                        ? "Cannot delete page with sub-pages. Delete or move sub-pages first." 
+                        : "Delete page"
+                      }
+                    </p>
                   </TooltipContent>
                 </Tooltip>
               </div>
