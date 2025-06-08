@@ -48,16 +48,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
       >
         {/* Header */}
         <div className="px-6 py-6 border-b border-border">
-          <div className="flex items-center justify-between mb-6">
-            <h2 id="page-settings-title" className="text-xl font-semibold text-foreground">Page settings</h2>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-muted rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50"
-              aria-label="Close page settings"
-            >
-              <X className="w-5 h-5 text-muted-foreground" />
-            </button>
-          </div>
+          <h2 id="page-settings-title" className="text-xl font-semibold text-foreground mb-6">Page settings</h2>
 
           {/* Edit Page Button */}
           <div className="mb-6">

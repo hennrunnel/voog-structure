@@ -50,24 +50,15 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
         <div className="px-6 py-6 border-b border-border">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-foreground">Language settings</h2>
-            <div className="flex items-center gap-2">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={onLanguageDelete} 
-                className="text-muted-foreground hover:text-foreground p-2" 
-                aria-label="Delete language"
-              >
-                <Trash className="w-4 h-4" />
-              </Button>
-              <button
-                onClick={onClose}
-                className="p-2 hover:bg-muted rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50"
-                aria-label="Close language settings"
-              >
-                <X className="w-5 h-5 text-muted-foreground" />
-              </button>
-            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={onLanguageDelete} 
+              className="text-muted-foreground hover:text-foreground p-2" 
+              aria-label="Delete language"
+            >
+              <Trash className="w-4 h-4" />
+            </Button>
           </div>
         </div>
 
@@ -83,7 +74,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 id="website-title" 
                 value={websiteTitle} 
                 onChange={e => setWebsiteTitle(e.target.value)} 
-                className="w-full bg-muted border-border rounded-lg mt-2" 
+                className="w-full border-border rounded-lg mt-2" 
               />
             </div>
 
@@ -93,7 +84,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 Language name
               </Label>
               <Select defaultValue={activeTab}>
-                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="language-name">
+                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="language-name">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -110,7 +101,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 Region
               </Label>
               <Select defaultValue="global">
-                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="region">
+                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="region">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -130,7 +121,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 id="name-in-menu" 
                 value={nameInMenu} 
                 onChange={e => setNameInMenu(e.target.value)} 
-                className="w-full bg-muted border-border rounded-lg mt-2" 
+                className="w-full border-border rounded-lg mt-2" 
               />
             </div>
 
@@ -152,7 +143,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 Which language visitors see?
               </Label>
               <Select defaultValue="detect-location">
-                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="visitor-language">
+                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="visitor-language">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { X } from "lucide-react";
 import { useState } from "react";
 
 interface AddLanguageSidebarProps {
@@ -55,16 +54,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
       >
         {/* Header */}
         <div className="px-6 py-6 border-b border-border">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-foreground">Add a new language to this website</h2>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-muted rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50"
-              aria-label="Close sidebar"
-            >
-              <X className="w-5 h-5 text-muted-foreground" />
-            </button>
-          </div>
+          <h2 className="text-xl font-semibold text-foreground">Add a new language to this website</h2>
         </div>
         
         {/* Content */}
