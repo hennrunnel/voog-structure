@@ -6,6 +6,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -16,6 +30,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
+import { Check, ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface AddLanguageSidebarProps {
   isOpen: boolean;
@@ -79,21 +95,17 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
   const [isPubliclyVisible, setIsPubliclyVisible] = useState(false);
   const [whichLanguageVisitors, setWhichLanguageVisitors] = useState("");
   const [duplicateContentFrom, setDuplicateContentFrom] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
   const [showVisibilityDialog, setShowVisibilityDialog] = useState(false);
   const [pendingVisibilityValue, setPendingVisibilityValue] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const selectedLanguage = ALL_LANGUAGES.find(lang => lang.value === languageName);
   const showRegionField = selectedLanguage?.hasRegions;
 
-  const filteredLanguages = ALL_LANGUAGES.filter(lang =>
-    lang.label.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const handleLanguageSelect = (value: string) => {
     setLanguageName(value);
     setRegion(""); // Reset region when language changes
-    setSearchTerm(""); // Clear search term after selection
+    setOpen(false);
   };
 
   const handleVisibilityToggle = (newValue: boolean) => {
@@ -127,7 +139,6 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
     setIsPubliclyVisible(false);
     setWebsiteTitle("");
     setDuplicateContentFrom("");
-    setSearchTerm("");
     
     onClose();
   };
@@ -153,47 +164,64 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                   Language
                 </Label>
                 <div className="mt-2">
-                  <Input
-                    placeholder="Search languages..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-muted border-border rounded-lg mb-2"
-                  />
-                  <div className="max-h-48 overflow-y-auto border border-border rounded-lg bg-muted">
-                    {/* Popular languages section */}
-                    <div className="p-2 border-b border-border bg-muted-foreground/5">
-                      <p className="text-xs font-medium text-muted-foreground mb-2">Popular languages</p>
-                      {POPULAR_LANGUAGES.map((lang) => (
-                        <button
-                          key={`popular-${lang.value}`}
-                          onClick={() => handleLanguageSelect(lang.value)}
-                          className={`w-full text-left px-3 py-2 rounded text-sm hover:bg-accent hover:text-accent-foreground ${
-                            languageName === lang.value ? 'bg-primary text-primary-foreground' : ''
-                          }`}
-                        >
-                          {languageName === lang.value && <span className="mr-2">✓</span>}
-                          {lang.label}
-                        </button>
-                      ))}
-                    </div>
-                    
-                    {/* All languages section */}
-                    <div className="p-2">
-                      <p className="text-xs font-medium text-muted-foreground mb-2">All languages</p>
-                      {filteredLanguages.map((lang) => (
-                        <button
-                          key={lang.value}
-                          onClick={() => handleLanguageSelect(lang.value)}
-                          className={`w-full text-left px-3 py-2 rounded text-sm hover:bg-accent hover:text-accent-foreground ${
-                            languageName === lang.value ? 'bg-primary text-primary-foreground' : ''
-                          }`}
-                        >
-                          {languageName === lang.value && <span className="mr-2">✓</span>}
-                          {lang.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className="w-full justify-between bg-muted border-border"
+                      >
+                        {languageName
+                          ? ALL_LANGUAGES.find((language) => language.value === languageName)?.label
+                          : "Select language..."}
+                        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search languages..." />
+                        <CommandList>
+                          <CommandEmpty>No language found.</CommandEmpty>
+                          <CommandGroup heading="Popular languages">
+                            {POPULAR_LANGUAGES.map((language) => (
+                              <CommandItem
+                                key={`popular-${language.value}`}
+                                value={language.value}
+                                onSelect={() => handleLanguageSelect(language.value)}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    languageName === language.value ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {language.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                          <CommandSeparator />
+                          <CommandGroup heading="All languages">
+                            {ALL_LANGUAGES.map((language) => (
+                              <CommandItem
+                                key={language.value}
+                                value={language.value}
+                                onSelect={() => handleLanguageSelect(language.value)}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    languageName === language.value ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {language.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
 
