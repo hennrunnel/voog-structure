@@ -44,6 +44,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const [access, setAccess] = useState("public");
   const [layout, setLayout] = useState("front-page");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showDuplicateDialog, setShowDuplicateDialog] = useState(false);
 
   // Mock data to simulate if page has children - this would come from props in real implementation
   const pageHasChildren = false;
@@ -54,8 +55,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   };
 
   const handleDuplicatePage = () => {
-    console.log("Duplicating page...");
-    // Add duplicate logic here
+    setShowDuplicateDialog(true);
   };
 
   const handleDeletePage = () => {
@@ -67,6 +67,12 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const confirmDeletePage = () => {
     console.log("Deleting page...");
     setShowDeleteDialog(false);
+    onClose();
+  };
+
+  const confirmDuplicatePage = () => {
+    console.log("Duplicating page...");
+    setShowDuplicateDialog(false);
     onClose();
   };
 
@@ -232,35 +238,24 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
                   {/* Social media image */}
                   <div>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Label className="text-sm font-medium text-foreground cursor-help">
-                          Social media image
-                        </Label>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="text-xs text-muted-foreground">
-                          The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <div className="relative mt-2">
+                    <Label className="text-sm font-medium text-foreground">
+                      Social media image
+                    </Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
+                    </p>
+                    <div className="relative mt-2 group">
                       <img 
-                        src="/lovable-uploads/a3993143-33a0-4b8f-9cf9-3d7e86d827a7.png" 
+                        src="/lovable-uploads/493f491f-5622-4b00-b92b-e338e8375180.png" 
                         alt="Social media preview" 
                         className="w-full h-48 object-cover rounded-lg"
                       />
                       <button 
-                        className="absolute top-2 right-2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-1.5 rounded-md transition-colors"
+                        className="absolute top-2 right-2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-1.5 rounded-md transition-colors opacity-0 group-hover:opacity-100"
                         aria-label="Remove social media image"
                       >
                         <X className="w-4 h-4" />
                       </button>
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <div className="w-8 h-8 bg-white bg-opacity-80 rounded-full flex items-center justify-center">
-                          <div className="w-4 h-4 bg-muted rounded-full"></div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -344,6 +339,26 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
           <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
             <AlertDialogAction onClick={confirmDeletePage} className="bg-destructive hover:bg-destructive/90">
               Delete page
+            </AlertDialogAction>
+            <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
+              Cancel
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Duplicate Confirmation Dialog */}
+      <AlertDialog open={showDuplicateDialog} onOpenChange={setShowDuplicateDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Duplicate page</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to duplicate this page? This will create a copy of the page with all its content.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
+            <AlertDialogAction onClick={confirmDuplicatePage} className="bg-primary hover:bg-primary/90">
+              Duplicate page
             </AlertDialogAction>
             <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
               Cancel
