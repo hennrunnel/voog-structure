@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import {
   Sheet,
@@ -171,8 +170,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           <Button 
             onClick={handleCreatePage}
             disabled={!title || !address}
-            variant="default"
-            className="w-full rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-lg disabled:opacity-50 disabled:cursor-not-allowed bg-primary text-primary-foreground hover:bg-primary/90"
             aria-describedby={!title || !address ? "create-button-help" : undefined}
           >
             {isLinkMode ? "Add it" : "Create this page"}
