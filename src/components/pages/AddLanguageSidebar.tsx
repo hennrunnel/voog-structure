@@ -1,3 +1,4 @@
+
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,9 +93,9 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
   const [region, setRegion] = useState("");
   const [websiteTitle, setWebsiteTitle] = useState("");
   const [nameInMenu, setNameInMenu] = useState("");
-  const [isPubliclyVisible, setIsPubliclyVisible] = useState(false);
-  const [whichLanguageVisitors, setWhichLanguageVisitors] = useState("");
-  const [duplicateContentFrom, setDuplicateContentFrom] = useState("");
+  const [isPubliclyVisible, setIsPubliclyVisible] = useState(true);
+  const [whichLanguageVisitors, setWhichLanguageVisitors] = useState("detect-by-location");
+  const [duplicateContentFrom, setDuplicateContentFrom] = useState("do-not-duplicate");
   const [showVisibilityDialog, setShowVisibilityDialog] = useState(false);
   const [pendingVisibilityValue, setPendingVisibilityValue] = useState(false);
   const [open, setOpen] = useState(false);
@@ -135,10 +136,10 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
     setLanguageName("");
     setRegion("");
     setNameInMenu("");
-    setWhichLanguageVisitors("");
-    setIsPubliclyVisible(false);
+    setWhichLanguageVisitors("detect-by-location");
+    setIsPubliclyVisible(true);
     setWebsiteTitle("");
-    setDuplicateContentFrom("");
+    setDuplicateContentFrom("do-not-duplicate");
     
     onClose();
   };
@@ -181,46 +182,44 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                     <PopoverContent className="w-full p-0" align="start">
                       <Command>
                         <CommandInput placeholder="Search languages..." />
-                        <ScrollArea className="h-[300px]">
-                          <CommandList>
-                            <CommandEmpty>No language found.</CommandEmpty>
-                            <CommandGroup heading="Popular languages">
-                              {POPULAR_LANGUAGES.map((language) => (
-                                <CommandItem
-                                  key={`popular-${language.value}`}
-                                  value={language.value}
-                                  onSelect={() => handleLanguageSelect(language.value)}
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      languageName === language.value ? "opacity-100" : "opacity-0"
-                                    )}
-                                  />
-                                  {language.label}
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                            <CommandSeparator />
-                            <CommandGroup heading="All languages">
-                              {ALL_LANGUAGES.map((language) => (
-                                <CommandItem
-                                  key={language.value}
-                                  value={language.value}
-                                  onSelect={() => handleLanguageSelect(language.value)}
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      languageName === language.value ? "opacity-100" : "opacity-0"
-                                    )}
-                                  />
-                                  {language.label}
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </ScrollArea>
+                        <CommandList className="max-h-[300px] overflow-y-auto">
+                          <CommandEmpty>No language found.</CommandEmpty>
+                          <CommandGroup heading="Popular languages">
+                            {POPULAR_LANGUAGES.map((language) => (
+                              <CommandItem
+                                key={`popular-${language.value}`}
+                                value={language.value}
+                                onSelect={() => handleLanguageSelect(language.value)}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    languageName === language.value ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {language.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                          <CommandSeparator />
+                          <CommandGroup heading="All languages">
+                            {ALL_LANGUAGES.map((language) => (
+                              <CommandItem
+                                key={language.value}
+                                value={language.value}
+                                onSelect={() => handleLanguageSelect(language.value)}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    languageName === language.value ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {language.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
                       </Command>
                     </PopoverContent>
                   </Popover>
@@ -277,11 +276,11 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                 />
               </div>
 
-              {/* Make this language publicly visible */}
+              {/* Is this language publicly visible */}
               <div className="flex items-center justify-between">
                 <div>
                   <Label htmlFor="publicly-visible" className="text-sm font-medium text-foreground">
-                    Make this language publicly visible
+                    Is this language publicly visible?
                   </Label>
                 </div>
                 <Switch 
