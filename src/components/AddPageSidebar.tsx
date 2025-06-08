@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import {
   Sheet,
@@ -17,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Info } from "lucide-react";
+import { InfoBox } from "@/components/ui/info-box";
 
 interface AddPageSidebarProps {
   isOpen: boolean;
@@ -184,21 +183,11 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
               </>
             )}
 
-            {/* Info Box - improved with auto height and proper padding */}
+            {/* Info Box - now using the reusable component */}
             {!isLinkMode && (
-              <div className="w-full relative overflow-hidden">
-                <div className="w-full h-full left-0 top-0 absolute opacity-10 bg-indigo-600 rounded-[5px]"></div>
-                <div className="w-full py-3 px-3 relative inline-flex justify-start items-center gap-3">
-                  <div className="w-4 h-4 relative flex-shrink-0">
-                    <div className="w-4 h-4 left-0 top-0 absolute overflow-hidden">
-                      <Info className="w-4 h-4 text-indigo-600" />
-                    </div>
-                  </div>
-                  <div className="flex-1 text-neutral-800 text-xs font-medium font-sans leading-4">
-                    After creating your page, manage SEO, access, and social image in Page settings.
-                  </div>
-                </div>
-              </div>
+              <InfoBox>
+                After creating your page, manage SEO, access, and social image in Page settings.
+              </InfoBox>
             )}
           </div>
         </div>
