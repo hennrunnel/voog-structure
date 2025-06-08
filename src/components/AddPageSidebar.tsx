@@ -17,7 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { X } from "lucide-react";
 
 interface AddPageSidebarProps {
   isOpen: boolean;
@@ -88,18 +87,9 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
       >
         {/* Header */}
         <div className="px-6 py-6 border-b border-border">
-          <div className="flex items-center justify-between">
-            <h2 id="add-page-title" className="text-xl font-semibold text-foreground">
-              {isLinkMode ? "Add a custom link" : "Add new page"}
-            </h2>
-            <button 
-              onClick={onClose}
-              className="p-2 hover:bg-muted rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50"
-              aria-label="Close sidebar"
-            >
-              <X className="w-5 h-5 text-muted-foreground" />
-            </button>
-          </div>
+          <h2 id="add-page-title" className="text-xl font-semibold text-foreground">
+            {isLinkMode ? "Add a custom link" : "Add new page"}
+          </h2>
         </div>
 
         {/* Content */}
@@ -120,19 +110,24 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
               />
             </div>
 
-            {/* Address */}
+            {/* Address/URL slug */}
             <div>
               <Label htmlFor="address" className="text-sm font-medium text-foreground">
-                Address
+                {isLinkMode ? "Address" : "URL slug"}
               </Label>
               <Input
                 id="address"
                 value={address}
                 onChange={(e) => handleAddressChange(e.target.value)}
-                placeholder={isLinkMode ? "https://example.com" : "/page-address"}
+                placeholder={isLinkMode ? "https://example.com" : "/page-slug"}
                 className="w-full border-border rounded-lg mt-2"
                 aria-required="true"
               />
+              {!isLinkMode && (
+                <p className="text-sm text-muted-foreground mt-1">
+                  The unique location slug for this page.
+                </p>
+              )}
             </div>
 
             {!isLinkMode && (
@@ -176,7 +171,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           <Button 
             onClick={handleCreatePage}
             disabled={!title || !address}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             aria-describedby={!title || !address ? "create-button-help" : undefined}
           >
             {isLinkMode ? "Add it" : "Create this page"}
