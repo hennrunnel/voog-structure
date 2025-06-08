@@ -1,4 +1,3 @@
-
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
 import { DevControls } from "@/components/DevControls";
@@ -13,7 +12,7 @@ import { useState } from "react";
 
 export const PagesContainer = () => {
   const [devLanguage, setDevLanguage] = useState<'en' | 'et'>('en');
-  const [devNavigationState, setDevNavigationState] = useState<'normal' | 'empty'>('normal');
+  const [devEmptyState, setDevEmptyState] = useState<boolean>(false);
 
   const {
     pages,
@@ -74,17 +73,17 @@ export const PagesContainer = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '80px' }}>
       <div className="w-full" style={{ maxWidth: '992px' }}>
-        <div style={{ marginBottom: '48px' }}>
-          <PagesHeader />
-        </div>
-        
         <DevControls
           language={devLanguage}
           onLanguageChange={setDevLanguage}
-          navigationState={devNavigationState}
-          onNavigationChange={setDevNavigationState}
+          emptyState={devEmptyState}
+          onEmptyStateChange={setDevEmptyState}
           currentPageName="Site structure"
         />
+        
+        <div style={{ marginBottom: '48px' }}>
+          <PagesHeader />
+        </div>
         
         <Card 
           className="bg-white"
@@ -101,7 +100,7 @@ export const PagesContainer = () => {
             <PagesContent
               activeTab={activeTab}
               setActiveTab={setActiveTab}
-              availableTabs={devNavigationState === 'empty' ? [] : availableTabs}
+              availableTabs={devEmptyState ? [] : availableTabs}
               englishLanguageVisible={englishLanguageVisible}
               estonianLanguageVisible={estonianLanguageVisible}
               englishWebsiteTitle={englishWebsiteTitle}

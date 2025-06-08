@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Toggle } from '@/components/ui/toggle';
 import {
   Select,
   SelectContent,
@@ -11,13 +12,12 @@ import {
 } from '@/components/ui/select';
 
 type Language = 'en' | 'et';
-type NavigationState = 'normal' | 'empty';
 
 interface DevControlsProps {
   language: Language;
   onLanguageChange: (language: Language) => void;
-  navigationState: NavigationState;
-  onNavigationChange: (state: NavigationState) => void;
+  emptyState: boolean;
+  onEmptyStateChange: (emptyState: boolean) => void;
   currentPageName?: string;
 }
 
@@ -25,14 +25,14 @@ const DEV_CONTROLS_STORAGE_KEY = 'dev-controls-state';
 
 interface StoredState {
   language: Language;
-  navigationState: NavigationState;
+  emptyState: boolean;
 }
 
 export const DevControls: React.FC<DevControlsProps> = ({
   language,
   onLanguageChange,
-  navigationState,
-  onNavigationChange,
+  emptyState,
+  onEmptyStateChange,
   currentPageName = 'Site structure'
 }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -44,21 +44,21 @@ export const DevControls: React.FC<DevControlsProps> = ({
       try {
         const parsedState: StoredState = JSON.parse(stored);
         onLanguageChange(parsedState.language);
-        onNavigationChange(parsedState.navigationState);
+        onEmptyStateChange(parsedState.emptyState);
       } catch (error) {
         console.error('Failed to parse dev controls state:', error);
       }
     }
-  }, [onLanguageChange, onNavigationChange]);
+  }, [onLanguageChange, onEmptyStateChange]);
 
   // Save state to localStorage whenever it changes
   useEffect(() => {
     const state: StoredState = {
       language,
-      navigationState
+      emptyState
     };
     localStorage.setItem(DEV_CONTROLS_STORAGE_KEY, JSON.stringify(state));
-  }, [language, navigationState]);
+  }, [language, emptyState]);
 
   const handleDestroy = () => {
     setIsVisible(false);
@@ -68,8 +68,8 @@ export const DevControls: React.FC<DevControlsProps> = ({
     onLanguageChange(newLanguage);
   };
 
-  const handleNavigationChange = (newState: NavigationState) => {
-    onNavigationChange(newState);
+  const handleEmptyStateToggle = (pressed: boolean) => {
+    onEmptyStateChange(pressed);
   };
 
   if (!isVisible) {
@@ -116,25 +116,18 @@ export const DevControls: React.FC<DevControlsProps> = ({
           </Select>
         </div>
 
-        {/* Navigation State */}
+        {/* Empty State Toggle */}
         <div className="flex items-center gap-2">
           <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
-            Navigation:
+            Empty state:
           </label>
-          <Select value={navigationState} onValueChange={handleNavigationChange}>
-            <SelectTrigger className="h-8 bg-white border-orange-200 text-orange-800 text-xs font-mono flex-1">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="normal">
-                <div className="flex items-center gap-2">
-                  <span className="text-green-600">✓</span>
-                  <span>{currentPageName}</span>
-                </div>
-              </SelectItem>
-              <SelectItem value="empty">Empty state</SelectItem>
-            </SelectContent>
-          </Select>
+          <Toggle 
+            pressed={emptyState}
+            onPressedChange={handleEmptyStateToggle}
+            className="h-8 px-3 bg-white border border-orange-200 text-orange-800 text-xs font-mono data-[state=on]:bg-orange-100 data-[state=on]:text-orange-900"
+          >
+            {emptyState ? 'ON' : 'OFF'}
+          </Toggle>
         </div>
       </div>
     </div>
