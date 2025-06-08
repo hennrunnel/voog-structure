@@ -74,6 +74,10 @@ export const PagesContainer = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '80px' }}>
       <div className="w-full" style={{ maxWidth: '992px' }}>
+        <div style={{ marginBottom: '48px' }}>
+          <PagesHeader />
+        </div>
+        
         <DevControls
           language={devLanguage}
           onLanguageChange={setDevLanguage}
@@ -81,10 +85,6 @@ export const PagesContainer = () => {
           onNavigationChange={setDevNavigationState}
           currentPageName="Site structure"
         />
-        
-        <div style={{ marginBottom: '48px' }}>
-          <PagesHeader />
-        </div>
         
         <Card 
           className="bg-white"
@@ -101,7 +101,7 @@ export const PagesContainer = () => {
             <PagesContent
               activeTab={activeTab}
               setActiveTab={setActiveTab}
-              availableTabs={availableTabs}
+              availableTabs={devNavigationState === 'empty' ? [] : availableTabs}
               englishLanguageVisible={englishLanguageVisible}
               estonianLanguageVisible={estonianLanguageVisible}
               englishWebsiteTitle={englishWebsiteTitle}

@@ -33,7 +33,7 @@ export const DevControls: React.FC<DevControlsProps> = ({
   onLanguageChange,
   navigationState,
   onNavigationChange,
-  currentPageName = 'tellAFriend'
+  currentPageName = 'Site structure'
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -77,7 +77,14 @@ export const DevControls: React.FC<DevControlsProps> = ({
   }
 
   return (
-    <div className="fixed top-4 left-4 z-50 bg-orange-50 border-2 border-dashed border-orange-400 rounded-lg p-4 font-mono text-sm max-w-md">
+    <div 
+      className="w-full bg-orange-50 border-2 border-dashed border-orange-400 rounded-lg p-4 font-mono text-sm mb-6"
+      style={{
+        borderRadius: '10px',
+        background: 'rgb(255 247 237)',
+        border: '2px dashed rgb(251 146 60)'
+      }}
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-orange-600 font-bold text-xs tracking-wider">DEV ONLY</h3>
@@ -92,14 +99,14 @@ export const DevControls: React.FC<DevControlsProps> = ({
       </div>
 
       {/* Controls */}
-      <div className="space-y-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Language Selector */}
         <div className="flex items-center gap-2">
           <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
             Language:
           </label>
           <Select value={language} onValueChange={handleLanguageChange}>
-            <SelectTrigger className="h-8 bg-white border-orange-200 text-orange-800 text-xs font-mono">
+            <SelectTrigger className="h-8 bg-white border-orange-200 text-orange-800 text-xs font-mono flex-1">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -115,7 +122,7 @@ export const DevControls: React.FC<DevControlsProps> = ({
             Navigation:
           </label>
           <Select value={navigationState} onValueChange={handleNavigationChange}>
-            <SelectTrigger className="h-8 bg-white border-orange-200 text-orange-800 text-xs font-mono">
+            <SelectTrigger className="h-8 bg-white border-orange-200 text-orange-800 text-xs font-mono flex-1">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -128,34 +135,6 @@ export const DevControls: React.FC<DevControlsProps> = ({
               <SelectItem value="empty">Empty state</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-
-        {/* Show data toggle placeholder */}
-        <div className="flex items-center gap-2 pt-1">
-          <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
-            Show data:
-          </label>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-4 bg-gray-200 rounded-full relative">
-              <div className="w-3 h-3 bg-white rounded-full absolute top-0.5 left-0.5 shadow-sm"></div>
-            </div>
-            <span className="text-orange-600 text-xs">OFF</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Documentation Links */}
-      <div className="mt-4 pt-3 border-t border-orange-200">
-        <div className="text-orange-600 text-xs">
-          <span>Documentation:</span>
-          <div className="mt-1 flex gap-4">
-            <button className="text-orange-600 hover:text-orange-800 underline decoration-dashed">
-              📄 PRD
-            </button>
-            <button className="text-orange-600 hover:text-orange-800 underline decoration-dashed">
-              🌐 Translations (YAML)
-            </button>
-          </div>
         </div>
       </div>
     </div>
