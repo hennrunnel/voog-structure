@@ -1,7 +1,8 @@
 
 import React from "react";
-import { PageRowContent } from "./PageRowContent";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { PageItem } from "@/types/pages";
+import { PageRowContent } from "./PageRowContent";
 
 interface PageRowContainerProps {
   page: PageItem;
@@ -20,7 +21,7 @@ interface PageRowContainerProps {
 export const PageRowContainer: React.FC<PageRowContainerProps> = ({
   page,
   currentLanguage,
-  level,
+  level = 0,
   onToggleExpansion,
   onToggleVisibility,
   onDeletePage,
@@ -30,29 +31,15 @@ export const PageRowContainer: React.FC<PageRowContainerProps> = ({
   onEditPage,
   onTranslatePage
 }) => {
+  const hasChildren = page.children && page.children.length > 0;
+
   return (
-    <>
-      <PageRowContent
-        page={page}
-        currentLanguage={currentLanguage}
-        level={level}
-        onToggleExpansion={onToggleExpansion}
-        onToggleVisibility={onToggleVisibility}
-        onDeletePage={onDeletePage}
-        onDuplicatePage={onDuplicatePage}
-        onAddNestedPage={onAddNestedPage}
-        onPageSettings={onPageSettings}
-        onEditPage={onEditPage}
-        onTranslatePage={onTranslatePage}
-      />
-      
-      {/* Render nested pages when expanded */}
-      {page.isExpanded && page.children && page.children.map((childPage) => (
-        <PageRowContainer
-          key={childPage.id}
-          page={childPage}
+    <TooltipProvider>
+      <div key={page.id} className="font-sans">
+        <PageRowContent
+          page={page}
           currentLanguage={currentLanguage}
-          level={level + 1}
+          level={level}
           onToggleExpansion={onToggleExpansion}
           onToggleVisibility={onToggleVisibility}
           onDeletePage={onDeletePage}
@@ -62,7 +49,25 @@ export const PageRowContainer: React.FC<PageRowContainerProps> = ({
           onEditPage={onEditPage}
           onTranslatePage={onTranslatePage}
         />
-      ))}
-    </>
+
+        {/* Render children if expanded */}
+        {hasChildren && page.isExpanded && page.children?.map(child => (
+          <PageRowContainer
+            key={child.id}
+            page={child}
+            currentLanguage={currentLanguage}
+            level={level + 1}
+            onToggleExpansion={onToggleExpansion}
+            onToggleVisibility={onToggleVisibility}
+            onDeletePage={onDeletePage}
+            onDuplicatePage={onDuplicatePage}
+            onAddNestedPage={onAddNestedPage}
+            onPageSettings={onPageSettings}
+            onEditPage={onEditPage}
+            onTranslatePage={onTranslatePage}
+          />
+        ))}
+      </div>
+    </TooltipProvider>
   );
 };

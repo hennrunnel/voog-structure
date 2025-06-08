@@ -12,11 +12,7 @@ import { SeoTabContent } from "./pageSettings/SeoTabContent";
 import { PageSettingsFooter } from "./pageSettings/PageSettingsFooter";
 import { PageSettingsDialogs } from "./pageSettings/PageSettingsDialogs";
 
-interface PageSettingsPropsExtended extends PageSettingsProps {
-  currentLanguage?: "en" | "et";
-}
-
-export const PageSettings = ({ isOpen, onClose, currentLanguage = "en" }: PageSettingsPropsExtended) => {
+export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const [activeTab, setActiveTab] = useState("general");
   const [title, setTitle] = useState("Digital ordering platform for restaurants and cafes");
   const [urlSlug, setUrlSlug] = useState("/products");
@@ -69,7 +65,7 @@ export const PageSettings = ({ isOpen, onClose, currentLanguage = "en" }: PageSe
             role="dialog"
             aria-labelledby="page-settings-title"
           >
-            <PageSettingsHeader activeTab={activeTab} setActiveTab={setActiveTab} currentLanguage={currentLanguage} />
+            <PageSettingsHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
             {/* Content - scrollable */}
             <div className="px-6 py-6 flex-1 overflow-y-auto pb-24">
@@ -113,7 +109,6 @@ export const PageSettings = ({ isOpen, onClose, currentLanguage = "en" }: PageSe
               onDuplicatePage={handleDuplicatePage}
               onDeletePage={handleDeletePage}
               pageHasChildren={pageHasChildren}
-              currentLanguage={currentLanguage}
             />
           </SheetContent>
         </Sheet>

@@ -29,7 +29,6 @@ interface LanguageTabsProps {
   onAddLanguage: (languageData: any) => void;
   onLanguagePublishToggle?: (language: string, published: boolean) => void;
   onLanguageDelete?: (language: string) => void;
-  currentLanguage?: "en" | "et";
 }
 
 export const LanguageTabs = ({
@@ -51,8 +50,7 @@ export const LanguageTabs = ({
   onTranslatePage,
   onAddLanguage,
   onLanguagePublishToggle,
-  onLanguageDelete,
-  currentLanguage = "en"
+  onLanguageDelete
 }: LanguageTabsProps) => {
   const [addLanguageSidebarOpen, setAddLanguageSidebarOpen] = useState(false);
 
@@ -77,7 +75,6 @@ export const LanguageTabs = ({
           isOpen={addLanguageSidebarOpen} 
           onClose={() => setAddLanguageSidebarOpen(false)} 
           onAddLanguage={handleAddLanguage} 
-          currentLanguage={currentLanguage}
         />
       </TooltipProvider>
     );
@@ -94,7 +91,6 @@ export const LanguageTabs = ({
             englishVisible={englishVisible}
             estonianVisible={estonianVisible}
             onAddLanguageClick={handleAddLanguageClick}
-            currentLanguage={currentLanguage}
           />
 
           <LanguageTabsActions
@@ -105,7 +101,6 @@ export const LanguageTabs = ({
             onAddPageClick={onAddPageClick}
             onLanguagePublishToggle={onLanguagePublishToggle}
             onLanguageDelete={onLanguageDelete}
-            currentLanguage={currentLanguage}
           />
 
           {availableTabs.map(tab => (
@@ -131,7 +126,6 @@ export const LanguageTabs = ({
         isOpen={addLanguageSidebarOpen} 
         onClose={() => setAddLanguageSidebarOpen(false)} 
         onAddLanguage={handleAddLanguage} 
-        currentLanguage={currentLanguage}
       />
     </TooltipProvider>
   );

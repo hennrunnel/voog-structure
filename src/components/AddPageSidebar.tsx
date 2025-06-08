@@ -13,16 +13,9 @@ interface AddPageSidebarProps {
   onClose: () => void;
   onCreatePage: (pageData: { title: string; slug: string }) => void;
   selectedLayout: string | null;
-  currentLanguage?: "en" | "et";
 }
 
-export const AddPageSidebar = ({ 
-  isOpen, 
-  onClose, 
-  onCreatePage, 
-  selectedLayout, 
-  currentLanguage = "en" 
-}: AddPageSidebarProps) => {
+export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }: AddPageSidebarProps) => {
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [layout, setLayout] = useState("2023-front-page");
@@ -82,7 +75,7 @@ export const AddPageSidebar = ({
         role="dialog"
         aria-labelledby="add-page-title"
       >
-        <AddPageSidebarHeader isLinkMode={isLinkMode} currentLanguage={currentLanguage} />
+        <AddPageSidebarHeader isLinkMode={isLinkMode} />
         
         <AddPageSidebarForm
           title={title}
@@ -94,7 +87,6 @@ export const AddPageSidebar = ({
           showInMenu={showInMenu}
           setShowInMenu={setShowInMenu}
           isLinkMode={isLinkMode}
-          currentLanguage={currentLanguage}
         />
         
         <AddPageSidebarFooter
@@ -103,7 +95,6 @@ export const AddPageSidebar = ({
           isLinkMode={isLinkMode}
           handleCreatePage={handleCreatePage}
           toggleMode={toggleMode}
-          currentLanguage={currentLanguage}
         />
       </SheetContent>
     </Sheet>

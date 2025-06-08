@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { InfoBox } from "@/components/ui/info-box";
-import { useTranslation } from "@/hooks/useTranslation";
 
 interface AddPageSidebarFormProps {
   title: string;
@@ -22,7 +21,6 @@ interface AddPageSidebarFormProps {
   showInMenu: boolean;
   setShowInMenu: (value: boolean) => void;
   isLinkMode: boolean;
-  currentLanguage?: "en" | "et";
 }
 
 export const AddPageSidebarForm = ({
@@ -34,24 +32,21 @@ export const AddPageSidebarForm = ({
   setLayout,
   showInMenu,
   setShowInMenu,
-  isLinkMode,
-  currentLanguage = "en"
+  isLinkMode
 }: AddPageSidebarFormProps) => {
-  const { t } = useTranslation(currentLanguage);
-  
   return (
     <div className="px-6 py-6 flex-1 overflow-y-auto">
       <div className="space-y-6">
         {/* Page title */}
         <div className="space-y-2">
           <Label htmlFor="title" className="text-sm font-medium text-foreground">
-            {t("add_page.form.page_title_label")}
+            Page title
           </Label>
           <Input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder={t("add_page.form.page_title_placeholder")}
+            placeholder="Enter page title..."
             className="w-full border-border rounded-lg"
             aria-required="true"
           />
@@ -60,19 +55,19 @@ export const AddPageSidebarForm = ({
         {/* URL slug */}
         <div className="space-y-2">
           <Label htmlFor="address" className="text-sm font-medium text-foreground">
-            {isLinkMode ? t("add_page.form.address_label") : t("add_page.form.url_slug_label")}
+            {isLinkMode ? "Address" : "URL slug"}
           </Label>
           <Input
             id="address"
             value={address}
             onChange={(e) => handleAddressChange(e.target.value)}
-            placeholder={isLinkMode ? t("add_page.form.address_placeholder") : "/page-slug"}
+            placeholder={isLinkMode ? "https://example.com" : "/page-slug"}
             className="w-full border-border rounded-lg"
             aria-required="true"
           />
           {!isLinkMode && (
             <p className="text-sm text-muted-foreground">
-              {t("add_page.form.url_slug_help")}
+              The unique location slug for this page.
             </p>
           )}
         </div>
@@ -82,7 +77,7 @@ export const AddPageSidebarForm = ({
             {/* Layout */}
             <div className="space-y-2">
               <Label htmlFor="layout" className="text-sm font-medium text-foreground">
-                {t("add_page.form.layout_label")}
+                Layout
               </Label>
               <Select value={layout} onValueChange={setLayout}>
                 <SelectTrigger className="w-full border-border rounded-lg" id="layout">
@@ -101,7 +96,7 @@ export const AddPageSidebarForm = ({
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="menu-title" className="text-sm font-medium text-foreground">
-                  {t("add_page.form.menu_title_label")}
+                  Menu title
                 </Label>
                 <Input
                   id="menu-title"
@@ -113,7 +108,7 @@ export const AddPageSidebarForm = ({
               
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-foreground">
-                  {t("add_page.form.show_in_menu_label")}
+                  Show in menu
                 </Label>
                 <div className="flex items-center mt-4">
                   <Switch
@@ -122,7 +117,7 @@ export const AddPageSidebarForm = ({
                     aria-describedby="show-in-menu-description"
                   />
                   <span className="sr-only" id="show-in-menu-description">
-                    {t("add_page.form.show_in_menu_description")}
+                    Toggle whether this page appears in the navigation menu
                   </span>
                 </div>
               </div>
@@ -133,7 +128,7 @@ export const AddPageSidebarForm = ({
         {/* Info Box - now using the reusable component */}
         {!isLinkMode && (
           <InfoBox>
-            {t("add_page.form.info_box_text")}
+            After creating your page, manage SEO, access, and social image in Page settings.
           </InfoBox>
         )}
       </div>

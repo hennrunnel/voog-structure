@@ -1,4 +1,3 @@
-
 import { LanguageTabs } from "@/components/pages/LanguageTabs";
 import { LanguageSettingsSidebar } from "@/components/pages/LanguageSettingsSidebar";
 import { PageItem } from "@/types/pages";
@@ -32,7 +31,6 @@ interface PagesContentProps {
   onPageSettings: (page: PageItem) => void;
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
-  addLanguage: (languageData: any) => void;
 }
 
 export const PagesContent = ({
@@ -63,9 +61,8 @@ export const PagesContent = ({
   onPageSettings,
   onEditPage,
   onTranslatePage,
-  addLanguage,
-  currentLanguage = "en"
-}: PagesContentProps & { currentLanguage?: "en" | "et" }) => {
+  addLanguage
+}: PagesContentProps & { addLanguage: (languageData: any) => void }) => {
   const [languageSettingsOpen, setLanguageSettingsOpen] = useState(false);
 
   const handleLanguageSettings = () => {
@@ -118,7 +115,6 @@ export const PagesContent = ({
         onAddLanguage={addLanguage}
         onLanguagePublishToggle={handleLanguagePublishToggle}
         onLanguageDelete={handleLanguageDelete}
-        currentLanguage={currentLanguage}
       />
 
       {/* Only show language settings sidebar if there are languages */}
