@@ -1,3 +1,4 @@
+
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
 import { DevControls } from "@/components/DevControls";
@@ -13,7 +14,6 @@ import { useState } from "react";
 export const PagesContainer = () => {
   const [devLanguage, setDevLanguage] = useState<'en' | 'et'>('en');
   const [devEmptyState, setDevEmptyState] = useState<boolean>(false);
-  const [devControlsVisible, setDevControlsVisible] = useState<boolean>(true);
 
   const {
     pages,
@@ -72,18 +72,15 @@ export const PagesContainer = () => {
   } = usePageActions(setPages);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: devControlsVisible ? '24px' : '80px' }}>
+    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '24px' }}>
       <div className="w-full" style={{ maxWidth: '992px' }}>
-        {devControlsVisible && (
-          <DevControls
-            language={devLanguage}
-            onLanguageChange={setDevLanguage}
-            emptyState={devEmptyState}
-            onEmptyStateChange={setDevEmptyState}
-            currentPageName="Site structure"
-            onDestroy={() => setDevControlsVisible(false)}
-          />
-        )}
+        <DevControls
+          language={devLanguage}
+          onLanguageChange={setDevLanguage}
+          emptyState={devEmptyState}
+          onEmptyStateChange={setDevEmptyState}
+          currentPageName="Site structure"
+        />
         
         <div style={{ marginBottom: '64px' }}>
           <PagesHeader />

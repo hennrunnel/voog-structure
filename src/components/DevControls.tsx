@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,6 @@ interface DevControlsProps {
   emptyState: boolean;
   onEmptyStateChange: (emptyState: boolean) => void;
   currentPageName?: string;
-  onDestroy: () => void;
 }
 
 const DEV_CONTROLS_STORAGE_KEY = 'dev-controls-state';
@@ -33,8 +33,7 @@ export const DevControls: React.FC<DevControlsProps> = ({
   onLanguageChange,
   emptyState,
   onEmptyStateChange,
-  currentPageName = 'Site structure',
-  onDestroy
+  currentPageName = 'Site structure'
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -62,7 +61,7 @@ export const DevControls: React.FC<DevControlsProps> = ({
   }, [language, emptyState]);
 
   const handleDestroy = () => {
-    onDestroy();
+    setIsVisible(false);
   };
 
   const handleLanguageChange = (newLanguage: Language) => {
