@@ -43,27 +43,16 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
-        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg"
+        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg flex flex-col"
         side="right"
       >
         {/* Header */}
         <div className="px-6 py-6 border-b border-border">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-foreground">Language settings</h2>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={onLanguageDelete} 
-              className="text-muted-foreground hover:text-foreground p-2" 
-              aria-label="Delete language"
-            >
-              <Trash className="w-4 h-4" />
-            </Button>
-          </div>
+          <h2 className="text-xl font-semibold text-foreground">Language settings</h2>
         </div>
 
         {/* Content */}
-        <div className="px-6 py-6 flex-1 overflow-y-auto">
+        <div className="px-6 py-6 flex-1 overflow-y-auto pb-24">
           <div className="space-y-4">
             {/* Website title */}
             <div>
@@ -74,7 +63,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 id="website-title" 
                 value={websiteTitle} 
                 onChange={e => setWebsiteTitle(e.target.value)} 
-                className="w-full border-border rounded-lg mt-2" 
+                className="w-full bg-muted border-border rounded-lg mt-2" 
               />
             </div>
 
@@ -84,7 +73,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 Language name
               </Label>
               <Select defaultValue={activeTab}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="language-name">
+                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="language-name">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -101,7 +90,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 Region
               </Label>
               <Select defaultValue="global">
-                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="region">
+                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="region">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -121,7 +110,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 id="name-in-menu" 
                 value={nameInMenu} 
                 onChange={e => setNameInMenu(e.target.value)} 
-                className="w-full border-border rounded-lg mt-2" 
+                className="w-full bg-muted border-border rounded-lg mt-2" 
               />
             </div>
 
@@ -143,7 +132,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 Which language visitors see?
               </Label>
               <Select defaultValue="detect-location">
-                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="visitor-language">
+                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="visitor-language">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -156,17 +145,28 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
           </div>
         </div>
 
-        {/* Action buttons */}
-        <div className="px-6 py-6 border-t border-border flex space-x-3">
-          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium">
-            Save
-          </Button>
+        {/* Sticky bottom row */}
+        <div className="absolute bottom-0 left-0 right-0 px-6 py-6 border-t border-border bg-background flex items-center justify-between">
+          <div className="flex space-x-3">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium">
+              Save
+            </Button>
+            <Button 
+              variant="ghost" 
+              onClick={onClose} 
+              className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
+            >
+              Cancel
+            </Button>
+          </div>
           <Button 
             variant="ghost" 
-            onClick={onClose} 
-            className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
+            size="sm" 
+            onClick={onLanguageDelete} 
+            className="text-muted-foreground hover:text-foreground p-2" 
+            aria-label="Delete language"
           >
-            Cancel
+            <Trash className="w-4 h-4" />
           </Button>
         </div>
       </SheetContent>
