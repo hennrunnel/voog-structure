@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -76,36 +77,8 @@ export const SeoTabContent = ({
 
   const descriptionProgress = Math.min((descriptionLength / 150) * 100, 100);
 
-  // Overall SEO score calculation
-  const getSeoScore = () => {
-    let score = 0;
-    
-    // Title length (optimal: under 70 characters)
-    if (titleLength <= 70 && titleLength > 0) score += 40;
-    else if (titleLength <= 90) score += 20;
-    
-    // Description length (optimal: 120-150 characters)
-    if (descriptionLength >= 120 && descriptionLength <= 150) score += 40;
-    else if (descriptionLength > 0) score += 20;
-    
-    // Visible to search engines
-    if (visibleToSearchEngines) score += 20;
-    
-    if (score >= 80) return { status: "Good", color: "bg-green-500" };
-    if (score >= 50) return { status: "Medium", color: "bg-yellow-500" };
-    return { status: "Poor", color: "bg-red-500" };
-  };
-
-  const seoScore = getSeoScore();
-
   return (
     <div id="seo-panel" role="tabpanel" className="space-y-6">
-      {/* SEO Score Indicator */}
-      <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-        <div className={`w-3 h-3 rounded-full ${seoScore.color}`} />
-        <span className="text-sm font-medium">SEO Score: {seoScore.status}</span>
-      </div>
-
       {/* Title */}
       <div className="space-y-2">
         <Label htmlFor="seo-title" className="text-sm font-medium text-foreground">
@@ -120,23 +93,11 @@ export const SeoTabContent = ({
         />
       </div>
 
-      {/* Title format and Customize toggle on same line */}
+      {/* Title format */}
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="title-format" className="text-sm font-medium text-foreground">
-            Title format
-          </Label>
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="customize-title"
-              checked={customizeTitleFormat}
-              onCheckedChange={setCustomizeTitleFormat}
-            />
-            <Label htmlFor="customize-title" className="text-sm font-medium text-foreground">
-              Customize title format
-            </Label>
-          </div>
-        </div>
+        <Label htmlFor="title-format" className="text-sm font-medium text-foreground">
+          Title format
+        </Label>
         <Select value={titleFormat} onValueChange={setTitleFormat} disabled={customizeTitleFormat}>
           <SelectTrigger className="w-full border-border rounded-lg" id="title-format">
             <SelectValue />
@@ -147,6 +108,20 @@ export const SeoTabContent = ({
             <SelectItem value="page-title-only">Page title only</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      {/* Customize title format label */}
+      <div className="space-y-2">
+        <Label htmlFor="customize-title" className="text-sm font-medium text-foreground">
+          Customize title format
+        </Label>
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="customize-title"
+            checked={customizeTitleFormat}
+            onCheckedChange={setCustomizeTitleFormat}
+          />
+        </div>
       </div>
 
       {/* Title preview (no label) */}
