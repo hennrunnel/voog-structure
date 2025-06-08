@@ -3,6 +3,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { X } from "lucide-react";
+import { useState } from "react";
 
 interface GeneralTabContentProps {
   title: string;
@@ -33,6 +35,8 @@ export const GeneralTabContent = ({
   layout,
   setLayout,
 }: GeneralTabContentProps) => {
+  const [isImageHovered, setIsImageHovered] = useState(false);
+
   return (
     <div id="general-panel" role="tabpanel" className="space-y-6">
       {/* Page title */}
@@ -59,7 +63,7 @@ export const GeneralTabContent = ({
           onChange={(e) => setUrlSlug(e.target.value)}
           className="w-full border-border rounded-lg"
         />
-        <p className="text-sm text-muted-foreground mt-2">
+        <p className="text-sm text-muted-foreground">
           The unique location slug for this page.
         </p>
       </div>
@@ -135,13 +139,22 @@ export const GeneralTabContent = ({
         <Label htmlFor="social-image" className="text-sm font-medium text-foreground">
           Social image
         </Label>
-        <div className="border border-border rounded-lg p-4 bg-background">
-          <div className="aspect-video w-full bg-muted rounded-lg overflow-hidden mb-2">
+        <div className="bg-background">
+          <div 
+            className="aspect-video w-full bg-muted rounded-lg overflow-hidden mb-2 relative"
+            onMouseEnter={() => setIsImageHovered(true)}
+            onMouseLeave={() => setIsImageHovered(false)}
+          >
             <img 
-              src="https://images.unsplash.com/photo-1472396961693-142e6e269027"
+              src="/lovable-uploads/01d5297b-673d-4f82-8bf5-fac4d352b073.png"
               alt="F1 race car preview"
               className="w-full h-full object-cover"
             />
+            {isImageHovered && (
+              <button className="absolute top-2 right-2 w-6 h-6 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors">
+                <X className="w-4 h-4 text-white" />
+              </button>
+            )}
           </div>
           <p className="text-sm text-muted-foreground">
             This image will be displayed when your page is shared on social media platforms.

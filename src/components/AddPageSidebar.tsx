@@ -126,7 +126,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                 aria-required="true"
               />
               {!isLinkMode && (
-                <p className="text-sm text-muted-foreground mt-2">
+                <p className="text-sm text-muted-foreground">
                   The unique location slug for this page.
                 </p>
               )}
@@ -215,14 +215,15 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
           ) : null}
         </div>
 
-        {/* Toggle mode link */}
+        {/* Toggle mode button */}
         <div className="px-6 pb-6 text-center">
-          <button 
+          <Button 
             onClick={toggleMode}
-            className="text-sm text-muted-foreground hover:text-foreground hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded"
+            variant="ghost"
+            className="text-sm font-normal text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg px-3 py-2"
           >
             {isLinkMode ? "Add a new page instead" : "Add a link instead"}
-          </button>
+          </Button>
         </div>
       </SheetContent>
     </Sheet>
