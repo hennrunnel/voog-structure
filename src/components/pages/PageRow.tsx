@@ -6,9 +6,11 @@ import { PageItem } from "@/types/pages";
 import { ChevronIcon, EyeVisibleIcon, EyeHiddenIcon, MoveIcon } from "./PageRowIcons";
 import { PageTitleSection } from "./PageTitleSection";
 import { PageRowActions } from "./PageRowActions";
+import { getTranslatedPageTitle, getTranslatedPageSlug } from "@/constants/translations";
 
 interface PageRowProps {
   page: PageItem;
+  currentLanguage: string;
   level: number;
   onToggleExpansion: (pageId: string) => void;
   onToggleVisibility: (pageId: string) => void;
@@ -31,6 +33,7 @@ const renderSeoScore = (score: "Good" | "Medium" | "Poor") => {
 
 export const PageRow: React.FC<PageRowProps> = ({
   page,
+  currentLanguage,
   level = 0,
   onToggleExpansion,
   onToggleVisibility,
@@ -46,6 +49,10 @@ export const PageRow: React.FC<PageRowProps> = ({
   const isHomePage = page.id === "1";
   const isUntranslated = page.translationStatus === "Untranslated";
 
+  // Get translated content
+  const translatedTitle = getTranslatedPageTitle(page.title, currentLanguage, isUntranslated);
+  const translatedSlug = getTranslatedPageSlug(page.slug, currentLanguage, isUntranslated);
+
   const handleRowClick = () => {
     if (page.translationStatus === "Untranslated") {
       onEditPage(page);
@@ -56,12 +63,18 @@ export const PageRow: React.FC<PageRowProps> = ({
 
   const handleSlugClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log('Slug clicked:', page.slug);
+    console.log('Slug clicked:', translatedSlug);
   };
 
   const handleVisibilityToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     onToggleVisibility(page.id);
+  };
+
+  // Create page object with translated content for PageTitleSection
+  const translatedPage = {
+    ...page,
+    title: translatedTitle
   };
 
   return (
@@ -77,7 +90,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           }} 
           role="row" 
           tabIndex={0} 
-          aria-label={`${page.title} page row`}
+          aria-label={`${translatedTitle} page row`}
           onClick={handleRowClick}
         >
           {/* Expand/collapse button */}
@@ -89,7 +102,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                   onToggleExpansion(page.id);
                 }} 
                 className="text-gray-400 hover:text-gray-600 outline-none focus:outline-none focus:ring-0 rounded" 
-                aria-label={page.isExpanded ? `Collapse ${page.title}` : `Expand ${page.title}`} 
+                aria-label={page.isExpanded ? `Collapse ${translatedTitle}` : `Expand ${translatedTitle}`} 
                 aria-expanded={page.isExpanded}
               >
                 <ChevronIcon isExpanded={page.isExpanded} />
@@ -98,7 +111,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           </div>
 
           {/* Title */}
-          <PageTitleSection page={page} />
+          <PageTitleSection page={translatedPage} />
 
           {/* Slug */}
           <div className="w-48 px-4">
@@ -110,11 +123,11 @@ export const PageRow: React.FC<PageRowProps> = ({
                     className="text-[#1B2124] hover:text-[#5A4FFF] hover:underline truncate block max-w-full text-left transition-colors cursor-pointer outline-none focus:outline-none focus:ring-0 rounded"
                     style={{ fontSize: '14px' }}
                   >
-                    {page.slug}
+                    {translatedSlug}
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{page.slug}</p>
+                  <p>{translatedSlug}</p>
                 </TooltipContent>
               </Tooltip>
             ) : (
@@ -154,7 +167,7 @@ export const PageRow: React.FC<PageRowProps> = ({
             {!isUntranslated ? (
               <button
                 onClick={handleVisibilityToggle}
-                aria-label={page.isVisible ? `Hide ${page.title} from menu` : `Show ${page.title} in menu`}
+                aria-label={page.isVisible ? `Hide ${translatedTitle} from menu` : `Show ${translatedTitle} in menu`}
                 className="outline-none focus:outline-none focus:ring-0 rounded"
               >
                 {page.isVisible ? <EyeVisibleIcon /> : <EyeHiddenIcon />}
@@ -184,6 +197,7 @@ export const PageRow: React.FC<PageRowProps> = ({
           <PageRow
             key={child.id}
             page={child}
+            currentLanguage={currentLanguage}
             level={level + 1}
             onToggleExpansion={onToggleExpansion}
             onToggleVisibility={onToggleVisibility}

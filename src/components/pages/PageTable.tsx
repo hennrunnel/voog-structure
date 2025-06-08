@@ -4,6 +4,7 @@ import { PageItem } from "@/types/pages";
 
 interface PageTableProps {
   pages: PageItem[];
+  currentLanguage: string;
   onToggleExpansion: (pageId: string) => void;
   onToggleVisibility: (pageId: string) => void;
   onDeletePage: (page: PageItem) => void;
@@ -16,6 +17,7 @@ interface PageTableProps {
 
 export const PageTable = ({
   pages,
+  currentLanguage,
   onToggleExpansion,
   onToggleVisibility,
   onDeletePage,
@@ -77,6 +79,7 @@ export const PageTable = ({
           <PageRow
             key={page.id}
             page={page}
+            currentLanguage={currentLanguage}
             level={0}
             onToggleExpansion={onToggleExpansion}
             onToggleVisibility={onToggleVisibility}

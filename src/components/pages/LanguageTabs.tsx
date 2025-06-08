@@ -106,7 +106,8 @@ export const LanguageTabs = ({
           {availableTabs.map(tab => (
             <TabsContent key={tab} value={tab} className="mt-0">
               <PageTable 
-                pages={pages} 
+                pages={pages}
+                currentLanguage={activeTab}
                 onToggleExpansion={onToggleExpansion} 
                 onToggleVisibility={onToggleVisibility} 
                 onDeletePage={onDeletePage} 
