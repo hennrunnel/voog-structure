@@ -241,12 +241,9 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                     <Label className="text-sm font-medium text-foreground">
                       Social media image
                     </Label>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
-                    </p>
                     <div className="relative mt-2 group">
                       <img 
-                        src="/lovable-uploads/493f491f-5622-4b00-b92b-e338e8375180.png" 
+                        src="/lovable-uploads/a3993143-33a0-4b8f-9cf9-3d7e86d827a7.png" 
                         alt="Social media preview" 
                         className="w-full h-48 object-cover rounded-lg"
                       />
@@ -257,6 +254,9 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                         <X className="w-4 h-4" />
                       </button>
                     </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
+                    </p>
                   </div>
                 </div>
               )}
