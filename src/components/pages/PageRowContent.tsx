@@ -71,14 +71,14 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
       onClick={handleRowClick}
     >
       {/* Expand/collapse button */}
-      <div className="w-5 flex justify-center mr-2">
+      <div className="w-5 flex justify-center items-center mr-2">
         {hasChildren ? (
           <button 
             onClick={e => {
               e.stopPropagation();
               onToggleExpansion(page.id);
             }} 
-            className="text-gray-400 hover:text-gray-600 outline-none focus:outline-none focus:ring-0 rounded" 
+            className="flex items-center justify-center text-gray-400 hover:text-gray-600 outline-none focus:outline-none focus:ring-0 rounded" 
             aria-label={page.isExpanded ? `Collapse ${translatedTitle}` : `Expand ${translatedTitle}`} 
             aria-expanded={page.isExpanded}
           >
