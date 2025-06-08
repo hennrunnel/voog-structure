@@ -75,111 +75,110 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
           {/* Content */}
           <div className="px-6 py-6 flex-1 overflow-y-auto pb-24">
             <div className="space-y-6">
-              {/* Basic Information Section */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">Basic Information</h3>
-                
-                {/* Language name */}
-                <div>
-                  <Label htmlFor="language-name" className="text-sm font-medium text-foreground">
-                    Language
-                  </Label>
-                  <Select defaultValue={activeTab}>
-                    <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="language-name">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="english">English</SelectItem>
-                      <SelectItem value="estonian">Estonian</SelectItem>
-                      <SelectItem value="finnish">Finnish</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Region */}
-                <div>
-                  <Label htmlFor="region" className="text-sm font-medium text-foreground">
-                    Region
-                  </Label>
-                  <Select defaultValue="global">
-                    <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="region">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="global">Global</SelectItem>
-                      <SelectItem value="europe">Europe</SelectItem>
-                      <SelectItem value="north-america">North America</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Name in menu */}
-                <div>
-                  <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
-                    Name in menu
-                  </Label>
-                  <Input 
-                    id="name-in-menu" 
-                    value={nameInMenu} 
-                    onChange={e => setNameInMenu(e.target.value)} 
-                    className="w-full bg-muted border-border rounded-lg mt-2" 
-                    placeholder="e.g., EN, English"
-                  />
-                </div>
-
-                {/* Website title */}
-                <div>
-                  <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
-                    Website title
-                  </Label>
-                  <Input 
-                    id="website-title" 
-                    value={websiteTitle} 
-                    onChange={e => setWebsiteTitle(e.target.value)} 
-                    className="w-full bg-muted border-border rounded-lg mt-2" 
-                  />
-                </div>
+              {/* Language */}
+              <div>
+                <Label htmlFor="language-name" className="text-sm font-medium text-foreground">
+                  Language
+                </Label>
+                <Select defaultValue={activeTab}>
+                  <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="language-name">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="english">English</SelectItem>
+                    <SelectItem value="estonian">Estonian</SelectItem>
+                    <SelectItem value="finnish">Finnish</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Select the language for this version of your website
+                </p>
               </div>
 
-              {/* Visibility Settings Section */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide">Visibility Settings</h3>
-                
-                {/* Is this language publicly visible */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label htmlFor="publicly-visible" className="text-sm font-medium text-foreground">
-                      Make this language publicly visible
-                    </Label>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      When enabled, visitors will be able to access this language version
-                    </p>
-                  </div>
-                  <Switch 
-                    id="publicly-visible" 
-                    checked={languageVisible} 
-                    onCheckedChange={onLanguageVisibilityToggle} 
-                  />
-                </div>
+              {/* Region */}
+              <div>
+                <Label htmlFor="region" className="text-sm font-medium text-foreground">
+                  Region
+                </Label>
+                <Select defaultValue="global">
+                  <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="region">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="global">Global</SelectItem>
+                    <SelectItem value="europe">Europe</SelectItem>
+                    <SelectItem value="north-america">North America</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Choose the region this language targets
+                </p>
+              </div>
 
-                {/* Which language visitors see */}
+              {/* Make this language publicly visible */}
+              <div className="flex items-center justify-between">
                 <div>
-                  <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
-                    Which language visitors see
+                  <Label htmlFor="publicly-visible" className="text-sm font-medium text-foreground">
+                    Make this language publicly visible
                   </Label>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    How should visitors be directed to language versions?
-                  </p>
-                  <Select defaultValue="detect-location">
-                    <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="visitor-language">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="detect-location">Detect by location</SelectItem>
-                      <SelectItem value="always-this">Always this language</SelectItem>
-                    </SelectContent>
-                  </Select>
                 </div>
+                <Switch 
+                  id="publicly-visible" 
+                  checked={languageVisible} 
+                  onCheckedChange={onLanguageVisibilityToggle} 
+                />
+              </div>
+
+              {/* Which language visitors see */}
+              <div>
+                <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
+                  Which language visitors see
+                </Label>
+                <Select defaultValue="detect-location">
+                  <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="visitor-language">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="detect-location">Auto-detect visitor's language</SelectItem>
+                    <SelectItem value="always-this">Always show this language</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Auto-detect will serve the appropriate language based on visitor's location and browser settings. Always show will display this language to all visitors regardless of their preferences.
+                </p>
+              </div>
+
+              {/* Name in menu */}
+              <div>
+                <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
+                  Name in menu
+                </Label>
+                <Input 
+                  id="name-in-menu" 
+                  value={nameInMenu} 
+                  onChange={e => setNameInMenu(e.target.value)} 
+                  className="w-full bg-muted border-border rounded-lg mt-2" 
+                  placeholder="e.g., EN, English"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  How this language appears in the language switcher
+                </p>
+              </div>
+
+              {/* Website title */}
+              <div>
+                <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
+                  Website title
+                </Label>
+                <Input 
+                  id="website-title" 
+                  value={websiteTitle} 
+                  onChange={e => setWebsiteTitle(e.target.value)} 
+                  className="w-full bg-muted border-border rounded-lg mt-2" 
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  The main title for your website in this language
+                </p>
               </div>
             </div>
           </div>
