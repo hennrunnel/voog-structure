@@ -1,4 +1,3 @@
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -18,6 +17,7 @@ interface SeoTabContentProps {
   visibleToSearchEngines: boolean;
   setVisibleToSearchEngines: (visible: boolean) => void;
   pageTitle: string;
+  urlSlug: string;
 }
 
 export const SeoTabContent = ({
@@ -32,6 +32,7 @@ export const SeoTabContent = ({
   visibleToSearchEngines,
   setVisibleToSearchEngines,
   pageTitle,
+  urlSlug,
 }: SeoTabContentProps) => {
   // Calculate title length and preview
   const getTitlePreview = () => {

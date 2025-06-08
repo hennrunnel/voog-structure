@@ -99,6 +99,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   visibleToSearchEngines={visibleToSearchEngines}
                   setVisibleToSearchEngines={setVisibleToSearchEngines}
                   pageTitle={title}
+                  urlSlug={urlSlug}
                 />
               )}
             </div>
