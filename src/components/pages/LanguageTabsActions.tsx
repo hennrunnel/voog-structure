@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { KebabIcon } from "./LanguageTabsIcons";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface LanguageTabsActionsProps {
   activeTab: string;
@@ -11,6 +12,7 @@ interface LanguageTabsActionsProps {
   onAddPageClick: () => void;
   onLanguagePublishToggle?: (language: string, published: boolean) => void;
   onLanguageDelete?: (language: string) => void;
+  currentLanguage?: "en" | "et";
 }
 
 export const LanguageTabsActions = ({
@@ -20,8 +22,11 @@ export const LanguageTabsActions = ({
   onLanguageSettings,
   onAddPageClick,
   onLanguagePublishToggle,
-  onLanguageDelete
+  onLanguageDelete,
+  currentLanguage = "en"
 }: LanguageTabsActionsProps) => {
+  const { t } = useTranslation(currentLanguage);
+
   const handleDownloadSite = () => {
     console.log("Download entire site clicked");
   };
@@ -69,7 +74,7 @@ export const LanguageTabsActions = ({
             color: '#5A4FFF'
           }}
         >
-          Language settings
+          {t("language_management.actions.language_settings_button")}
         </Button>
         
         <Button 
@@ -91,7 +96,7 @@ export const LanguageTabsActions = ({
             lineHeight: '24px'
           }}
         >
-          New page
+          {t("language_management.actions.new_page_button")}
         </Button>
 
         <DropdownMenu>
@@ -100,7 +105,7 @@ export const LanguageTabsActions = ({
               variant="ghost" 
               size="sm" 
               className="p-1 h-auto hover:bg-transparent outline-none focus:outline-none focus:ring-0" 
-              aria-label="More options"
+              aria-label={t("language_management.actions.more_options_aria")}
             >
               <KebabIcon />
             </Button>
@@ -133,7 +138,7 @@ export const LanguageTabsActions = ({
                 e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
+              {isCurrentLanguagePublished() ? t("language_management.actions.unpublish_language") : t("language_management.actions.publish_language")}
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleDownloadSite} 
@@ -155,7 +160,7 @@ export const LanguageTabsActions = ({
                 e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              Download entire site
+              {t("language_management.actions.download_site")}
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleLanguageDelete} 
@@ -177,7 +182,7 @@ export const LanguageTabsActions = ({
                 e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              Delete language
+              {t("language_management.actions.delete_language")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

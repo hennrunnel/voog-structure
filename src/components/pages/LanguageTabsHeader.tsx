@@ -1,6 +1,7 @@
 
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EyeHiddenIcon } from "./LanguageTabsIcons";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface LanguageTabsHeaderProps {
   activeTab: string;
@@ -9,6 +10,7 @@ interface LanguageTabsHeaderProps {
   englishVisible?: boolean;
   estonianVisible?: boolean;
   onAddLanguageClick: () => void;
+  currentLanguage?: "en" | "et";
 }
 
 export const LanguageTabsHeader = ({
@@ -17,8 +19,11 @@ export const LanguageTabsHeader = ({
   availableTabs,
   englishVisible = true,
   estonianVisible = true,
-  onAddLanguageClick
+  onAddLanguageClick,
+  currentLanguage = "en"
 }: LanguageTabsHeaderProps) => {
+  const { t } = useTranslation(currentLanguage);
+  
   return (
     <div 
       className="flex items-center justify-between"
@@ -68,7 +73,7 @@ export const LanguageTabsHeader = ({
           fontWeight: 500
         }}
       >
-        Add language
+        {t("language_management.tabs.add_language_button")}
       </button>
     </div>
   );

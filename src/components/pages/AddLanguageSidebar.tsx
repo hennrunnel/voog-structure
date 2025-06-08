@@ -33,11 +33,13 @@ import {
 import { useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface AddLanguageSidebarProps {
   isOpen: boolean;
   onClose: () => void;
   onAddLanguage: (languageData: any) => void;
+  currentLanguage?: "en" | "et";
 }
 
 // Popular languages that appear at the top
@@ -88,7 +90,14 @@ const LANGUAGE_REGIONS = {
   ],
 };
 
-export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLanguageSidebarProps) => {
+export const AddLanguageSidebar = ({ 
+  isOpen, 
+  onClose, 
+  onAddLanguage, 
+  currentLanguage = "en" 
+}: AddLanguageSidebarProps) => {
+  const { t } = useTranslation(currentLanguage);
+  
   const [languageName, setLanguageName] = useState("");
   const [region, setRegion] = useState("");
   const [websiteTitle, setWebsiteTitle] = useState("");
@@ -144,6 +153,14 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
     onClose();
   };
 
+  // Helper function to get translated language name
+  const getTranslatedLanguageName = (languageKey: string) => {
+    if (currentLanguage === "et" && t(`language_options.popular_languages.${languageKey}`)) {
+      return t(`language_options.popular_languages.${languageKey}` as any);
+    }
+    return ALL_LANGUAGES.find(lang => lang.value === languageKey)?.label || languageKey;
+  };
+
   return (
     <>
       <Sheet open={isOpen} onOpenChange={onClose}>
@@ -153,7 +170,9 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
         >
           {/* Header */}
           <div className="px-6 py-6 border-b border-border">
-            <h2 className="text-xl font-semibold text-foreground">Add a new language</h2>
+            <h2 className="text-xl font-semibold text-foreground">
+              {t("add_language.header.title")}
+            </h2>
           </div>
           
           {/* Content */}
@@ -162,7 +181,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               {/* Language name */}
               <div className="space-y-2">
                 <Label htmlFor="language-name" className="text-sm font-medium text-foreground">
-                  Language
+                  {t("add_language.form.language_label")}
                 </Label>
                 <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
@@ -173,7 +192,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                       className="w-full justify-between border-border"
                     >
                       {languageName
-                        ? ALL_LANGUAGES.find((language) => language.value === languageName)?.label
+                        ? getTranslatedLanguageName(languageName)
                         : "Select language..."}
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -196,12 +215,12 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                                   languageName === language.value ? "opacity-100" : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {getTranslatedLanguageName(language.value)}
                             </CommandItem>
                           ))}
                         </CommandGroup>
                         <CommandSeparator />
-                        <CommandGroup heading="All languages">
+                        <CommandGroup heading={t("language_options.all_languages_group")}>
                           {ALL_LANGUAGES.map((language) => (
                             <CommandItem
                               key={language.value}
@@ -214,7 +233,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                                   languageName === language.value ? "opacity-100" : "opacity-0"
                                 )}
                               />
-                              {language.label}
+                              {getTranslatedLanguageName(language.value)}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -228,7 +247,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               {showRegionField && (
                 <div className="space-y-2">
                   <Label htmlFor="region" className="text-sm font-medium text-foreground">
-                    Region
+                    {t("add_language.form.region_label")}
                   </Label>
                   <Select value={region} onValueChange={setRegion}>
                     <SelectTrigger className="w-full border-border rounded-lg">
@@ -248,13 +267,13 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               {/* Website title */}
               <div className="space-y-2">
                 <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
-                  Website title in this language
+                  {t("add_language.form.website_title_label")}
                 </Label>
                 <Input
                   id="website-title"
                   value={websiteTitle}
                   onChange={(e) => setWebsiteTitle(e.target.value)}
-                  placeholder="Enter website title"
+                  placeholder={t("add_language.form.website_title_placeholder")}
                   className="w-full border-border rounded-lg"
                 />
               </div>
@@ -262,13 +281,13 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               {/* Name in menu */}
               <div className="space-y-2">
                 <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
-                  Name in menu
+                  {t("add_language.form.name_in_menu_label")}
                 </Label>
                 <Input
                   id="name-in-menu"
                   value={nameInMenu}
                   onChange={(e) => setNameInMenu(e.target.value)}
-                  placeholder="e.g., EN, English"
+                  placeholder={t("add_language.form.name_in_menu_placeholder")}
                   className="w-full border-border rounded-lg"
                   required
                 />
@@ -278,7 +297,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               <div className="flex items-center justify-between">
                 <div>
                   <Label htmlFor="publicly-visible" className="text-sm font-medium text-foreground">
-                    Is this language publicly visible?
+                    {t("add_language.form.publicly_visible_label")}
                   </Label>
                 </div>
                 <Switch 
@@ -291,15 +310,19 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               {/* Which language visitors see */}
               <div className="space-y-2">
                 <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
-                  Which language visitors see
+                  {t("add_language.form.visitor_language_label")}
                 </Label>
                 <Select value={whichLanguageVisitors} onValueChange={setWhichLanguageVisitors}>
                   <SelectTrigger className="w-full border-border rounded-lg">
                     <SelectValue placeholder="Select option" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="detect-by-location">Detect by location</SelectItem>
-                    <SelectItem value="always-this-language">Always this language</SelectItem>
+                    <SelectItem value="detect-by-location">
+                      {t("add_language.visitor_language_options.detect_by_location")}
+                    </SelectItem>
+                    <SelectItem value="always-this-language">
+                      {t("add_language.visitor_language_options.always_this_language")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground mt-2">
@@ -310,16 +333,22 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               {/* Duplicate content from */}
               <div className="space-y-2">
                 <Label htmlFor="duplicate-content" className="text-sm font-medium text-foreground">
-                  Duplicate content from
+                  {t("add_language.form.duplicate_content_label")}
                 </Label>
                 <Select value={duplicateContentFrom} onValueChange={setDuplicateContentFrom}>
                   <SelectTrigger className="w-full border-border rounded-lg">
                     <SelectValue placeholder="Select option" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="do-not-duplicate">Do not duplicate</SelectItem>
-                    <SelectItem value="english">English</SelectItem>
-                    <SelectItem value="estonian">Estonian</SelectItem>
+                    <SelectItem value="do-not-duplicate">
+                      {t("add_language.duplicate_content_options.do_not_duplicate")}
+                    </SelectItem>
+                    <SelectItem value="english">
+                      {t("add_language.duplicate_content_options.english")}
+                    </SelectItem>
+                    <SelectItem value="estonian">
+                      {t("add_language.duplicate_content_options.estonian")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -334,7 +363,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
                 disabled={!languageName || !nameInMenu}
               >
-                Add language
+                {t("add_language.footer.add_button")}
               </Button>
               <Button 
                 variant="outline" 

@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface AddPageSidebarFooterProps {
   title: string;
@@ -7,6 +8,7 @@ interface AddPageSidebarFooterProps {
   isLinkMode: boolean;
   handleCreatePage: () => void;
   toggleMode: () => void;
+  currentLanguage?: "en" | "et";
 }
 
 export const AddPageSidebarFooter = ({
@@ -14,8 +16,11 @@ export const AddPageSidebarFooter = ({
   address,
   isLinkMode,
   handleCreatePage,
-  toggleMode
+  toggleMode,
+  currentLanguage = "en"
 }: AddPageSidebarFooterProps) => {
+  const { t } = useTranslation(currentLanguage);
+  
   return (
     <div className="sticky bottom-0 bg-background border-t border-border">
       {/* Action buttons - with 16px spacing */}
@@ -26,12 +31,12 @@ export const AddPageSidebarFooter = ({
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
           aria-describedby={!title || !address ? "create-button-help" : undefined}
         >
-          {isLinkMode ? "Add it" : "Create this page"}
+          {isLinkMode ? t("add_page.footer.add_button") : t("add_page.footer.create_button")}
         </Button>
         
         {!title || !address ? (
           <p id="create-button-help" className="sr-only">
-            Please fill in both page title and address
+            {t("add_page.footer.validation_help")}
           </p>
         ) : null}
 
@@ -41,7 +46,7 @@ export const AddPageSidebarFooter = ({
           variant="outline"
           className="w-full text-sm font-normal text-muted-foreground hover:text-foreground px-3 py-2"
         >
-          {isLinkMode ? "Add a new page instead" : "Add a link instead"}
+          {isLinkMode ? t("add_page.footer.add_page_instead") : t("add_page.footer.add_link_instead")}
         </Button>
       </div>
     </div>
