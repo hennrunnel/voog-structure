@@ -1,6 +1,15 @@
-
 export const languageManagementTranslations = {
   language_management: {
+    language_names: {
+      english: {
+        en: "English",
+        et: "Inglise"
+      },
+      estonian: {
+        en: "Estonian", 
+        et: "Eesti"
+      }
+    },
     tabs: {
       add_language_button: {
         en: "Add language",

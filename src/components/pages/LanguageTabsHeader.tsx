@@ -24,6 +24,15 @@ export const LanguageTabsHeader = ({
 }: LanguageTabsHeaderProps) => {
   const { t } = useTranslation(currentLanguage);
   
+  const getLanguageDisplayName = (tab: string) => {
+    if (tab === "english") {
+      return t("language_management.language_names.english");
+    } else if (tab === "estonian") {
+      return t("language_management.language_names.estonian");
+    }
+    return tab;
+  };
+  
   return (
     <div 
       className="flex items-center justify-between"
@@ -44,7 +53,7 @@ export const LanguageTabsHeader = ({
             <div key={tab} className="flex items-center" style={{ marginRight: index < availableTabs.length - 1 ? '24px' : '0px' }}>
               <TabsTrigger 
                 value={tab} 
-                className="text-sm text-black data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center capitalize outline-none focus:outline-none focus-visible:outline-none"
+                className="text-sm text-black data-[state=active]:text-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-[#5A4FFF] data-[state=active]:shadow-none rounded-none border-b-2 border-transparent flex items-center outline-none focus:outline-none focus-visible:outline-none"
                 style={{ 
                   paddingBottom: '16px', 
                   paddingTop: '0px',
@@ -53,7 +62,7 @@ export const LanguageTabsHeader = ({
                 }}
               >
                 <span className="flex items-center gap-2">
-                  {tab}
+                  {getLanguageDisplayName(tab)}
                   {tab === "estonian" && !estonianVisible && <EyeHiddenIcon />}
                   {tab === "english" && !englishVisible && <EyeHiddenIcon />}
                 </span>

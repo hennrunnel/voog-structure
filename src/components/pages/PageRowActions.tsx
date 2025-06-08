@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { PageItem } from "@/types/pages";
 import { KebabIcon } from "./PageRowIcons";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface PageRowActionsProps {
   page: PageItem;
@@ -14,6 +15,7 @@ interface PageRowActionsProps {
   onPageSettings: (page: PageItem) => void;
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
+  currentLanguage?: "en" | "et";
 }
 
 export const PageRowActions: React.FC<PageRowActionsProps> = ({
@@ -23,8 +25,10 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   onAddNestedPage,
   onPageSettings,
   onEditPage,
-  onTranslatePage
+  onTranslatePage,
+  currentLanguage = "en"
 }) => {
+  const { t } = useTranslation(currentLanguage);
   const hasChildren = page.children && page.children.length > 0;
   const isHomePage = page.id === "1";
   const isUntranslated = page.translationStatus === "Untranslated";
@@ -75,7 +79,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                 e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              Translate page
+              {t("page_structure.actions.translate")}
             </DropdownMenuItem>
           ) : (
             <>
@@ -102,7 +106,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
-                Edit page
+                {t("page_structure.actions.edit")}
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={e => {
@@ -127,7 +131,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
-                Settings
+                {t("page_structure.actions.page_settings")}
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={e => {
@@ -152,7 +156,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
-                Duplicate
+                {t("page_structure.actions.duplicate")}
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={e => {
@@ -177,7 +181,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                   e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
-                Add subpage
+                {t("page_structure.actions.add_nested_page")}
               </DropdownMenuItem>
               {/* Delete option - not shown for Home page, disabled with tooltip for pages with children */}
               {!isHomePage && (
@@ -197,7 +201,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                             borderRadius: '0'
                           }}
                         >
-                          Delete
+                          {t("page_structure.actions.delete")}
                         </DropdownMenuItem>
                       </div>
                     </TooltipTrigger>
@@ -229,7 +233,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                       e.currentTarget.style.backgroundColor = 'transparent';
                     }}
                   >
-                    Delete
+                    {t("page_structure.actions.delete")}
                   </DropdownMenuItem>
                 )
               )}
