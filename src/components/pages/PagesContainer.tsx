@@ -1,3 +1,4 @@
+
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
 import { DevControls } from "@/components/DevControls";
@@ -71,7 +72,7 @@ export const PagesContainer = () => {
   } = usePageActions(setPages);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '80px' }}>
+    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '24px' }}>
       <div className="w-full" style={{ maxWidth: '992px' }}>
         <DevControls
           language={devLanguage}
@@ -81,7 +82,7 @@ export const PagesContainer = () => {
           currentPageName="Site structure"
         />
         
-        <div style={{ marginBottom: '48px' }}>
+        <div style={{ marginBottom: '64px' }}>
           <PagesHeader />
         </div>
         
