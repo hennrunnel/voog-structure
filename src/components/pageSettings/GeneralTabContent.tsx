@@ -146,7 +146,7 @@ export const GeneralTabContent = ({
             onMouseLeave={() => setIsImageHovered(false)}
           >
             <img 
-              src="/lovable-uploads/01d5297b-673d-4f82-8bf5-fac4d352b073.png"
+              src="/lovable-uploads/b94d51a1-6d9f-47e9-b2af-afc90770f621.png"
               alt="F1 race car preview"
               className="w-full h-full object-cover"
             />
