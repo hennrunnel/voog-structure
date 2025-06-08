@@ -17,7 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 
 interface AddPageSidebarProps {
@@ -185,14 +184,21 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
               </>
             )}
 
-            {/* Info Box - moved above the button */}
+            {/* Info Box - moved above the button with new design */}
             {!isLinkMode && (
-              <Alert>
-                <Info className="h-4 w-4" />
-                <AlertDescription>
-                  After creating your page, manage SEO, access, and social images in Page settings.
-                </AlertDescription>
-              </Alert>
+              <div className="w-full h-10 relative overflow-hidden">
+                <div className="w-full h-10 left-0 top-0 absolute opacity-10 bg-indigo-600 rounded-[5px]"></div>
+                <div className="w-full left-[12px] top-[12px] absolute inline-flex justify-start items-center gap-3 pr-3">
+                  <div className="w-4 h-4 relative flex-shrink-0">
+                    <div className="w-4 h-4 left-0 top-0 absolute overflow-hidden">
+                      <Info className="w-4 h-4 text-indigo-600" />
+                    </div>
+                  </div>
+                  <div className="flex-1 text-neutral-800 text-xs font-medium leading-none">
+                    After creating your page, manage SEO, access, and social image in Page settings.
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
