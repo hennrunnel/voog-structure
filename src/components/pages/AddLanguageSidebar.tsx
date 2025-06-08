@@ -1,10 +1,10 @@
-
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Command,
   CommandEmpty,
@@ -181,44 +181,46 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                     <PopoverContent className="w-full p-0" align="start">
                       <Command>
                         <CommandInput placeholder="Search languages..." />
-                        <CommandList>
-                          <CommandEmpty>No language found.</CommandEmpty>
-                          <CommandGroup heading="Popular languages">
-                            {POPULAR_LANGUAGES.map((language) => (
-                              <CommandItem
-                                key={`popular-${language.value}`}
-                                value={language.value}
-                                onSelect={() => handleLanguageSelect(language.value)}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    languageName === language.value ? "opacity-100" : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                          <CommandSeparator />
-                          <CommandGroup heading="All languages">
-                            {ALL_LANGUAGES.map((language) => (
-                              <CommandItem
-                                key={language.value}
-                                value={language.value}
-                                onSelect={() => handleLanguageSelect(language.value)}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    languageName === language.value ? "opacity-100" : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
+                        <ScrollArea className="h-[300px]">
+                          <CommandList>
+                            <CommandEmpty>No language found.</CommandEmpty>
+                            <CommandGroup heading="Popular languages">
+                              {POPULAR_LANGUAGES.map((language) => (
+                                <CommandItem
+                                  key={`popular-${language.value}`}
+                                  value={language.value}
+                                  onSelect={() => handleLanguageSelect(language.value)}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      languageName === language.value ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  {language.label}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                            <CommandSeparator />
+                            <CommandGroup heading="All languages">
+                              {ALL_LANGUAGES.map((language) => (
+                                <CommandItem
+                                  key={language.value}
+                                  value={language.value}
+                                  onSelect={() => handleLanguageSelect(language.value)}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      languageName === language.value ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  {language.label}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </ScrollArea>
                       </Command>
                     </PopoverContent>
                   </Popover>
