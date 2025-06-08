@@ -1,7 +1,13 @@
 
-interface PagesHeaderProps {}
+import { useTranslation } from "@/hooks/useTranslation";
 
-export const PagesHeader = () => {
+interface PagesHeaderProps {
+  currentLanguage?: "en" | "et";
+}
+
+export const PagesHeader = ({ currentLanguage = "en" }: PagesHeaderProps) => {
+  const { t } = useTranslation(currentLanguage);
+  
   return (
     <h1 
       className="text-[#1A1A1A]"
@@ -13,7 +19,7 @@ export const PagesHeader = () => {
         lineHeight: '39px'
       }}
     >
-      Site structure
+      {t("page_structure.site_structure_title")}
     </h1>
   );
 };

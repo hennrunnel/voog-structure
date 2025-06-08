@@ -5,6 +5,7 @@ import { pageSettingsTranslations } from "./pageSettings";
 import { languageManagementTranslations } from "./languageManagement";
 import { languageOptionsTranslations } from "./languageOptions";
 import { regionsTranslations } from "./regions";
+import { pageStructureTranslations } from "./pageStructure";
 
 export const translations = {
   ...addLanguageTranslations,
@@ -12,7 +13,8 @@ export const translations = {
   ...pageSettingsTranslations,
   ...languageManagementTranslations,
   ...languageOptionsTranslations,
-  ...regionsTranslations
+  ...regionsTranslations,
+  ...pageStructureTranslations
 } as const;
 
 export type TranslationKey = keyof typeof translations;

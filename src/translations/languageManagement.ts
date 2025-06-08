@@ -7,44 +7,14 @@ export const languageManagementTranslations = {
         et: "Lisa keel"
       }
     },
-    actions: {
-      language_settings_button: {
-        en: "Language settings",
-        et: "Keele seaded"
-      },
-      new_page_button: {
-        en: "New page",
-        et: "Uus leht"
-      },
-      more_options_aria: {
-        en: "More options",
-        et: "Veel valikuid"
-      },
-      publish_language: {
-        en: "Publish this language",
-        et: "Avalikusta keel"
-      },
-      unpublish_language: {
-        en: "Unpublish this language",
-        et: "Peida keel"
-      },
-      download_site: {
-        en: "Download entire site",
-        et: "Laadi kogu sait alla"
-      },
-      delete_language: {
-        en: "Delete language",
-        et: "Kustuta keel"
-      }
-    },
     settings: {
       title: {
         en: "Language settings",
         et: "Keele seaded"
       },
       language_label: {
-        en: "Language",
-        et: "Keel"
+        en: "Language name",
+        et: "Keele nimetus"
       },
       region_label: {
         en: "Region",
@@ -64,11 +34,11 @@ export const languageManagementTranslations = {
       },
       visitor_language_label: {
         en: "Which language visitors see",
-        et: "Mis keelt külastaja näeb"
+        et: "Mis keelt külastaja näeb?"
       },
       visitor_language_help: {
         en: "Choose how to show the site's language: auto-detect based on location, or always use the selected one.",
-        et: "Vali, kuidas saidi keelt näidata: automaatne tuvastamine asukoha põhjal või alati valitud keele kasutamine."
+        et: "Vali, kuidas saidi keelt näidata: automaatne tuvastus asukoha järgi või alati valitud keel."
       },
       save_button: {
         en: "Save",
@@ -85,16 +55,16 @@ export const languageManagementTranslations = {
         et: "Kustuta keel"
       },
       delete_description: {
-        en: "Are you sure you want to delete this language? This action cannot be undone and will remove all content for this language.",
-        et: "Kas oled kindel, et soovid selle keele kustutada? Seda tegevust ei saa tagasi võtta ja see eemaldab kogu selle keele sisu."
+        en: "Are you sure you want to delete this language? This action cannot be undone.",
+        et: "Kas oled kindel, et soovid selle keele kustutada? Seda tegevust ei saa tagasi võtta."
       },
-      disable_title: {
-        en: "Disable language",
-        et: "Keela keel"
+      delete_button: {
+        en: "Delete",
+        et: "Kustuta"
       },
-      disable_description: {
-        en: "Are you sure you want to disable this language? It will no longer be visible to visitors.",
-        et: "Kas oled kindel, et soovid selle keele keelata? See ei ole enam külastajatele nähtav."
+      cancel_button: {
+        en: "Cancel",
+        et: "Loobu"
       },
       enable_title: {
         en: "Enable language",
@@ -104,21 +74,21 @@ export const languageManagementTranslations = {
         en: "Are you sure you want to enable this language? It will become visible to visitors.",
         et: "Kas oled kindel, et soovid selle keele lubada? See muutub külastajatele nähtavaks."
       },
-      delete_button: {
-        en: "Delete language",
-        et: "Kustuta keel"
-      },
-      disable_button: {
-        en: "Disable",
-        et: "Keela"
-      },
       enable_button: {
         en: "Enable",
         et: "Luba"
       },
-      cancel_button: {
-        en: "Cancel",
-        et: "Loobu"
+      disable_title: {
+        en: "Disable language",
+        et: "Keela keel"
+      },
+      disable_description: {
+        en: "Are you sure you want to disable this language? It will no longer be visible to visitors.",
+        et: "Kas oled kindel, et soovid selle keele keelata? See ei ole enam külastajatele nähtav."
+      },
+      disable_button: {
+        en: "Disable",
+        et: "Keela"
       }
     }
   }

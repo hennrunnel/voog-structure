@@ -1,5 +1,7 @@
+
 import { PageRowContainer } from "@/components/pages/PageRowContainer";
 import { PageItem } from "@/types/pages";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface PageTableProps {
   pages: PageItem[];
@@ -26,6 +28,8 @@ export const PageTable = ({
   onEditPage,
   onTranslatePage
 }: PageTableProps) => {
+  const { t } = useTranslation(currentLanguage as "en" | "et");
+  
   return (
     <div className="overflow-hidden" style={{ borderTop: '1px solid #EFEFEF' }}>
       {/* Table Header */}
@@ -41,27 +45,27 @@ export const PageTable = ({
           <div className="flex items-center mr-4" style={{ minWidth: 0, flex: 1 }}>
             {/* Space for expand button (20px width + 8px margin) */}
             <div className="w-5 mr-2"></div>
-            <span>Menu title</span>
+            <span>{t("page_structure.table.menu_title")}</span>
           </div>
           
           {/* Slug */}
           <div className="w-48 px-4">
-            <span>Slug</span>
+            <span>{t("page_structure.table.slug")}</span>
           </div>
           
           {/* Layout */}
           <div className="w-32 px-4">
-            <span>Layout</span>
+            <span>{t("page_structure.table.layout")}</span>
           </div>
           
           {/* SEO */}
           <div className="w-24 px-4 flex justify-center">
-            <span>SEO</span>
+            <span>{t("page_structure.table.seo")}</span>
           </div>
           
           {/* In menu */}
           <div className="w-24 px-4 flex justify-center">
-            <span>In menu</span>
+            <span>{t("page_structure.table.in_menu")}</span>
           </div>
 
           {/* Space for move handle */}

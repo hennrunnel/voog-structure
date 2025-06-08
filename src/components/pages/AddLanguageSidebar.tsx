@@ -1,4 +1,3 @@
-
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -209,16 +208,16 @@ export const AddLanguageSidebar = ({
                     >
                       {languageName
                         ? getTranslatedLanguageName(languageName)
-                        : "Select language..."}
+                        : t("language_options.select_language_placeholder")}
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-full p-0" align="start">
                     <Command>
-                      <CommandInput placeholder="Search languages..." />
+                      <CommandInput placeholder={t("language_options.search_languages_placeholder")} />
                       <CommandList className="max-h-[300px] overflow-y-auto">
-                        <CommandEmpty>No language found.</CommandEmpty>
-                        <CommandGroup heading="Popular languages">
+                        <CommandEmpty>{t("language_options.no_language_found")}</CommandEmpty>
+                        <CommandGroup heading={t("language_options.popular_languages_group")}>
                           {POPULAR_LANGUAGES.map((language) => (
                             <CommandItem
                               key={`popular-${language.value}`}
@@ -267,7 +266,7 @@ export const AddLanguageSidebar = ({
                   </Label>
                   <Select value={region} onValueChange={setRegion}>
                     <SelectTrigger className="w-full border-border rounded-lg">
-                      <SelectValue placeholder="Select region" />
+                      <SelectValue placeholder={t("language_options.select_language_placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
                       {LANGUAGE_REGIONS[languageName as keyof typeof LANGUAGE_REGIONS]?.map((regionOption) => (
@@ -330,7 +329,7 @@ export const AddLanguageSidebar = ({
                 </Label>
                 <Select value={whichLanguageVisitors} onValueChange={setWhichLanguageVisitors}>
                   <SelectTrigger className="w-full border-border rounded-lg">
-                    <SelectValue placeholder="Select option" />
+                    <SelectValue placeholder={t("language_options.select_language_placeholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="detect-by-location">
@@ -342,7 +341,7 @@ export const AddLanguageSidebar = ({
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Choose how to show the site's language: auto-detect based on location, or always use the selected one.
+                  {t("language_management.settings.visitor_language_help")}
                 </p>
               </div>
 
@@ -353,7 +352,7 @@ export const AddLanguageSidebar = ({
                 </Label>
                 <Select value={duplicateContentFrom} onValueChange={setDuplicateContentFrom}>
                   <SelectTrigger className="w-full border-border rounded-lg">
-                    <SelectValue placeholder="Select option" />
+                    <SelectValue placeholder={t("language_options.select_language_placeholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="do-not-duplicate">
@@ -386,7 +385,7 @@ export const AddLanguageSidebar = ({
                 onClick={onClose} 
                 className="px-6 py-2 rounded-lg font-medium border-border bg-background hover:bg-accent hover:text-accent-foreground"
               >
-                Cancel
+                {t("add_language.footer.cancel_button")}
               </Button>
             </div>
           </div>
@@ -398,12 +397,12 @@ export const AddLanguageSidebar = ({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {pendingVisibilityValue ? 'Enable language' : 'Disable language'}
+              {pendingVisibilityValue ? t("language_management.dialogs.enable_title") : t("language_management.dialogs.disable_title")}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {pendingVisibilityValue 
-                ? 'Are you sure you want to enable this language? It will become visible to visitors.'
-                : 'Are you sure you want to disable this language? It will no longer be visible to visitors.'
+                ? t("language_management.dialogs.enable_description")
+                : t("language_management.dialogs.disable_description")
               }
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -415,10 +414,10 @@ export const AddLanguageSidebar = ({
                 : "bg-primary hover:bg-primary/90"
               }
             >
-              {pendingVisibilityValue ? 'Enable' : 'Disable'}
+              {pendingVisibilityValue ? t("language_management.dialogs.enable_button") : t("language_management.dialogs.disable_button")}
             </AlertDialogAction>
             <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
-              Cancel
+              {t("language_management.dialogs.cancel_button")}
             </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>

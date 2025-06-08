@@ -87,7 +87,7 @@ export const PagesContainer = () => {
         )}
         
         <div style={{ marginBottom: '64px' }}>
-          <PagesHeader />
+          <PagesHeader currentLanguage={devLanguage} />
         </div>
         
         <Card 
