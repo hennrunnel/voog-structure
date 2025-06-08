@@ -69,7 +69,7 @@ export const PageDialogs = ({
               Are you sure you want to delete this language? This action cannot be undone and all content in this language will be permanently lost.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-row justify-end space-x-2 space-y-0">
+          <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
             <AlertDialogAction onClick={onConfirmLanguageDelete} className="bg-destructive hover:bg-destructive/90">
               Delete language
             </AlertDialogAction>

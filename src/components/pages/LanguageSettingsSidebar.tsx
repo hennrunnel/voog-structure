@@ -165,7 +165,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground mt-1">
-                  This setting applies to all languages. Auto-detect serves the appropriate language based on visitor's browser settings. Always this language shows the selected language to all visitors.
+                  Choose how to show the site's language: auto-detect based on location, or always use the selected one.
                 </p>
               </div>
             </div>
@@ -202,16 +202,18 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Language</AlertDialogTitle>
+            <AlertDialogTitle>Delete language</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to delete the {languageName} language? This action cannot be undone and will remove all content for this language.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
             <AlertDialogAction onClick={handleConfirmDelete} className="bg-destructive hover:bg-destructive/90">
-              Delete Language
+              Delete language
             </AlertDialogAction>
+            <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
+              Cancel
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
