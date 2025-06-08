@@ -14,9 +14,9 @@ import { PageSettingsDialogs } from "./pageSettings/PageSettingsDialogs";
 
 export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   const [activeTab, setActiveTab] = useState("general");
-  const [title, setTitle] = useState("Products");
+  const [title, setTitle] = useState("Digital ordering platform for restaurants and cafes");
   const [urlSlug, setUrlSlug] = useState("/products");
-  const [menuTitle, setMenuTitle] = useState("Home");
+  const [menuTitle, setMenuTitle] = useState("Products");
   const [showInMenu, setShowInMenu] = useState(true);
   const [access, setAccess] = useState("public");
   const [layout, setLayout] = useState("front-page");

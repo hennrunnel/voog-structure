@@ -53,21 +53,38 @@ export const SeoTabContent = ({
 
   const titlePreview = getTitlePreview();
   const titleLength = titlePreview.length;
-  const titleProgress = Math.min((titleLength / 60) * 100, 100);
+  
+  // Title SEO score calculation (optimal: under 70 characters)
+  const getTitleSeoColor = () => {
+    if (titleLength <= 70) return "bg-green-500";
+    if (titleLength <= 90) return "bg-yellow-500";
+    return "bg-red-500";
+  };
+
+  const titleProgress = Math.min((titleLength / 70) * 100, 100);
   
   const descriptionLength = metaDescription.length;
-  const descriptionProgress = Math.min((descriptionLength / 160) * 100, 100);
+  
+  // Description SEO score calculation (optimal: around 150 characters)
+  const getDescriptionSeoColor = () => {
+    if (descriptionLength >= 120 && descriptionLength <= 150) return "bg-green-500";
+    if (descriptionLength >= 100 && descriptionLength <= 180) return "bg-yellow-500";
+    if (descriptionLength > 0) return "bg-red-500";
+    return "bg-gray-400";
+  };
 
-  // SEO score calculation based on best practices
+  const descriptionProgress = Math.min((descriptionLength / 150) * 100, 100);
+
+  // Overall SEO score calculation
   const getSeoScore = () => {
     let score = 0;
     
-    // Title length (optimal: 30-60 characters)
-    if (titleLength >= 30 && titleLength <= 60) score += 40;
-    else if (titleLength > 0) score += 20;
+    // Title length (optimal: under 70 characters)
+    if (titleLength <= 70 && titleLength > 0) score += 40;
+    else if (titleLength <= 90) score += 20;
     
-    // Description length (optimal: 120-160 characters)
-    if (descriptionLength >= 120 && descriptionLength <= 160) score += 40;
+    // Description length (optimal: 120-150 characters)
+    if (descriptionLength >= 120 && descriptionLength <= 150) score += 40;
     else if (descriptionLength > 0) score += 20;
     
     // Visible to search engines
@@ -102,11 +119,23 @@ export const SeoTabContent = ({
         />
       </div>
 
-      {/* Title format */}
+      {/* Title format and Customize toggle on same line */}
       <div className="space-y-2">
-        <Label htmlFor="title-format" className="text-sm font-medium text-foreground">
-          Title format
-        </Label>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="title-format" className="text-sm font-medium text-foreground">
+            Title format
+          </Label>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="customize-title"
+              checked={customizeTitleFormat}
+              onCheckedChange={setCustomizeTitleFormat}
+            />
+            <Label htmlFor="customize-title" className="text-sm font-medium text-foreground">
+              Customize title format
+            </Label>
+          </div>
+        </div>
         <Select value={titleFormat} onValueChange={setTitleFormat} disabled={customizeTitleFormat}>
           <SelectTrigger className="w-full border-border rounded-lg" id="title-format">
             <SelectValue />
@@ -119,39 +148,27 @@ export const SeoTabContent = ({
         </Select>
       </div>
 
-      {/* Customize title format */}
-      <div className="flex items-center space-x-2">
-        <Switch
-          id="customize-title"
-          checked={customizeTitleFormat}
-          onCheckedChange={setCustomizeTitleFormat}
-        />
-        <Label htmlFor="customize-title" className="text-sm font-medium text-foreground">
-          Customize title format for this page
-        </Label>
-      </div>
-
-      {/* Google preview */}
+      {/* Title preview (no label) */}
       <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">
-          Google preview
-        </Label>
         <div className="border border-border rounded-lg p-4 bg-background">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <div className="text-blue-600 text-sm font-medium truncate">
-                {titlePreview}
-              </div>
-              <div className="text-xs text-muted-foreground">
-                {titleLength}/60
-              </div>
+          <div className="space-y-2">
+            <div className="text-blue-600 text-sm font-medium">
+              {titlePreview}
             </div>
-            <Progress value={titleProgress} className="h-1" />
-            <div className="text-green-700 text-xs">
-              yoursite.com{pageTitle ? `/products` : ''}
+            <div className="flex items-center gap-2">
+              <Progress value={titleProgress} className={`h-2 flex-1`} />
+              <div className="text-xs text-muted-foreground">
+                {titleLength}/70
+              </div>
+              <div className={`w-2 h-2 rounded-full ${getTitleSeoColor()}`} />
             </div>
           </div>
         </div>
+        <p className="text-sm text-muted-foreground">
+          This is how current page's title is displayed on Google. By default the title format set in{" "}
+          <a href="/admin/seo" className="text-blue-600 hover:underline">SEO General</a>{" "}
+          is used but you can override it locally, if you wish.
+        </p>
       </div>
 
       {/* Meta description */}
@@ -166,6 +183,13 @@ export const SeoTabContent = ({
           className="w-full border-border rounded-lg min-h-[80px]"
           placeholder="Write a compelling description that summarizes this page..."
         />
+        <div className="flex items-center gap-2">
+          <Progress value={descriptionProgress} className="h-2 flex-1" />
+          <div className="text-xs text-muted-foreground">
+            {descriptionLength}/150
+          </div>
+          <div className={`w-2 h-2 rounded-full ${getDescriptionSeoColor()}`} />
+        </div>
         <p className="text-sm text-muted-foreground">
           The description that will appear in search engine results.
         </p>
@@ -182,16 +206,10 @@ export const SeoTabContent = ({
               {titlePreview}
             </div>
             <div className="text-green-700 text-xs">
-              yoursite.com{pageTitle ? `/products` : ''}
+              yoursite.com{urlSlug || '/products'}
             </div>
             <div className="text-sm text-muted-foreground">
               {metaDescription || "No meta description provided."}
-            </div>
-            <div className="flex items-center gap-2 mt-2">
-              <div className="text-xs text-muted-foreground">
-                {descriptionLength}/160
-              </div>
-              <Progress value={descriptionProgress} className="h-1 flex-1" />
             </div>
           </div>
         </div>
@@ -199,15 +217,15 @@ export const SeoTabContent = ({
 
       {/* Visible to search engines */}
       <div className="space-y-2">
+        <Label htmlFor="visible-search-engines" className="text-sm font-medium text-foreground">
+          Visible to search engines
+        </Label>
         <div className="flex items-center space-x-2">
           <Switch
             id="visible-search-engines"
             checked={visibleToSearchEngines}
             onCheckedChange={setVisibleToSearchEngines}
           />
-          <Label htmlFor="visible-search-engines" className="text-sm font-medium text-foreground">
-            Visible to search engines
-          </Label>
         </div>
         <p className="text-sm text-muted-foreground">
           When disabled, search engines will be instructed not to index this page.
