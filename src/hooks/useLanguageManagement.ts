@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const useLanguageManagement = () => {
   const [activeTab, setActiveTab] = useState("english");
-  const [availableTabs, setAvailableTabs] = useState<string[]>([]);
+  const [availableTabs, setAvailableTabs] = useState<string[]>(["english", "estonian"]);
   
   // English language settings
   const [englishWebsiteTitle, setEnglishWebsiteTitle] = useState("Finn & Cross");
