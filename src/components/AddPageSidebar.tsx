@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { X } from "lucide-react";
 
 interface AddPageSidebarProps {
@@ -27,25 +28,54 @@ interface AddPageSidebarProps {
 
 export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }: AddPageSidebarProps) => {
   const [title, setTitle] = useState("");
-  const [urlSlug, setUrlSlug] = useState("");
+  const [address, setAddress] = useState("");
   const [layout, setLayout] = useState("2023-front-page");
-  const [visibility, setVisibility] = useState("visible-in-menu");
+  const [visibleInMenu, setVisibleInMenu] = useState(true);
+  const [isLinkMode, setIsLinkMode] = useState(false);
+  const [hasManuallyEditedAddress, setHasManuallyEditedAddress] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       // Reset form when opening
       setTitle("");
-      setUrlSlug("");
+      setAddress("");
       setLayout("2023-front-page");
-      setVisibility("visible-in-menu");
+      setVisibleInMenu(true);
+      setIsLinkMode(false);
+      setHasManuallyEditedAddress(false);
     }
   }, [isOpen]);
 
+  // Auto-generate address from title
+  useEffect(() => {
+    if (title && !hasManuallyEditedAddress && !isLinkMode) {
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+      setAddress(slug ? `/${slug}` : "");
+    }
+  }, [title, hasManuallyEditedAddress, isLinkMode]);
+
+  const handleAddressChange = (value: string) => {
+    setAddress(value);
+    setHasManuallyEditedAddress(true);
+  };
+
   const handleCreatePage = () => {
-    if (title && urlSlug) {
-      onCreatePage({ title, slug: urlSlug });
+    if (title && address) {
+      onCreatePage({ title, slug: address });
       onClose();
     }
+  };
+
+  const toggleMode = () => {
+    setIsLinkMode(!isLinkMode);
+    setTitle("");
+    setAddress("");
+    setHasManuallyEditedAddress(false);
   };
 
   return (
@@ -59,7 +89,9 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
         {/* Header */}
         <div className="px-6 py-6 border-b border-border">
           <div className="flex items-center justify-between">
-            <h2 id="add-page-title" className="text-xl font-semibold text-foreground">Add new page</h2>
+            <h2 id="add-page-title" className="text-xl font-semibold text-foreground">
+              {isLinkMode ? "Add a custom link" : "Add new page"}
+            </h2>
             <button 
               onClick={onClose}
               className="p-2 hover:bg-muted rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50"
@@ -72,7 +104,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
 
         {/* Content */}
         <div className="px-6 py-6 flex-1 overflow-y-auto">
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Page title */}
             <div>
               <Label htmlFor="title" className="text-sm font-medium text-foreground">
@@ -82,61 +114,60 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Type here..."
+                placeholder="Enter page title..."
                 className="w-full border-border rounded-lg mt-2"
                 aria-required="true"
               />
             </div>
 
-            {/* Page URL */}
+            {/* Address */}
             <div>
-              <Label htmlFor="url-slug" className="text-sm font-medium text-foreground">
-                Page URL
+              <Label htmlFor="address" className="text-sm font-medium text-foreground">
+                Address
               </Label>
               <Input
-                id="url-slug"
-                value={urlSlug}
-                onChange={(e) => setUrlSlug(e.target.value)}
-                placeholder="/newpage"
+                id="address"
+                value={address}
+                onChange={(e) => handleAddressChange(e.target.value)}
+                placeholder={isLinkMode ? "https://example.com" : "/page-address"}
                 className="w-full border-border rounded-lg mt-2"
                 aria-required="true"
               />
             </div>
 
-            {/* Page layout */}
-            <div>
-              <Label htmlFor="layout" className="text-sm font-medium text-foreground">
-                Page layout
-              </Label>
-              <Select value={layout} onValueChange={setLayout}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="layout">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="2023-front-page">2023 front page</SelectItem>
-                  <SelectItem value="common-page">Common page</SelectItem>
-                  <SelectItem value="blog-layout">Blog layout</SelectItem>
-                  <SelectItem value="shop-layout">Shop layout</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {!isLinkMode && (
+              <>
+                {/* Layout */}
+                <div>
+                  <Label htmlFor="layout" className="text-sm font-medium text-foreground">
+                    Layout
+                  </Label>
+                  <Select value={layout} onValueChange={setLayout}>
+                    <SelectTrigger className="w-full border-border rounded-lg mt-2" id="layout">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2023-front-page">2023 front page</SelectItem>
+                      <SelectItem value="common-page">Common page</SelectItem>
+                      <SelectItem value="blog-layout">Blog layout</SelectItem>
+                      <SelectItem value="shop-layout">Shop layout</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-            {/* Visibility */}
-            <div>
-              <Label htmlFor="visibility" className="text-sm font-medium text-foreground">
-                Visibility
-              </Label>
-              <Select value={visibility} onValueChange={setVisibility}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2" id="visibility">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="visible-in-menu">Show in menu</SelectItem>
-                  <SelectItem value="hidden">Hidden</SelectItem>
-                  <SelectItem value="visible-not-in-menu">Visible but not in menu</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+                {/* Visible in menu */}
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="visible-in-menu" className="text-sm font-medium text-foreground">
+                    Visible in menu
+                  </Label>
+                  <Switch
+                    id="visible-in-menu"
+                    checked={visibleInMenu}
+                    onCheckedChange={setVisibleInMenu}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -144,22 +175,25 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
         <div className="px-6 py-6 border-t border-border flex flex-col space-y-3">
           <Button 
             onClick={handleCreatePage}
-            disabled={!title || !urlSlug}
+            disabled={!title || !address}
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-describedby={!title || !urlSlug ? "create-button-help" : undefined}
+            aria-describedby={!title || !address ? "create-button-help" : undefined}
           >
-            Create this page
+            {isLinkMode ? "Add it" : "Create this page"}
           </Button>
           
-          {!title || !urlSlug ? (
+          {!title || !address ? (
             <p id="create-button-help" className="sr-only">
-              Please fill in both page title and URL to create the page
+              Please fill in both page title and address
             </p>
           ) : null}
           
           <div className="text-center">
-            <button className="text-muted-foreground hover:text-foreground hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded">
-              Add a link instead
+            <button 
+              onClick={toggleMode}
+              className="text-muted-foreground hover:text-foreground hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded"
+            >
+              {isLinkMode ? "Add a new page instead" : "Add a link instead"}
             </button>
           </div>
         </div>
