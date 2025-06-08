@@ -1,3 +1,4 @@
+
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
 import { DevControls } from "@/components/DevControls";
@@ -130,6 +131,7 @@ export const PagesContainer = () => {
               onEditPage={handleEditPage}
               onTranslatePage={handleTranslatePage}
               addLanguage={addLanguage}
+              currentLanguage={devLanguage}
             />
           </CardContent>
         </Card>
@@ -151,6 +153,7 @@ export const PagesContainer = () => {
         <PageSettings 
           isOpen={pageSettingsOpen} 
           onClose={handleClosePageSettings}
+          currentLanguage={devLanguage}
         />
 
         <AddPageSidebar 
@@ -158,6 +161,7 @@ export const PagesContainer = () => {
           onClose={handleCloseAddPageSidebar} 
           onCreatePage={handleCreatePage} 
           selectedLayout={selectedLayout} 
+          currentLanguage={devLanguage}
         />
       </div>
     </div>

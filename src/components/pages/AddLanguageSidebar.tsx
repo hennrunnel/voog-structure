@@ -90,6 +90,21 @@ const LANGUAGE_REGIONS = {
   ],
 };
 
+// Language translations mapping
+const LANGUAGE_TRANSLATIONS = {
+  spanish: { en: "Spanish", et: "Hispaania" },
+  french: { en: "French", et: "Prantsuse" },
+  german: { en: "German", et: "Saksa" },
+  russian: { en: "Russian", et: "Vene" },
+  dutch: { en: "Dutch", et: "Hollandi" },
+  portuguese: { en: "Portuguese", et: "Portugali" },
+  italian: { en: "Italian", et: "Itaalia" },
+  finnish: { en: "Finnish", et: "Soome" },
+  latvian: { en: "Latvian", et: "Läti" },
+  lithuanian: { en: "Lithuanian", et: "Leedu" },
+  chinese: { en: "Chinese", et: "Hiina" },
+};
+
 export const AddLanguageSidebar = ({ 
   isOpen, 
   onClose, 
@@ -155,8 +170,9 @@ export const AddLanguageSidebar = ({
 
   // Helper function to get translated language name
   const getTranslatedLanguageName = (languageKey: string) => {
-    if (currentLanguage === "et" && t(`language_options.popular_languages.${languageKey}`)) {
-      return t(`language_options.popular_languages.${languageKey}` as any);
+    const translation = LANGUAGE_TRANSLATIONS[languageKey as keyof typeof LANGUAGE_TRANSLATIONS];
+    if (translation && currentLanguage === "et") {
+      return translation.et;
     }
     return ALL_LANGUAGES.find(lang => lang.value === languageKey)?.label || languageKey;
   };

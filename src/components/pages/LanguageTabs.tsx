@@ -29,6 +29,7 @@ interface LanguageTabsProps {
   onAddLanguage: (languageData: any) => void;
   onLanguagePublishToggle?: (language: string, published: boolean) => void;
   onLanguageDelete?: (language: string) => void;
+  currentLanguage?: "en" | "et";
 }
 
 export const LanguageTabs = ({
@@ -50,12 +51,10 @@ export const LanguageTabs = ({
   onTranslatePage,
   onAddLanguage,
   onLanguagePublishToggle,
-  onLanguageDelete
+  onLanguageDelete,
+  currentLanguage = "en"
 }: LanguageTabsProps) => {
   const [addLanguageSidebarOpen, setAddLanguageSidebarOpen] = useState(false);
-
-  // Get current language for UI translation
-  const currentLanguage = activeTab === "estonian" ? "et" : "en";
 
   const handleAddLanguageClick = () => {
     setAddLanguageSidebarOpen(true);

@@ -63,8 +63,9 @@ export const PagesContent = ({
   onPageSettings,
   onEditPage,
   onTranslatePage,
-  addLanguage
-}: PagesContentProps) => {
+  addLanguage,
+  currentLanguage = "en"
+}: PagesContentProps & { currentLanguage?: "en" | "et" }) => {
   const [languageSettingsOpen, setLanguageSettingsOpen] = useState(false);
 
   const handleLanguageSettings = () => {
@@ -117,6 +118,7 @@ export const PagesContent = ({
         onAddLanguage={addLanguage}
         onLanguagePublishToggle={handleLanguagePublishToggle}
         onLanguageDelete={handleLanguageDelete}
+        currentLanguage={currentLanguage}
       />
 
       {/* Only show language settings sidebar if there are languages */}
