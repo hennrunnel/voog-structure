@@ -112,14 +112,53 @@ export const DomainItem = ({
                 <MoreVertical className="w-4 h-4" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleSettingsClick}>
+            <DropdownMenuContent 
+              align="end"
+              style={{
+                borderRadius: '4px',
+                padding: '8px 0'
+              }}
+            >
+              <DropdownMenuItem 
+                onClick={handleSettingsClick}
+                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                style={{
+                  height: '40px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  margin: '0',
+                  borderRadius: '0'
+                }}
+              >
                 Settings (simplified)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleRenewClick}>
+              <DropdownMenuItem 
+                onClick={handleRenewClick}
+                className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                style={{
+                  height: '40px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  margin: '0',
+                  borderRadius: '0'
+                }}
+              >
                 Renew (console log)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleRemoveClick} className="text-red-600 focus:text-red-600">
+              <DropdownMenuItem 
+                onClick={handleRemoveClick} 
+                className="cursor-pointer text-red-600 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                style={{
+                  height: '40px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  margin: '0',
+                  borderRadius: '0'
+                }}
+              >
                 Remove (console log)
               </DropdownMenuItem>
             </DropdownMenuContent>

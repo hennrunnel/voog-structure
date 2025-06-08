@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Trash, Plus, Settings, Copy, FileText, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -296,14 +295,29 @@ export const PageRow: React.FC<PageRowProps> = ({
                   <KebabIcon />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
+              <DropdownMenuContent 
+                align="end" 
+                className="w-48 bg-white shadow-md border font-sans"
+                style={{
+                  borderRadius: '4px',
+                  padding: '8px 0'
+                }}
+              >
                 {isUntranslated ? (
                   <DropdownMenuItem 
                     onClick={e => {
                       e.stopPropagation();
                       onTranslatePage(page);
                     }} 
-                    className="cursor-pointer text-sm text-[#1B2124]"
+                    className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                    style={{
+                      height: '40px',
+                      padding: '8px 16px',
+                      fontSize: '14px',
+                      lineHeight: '24px',
+                      margin: '0',
+                      borderRadius: '0'
+                    }}
                   >
                     <FileText className="w-4 h-4 mr-2" />
                     Translate page
@@ -315,7 +329,15 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onEditPage(page);
                       }} 
-                      className="cursor-pointer text-sm text-[#1B2124]"
+                      className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                      style={{
+                        height: '40px',
+                        padding: '8px 16px',
+                        fontSize: '14px',
+                        lineHeight: '24px',
+                        margin: '0',
+                        borderRadius: '0'
+                      }}
                     >
                       <Edit className="w-4 h-4 mr-2" />
                       Edit page
@@ -325,7 +347,15 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onPageSettings(page);
                       }} 
-                      className="cursor-pointer text-sm text-[#1B2124]"
+                      className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                      style={{
+                        height: '40px',
+                        padding: '8px 16px',
+                        fontSize: '14px',
+                        lineHeight: '24px',
+                        margin: '0',
+                        borderRadius: '0'
+                      }}
                     >
                       <Settings className="w-4 h-4 mr-2" />
                       Settings
@@ -335,7 +365,15 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onDuplicatePage(page);
                       }} 
-                      className="cursor-pointer text-sm text-[#1B2124]"
+                      className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                      style={{
+                        height: '40px',
+                        padding: '8px 16px',
+                        fontSize: '14px',
+                        lineHeight: '24px',
+                        margin: '0',
+                        borderRadius: '0'
+                      }}
                     >
                       <Copy className="w-4 h-4 mr-2" />
                       Duplicate
@@ -345,7 +383,15 @@ export const PageRow: React.FC<PageRowProps> = ({
                         e.stopPropagation();
                         onAddNestedPage(page);
                       }} 
-                      className="cursor-pointer text-sm text-[#1B2124]"
+                      className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                      style={{
+                        height: '40px',
+                        padding: '8px 16px',
+                        fontSize: '14px',
+                        lineHeight: '24px',
+                        margin: '0',
+                        borderRadius: '0'
+                      }}
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       Add subpage
@@ -358,7 +404,15 @@ export const PageRow: React.FC<PageRowProps> = ({
                             <div>
                               <DropdownMenuItem 
                                 disabled
-                                className="cursor-not-allowed text-sm text-gray-400"
+                                className="cursor-not-allowed text-gray-400"
+                                style={{
+                                  height: '40px',
+                                  padding: '8px 16px',
+                                  fontSize: '14px',
+                                  lineHeight: '24px',
+                                  margin: '0',
+                                  borderRadius: '0'
+                                }}
                               >
                                 <Trash className="w-4 h-4 mr-2" />
                                 Delete
@@ -375,7 +429,15 @@ export const PageRow: React.FC<PageRowProps> = ({
                             e.stopPropagation();
                             onDeletePage(page);
                           }} 
-                          className="cursor-pointer text-sm text-red-600 focus:text-red-600"
+                          className="cursor-pointer text-red-600 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+                          style={{
+                            height: '40px',
+                            padding: '8px 16px',
+                            fontSize: '14px',
+                            lineHeight: '24px',
+                            margin: '0',
+                            borderRadius: '0'
+                          }}
                         >
                           <Trash className="w-4 h-4 mr-2" />
                           Delete

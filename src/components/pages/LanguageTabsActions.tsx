@@ -105,22 +105,53 @@ export const LanguageTabsActions = ({
               <KebabIcon />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-white shadow-md border font-sans">
+          <DropdownMenuContent 
+            align="end" 
+            className="w-48 bg-white shadow-md border font-sans"
+            style={{
+              borderRadius: '4px',
+              padding: '8px 0'
+            }}
+          >
             <DropdownMenuItem 
               onClick={handleLanguagePublishToggle} 
-              className="cursor-pointer text-sm text-[#1B2124]"
+              className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+              style={{
+                height: '40px',
+                padding: '8px 16px',
+                fontSize: '14px',
+                lineHeight: '24px',
+                margin: '0',
+                borderRadius: '0'
+              }}
             >
               {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleDownloadSite} 
-              className="cursor-pointer text-sm text-[#1B2124]"
+              className="cursor-pointer text-[#1B2124] hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+              style={{
+                height: '40px',
+                padding: '8px 16px',
+                fontSize: '14px',
+                lineHeight: '24px',
+                margin: '0',
+                borderRadius: '0'
+              }}
             >
               Download entire site
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleLanguageDelete} 
-              className="cursor-pointer text-sm text-red-600 focus:text-red-600"
+              className="cursor-pointer text-red-600 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white transition-colors"
+              style={{
+                height: '40px',
+                padding: '8px 16px',
+                fontSize: '14px',
+                lineHeight: '24px',
+                margin: '0',
+                borderRadius: '0'
+              }}
             >
               Delete language
             </DropdownMenuItem>
