@@ -7,6 +7,36 @@ export const languageManagementTranslations = {
         et: "Lisa keel"
       }
     },
+    actions: {
+      language_settings_button: {
+        en: "Language settings",
+        et: "Keele seaded"
+      },
+      new_page_button: {
+        en: "New page",
+        et: "Uus leht"
+      },
+      more_options_aria: {
+        en: "More options",
+        et: "Rohkem valikuid"
+      },
+      publish_language: {
+        en: "Publish language",
+        et: "Avalda keel"
+      },
+      unpublish_language: {
+        en: "Unpublish language",
+        et: "Peida keel"
+      },
+      download_site: {
+        en: "Download site",
+        et: "Lae sait alla"
+      },
+      delete_language: {
+        en: "Delete language",
+        et: "Kustuta keel"
+      }
+    },
     settings: {
       title: {
         en: "Language settings",
