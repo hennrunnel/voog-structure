@@ -41,21 +41,21 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
-        className="w-[420px] max-w-[420px] p-0 bg-white border-l border-gray-200 shadow-lg"
+        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg"
         side="right"
         role="dialog"
         aria-labelledby="page-settings-title"
       >
         {/* Header */}
-        <div className="px-8 py-8 pb-6 border-b border-gray-100">
+        <div className="px-6 py-6 border-b border-border">
           <div className="flex items-center justify-between mb-6">
-            <h2 id="page-settings-title" className="text-2xl font-semibold text-gray-900">Page settings</h2>
+            <h2 id="page-settings-title" className="text-xl font-semibold text-foreground">Page settings</h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="p-2 hover:bg-muted rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50"
               aria-label="Close page settings"
             >
-              <X className="w-5 h-5 text-gray-500" />
+              <X className="w-5 h-5 text-muted-foreground" />
             </button>
           </div>
 
@@ -63,7 +63,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
           <div className="mb-6">
             <Button 
               onClick={handleEditPage}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 justify-center"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium flex items-center gap-2 justify-center"
             >
               <Edit className="w-4 h-4" />
               Edit page
@@ -74,10 +74,10 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
           <div className="flex space-x-8" role="tablist">
             <button
               onClick={() => setActiveTab("general")}
-              className={`pb-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-t ${
+              className={`pb-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded-t ${
                 activeTab === "general"
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
               role="tab"
               aria-selected={activeTab === "general"}
@@ -87,10 +87,10 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
             </button>
             <button
               onClick={() => setActiveTab("seo")}
-              className={`pb-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-t ${
+              className={`pb-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded-t ${
                 activeTab === "seo"
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
               role="tab"
               aria-selected={activeTab === "seo"}
@@ -102,61 +102,60 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
         </div>
 
         {/* Content */}
-        <div className="px-8 py-6 flex-1 overflow-y-auto">
+        <div className="px-6 py-6 flex-1 overflow-y-auto">
           {activeTab === "general" && (
-            <div id="general-panel" role="tabpanel" className="space-y-6">
+            <div id="general-panel" role="tabpanel" className="space-y-4">
               {/* Page title */}
               <div>
-                <Label htmlFor="title" className="text-sm font-medium text-[#1A1A1A] block mb-2">
+                <Label htmlFor="title" className="text-sm font-medium text-foreground">
                   Page title
                 </Label>
                 <Input
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5"
+                  className="w-full border-border rounded-lg mt-2"
                   aria-describedby="title-description"
                 />
               </div>
 
               {/* URL slug */}
               <div>
-                <Label htmlFor="url-slug" className="text-sm font-medium text-[#1A1A1A] block mb-2">
+                <Label htmlFor="url-slug" className="text-sm font-medium text-foreground">
                   URL slug
                 </Label>
                 <Input
                   id="url-slug"
                   value={urlSlug}
                   onChange={(e) => setUrlSlug(e.target.value)}
-                  className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5 border-2 border-blue-500"
+                  className="w-full border-border rounded-lg mt-2 border-2 border-primary"
                   aria-describedby="url-slug-description"
                 />
-                <p id="url-slug-description" className="text-sm text-gray-600 mt-1">The unique location slug for this page.</p>
+                <p id="url-slug-description" className="text-sm text-muted-foreground mt-1">The unique location slug for this page.</p>
               </div>
 
               {/* Menu title and Show in menu */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="menu-title" className="text-sm font-medium text-[#1A1A1A] block mb-2">
+                  <Label htmlFor="menu-title" className="text-sm font-medium text-foreground">
                     Menu title
                   </Label>
                   <Input
                     id="menu-title"
                     value={menuTitle}
                     onChange={(e) => setMenuTitle(e.target.value)}
-                    className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5"
+                    className="w-full border-border rounded-lg mt-2"
                   />
                 </div>
                 
                 <div>
-                  <Label className="text-sm font-medium text-[#1A1A1A] block mb-2">
+                  <Label className="text-sm font-medium text-foreground">
                     Show in menu
                   </Label>
                   <div className="flex items-center mt-4">
                     <Switch
                       checked={showInMenu}
                       onCheckedChange={setShowInMenu}
-                      className="data-[state=checked]:bg-blue-600"
                       aria-describedby="show-in-menu-description"
                     />
                     <span className="sr-only" id="show-in-menu-description">
@@ -168,11 +167,11 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
               {/* Access */}
               <div>
-                <Label htmlFor="access" className="text-sm font-medium text-[#1A1A1A] block mb-2">
+                <Label htmlFor="access" className="text-sm font-medium text-foreground">
                   Access
                 </Label>
                 <Select value={access} onValueChange={setAccess}>
-                  <SelectTrigger className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5" id="access">
+                  <SelectTrigger className="w-full border-border rounded-lg mt-2" id="access">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -185,11 +184,11 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
               {/* Layout */}
               <div>
-                <Label htmlFor="layout" className="text-sm font-medium text-[#1A1A1A] block mb-2">
+                <Label htmlFor="layout" className="text-sm font-medium text-foreground">
                   Layout
                 </Label>
                 <Select value={layout} onValueChange={setLayout}>
-                  <SelectTrigger className="w-full border-[#E2E2E2] rounded-lg px-3 py-2.5" id="layout">
+                  <SelectTrigger className="w-full border-border rounded-lg mt-2" id="layout">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -203,7 +202,7 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
               {/* Social media image */}
               <div>
-                <Label className="text-sm font-medium text-[#1A1A1A] block mb-4">
+                <Label className="text-sm font-medium text-foreground mb-4 block">
                   Social media image
                 </Label>
                 <div className="relative">
@@ -220,11 +219,11 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
                   </button>
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
                     <div className="w-8 h-8 bg-white bg-opacity-80 rounded-full flex items-center justify-center">
-                      <div className="w-4 h-4 bg-gray-400 rounded-full"></div>
+                      <div className="w-4 h-4 bg-muted rounded-full"></div>
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-600 mt-2">
+                <p className="text-sm text-muted-foreground mt-2">
                   The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
                 </p>
               </div>
@@ -233,20 +232,20 @@ export const PageSettings = ({ isOpen, onClose }: PageSettingsProps) => {
 
           {activeTab === "seo" && (
             <div id="seo-panel" role="tabpanel" className="py-4">
-              <p className="text-gray-600">SEO settings would go here...</p>
+              <p className="text-muted-foreground">SEO settings would go here...</p>
             </div>
           )}
         </div>
 
         {/* Action buttons */}
-        <div className="px-8 py-6 border-t border-gray-100 flex space-x-3">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        <div className="px-6 py-6 border-t border-border flex space-x-3">
+          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium">
             Save
           </Button>
           <Button 
             variant="ghost" 
             onClick={onClose} 
-            className="px-6 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+            className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
           >
             Cancel
           </Button>

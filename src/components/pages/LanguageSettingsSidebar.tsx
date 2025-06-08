@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface LanguageSettingsSidebarProps {
   isOpen: boolean;
@@ -42,57 +43,57 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
-        className="w-[420px] max-w-[420px] p-0 bg-white border-l border-gray-200 shadow-lg"
+        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg"
         side="right"
       >
         {/* Header */}
-        <div className="px-8 py-8 pb-6 border-b border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900">Language settings</h2>
+        <div className="px-6 py-6 border-b border-border">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-foreground">Language settings</h2>
             <div className="flex items-center gap-2">
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={onLanguageDelete} 
-                className="text-gray-400 hover:text-gray-600 p-2" 
+                className="text-muted-foreground hover:text-foreground p-2" 
                 aria-label="Delete language"
               >
                 <Trash className="w-4 h-4" />
               </Button>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="p-2 hover:bg-muted rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50"
                 aria-label="Close language settings"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-muted-foreground" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="px-8 py-6 flex-1 overflow-y-auto">
-          <div className="space-y-6">
+        <div className="px-6 py-6 flex-1 overflow-y-auto">
+          <div className="space-y-4">
             {/* Website title */}
-            <div className="flex items-center">
-              <label htmlFor="website-title" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+            <div>
+              <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
                 Website title
-              </label>
+              </Label>
               <Input 
                 id="website-title" 
                 value={websiteTitle} 
                 onChange={e => setWebsiteTitle(e.target.value)} 
-                className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" 
+                className="w-full bg-muted border-border rounded-lg mt-2" 
               />
             </div>
 
             {/* Language name */}
-            <div className="flex items-center">
-              <label htmlFor="language-name" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+            <div>
+              <Label htmlFor="language-name" className="text-sm font-medium text-foreground">
                 Language name
-              </label>
+              </Label>
               <Select defaultValue={activeTab}>
-                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" id="language-name">
+                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="language-name">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -104,12 +105,12 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
             </div>
 
             {/* Region */}
-            <div className="flex items-center">
-              <label htmlFor="region" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+            <div>
+              <Label htmlFor="region" className="text-sm font-medium text-foreground">
                 Region
-              </label>
+              </Label>
               <Select defaultValue="global">
-                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" id="region">
+                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="region">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -121,39 +122,37 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
             </div>
 
             {/* Name in menu */}
-            <div className="flex items-center">
-              <label htmlFor="name-in-menu" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+            <div>
+              <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
                 Name in menu
-              </label>
+              </Label>
               <Input 
                 id="name-in-menu" 
                 value={nameInMenu} 
                 onChange={e => setNameInMenu(e.target.value)} 
-                className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" 
+                className="w-full bg-muted border-border rounded-lg mt-2" 
               />
             </div>
 
             {/* Is this language publicly visible */}
-            <div className="flex items-center">
-              <label htmlFor="publicly-visible" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="publicly-visible" className="text-sm font-medium text-foreground">
                 Is this language publicly visible?
-              </label>
-              <div className="flex-shrink-0 ml-4">
-                <Switch 
-                  id="publicly-visible" 
-                  checked={languageVisible} 
-                  onCheckedChange={onLanguageVisibilityToggle} 
-                />
-              </div>
+              </Label>
+              <Switch 
+                id="publicly-visible" 
+                checked={languageVisible} 
+                onCheckedChange={onLanguageVisibilityToggle} 
+              />
             </div>
 
             {/* Which language visitors see */}
-            <div className="flex items-center">
-              <label htmlFor="visitor-language" className="text-sm text-[#1A1A1A] font-medium w-32 flex-shrink-0">
+            <div>
+              <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
                 Which language visitors see?
-              </label>
+              </Label>
               <Select defaultValue="detect-location">
-                <SelectTrigger className="bg-[#F8F9FB] border-[#E2E2E2] rounded-lg text-sm h-10 flex-1 ml-4" id="visitor-language">
+                <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="visitor-language">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -167,14 +166,14 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
         </div>
 
         {/* Action buttons */}
-        <div className="px-8 py-6 border-t border-gray-100 flex space-x-3">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        <div className="px-6 py-6 border-t border-border flex space-x-3">
+          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium">
             Save
           </Button>
           <Button 
             variant="ghost" 
             onClick={onClose} 
-            className="px-6 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+            className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
           >
             Cancel
           </Button>
