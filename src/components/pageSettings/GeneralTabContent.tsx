@@ -1,16 +1,8 @@
 
-import { X } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface GeneralTabContentProps {
   title: string;
@@ -45,38 +37,29 @@ export const GeneralTabContent = ({
     <div id="general-panel" role="tabpanel" className="space-y-6">
       {/* Page title */}
       <div className="space-y-2">
-        <Label htmlFor="title" className="text-sm font-medium text-foreground">
+        <Label htmlFor="page-title" className="text-sm font-medium text-foreground">
           Page title
         </Label>
         <Input
-          id="title"
+          id="page-title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="w-full border-border rounded-lg"
-          aria-describedby="title-description"
         />
       </div>
 
       {/* URL slug */}
       <div className="space-y-2">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Label htmlFor="url-slug" className="text-sm font-medium text-foreground cursor-help">
-              URL slug
-            </Label>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p className="text-xs">The unique location slug for this page.</p>
-          </TooltipContent>
-        </Tooltip>
+        <Label htmlFor="url-slug" className="text-sm font-medium text-foreground">
+          URL slug
+        </Label>
         <Input
           id="url-slug"
           value={urlSlug}
           onChange={(e) => setUrlSlug(e.target.value)}
           className="w-full border-border rounded-lg"
-          aria-describedby="url-slug-description"
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-muted-foreground mt-2">
           The unique location slug for this page.
         </p>
       </div>
@@ -99,7 +82,7 @@ export const GeneralTabContent = ({
           <Label className="text-sm font-medium text-foreground">
             Show in menu
           </Label>
-          <div className="flex items-center pt-2">
+          <div className="flex items-center mt-4">
             <Switch
               checked={showInMenu}
               onCheckedChange={setShowInMenu}
@@ -112,13 +95,13 @@ export const GeneralTabContent = ({
         </div>
       </div>
 
-      {/* Access */}
+      {/* Access control */}
       <div className="space-y-2">
-        <Label htmlFor="access" className="text-sm font-medium text-foreground">
+        <Label htmlFor="access-control" className="text-sm font-medium text-foreground">
           Access
         </Label>
         <Select value={access} onValueChange={setAccess}>
-          <SelectTrigger className="w-full border-border rounded-lg" id="access">
+          <SelectTrigger className="w-full border-border rounded-lg" id="access-control">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -131,43 +114,20 @@ export const GeneralTabContent = ({
 
       {/* Layout */}
       <div className="space-y-2">
-        <Label htmlFor="layout" className="text-sm font-medium text-foreground">
+        <Label htmlFor="page-layout" className="text-sm font-medium text-foreground">
           Layout
         </Label>
         <Select value={layout} onValueChange={setLayout}>
-          <SelectTrigger className="w-full border-border rounded-lg" id="layout">
+          <SelectTrigger className="w-full border-border rounded-lg" id="page-layout">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="front-page">Front page</SelectItem>
             <SelectItem value="common-page">Common page</SelectItem>
-            <SelectItem value="blog">Blog</SelectItem>
-            <SelectItem value="shop">Shop</SelectItem>
+            <SelectItem value="blog-layout">Blog layout</SelectItem>
+            <SelectItem value="shop-layout">Shop layout</SelectItem>
           </SelectContent>
         </Select>
-      </div>
-
-      {/* Social media image */}
-      <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">
-          Social media image
-        </Label>
-        <div className="relative group">
-          <img 
-            src="/lovable-uploads/a3993143-33a0-4b8f-9cf9-3d7e86d827a7.png" 
-            alt="Social media preview" 
-            className="w-full h-48 object-cover rounded-lg"
-          />
-          <button 
-            className="absolute top-2 right-2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-1.5 rounded-md transition-colors opacity-0 group-hover:opacity-100"
-            aria-label="Remove social media image"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          The image is usually presented when sharing the link. For example, if you post a link on Facebook, there is an image of the website.
-        </p>
       </div>
     </div>
   );

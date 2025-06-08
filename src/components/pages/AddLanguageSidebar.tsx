@@ -160,80 +160,78 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
           <div className="px-6 py-6 flex-1 overflow-y-auto pb-24">
             <div className="space-y-6">
               {/* Language name */}
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="language-name" className="text-sm font-medium text-foreground">
                   Language
                 </Label>
-                <div className="mt-2">
-                  <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={open}
-                        className="w-full justify-between bg-muted border-border"
-                      >
-                        {languageName
-                          ? ALL_LANGUAGES.find((language) => language.value === languageName)?.label
-                          : "Select language..."}
-                        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-full p-0" align="start">
-                      <Command>
-                        <CommandInput placeholder="Search languages..." />
-                        <CommandList className="max-h-[300px] overflow-y-auto">
-                          <CommandEmpty>No language found.</CommandEmpty>
-                          <CommandGroup heading="Popular languages">
-                            {POPULAR_LANGUAGES.map((language) => (
-                              <CommandItem
-                                key={`popular-${language.value}`}
-                                value={language.value}
-                                onSelect={() => handleLanguageSelect(language.value)}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    languageName === language.value ? "opacity-100" : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                          <CommandSeparator />
-                          <CommandGroup heading="All languages">
-                            {ALL_LANGUAGES.map((language) => (
-                              <CommandItem
-                                key={language.value}
-                                value={language.value}
-                                onSelect={() => handleLanguageSelect(language.value)}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    languageName === language.value ? "opacity-100" : "opacity-0"
-                                  )}
-                                />
-                                {language.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                </div>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-full justify-between border-border"
+                    >
+                      {languageName
+                        ? ALL_LANGUAGES.find((language) => language.value === languageName)?.label
+                        : "Select language..."}
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput placeholder="Search languages..." />
+                      <CommandList className="max-h-[300px] overflow-y-auto">
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup heading="Popular languages">
+                          {POPULAR_LANGUAGES.map((language) => (
+                            <CommandItem
+                              key={`popular-${language.value}`}
+                              value={language.value}
+                              onSelect={() => handleLanguageSelect(language.value)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  languageName === language.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                        <CommandSeparator />
+                        <CommandGroup heading="All languages">
+                          {ALL_LANGUAGES.map((language) => (
+                            <CommandItem
+                              key={language.value}
+                              value={language.value}
+                              onSelect={() => handleLanguageSelect(language.value)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  languageName === language.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               {/* Region - only show if language has regions */}
               {showRegionField && (
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="region" className="text-sm font-medium text-foreground">
                     Region
                   </Label>
                   <Select value={region} onValueChange={setRegion}>
-                    <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2">
+                    <SelectTrigger className="w-full border-border rounded-lg">
                       <SelectValue placeholder="Select region" />
                     </SelectTrigger>
                     <SelectContent>
@@ -248,7 +246,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               )}
 
               {/* Website title */}
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
                   Website title in this language
                 </Label>
@@ -257,12 +255,12 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                   value={websiteTitle}
                   onChange={(e) => setWebsiteTitle(e.target.value)}
                   placeholder="Enter website title"
-                  className="w-full bg-muted border-border rounded-lg mt-2"
+                  className="w-full border-border rounded-lg"
                 />
               </div>
 
               {/* Name in menu */}
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
                   Name in menu
                 </Label>
@@ -271,7 +269,7 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                   value={nameInMenu}
                   onChange={(e) => setNameInMenu(e.target.value)}
                   placeholder="e.g., EN, English"
-                  className="w-full bg-muted border-border rounded-lg mt-2"
+                  className="w-full border-border rounded-lg"
                   required
                 />
               </div>
@@ -291,12 +289,12 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
               </div>
 
               {/* Which language visitors see */}
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
                   Which language visitors see
                 </Label>
                 <Select value={whichLanguageVisitors} onValueChange={setWhichLanguageVisitors}>
-                  <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2">
+                  <SelectTrigger className="w-full border-border rounded-lg">
                     <SelectValue placeholder="Select option" />
                   </SelectTrigger>
                   <SelectContent>
@@ -304,18 +302,18 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                     <SelectItem value="always-this-language">Always this language</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-muted-foreground mt-2">
                   Choose how to show the site's language: auto-detect based on location, or always use the selected one.
                 </p>
               </div>
 
               {/* Duplicate content from */}
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="duplicate-content" className="text-sm font-medium text-foreground">
                   Duplicate content from
                 </Label>
                 <Select value={duplicateContentFrom} onValueChange={setDuplicateContentFrom}>
-                  <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2">
+                  <SelectTrigger className="w-full border-border rounded-lg">
                     <SelectValue placeholder="Select option" />
                   </SelectTrigger>
                   <SelectContent>
@@ -339,9 +337,9 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
                 Add language
               </Button>
               <Button 
-                variant="ghost" 
+                variant="outline" 
                 onClick={onClose} 
-                className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
+                className="px-6 py-2 rounded-lg font-medium border-border bg-background hover:bg-accent hover:text-accent-foreground"
               >
                 Cancel
               </Button>

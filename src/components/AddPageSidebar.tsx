@@ -96,9 +96,9 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
 
         {/* Content */}
         <div className="px-6 py-6 flex-1 overflow-y-auto">
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Page title */}
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="title" className="text-sm font-medium text-foreground">
                 Page title
               </Label>
@@ -107,13 +107,13 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter page title..."
-                className="w-full border-border rounded-lg mt-2"
+                className="w-full border-border rounded-lg"
                 aria-required="true"
               />
             </div>
 
             {/* URL slug */}
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="address" className="text-sm font-medium text-foreground">
                 {isLinkMode ? "Address" : "URL slug"}
               </Label>
@@ -122,11 +122,11 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                 value={address}
                 onChange={(e) => handleAddressChange(e.target.value)}
                 placeholder={isLinkMode ? "https://example.com" : "/page-slug"}
-                className="w-full border-border rounded-lg mt-2"
+                className="w-full border-border rounded-lg"
                 aria-required="true"
               />
               {!isLinkMode && (
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-muted-foreground mt-2">
                   The unique location slug for this page.
                 </p>
               )}
@@ -135,12 +135,12 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
             {!isLinkMode && (
               <>
                 {/* Layout */}
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="layout" className="text-sm font-medium text-foreground">
                     Layout
                   </Label>
                   <Select value={layout} onValueChange={setLayout}>
-                    <SelectTrigger className="w-full border-border rounded-lg mt-2" id="layout">
+                    <SelectTrigger className="w-full border-border rounded-lg" id="layout">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -154,7 +154,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
 
                 {/* Menu title and Show in menu - using same pattern as Page Settings */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="menu-title" className="text-sm font-medium text-foreground">
                       Menu title
                     </Label>
@@ -162,11 +162,11 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                       id="menu-title"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className="w-full border-border rounded-lg mt-2"
+                      className="w-full border-border rounded-lg"
                     />
                   </div>
                   
-                  <div>
+                  <div className="space-y-2">
                     <Label className="text-sm font-medium text-foreground">
                       Show in menu
                     </Label>
