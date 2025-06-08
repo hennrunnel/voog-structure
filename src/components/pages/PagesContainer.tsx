@@ -1,6 +1,7 @@
 
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
+import { DevControls } from "@/components/DevControls";
 import { usePageManagement } from "@/hooks/usePageManagement";
 import { useLanguageManagement } from "@/hooks/useLanguageManagement";
 import { usePageActions } from "@/hooks/usePageActions";
@@ -8,8 +9,12 @@ import { PageDialogs } from "@/components/pages/PageDialogs";
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { PagesContent } from "@/components/pages/PagesContent";
 import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
 
 export const PagesContainer = () => {
+  const [devLanguage, setDevLanguage] = useState<'en' | 'et'>('en');
+  const [devNavigationState, setDevNavigationState] = useState<'normal' | 'empty'>('normal');
+
   const {
     pages,
     setPages,
@@ -69,6 +74,14 @@ export const PagesContainer = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '80px' }}>
       <div className="w-full" style={{ maxWidth: '992px' }}>
+        <DevControls
+          language={devLanguage}
+          onLanguageChange={setDevLanguage}
+          navigationState={devNavigationState}
+          onNavigationChange={setDevNavigationState}
+          currentPageName="Site structure"
+        />
+        
         <div style={{ marginBottom: '48px' }}>
           <PagesHeader />
         </div>

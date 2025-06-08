@@ -26,7 +26,6 @@ const DEV_CONTROLS_STORAGE_KEY = 'dev-controls-state';
 interface StoredState {
   language: Language;
   navigationState: NavigationState;
-  isVisible: boolean;
 }
 
 export const DevControls: React.FC<DevControlsProps> = ({
@@ -44,7 +43,6 @@ export const DevControls: React.FC<DevControlsProps> = ({
     if (stored) {
       try {
         const parsedState: StoredState = JSON.parse(stored);
-        setIsVisible(parsedState.isVisible);
         onLanguageChange(parsedState.language);
         onNavigationChange(parsedState.navigationState);
       } catch (error) {
@@ -57,11 +55,10 @@ export const DevControls: React.FC<DevControlsProps> = ({
   useEffect(() => {
     const state: StoredState = {
       language,
-      navigationState,
-      isVisible
+      navigationState
     };
     localStorage.setItem(DEV_CONTROLS_STORAGE_KEY, JSON.stringify(state));
-  }, [language, navigationState, isVisible]);
+  }, [language, navigationState]);
 
   const handleDestroy = () => {
     setIsVisible(false);
