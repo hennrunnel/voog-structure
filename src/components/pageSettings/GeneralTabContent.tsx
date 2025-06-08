@@ -129,6 +129,25 @@ export const GeneralTabContent = ({
           </SelectContent>
         </Select>
       </div>
+
+      {/* Social image */}
+      <div className="space-y-2">
+        <Label htmlFor="social-image" className="text-sm font-medium text-foreground">
+          Social image
+        </Label>
+        <div className="border border-border rounded-lg p-4 bg-background">
+          <div className="aspect-video w-full bg-muted rounded-lg overflow-hidden mb-2">
+            <img 
+              src="https://images.unsplash.com/photo-1472396961693-142e6e269027"
+              alt="F1 race car preview"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <p className="text-sm text-muted-foreground">
+            This image will be displayed when your page is shared on social media platforms.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

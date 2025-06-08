@@ -1,6 +1,6 @@
 
-import React from "react";
-import { X, Trash } from "lucide-react";
+import React, { useState } from "react";
+import { X, Trash, Check, ChevronDown } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -18,10 +18,25 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 interface LanguageSettingsSidebarProps {
   isOpen: boolean;
@@ -36,6 +51,54 @@ interface LanguageSettingsSidebarProps {
   activeTab: string;
 }
 
+// Popular languages that appear at the top
+const POPULAR_LANGUAGES = [
+  { value: "spanish", label: "Spanish", hasRegions: true },
+  { value: "french", label: "French", hasRegions: false },
+  { value: "german", label: "German", hasRegions: false },
+  { value: "english", label: "English", hasRegions: true },
+  { value: "estonian", label: "Estonian", hasRegions: false },
+];
+
+// All languages in alphabetical order
+const ALL_LANGUAGES = [
+  { value: "abkhazian", label: "Abkhazian", hasRegions: false },
+  { value: "afar", label: "Afar", hasRegions: false },
+  { value: "chinese", label: "Chinese", hasRegions: false },
+  { value: "dutch", label: "Dutch", hasRegions: false },
+  { value: "english", label: "English", hasRegions: true },
+  { value: "estonian", label: "Estonian", hasRegions: false },
+  { value: "finnish", label: "Finnish", hasRegions: false },
+  { value: "french", label: "French", hasRegions: false },
+  { value: "german", label: "German", hasRegions: false },
+  { value: "italian", label: "Italian", hasRegions: false },
+  { value: "japanese", label: "Japanese", hasRegions: false },
+  { value: "latvian", label: "Latvian", hasRegions: false },
+  { value: "lithuanian", label: "Lithuanian", hasRegions: false },
+  { value: "portuguese", label: "Portuguese", hasRegions: false },
+  { value: "russian", label: "Russian", hasRegions: false },
+  { value: "spanish", label: "Spanish", hasRegions: true },
+];
+
+// Region options for languages that have them
+const LANGUAGE_REGIONS = {
+  spanish: [
+    { value: "global", label: "Global" },
+    { value: "argentina", label: "Argentina" },
+    { value: "spain", label: "Spain" },
+    { value: "mexico", label: "Mexico" },
+    { value: "peru", label: "Peru" },
+  ],
+  english: [
+    { value: "global", label: "Global" },
+    { value: "australia", label: "Australia" },
+    { value: "canada", label: "Canada" },
+    { value: "new-zealand", label: "New Zealand" },
+    { value: "united-kingdom", label: "United Kingdom" },
+    { value: "united-states", label: "United States" },
+  ],
+};
+
 export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = ({
   isOpen,
   onClose,
@@ -49,7 +112,13 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
   activeTab
 }) => {
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
-  const languageName = activeTab === "english" ? "English" : "Estonian";
+  const [open, setOpen] = useState(false);
+  const [languageName, setLanguageName] = useState(activeTab);
+  const [region, setRegion] = useState("global");
+  
+  const languageDisplayName = activeTab === "english" ? "English" : "Estonian";
+  const selectedLanguage = ALL_LANGUAGES.find(lang => lang.value === languageName);
+  const showRegionField = selectedLanguage?.hasRegions;
 
   const handleDeleteClick = () => {
     setShowDeleteDialog(true);
@@ -58,6 +127,12 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
   const handleConfirmDelete = () => {
     onLanguageDelete();
     setShowDeleteDialog(false);
+  };
+
+  const handleLanguageSelect = (value: string) => {
+    setLanguageName(value);
+    setRegion("global"); // Reset region when language changes
+    setOpen(false);
   };
 
   return (
@@ -80,34 +155,86 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 <Label htmlFor="language-name" className="text-sm font-medium text-foreground">
                   Language
                 </Label>
-                <Select defaultValue={activeTab}>
-                  <SelectTrigger className="w-full border-border rounded-lg" id="language-name">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="english">English</SelectItem>
-                    <SelectItem value="estonian">Estonian</SelectItem>
-                    <SelectItem value="finnish">Finnish</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-full justify-between border-border"
+                    >
+                      {languageName
+                        ? ALL_LANGUAGES.find((language) => language.value === languageName)?.label
+                        : "Select language..."}
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput placeholder="Search languages..." />
+                      <CommandList className="max-h-[300px] overflow-y-auto">
+                        <CommandEmpty>No language found.</CommandEmpty>
+                        <CommandGroup heading="Popular languages">
+                          {POPULAR_LANGUAGES.map((language) => (
+                            <CommandItem
+                              key={`popular-${language.value}`}
+                              value={language.value}
+                              onSelect={() => handleLanguageSelect(language.value)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  languageName === language.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                        <CommandSeparator />
+                        <CommandGroup heading="All languages">
+                          {ALL_LANGUAGES.map((language) => (
+                            <CommandItem
+                              key={language.value}
+                              value={language.value}
+                              onSelect={() => handleLanguageSelect(language.value)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  languageName === language.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {language.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
 
-              {/* Region */}
-              <div className="space-y-2">
-                <Label htmlFor="region" className="text-sm font-medium text-foreground">
-                  Region
-                </Label>
-                <Select defaultValue="global">
-                  <SelectTrigger className="w-full border-border rounded-lg" id="region">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="global">Global</SelectItem>
-                    <SelectItem value="europe">Europe</SelectItem>
-                    <SelectItem value="north-america">North America</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Region - only show if language has regions */}
+              {showRegionField && (
+                <div className="space-y-2">
+                  <Label htmlFor="region" className="text-sm font-medium text-foreground">
+                    Region
+                  </Label>
+                  <Select value={region} onValueChange={setRegion}>
+                    <SelectTrigger className="w-full border-border rounded-lg">
+                      <SelectValue placeholder="Select region" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {LANGUAGE_REGIONS[languageName as keyof typeof LANGUAGE_REGIONS]?.map((regionOption) => (
+                        <SelectItem key={regionOption.value} value={regionOption.value}>
+                          {regionOption.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
               {/* Website title */}
               <div className="space-y-2">
@@ -164,7 +291,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                     <SelectItem value="always-this">Always this language</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className="text-sm text-muted-foreground mt-2">
                   Choose how to show the site's language: auto-detect based on location, or always use the selected one.
                 </p>
               </div>
@@ -204,7 +331,7 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
           <AlertDialogHeader>
             <AlertDialogTitle>Delete language</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete the {languageName} language? This action cannot be undone and will remove all content for this language.
+              Are you sure you want to delete the {languageDisplayName} language? This action cannot be undone and will remove all content for this language.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
