@@ -11,7 +11,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 
 export const PagesContainer = () => {
-  const [devLanguage, setDevLanguage] = useState<'en' | 'et'>('en');
   const [devEmptyState, setDevEmptyState] = useState<boolean>(false);
   const [devControlsVisible, setDevControlsVisible] = useState<boolean>(true);
 
@@ -76,8 +75,6 @@ export const PagesContainer = () => {
       <div className="w-full" style={{ maxWidth: '992px' }}>
         {devControlsVisible && (
           <DevControls
-            language={devLanguage}
-            onLanguageChange={setDevLanguage}
             emptyState={devEmptyState}
             onEmptyStateChange={setDevEmptyState}
             currentPageName="Site structure"
