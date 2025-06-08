@@ -81,17 +81,45 @@ export const DevControls: React.FC<DevControlsProps> = ({
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-2">
-        <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
-          Empty state:
-        </label>
-        <Toggle 
-          pressed={emptyState}
-          onPressedChange={handleEmptyStateToggle}
-          className="h-8 px-3 bg-white border border-orange-200 text-orange-800 text-xs font-mono data-[state=on]:bg-orange-100 data-[state=on]:text-orange-900"
-        >
-          {emptyState ? 'ON' : 'OFF'}
-        </Toggle>
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
+            Empty state:
+          </label>
+          <Toggle 
+            pressed={emptyState}
+            onPressedChange={handleEmptyStateToggle}
+            className="h-8 px-3 bg-white border border-orange-200 text-orange-800 text-xs font-mono data-[state=on]:bg-orange-100 data-[state=on]:text-orange-900"
+          >
+            {emptyState ? 'ON' : 'OFF'}
+          </Toggle>
+        </div>
+
+        {/* Links */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
+              Figma:
+            </label>
+            <a 
+              href="https://www.figma.com/design/FGonQ6GxSYt1fCuIPZ7Zep/Voog--Site-structure?node-id=1-1349&t=aTY9mOK5JexRbsJT-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-orange-600 text-xs hover:underline"
+            >
+              Site structure 2.0
+            </a>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
+              Linear:
+            </label>
+            <span className="text-orange-600 text-xs">
+              Refactor "Site structure" view
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
