@@ -184,11 +184,11 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
               </>
             )}
 
-            {/* Info Box - moved above the button with new design */}
+            {/* Info Box - improved with auto height and proper padding */}
             {!isLinkMode && (
-              <div className="w-full h-10 relative overflow-hidden">
-                <div className="w-full h-10 left-0 top-0 absolute opacity-10 bg-indigo-600 rounded-[5px]"></div>
-                <div className="w-full left-3 top-3 absolute inline-flex justify-start items-center gap-3 pr-3">
+              <div className="w-full relative overflow-hidden">
+                <div className="w-full h-full left-0 top-0 absolute opacity-10 bg-indigo-600 rounded-[5px]"></div>
+                <div className="w-full py-3 px-3 relative inline-flex justify-start items-center gap-3">
                   <div className="w-4 h-4 relative flex-shrink-0">
                     <div className="w-4 h-4 left-0 top-0 absolute overflow-hidden">
                       <Info className="w-4 h-4 text-indigo-600" />
