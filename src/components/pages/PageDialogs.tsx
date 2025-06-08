@@ -49,11 +49,11 @@ export const PageDialogs = ({
               Are you sure you want to delete "{pageToDelete?.title}"? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
+          <AlertDialogFooter className="flex-row justify-end space-x-2 space-y-0">
             <AlertDialogAction onClick={onConfirmDelete} className="bg-destructive hover:bg-destructive/90">
               Delete
             </AlertDialogAction>
-            <AlertDialogCancel className="bg-secondary text-secondary-foreground hover:bg-secondary/80 mt-0">
+            <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
               Cancel
             </AlertDialogCancel>
           </AlertDialogFooter>
@@ -69,11 +69,11 @@ export const PageDialogs = ({
               Are you sure you want to delete this language? This action cannot be undone and all content in this language will be permanently lost.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
+          <AlertDialogFooter className="flex-row justify-end space-x-2 space-y-0">
             <AlertDialogAction onClick={onConfirmLanguageDelete} className="bg-destructive hover:bg-destructive/90">
               Delete language
             </AlertDialogAction>
-            <AlertDialogCancel className="bg-secondary text-secondary-foreground hover:bg-secondary/80 mt-0">
+            <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
               Cancel
             </AlertDialogCancel>
           </AlertDialogFooter>
@@ -94,7 +94,7 @@ export const PageDialogs = ({
               }
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
+          <AlertDialogFooter className="flex-row justify-end space-x-2 space-y-0">
             <AlertDialogAction 
               onClick={onConfirmLanguageVisibilityToggle}
               className={languageVisibilityAction === 'disable' 
@@ -104,7 +104,7 @@ export const PageDialogs = ({
             >
               {languageVisibilityAction === 'enable' ? 'Enable' : 'Disable'}
             </AlertDialogAction>
-            <AlertDialogCancel className="bg-secondary text-secondary-foreground hover:bg-secondary/80 mt-0">
+            <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
               Cancel
             </AlertDialogCancel>
           </AlertDialogFooter>
