@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import {
   Sheet,
@@ -16,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Info } from "lucide-react";
 
 interface AddPageSidebarProps {
   isOpen: boolean;
@@ -28,7 +31,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [layout, setLayout] = useState("2023-front-page");
-  const [visibleInMenu, setVisibleInMenu] = useState(true);
+  const [showInMenu, setShowInMenu] = useState(true);
   const [isLinkMode, setIsLinkMode] = useState(false);
   const [hasManuallyEditedAddress, setHasManuallyEditedAddress] = useState(false);
 
@@ -38,7 +41,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
       setTitle("");
       setAddress("");
       setLayout("2023-front-page");
-      setVisibleInMenu(true);
+      setShowInMenu(true);
       setIsLinkMode(false);
       setHasManuallyEditedAddress(false);
     }
@@ -93,7 +96,17 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
 
         {/* Content */}
         <div className="px-6 py-6 flex-1 overflow-y-auto">
-          <div className="space-y-6">
+          <div className="space-y-4">
+            {/* Info Box */}
+            {!isLinkMode && (
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertDescription>
+                  After creating your page, you can access additional settings like SEO options, access controls, and social media images in the page settings.
+                </AlertDescription>
+              </Alert>
+            )}
+
             {/* Page title */}
             <div>
               <Label htmlFor="title" className="text-sm font-medium text-foreground">
@@ -109,7 +122,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
               />
             </div>
 
-            {/* Address/URL slug */}
+            {/* URL slug */}
             <div>
               <Label htmlFor="address" className="text-sm font-medium text-foreground">
                 {isLinkMode ? "Address" : "URL slug"}
@@ -149,31 +162,47 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
                   </Select>
                 </div>
 
-                {/* Visible in menu */}
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="visible-in-menu" className="text-sm font-medium text-foreground">
-                    Visible in menu
-                  </Label>
-                  <Switch
-                    id="visible-in-menu"
-                    checked={visibleInMenu}
-                    onCheckedChange={setVisibleInMenu}
-                  />
+                {/* Show in menu - using same pattern as Page Settings */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-sm font-medium text-foreground">
+                      Show in menu
+                    </Label>
+                    <div className="flex items-center mt-4">
+                      <Switch
+                        checked={showInMenu}
+                        onCheckedChange={setShowInMenu}
+                        aria-describedby="show-in-menu-description"
+                      />
+                      <span className="sr-only" id="show-in-menu-description">
+                        Toggle whether this page appears in the navigation menu
+                      </span>
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
               </>
             )}
           </div>
         </div>
 
-        {/* Action buttons */}
-        <div className="px-6 py-6 border-t border-border flex flex-col space-y-3">
+        {/* Action buttons - using horizontal layout like Page Settings */}
+        <div className="px-6 py-6 border-t border-border flex space-x-3">
           <Button 
             onClick={handleCreatePage}
             disabled={!title || !address}
-            className="w-full rounded-lg disabled:opacity-50 disabled:cursor-not-allowed bg-primary text-primary-foreground hover:bg-primary/90"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
             aria-describedby={!title || !address ? "create-button-help" : undefined}
           >
             {isLinkMode ? "Add it" : "Create this page"}
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            onClick={onClose} 
+            className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
+          >
+            Cancel
           </Button>
           
           {!title || !address ? (
@@ -181,15 +210,16 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
               Please fill in both page title and address
             </p>
           ) : null}
-          
-          <div className="text-center">
-            <button 
-              onClick={toggleMode}
-              className="text-sm text-muted-foreground hover:text-foreground hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded"
-            >
-              {isLinkMode ? "Add a new page instead" : "Add a link instead"}
-            </button>
-          </div>
+        </div>
+
+        {/* Toggle mode link */}
+        <div className="px-6 pb-6 text-center">
+          <button 
+            onClick={toggleMode}
+            className="text-sm text-muted-foreground hover:text-foreground hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 rounded"
+          >
+            {isLinkMode ? "Add a new page instead" : "Add a link instead"}
+          </button>
         </div>
       </SheetContent>
     </Sheet>
