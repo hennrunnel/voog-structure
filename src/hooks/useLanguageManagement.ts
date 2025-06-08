@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const useLanguageManagement = () => {
   const [activeTab, setActiveTab] = useState("english");
-  const [availableTabs, setAvailableTabs] = useState(["english", "estonian"]);
+  const [availableTabs, setAvailableTabs] = useState<string[]>([]);
   
   // English language settings
   const [englishWebsiteTitle, setEnglishWebsiteTitle] = useState("Finn & Cross");
@@ -62,6 +62,20 @@ export const useLanguageManagement = () => {
     setLanguageVisibilityDialogOpen(false);
   };
 
+  const addLanguage = (languageData: any) => {
+    // Add the new language to available tabs
+    const newLanguage = languageData.languageName;
+    if (!availableTabs.includes(newLanguage)) {
+      setAvailableTabs(prev => [...prev, newLanguage]);
+      
+      // If this is the first language, set it as active
+      if (availableTabs.length === 0) {
+        setActiveTab(newLanguage);
+      }
+    }
+    console.log("Adding new language:", languageData);
+  };
+
   return {
     activeTab,
     setActiveTab,
@@ -86,6 +100,7 @@ export const useLanguageManagement = () => {
     handleLanguagePublishToggle,
     handleEnglishLanguageVisibilityToggle,
     handleEstonianLanguageVisibilityToggle,
-    confirmLanguageVisibilityToggle
+    confirmLanguageVisibilityToggle,
+    addLanguage
   };
 };

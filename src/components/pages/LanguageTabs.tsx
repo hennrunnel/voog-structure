@@ -5,6 +5,8 @@ import { PageTable } from "@/components/pages/PageTable";
 import { AddLanguageSidebar } from "@/components/pages/AddLanguageSidebar";
 import { LanguageTabsHeader } from "./LanguageTabsHeader";
 import { LanguageTabsActions } from "./LanguageTabsActions";
+import { EmptyLanguageState } from "./EmptyLanguageState";
+import { EmptyLanguageTabsHeader } from "./EmptyLanguageTabsHeader";
 import { PageItem } from "@/types/pages";
 import { useState } from "react";
 
@@ -61,6 +63,24 @@ export const LanguageTabs = ({
     onAddLanguage(languageData);
     setAddLanguageSidebarOpen(false);
   };
+
+  // If no languages exist, show empty state
+  if (availableTabs.length === 0) {
+    return (
+      <TooltipProvider>
+        <div className="w-full">
+          <EmptyLanguageTabsHeader onAddLanguageClick={handleAddLanguageClick} />
+          <EmptyLanguageState onAddLanguageClick={handleAddLanguageClick} />
+        </div>
+
+        <AddLanguageSidebar 
+          isOpen={addLanguageSidebarOpen} 
+          onClose={() => setAddLanguageSidebarOpen(false)} 
+          onAddLanguage={handleAddLanguage} 
+        />
+      </TooltipProvider>
+    );
+  }
 
   return (
     <TooltipProvider>

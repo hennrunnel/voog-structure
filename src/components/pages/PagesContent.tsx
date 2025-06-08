@@ -1,4 +1,3 @@
-
 import { LanguageTabs } from "@/components/pages/LanguageTabs";
 import { LanguageSettingsSidebar } from "@/components/pages/LanguageSettingsSidebar";
 import { PageItem } from "@/types/pages";
@@ -61,16 +60,13 @@ export const PagesContent = ({
   onAddNestedPage,
   onPageSettings,
   onEditPage,
-  onTranslatePage
-}: PagesContentProps) => {
+  onTranslatePage,
+  addLanguage
+}: PagesContentProps & { addLanguage: (languageData: any) => void }) => {
   const [languageSettingsOpen, setLanguageSettingsOpen] = useState(false);
 
   const handleLanguageSettings = () => {
     setLanguageSettingsOpen(true);
-  };
-
-  const handleAddLanguage = (languageData: any) => {
-    console.log("Adding new language:", languageData);
   };
 
   const getCurrentLanguageSettings = () => {
@@ -116,23 +112,26 @@ export const PagesContent = ({
         onPageSettings={onPageSettings}
         onEditPage={onEditPage}
         onTranslatePage={onTranslatePage}
-        onAddLanguage={handleAddLanguage}
+        onAddLanguage={addLanguage}
         onLanguagePublishToggle={handleLanguagePublishToggle}
         onLanguageDelete={handleLanguageDelete}
       />
 
-      <LanguageSettingsSidebar
-        isOpen={languageSettingsOpen}
-        onClose={() => setLanguageSettingsOpen(false)}
-        websiteTitle={currentSettings.websiteTitle}
-        setWebsiteTitle={currentSettings.setWebsiteTitle}
-        nameInMenu={currentSettings.nameInMenu}
-        setNameInMenu={currentSettings.setNameInMenu}
-        languageVisible={currentSettings.languageVisible}
-        onLanguageVisibilityToggle={currentSettings.onLanguageVisibilityToggle}
-        onLanguageDelete={handleLanguageDelete}
-        activeTab={activeTab}
-      />
+      {/* Only show language settings sidebar if there are languages */}
+      {availableTabs.length > 0 && (
+        <LanguageSettingsSidebar
+          isOpen={languageSettingsOpen}
+          onClose={() => setLanguageSettingsOpen(false)}
+          websiteTitle={currentSettings.websiteTitle}
+          setWebsiteTitle={currentSettings.setWebsiteTitle}
+          nameInMenu={currentSettings.nameInMenu}
+          setNameInMenu={currentSettings.setNameInMenu}
+          languageVisible={currentSettings.languageVisible}
+          onLanguageVisibilityToggle={currentSettings.onLanguageVisibilityToggle}
+          onLanguageDelete={handleLanguageDelete}
+          activeTab={activeTab}
+        />
+      )}
     </>
   );
 };
