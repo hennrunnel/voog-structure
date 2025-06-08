@@ -4,6 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useState } from "react";
 
 interface AddLanguageSidebarProps {
@@ -12,24 +23,98 @@ interface AddLanguageSidebarProps {
   onAddLanguage: (languageData: any) => void;
 }
 
+// Popular languages that appear at the top
+const POPULAR_LANGUAGES = [
+  { value: "spanish", label: "Spanish", hasRegions: true },
+  { value: "french", label: "French", hasRegions: false },
+  { value: "german", label: "German", hasRegions: false },
+  { value: "english", label: "English", hasRegions: true },
+  { value: "estonian", label: "Estonian", hasRegions: false },
+];
+
+// All languages in alphabetical order
+const ALL_LANGUAGES = [
+  { value: "abkhazian", label: "Abkhazian", hasRegions: false },
+  { value: "afar", label: "Afar", hasRegions: false },
+  { value: "chinese", label: "Chinese", hasRegions: false },
+  { value: "dutch", label: "Dutch", hasRegions: false },
+  { value: "english", label: "English", hasRegions: true },
+  { value: "estonian", label: "Estonian", hasRegions: false },
+  { value: "finnish", label: "Finnish", hasRegions: false },
+  { value: "french", label: "French", hasRegions: false },
+  { value: "german", label: "German", hasRegions: false },
+  { value: "italian", label: "Italian", hasRegions: false },
+  { value: "japanese", label: "Japanese", hasRegions: false },
+  { value: "latvian", label: "Latvian", hasRegions: false },
+  { value: "lithuanian", label: "Lithuanian", hasRegions: false },
+  { value: "portuguese", label: "Portuguese", hasRegions: false },
+  { value: "russian", label: "Russian", hasRegions: false },
+  { value: "spanish", label: "Spanish", hasRegions: true },
+];
+
+// Region options for languages that have them
+const LANGUAGE_REGIONS = {
+  spanish: [
+    { value: "global", label: "Global" },
+    { value: "argentina", label: "Argentina" },
+    { value: "spain", label: "Spain" },
+    { value: "mexico", label: "Mexico" },
+    { value: "peru", label: "Peru" },
+  ],
+  english: [
+    { value: "global", label: "Global" },
+    { value: "australia", label: "Australia" },
+    { value: "canada", label: "Canada" },
+    { value: "new-zealand", label: "New Zealand" },
+    { value: "united-kingdom", label: "United Kingdom" },
+    { value: "united-states", label: "United States" },
+  ],
+};
+
 export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLanguageSidebarProps) => {
   const [languageName, setLanguageName] = useState("");
   const [region, setRegion] = useState("");
-  const [nameInMenu, setNameInMenu] = useState("");
-  const [whichLanguageVisitors, setWhichLanguageVisitors] = useState("");
-  const [isPubliclyVisible, setIsPubliclyVisible] = useState("");
   const [websiteTitle, setWebsiteTitle] = useState("");
+  const [nameInMenu, setNameInMenu] = useState("");
+  const [isPubliclyVisible, setIsPubliclyVisible] = useState(false);
+  const [whichLanguageVisitors, setWhichLanguageVisitors] = useState("");
   const [duplicateContentFrom, setDuplicateContentFrom] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showVisibilityDialog, setShowVisibilityDialog] = useState(false);
+  const [pendingVisibilityValue, setPendingVisibilityValue] = useState(false);
+
+  const selectedLanguage = ALL_LANGUAGES.find(lang => lang.value === languageName);
+  const showRegionField = selectedLanguage?.hasRegions;
+
+  const filteredLanguages = ALL_LANGUAGES.filter(lang =>
+    lang.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleLanguageSelect = (value: string) => {
+    setLanguageName(value);
+    setRegion(""); // Reset region when language changes
+    setSearchTerm(""); // Clear search term after selection
+  };
+
+  const handleVisibilityToggle = (newValue: boolean) => {
+    setPendingVisibilityValue(newValue);
+    setShowVisibilityDialog(true);
+  };
+
+  const confirmVisibilityToggle = () => {
+    setIsPubliclyVisible(pendingVisibilityValue);
+    setShowVisibilityDialog(false);
+  };
 
   const handleSubmit = () => {
     if (!languageName || !nameInMenu) return;
     
     onAddLanguage({
       languageName,
-      region,
+      region: showRegionField ? region : "",
       nameInMenu,
       whichLanguageVisitors,
-      isPubliclyVisible: isPubliclyVisible === "Yes",
+      isPubliclyVisible,
       websiteTitle,
       duplicateContentFrom
     });
@@ -39,140 +124,233 @@ export const AddLanguageSidebar = ({ isOpen, onClose, onAddLanguage }: AddLangua
     setRegion("");
     setNameInMenu("");
     setWhichLanguageVisitors("");
-    setIsPubliclyVisible("");
+    setIsPubliclyVisible(false);
     setWebsiteTitle("");
     setDuplicateContentFrom("");
+    setSearchTerm("");
     
     onClose();
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent 
-        className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg"
-        side="right"
-      >
-        {/* Header */}
-        <div className="px-6 py-6 border-b border-border">
-          <h2 className="text-xl font-semibold text-foreground">Add a new language to this website</h2>
-        </div>
-        
-        {/* Content */}
-        <div className="px-6 py-6 flex-1 overflow-y-auto">
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="language-name" className="text-sm font-medium text-foreground">Language name:</Label>
-              <Select value={languageName} onValueChange={setLanguageName}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2">
-                  <SelectValue placeholder="e.g. Spanish" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="spanish">Spanish</SelectItem>
-                  <SelectItem value="french">French</SelectItem>
-                  <SelectItem value="german">German</SelectItem>
-                  <SelectItem value="italian">Italian</SelectItem>
-                  <SelectItem value="portuguese">Portuguese</SelectItem>
-                  <SelectItem value="russian">Russian</SelectItem>
-                  <SelectItem value="chinese">Chinese</SelectItem>
-                  <SelectItem value="japanese">Japanese</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+    <>
+      <Sheet open={isOpen} onOpenChange={onClose}>
+        <SheetContent 
+          className="w-[400px] sm:w-[540px] p-0 bg-background border-l border-border shadow-lg flex flex-col"
+          side="right"
+        >
+          {/* Header */}
+          <div className="px-6 py-6 border-b border-border">
+            <h2 className="text-xl font-semibold text-foreground">Add a new language</h2>
+          </div>
+          
+          {/* Content */}
+          <div className="px-6 py-6 flex-1 overflow-y-auto pb-24">
+            <div className="space-y-6">
+              {/* Language name */}
+              <div>
+                <Label htmlFor="language-name" className="text-sm font-medium text-foreground">
+                  Language
+                </Label>
+                <div className="mt-2">
+                  <Input
+                    placeholder="Search languages..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full bg-muted border-border rounded-lg mb-2"
+                  />
+                  <div className="max-h-48 overflow-y-auto border border-border rounded-lg bg-muted">
+                    {/* Popular languages section */}
+                    <div className="p-2 border-b border-border bg-muted-foreground/5">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">Popular languages</p>
+                      {POPULAR_LANGUAGES.map((lang) => (
+                        <button
+                          key={`popular-${lang.value}`}
+                          onClick={() => handleLanguageSelect(lang.value)}
+                          className={`w-full text-left px-3 py-2 rounded text-sm hover:bg-accent hover:text-accent-foreground ${
+                            languageName === lang.value ? 'bg-primary text-primary-foreground' : ''
+                          }`}
+                        >
+                          {languageName === lang.value && <span className="mr-2">✓</span>}
+                          {lang.label}
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {/* All languages section */}
+                    <div className="p-2">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">All languages</p>
+                      {filteredLanguages.map((lang) => (
+                        <button
+                          key={lang.value}
+                          onClick={() => handleLanguageSelect(lang.value)}
+                          className={`w-full text-left px-3 py-2 rounded text-sm hover:bg-accent hover:text-accent-foreground ${
+                            languageName === lang.value ? 'bg-primary text-primary-foreground' : ''
+                          }`}
+                        >
+                          {languageName === lang.value && <span className="mr-2">✓</span>}
+                          {lang.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-            <div>
-              <Label htmlFor="region" className="text-sm font-medium text-foreground">Region:</Label>
-              <Select value={region} onValueChange={setRegion}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2">
-                  <SelectValue placeholder="e.g. Global" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="global">Global</SelectItem>
-                  <SelectItem value="europe">Europe</SelectItem>
-                  <SelectItem value="north-america">North America</SelectItem>
-                  <SelectItem value="south-america">South America</SelectItem>
-                  <SelectItem value="asia">Asia</SelectItem>
-                  <SelectItem value="africa">Africa</SelectItem>
-                  <SelectItem value="oceania">Oceania</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              {/* Region - only show if language has regions */}
+              {showRegionField && (
+                <div>
+                  <Label htmlFor="region" className="text-sm font-medium text-foreground">
+                    Region
+                  </Label>
+                  <Select value={region} onValueChange={setRegion}>
+                    <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2">
+                      <SelectValue placeholder="Select region" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {LANGUAGE_REGIONS[languageName as keyof typeof LANGUAGE_REGIONS]?.map((regionOption) => (
+                        <SelectItem key={regionOption.value} value={regionOption.value}>
+                          {regionOption.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
-            <div>
-              <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">Name in menu: *</Label>
-              <Input
-                id="name-in-menu"
-                value={nameInMenu}
-                onChange={(e) => setNameInMenu(e.target.value)}
-                placeholder="Enter name in menu"
-                className="w-full border-border rounded-lg mt-2"
-                required
-              />
-            </div>
+              {/* Website title */}
+              <div>
+                <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
+                  Website title in this language
+                </Label>
+                <Input
+                  id="website-title"
+                  value={websiteTitle}
+                  onChange={(e) => setWebsiteTitle(e.target.value)}
+                  placeholder="Enter website title"
+                  className="w-full bg-muted border-border rounded-lg mt-2"
+                />
+              </div>
 
-            <div>
-              <Label htmlFor="which-language-visitors" className="text-sm font-medium text-foreground">Which language visitors see?:</Label>
-              <Select value={whichLanguageVisitors} onValueChange={setWhichLanguageVisitors}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2">
-                  <SelectValue placeholder="Select option" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="detect-by-location">Detect by location</SelectItem>
-                  <SelectItem value="always-this-language">Always this language</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              {/* Name in menu */}
+              <div>
+                <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
+                  Name in menu
+                </Label>
+                <Input
+                  id="name-in-menu"
+                  value={nameInMenu}
+                  onChange={(e) => setNameInMenu(e.target.value)}
+                  placeholder="e.g., EN, English"
+                  className="w-full bg-muted border-border rounded-lg mt-2"
+                  required
+                />
+              </div>
 
-            <div>
-              <Label htmlFor="is-publicly-visible" className="text-sm font-medium text-foreground">Is this language publicly visible?:</Label>
-              <Select value={isPubliclyVisible} onValueChange={setIsPubliclyVisible}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2">
-                  <SelectValue placeholder="Select option" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Yes">Yes</SelectItem>
-                  <SelectItem value="No">No</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              {/* Make this language publicly visible */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="publicly-visible" className="text-sm font-medium text-foreground">
+                    Make this language publicly visible
+                  </Label>
+                </div>
+                <Switch 
+                  id="publicly-visible" 
+                  checked={isPubliclyVisible} 
+                  onCheckedChange={handleVisibilityToggle} 
+                />
+              </div>
 
-            <div>
-              <Label htmlFor="website-title" className="text-sm font-medium text-foreground">Website title:</Label>
-              <Input
-                id="website-title"
-                value={websiteTitle}
-                onChange={(e) => setWebsiteTitle(e.target.value)}
-                placeholder="Enter website title"
-                className="w-full border-border rounded-lg mt-2"
-              />
-            </div>
+              {/* Which language visitors see */}
+              <div>
+                <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
+                  Which language visitors see
+                </Label>
+                <Select value={whichLanguageVisitors} onValueChange={setWhichLanguageVisitors}>
+                  <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2">
+                    <SelectValue placeholder="Select option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="detect-by-location">Detect by location</SelectItem>
+                    <SelectItem value="always-this-language">Always this language</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Choose how to show the site's language: auto-detect based on location, or always use the selected one.
+                </p>
+              </div>
 
-            <div>
-              <Label htmlFor="duplicate-content" className="text-sm font-medium text-foreground">Duplicate content from:</Label>
-              <Select value={duplicateContentFrom} onValueChange={setDuplicateContentFrom}>
-                <SelectTrigger className="w-full border-border rounded-lg mt-2">
-                  <SelectValue placeholder="Select option" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="do-not-duplicate">Do not duplicate</SelectItem>
-                  <SelectItem value="english">English</SelectItem>
-                  <SelectItem value="estonian">Estonian</SelectItem>
-                </SelectContent>
-              </Select>
+              {/* Duplicate content from */}
+              <div>
+                <Label htmlFor="duplicate-content" className="text-sm font-medium text-foreground">
+                  Duplicate content from
+                </Label>
+                <Select value={duplicateContentFrom} onValueChange={setDuplicateContentFrom}>
+                  <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2">
+                    <SelectValue placeholder="Select option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="do-not-duplicate">Do not duplicate</SelectItem>
+                    <SelectItem value="english">English</SelectItem>
+                    <SelectItem value="estonian">Estonian</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Footer */}
-        <div className="px-6 py-6 border-t border-border">
-          <Button 
-            onClick={handleSubmit}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-            disabled={!languageName || !nameInMenu}
-          >
-            Add language
-          </Button>
-        </div>
-      </SheetContent>
-    </Sheet>
+          {/* Sticky bottom row */}
+          <div className="absolute bottom-0 left-0 right-0 px-6 py-6 border-t border-border bg-background flex items-center justify-between">
+            <div className="flex space-x-3">
+              <Button 
+                onClick={handleSubmit}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-lg font-medium"
+                disabled={!languageName || !nameInMenu}
+              >
+                Add language
+              </Button>
+              <Button 
+                variant="ghost" 
+                onClick={onClose} 
+                className="px-6 py-2 rounded-lg font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Language Visibility Dialog */}
+      <AlertDialog open={showVisibilityDialog} onOpenChange={setShowVisibilityDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {pendingVisibilityValue ? 'Enable language' : 'Disable language'}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {pendingVisibilityValue 
+                ? 'Are you sure you want to enable this language? It will become visible to visitors.'
+                : 'Are you sure you want to disable this language? It will no longer be visible to visitors.'
+              }
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row justify-end space-x-2 space-y-0">
+            <AlertDialogAction 
+              onClick={confirmVisibilityToggle}
+              className={pendingVisibilityValue === false 
+                ? "bg-destructive hover:bg-destructive/90" 
+                : "bg-primary hover:bg-primary/90"
+              }
+            >
+              {pendingVisibilityValue ? 'Enable' : 'Disable'}
+            </AlertDialogAction>
+            <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
+              Cancel
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
