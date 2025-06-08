@@ -90,9 +90,6 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                     <SelectItem value="finnish">Finnish</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Select the language for this version of your website
-                </p>
               </div>
 
               {/* Region */}
@@ -110,9 +107,33 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                     <SelectItem value="north-america">North America</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Choose the region this language targets
-                </p>
+              </div>
+
+              {/* Website title */}
+              <div>
+                <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
+                  Website title in this language
+                </Label>
+                <Input 
+                  id="website-title" 
+                  value={websiteTitle} 
+                  onChange={e => setWebsiteTitle(e.target.value)} 
+                  className="w-full bg-muted border-border rounded-lg mt-2" 
+                />
+              </div>
+
+              {/* Name in menu */}
+              <div>
+                <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
+                  Name in menu
+                </Label>
+                <Input 
+                  id="name-in-menu" 
+                  value={nameInMenu} 
+                  onChange={e => setNameInMenu(e.target.value)} 
+                  className="w-full bg-muted border-border rounded-lg mt-2" 
+                  placeholder="e.g., EN, English"
+                />
               </div>
 
               {/* Make this language publicly visible */}
@@ -134,50 +155,17 @@ export const LanguageSettingsSidebar: React.FC<LanguageSettingsSidebarProps> = (
                 <Label htmlFor="visitor-language" className="text-sm font-medium text-foreground">
                   Which language visitors see
                 </Label>
-                <Select defaultValue="detect-location">
+                <Select defaultValue="detect-browser-language">
                   <SelectTrigger className="w-full bg-muted border-border rounded-lg mt-2" id="visitor-language">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="detect-location">Auto-detect visitor's language</SelectItem>
-                    <SelectItem value="always-this">Always show this language</SelectItem>
+                    <SelectItem value="detect-browser-language">Auto-detect from browser language</SelectItem>
+                    <SelectItem value="always-this">Always this language</SelectItem>
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Auto-detect will serve the appropriate language based on visitor's location and browser settings. Always show will display this language to all visitors regardless of their preferences.
-                </p>
-              </div>
-
-              {/* Name in menu */}
-              <div>
-                <Label htmlFor="name-in-menu" className="text-sm font-medium text-foreground">
-                  Name in menu
-                </Label>
-                <Input 
-                  id="name-in-menu" 
-                  value={nameInMenu} 
-                  onChange={e => setNameInMenu(e.target.value)} 
-                  className="w-full bg-muted border-border rounded-lg mt-2" 
-                  placeholder="e.g., EN, English"
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  How this language appears in the language switcher
-                </p>
-              </div>
-
-              {/* Website title */}
-              <div>
-                <Label htmlFor="website-title" className="text-sm font-medium text-foreground">
-                  Website title
-                </Label>
-                <Input 
-                  id="website-title" 
-                  value={websiteTitle} 
-                  onChange={e => setWebsiteTitle(e.target.value)} 
-                  className="w-full bg-muted border-border rounded-lg mt-2" 
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  The main title for your website in this language
+                  This setting applies to all languages. Auto-detect serves the appropriate language based on visitor's browser settings. Always this language shows the selected language to all visitors.
                 </p>
               </div>
             </div>
