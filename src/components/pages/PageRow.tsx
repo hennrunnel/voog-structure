@@ -1,5 +1,6 @@
+
 import React from "react";
-import { Trash, Plus, Settings, Copy, FileText } from "lucide-react";
+import { Trash, Plus, Settings, Copy, FileText, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -312,12 +313,22 @@ export const PageRow: React.FC<PageRowProps> = ({
                     <DropdownMenuItem 
                       onClick={e => {
                         e.stopPropagation();
+                        onEditPage(page);
+                      }} 
+                      className="cursor-pointer text-sm text-[#1B2124]"
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      Edit page
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={e => {
+                        e.stopPropagation();
                         onPageSettings(page);
                       }} 
                       className="cursor-pointer text-sm text-[#1B2124]"
                     >
                       <Settings className="w-4 h-4 mr-2" />
-                      Page settings
+                      Settings
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={e => {
@@ -327,7 +338,7 @@ export const PageRow: React.FC<PageRowProps> = ({
                       className="cursor-pointer text-sm text-[#1B2124]"
                     >
                       <Copy className="w-4 h-4 mr-2" />
-                      Duplicate page
+                      Duplicate
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={e => {
