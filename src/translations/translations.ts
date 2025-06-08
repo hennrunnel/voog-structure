@@ -17,8 +17,8 @@ export const translations = {
         et: "Regioon"
       },
       website_title_label: {
-        en: "Website title",
-        et: "Saidi nimetus"
+        en: "Website title in this language",
+        et: "Saidi nimetus selles keeles"
       },
       website_title_placeholder: {
         en: "Type title here...",
@@ -37,7 +37,7 @@ export const translations = {
         et: "Kas see keel on avalikult nähtav?"
       },
       visitor_language_label: {
-        en: "Which language visitors see?",
+        en: "Which language visitors see",
         et: "Mis keelt külastaja näeb?"
       },
       duplicate_content_label: {
@@ -73,6 +73,10 @@ export const translations = {
       add_button: {
         en: "Add language",
         et: "Lisa keel"
+      },
+      cancel_button: {
+        en: "Cancel",
+        et: "Loobu"
       }
     }
   },
@@ -169,20 +173,32 @@ export const translations = {
       seo_tab: {
         en: "SEO",
         et: "SEO"
+      },
+      edit_page: {
+        en: "Edit page",
+        et: "Muuda lehte"
       }
     },
     general_tab: {
       page_title_label: {
-        en: "Title",
-        et: "Pealkiri"
+        en: "Page title",
+        et: "Lehe pealkiri"
+      },
+      url_slug_label: {
+        en: "URL slug",
+        et: "URL-i lühend"
+      },
+      url_slug_help: {
+        en: "The unique location slug for this page.",
+        et: "Selle lehe unikaalne aadressilühend."
       },
       menu_title_label: {
         en: "Menu title",
-        et: "Pealkiri menüüs"
+        et: "Menüü pealkiri"
       },
       show_in_menu_label: {
-        en: "Visible in menu",
-        et: "Nähtav menüüs"
+        en: "Show in menu",
+        et: "Näita menüüs"
       },
       access_label: {
         en: "Access",
@@ -193,7 +209,7 @@ export const translations = {
         et: "Mall"
       },
       social_image_label: {
-        en: "Social media image",
+        en: "Social image",
         et: "Sotsiaalmeedia pilt"
       },
       social_image_help: {
@@ -282,6 +298,36 @@ export const translations = {
         en: "Cancel",
         et: "Loobu"
       }
+    },
+    dialogs: {
+      delete_title: {
+        en: "Delete page",
+        et: "Kustuta leht"
+      },
+      delete_description: {
+        en: "Are you sure you want to delete this page? This action cannot be undone.",
+        et: "Kas oled kindel, et soovid selle lehe kustutada? Seda tegevust ei saa tagasi võtta."
+      },
+      duplicate_title: {
+        en: "Duplicate page",
+        et: "Kopeeri leht"
+      },
+      duplicate_description: {
+        en: "Are you sure you want to duplicate this page?",
+        et: "Kas oled kindel, et soovid selle lehe kopeerida?"
+      },
+      delete_button: {
+        en: "Delete page",
+        et: "Kustuta leht"
+      },
+      duplicate_button: {
+        en: "Duplicate page",
+        et: "Kopeeri leht"
+      },
+      cancel_button: {
+        en: "Cancel",
+        et: "Loobu"
+      }
     }
   },
   language_management: {
@@ -319,6 +365,90 @@ export const translations = {
       delete_language: {
         en: "Delete language",
         et: "Kustuta keel"
+      }
+    },
+    settings: {
+      title: {
+        en: "Language settings",
+        et: "Keele seaded"
+      },
+      language_label: {
+        en: "Language",
+        et: "Keel"
+      },
+      region_label: {
+        en: "Region",
+        et: "Regioon"
+      },
+      website_title_label: {
+        en: "Website title in this language",
+        et: "Saidi nimetus selles keeles"
+      },
+      name_in_menu_label: {
+        en: "Name in menu",
+        et: "Nimi menüüs"
+      },
+      publicly_visible_label: {
+        en: "Is this language publicly visible?",
+        et: "Kas see keel on avalikult nähtav?"
+      },
+      visitor_language_label: {
+        en: "Which language visitors see",
+        et: "Mis keelt külastaja näeb"
+      },
+      visitor_language_help: {
+        en: "Choose how to show the site's language: auto-detect based on location, or always use the selected one.",
+        et: "Vali, kuidas saidi keelt näidata: automaatne tuvastamine asukoha põhjal või alati valitud keele kasutamine."
+      },
+      save_button: {
+        en: "Save",
+        et: "Salvesta"
+      },
+      cancel_button: {
+        en: "Cancel",
+        et: "Loobu"
+      }
+    },
+    dialogs: {
+      delete_title: {
+        en: "Delete language",
+        et: "Kustuta keel"
+      },
+      delete_description: {
+        en: "Are you sure you want to delete this language? This action cannot be undone and will remove all content for this language.",
+        et: "Kas oled kindel, et soovid selle keele kustutada? Seda tegevust ei saa tagasi võtta ja see eemaldab kogu selle keele sisu."
+      },
+      disable_title: {
+        en: "Disable language",
+        et: "Keela keel"
+      },
+      disable_description: {
+        en: "Are you sure you want to disable this language? It will no longer be visible to visitors.",
+        et: "Kas oled kindel, et soovid selle keele keelata? See ei ole enam külastajatele nähtav."
+      },
+      enable_title: {
+        en: "Enable language",
+        et: "Luba keel"
+      },
+      enable_description: {
+        en: "Are you sure you want to enable this language? It will become visible to visitors.",
+        et: "Kas oled kindel, et soovid selle keele lubada? See muutub külastajatele nähtavaks."
+      },
+      delete_button: {
+        en: "Delete language",
+        et: "Kustuta keel"
+      },
+      disable_button: {
+        en: "Disable",
+        et: "Keela"
+      },
+      enable_button: {
+        en: "Enable",
+        et: "Luba"
+      },
+      cancel_button: {
+        en: "Cancel",
+        et: "Loobu"
       }
     }
   },
@@ -367,11 +497,49 @@ export const translations = {
       chinese: {
         en: "Chinese",
         et: "Hiina"
+      },
+      english: {
+        en: "English",
+        et: "Inglise"
+      },
+      estonian: {
+        en: "Estonian",
+        et: "Eesti"
       }
     },
     all_languages_group: {
       en: "All languages",
       et: "Kõik keeled"
+    },
+    select_language_placeholder: {
+      en: "Select language...",
+      et: "Vali keel..."
+    },
+    search_languages_placeholder: {
+      en: "Search languages...",
+      et: "Otsi keeli..."
+    },
+    no_language_found: {
+      en: "No language found.",
+      et: "Keelt ei leitud."
+    },
+    popular_languages_group: {
+      en: "Popular languages",
+      et: "Populaarsed keeled"
+    }
+  },
+  regions: {
+    global: {
+      en: "Global",
+      et: "Globaalne"
+    },
+    detect_by_location: {
+      en: "Detect by location",
+      et: "Asukohapõhine tuvastus"
+    },
+    always_this_language: {
+      en: "Always this language",
+      et: "Alati see keel"
     }
   }
 } as const;

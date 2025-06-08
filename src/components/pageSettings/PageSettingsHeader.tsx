@@ -35,7 +35,7 @@ export const PageSettingsHeader = ({
             className="text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
           >
             <Edit className="w-4 h-4 mr-2" />
-            Edit page
+            {t("page_settings.header.edit_page")}
           </Button>
         </div>
       </div>
