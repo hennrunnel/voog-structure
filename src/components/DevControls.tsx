@@ -105,7 +105,7 @@ export const DevControls: React.FC<DevControlsProps> = ({
               href="https://www.figma.com/design/FGonQ6GxSYt1fCuIPZ7Zep/Voog--Site-structure?node-id=1-1349&t=aTY9mOK5JexRbsJT-1"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-orange-600 text-xs hover:underline"
+              className="text-orange-600 text-xs hover:underline underline"
             >
               Site structure 2.0
             </a>
@@ -115,9 +115,14 @@ export const DevControls: React.FC<DevControlsProps> = ({
             <label className="text-orange-600 text-xs min-w-0 flex-shrink-0">
               Linear:
             </label>
-            <span className="text-orange-600 text-xs">
+            <a 
+              href="https://linear.app/voog/project/refactor-site-structure-view-aa3d5a143cbb/overview"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-orange-600 text-xs hover:underline underline"
+            >
               Refactor "Site structure" view
-            </span>
+            </a>
           </div>
         </div>
       </div>
