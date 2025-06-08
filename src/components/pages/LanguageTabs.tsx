@@ -27,7 +27,7 @@ interface LanguageTabsProps {
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
   onAddLanguage: (languageData: any) => void;
-  onLanguagePublishToggle?: (language: string, published: boolean) => void;
+  onLanguageVisibilityToggle?: (action: 'enable' | 'disable') => void;
   onLanguageDelete?: (language: string) => void;
 }
 
@@ -49,7 +49,7 @@ export const LanguageTabs = ({
   onEditPage,
   onTranslatePage,
   onAddLanguage,
-  onLanguagePublishToggle,
+  onLanguageVisibilityToggle,
   onLanguageDelete
 }: LanguageTabsProps) => {
   const [addLanguageSidebarOpen, setAddLanguageSidebarOpen] = useState(false);
@@ -99,7 +99,7 @@ export const LanguageTabs = ({
             estonianVisible={estonianVisible}
             onLanguageSettings={onLanguageSettings}
             onAddPageClick={onAddPageClick}
-            onLanguagePublishToggle={onLanguagePublishToggle}
+            onLanguageVisibilityToggle={onLanguageVisibilityToggle}
             onLanguageDelete={onLanguageDelete}
           />
 
