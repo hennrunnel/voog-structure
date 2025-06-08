@@ -9,7 +9,7 @@ interface LanguageTabsActionsProps {
   estonianVisible?: boolean;
   onLanguageSettings?: () => void;
   onAddPageClick: () => void;
-  onLanguagePublishToggle?: (language: string, published: boolean) => void;
+  onLanguageVisibilityToggle?: (action: 'enable' | 'disable') => void;
   onLanguageDelete?: (language: string) => void;
 }
 
@@ -19,7 +19,7 @@ export const LanguageTabsActions = ({
   estonianVisible = true,
   onLanguageSettings,
   onAddPageClick,
-  onLanguagePublishToggle,
+  onLanguageVisibilityToggle,
   onLanguageDelete
 }: LanguageTabsActionsProps) => {
   const handleDownloadSite = () => {
@@ -28,7 +28,8 @@ export const LanguageTabsActions = ({
 
   const handleLanguagePublishToggle = () => {
     const isCurrentlyPublished = activeTab === "english" ? englishVisible : estonianVisible;
-    onLanguagePublishToggle?.(activeTab, !isCurrentlyPublished);
+    const action = isCurrentlyPublished ? 'disable' : 'enable';
+    onLanguageVisibilityToggle?.(action);
   };
 
   const handleLanguageDelete = () => {

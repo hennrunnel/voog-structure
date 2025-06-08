@@ -39,7 +39,11 @@ export const PageSettingsDialogs = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
-            <AlertDialogAction onClick={onConfirmDelete} className="bg-destructive hover:bg-destructive/90">
+            <AlertDialogAction 
+              onClick={onConfirmDelete} 
+              style={{ backgroundColor: '#C5292A' }}
+              className="hover:opacity-90"
+            >
               Delete page
             </AlertDialogAction>
             <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">

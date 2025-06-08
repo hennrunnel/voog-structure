@@ -50,7 +50,11 @@ export const PageDialogs = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row justify-end space-x-2 space-y-0">
-            <AlertDialogAction onClick={onConfirmDelete} className="bg-destructive hover:bg-destructive/90">
+            <AlertDialogAction 
+              onClick={onConfirmDelete} 
+              style={{ backgroundColor: '#C5292A' }}
+              className="hover:opacity-90"
+            >
               Delete
             </AlertDialogAction>
             <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
@@ -70,7 +74,11 @@ export const PageDialogs = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row justify-start space-x-2 space-y-0">
-            <AlertDialogAction onClick={onConfirmLanguageDelete} className="bg-destructive hover:bg-destructive/90">
+            <AlertDialogAction 
+              onClick={onConfirmLanguageDelete} 
+              style={{ backgroundColor: '#C5292A' }}
+              className="hover:opacity-90"
+            >
               Delete language
             </AlertDialogAction>
             <AlertDialogCancel className="border border-border bg-background hover:bg-accent hover:text-accent-foreground mt-0">
@@ -97,10 +105,10 @@ export const PageDialogs = ({
           <AlertDialogFooter className="flex-row justify-end space-x-2 space-y-0">
             <AlertDialogAction 
               onClick={onConfirmLanguageVisibilityToggle}
-              className={languageVisibilityAction === 'disable' 
-                ? "bg-destructive hover:bg-destructive/90" 
-                : "bg-primary hover:bg-primary/90"
-              }
+              style={{ 
+                backgroundColor: languageVisibilityAction === 'disable' ? '#C5292A' : '#453DFF'
+              }}
+              className="hover:opacity-90"
             >
               {languageVisibilityAction === 'enable' ? 'Enable' : 'Disable'}
             </AlertDialogAction>

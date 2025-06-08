@@ -69,6 +69,14 @@ export const PagesContent = ({
     setLanguageSettingsOpen(true);
   };
 
+  const handleLanguageVisibilityToggle = (action: 'enable' | 'disable') => {
+    if (activeTab === "english") {
+      handleEnglishLanguageVisibilityToggle(action === 'enable');
+    } else if (activeTab === "estonian") {
+      handleEstonianLanguageVisibilityToggle(action === 'enable');
+    }
+  };
+
   const getCurrentLanguageSettings = () => {
     if (activeTab === "english") {
       return {
@@ -113,7 +121,7 @@ export const PagesContent = ({
         onEditPage={onEditPage}
         onTranslatePage={onTranslatePage}
         onAddLanguage={addLanguage}
-        onLanguagePublishToggle={handleLanguagePublishToggle}
+        onLanguageVisibilityToggle={handleLanguageVisibilityToggle}
         onLanguageDelete={handleLanguageDelete}
       />
 
