@@ -44,8 +44,6 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
       <PageRowColumns
         page={page}
         currentLanguage={currentLanguage}
-        level={level}
-        onToggleExpansion={onToggleExpansion}
         onToggleVisibility={onToggleVisibility}
       />
       
