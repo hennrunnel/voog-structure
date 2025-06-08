@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { InfoBox } from "@/components/ui/info-box";
 import { KebabIcon } from "./LanguageTabsIcons";
 
 interface LanguageTabsActionsProps {
@@ -41,6 +42,8 @@ export const LanguageTabsActions = ({
     return true;
   };
 
+  const isLanguageHidden = !isCurrentLanguagePublished();
+
   return (
     <div 
       className="flex items-center justify-between" 
@@ -52,7 +55,11 @@ export const LanguageTabsActions = ({
       }}
     >
       <div className="flex items-center gap-3">
-        {/* Empty div to push buttons to the right */}
+        {isLanguageHidden && (
+          <InfoBox className="max-w-md">
+            This language is hidden from visitors. Publish it in Language settings.
+          </InfoBox>
+        )}
       </div>
       
       <div className="flex items-center gap-3">
