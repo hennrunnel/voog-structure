@@ -1,6 +1,7 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useNavigate } from "react-router-dom";
 import { PageItem } from "@/types/pages";
@@ -89,6 +90,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
             </DropdownMenuItem>
           ) : (
             <>
+              {/* 1. Edit page */}
               <DropdownMenuItem 
                 onClick={handleEditPage} 
                 className="cursor-pointer text-[#1B2124] transition-colors"
@@ -111,81 +113,8 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
               >
                 Edit page
               </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={e => {
-                  e.stopPropagation();
-                  onPageSettings(page);
-                }} 
-                className="cursor-pointer text-[#1B2124] transition-colors"
-                style={{
-                  height: '40px',
-                  padding: '8px 16px',
-                  fontSize: '14px',
-                  lineHeight: '24px',
-                  margin: '0',
-                  borderRadius: '0'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#5A4FFF';
-                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#1B2124';
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
-              >
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={e => {
-                  e.stopPropagation();
-                  onToggleVisibility(page.id);
-                }} 
-                className="cursor-pointer text-[#1B2124] transition-colors"
-                style={{
-                  height: '40px',
-                  padding: '8px 16px',
-                  fontSize: '14px',
-                  lineHeight: '24px',
-                  margin: '0',
-                  borderRadius: '0'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#5A4FFF';
-                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#1B2124';
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
-              >
-                {page.isVisible ? 'Hide from menu' : 'Show in menu'}
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={e => {
-                  e.stopPropagation();
-                  onDuplicatePage(page);
-                }} 
-                className="cursor-pointer text-[#1B2124] transition-colors"
-                style={{
-                  height: '40px',
-                  padding: '8px 16px',
-                  fontSize: '14px',
-                  lineHeight: '24px',
-                  margin: '0',
-                  borderRadius: '0'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#5A4FFF';
-                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#1B2124';
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
-              >
-                Duplicate
-              </DropdownMenuItem>
+              
+              {/* 2. Add subpage */}
               <DropdownMenuItem 
                 onClick={e => {
                   e.stopPropagation();
@@ -211,59 +140,144 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
               >
                 Add subpage
               </DropdownMenuItem>
-              {/* Delete option - not shown for Home page, disabled with tooltip for pages with children */}
+              
+              {/* 3. Duplicate */}
+              <DropdownMenuItem 
+                onClick={e => {
+                  e.stopPropagation();
+                  onDuplicatePage(page);
+                }} 
+                className="cursor-pointer text-[#1B2124] transition-colors"
+                style={{
+                  height: '40px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  margin: '0',
+                  borderRadius: '0'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                Duplicate
+              </DropdownMenuItem>
+              
+              {/* 4. Hide from menu */}
+              <DropdownMenuItem 
+                onClick={e => {
+                  e.stopPropagation();
+                  onToggleVisibility(page.id);
+                }} 
+                className="cursor-pointer text-[#1B2124] transition-colors"
+                style={{
+                  height: '40px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  margin: '0',
+                  borderRadius: '0'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                {page.isVisible ? 'Hide from menu' : 'Show in menu'}
+              </DropdownMenuItem>
+              
+              {/* 5. Settings */}
+              <DropdownMenuItem 
+                onClick={e => {
+                  e.stopPropagation();
+                  onPageSettings(page);
+                }} 
+                className="cursor-pointer text-[#1B2124] transition-colors"
+                style={{
+                  height: '40px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  margin: '0',
+                  borderRadius: '0'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                Settings
+              </DropdownMenuItem>
+              
+              {/* 6. Divider and 7. Delete */}
               {!isHomePage && (
-                hasChildren ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div>
-                        <DropdownMenuItem 
-                          disabled
-                          className="cursor-not-allowed text-gray-400"
-                          style={{
-                            height: '40px',
-                            padding: '8px 16px',
-                            fontSize: '14px',
-                            lineHeight: '24px',
-                            margin: '0',
-                            borderRadius: '0'
-                          }}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Cannot delete page with subpages</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <DropdownMenuItem 
-                    onClick={e => {
-                      e.stopPropagation();
-                      onDeletePage(page);
-                    }} 
-                    className="cursor-pointer text-red-600 transition-colors"
-                    style={{
-                      height: '40px',
-                      padding: '8px 16px',
-                      fontSize: '14px',
-                      lineHeight: '24px',
-                      margin: '0',
-                      borderRadius: '0'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#5A4FFF';
-                      e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#DC2626';
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                    }}
-                  >
-                    Delete
-                  </DropdownMenuItem>
-                )
+                <>
+                  <DropdownMenuSeparator />
+                  {hasChildren ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <DropdownMenuItem 
+                            disabled
+                            className="cursor-not-allowed text-gray-400"
+                            style={{
+                              height: '40px',
+                              padding: '8px 16px',
+                              fontSize: '14px',
+                              lineHeight: '24px',
+                              margin: '0',
+                              borderRadius: '0'
+                            }}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Cannot delete page with subpages</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <DropdownMenuItem 
+                      onClick={e => {
+                        e.stopPropagation();
+                        onDeletePage(page);
+                      }} 
+                      className="cursor-pointer text-red-600 transition-colors"
+                      style={{
+                        height: '40px',
+                        padding: '8px 16px',
+                        fontSize: '14px',
+                        lineHeight: '24px',
+                        margin: '0',
+                        borderRadius: '0'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#5A4FFF';
+                        e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#DC2626';
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                      }}
+                    >
+                      Delete
+                    </DropdownMenuItem>
+                  )}
+                </>
               )}
             </>
           )}
