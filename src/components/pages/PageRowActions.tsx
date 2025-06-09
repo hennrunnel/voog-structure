@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -13,6 +14,7 @@ interface PageRowActionsProps {
   onPageSettings: (page: PageItem) => void;
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
+  onToggleVisibility: (pageId: string) => void;
 }
 
 export const PageRowActions: React.FC<PageRowActionsProps> = ({
@@ -22,7 +24,8 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   onAddNestedPage,
   onPageSettings,
   onEditPage,
-  onTranslatePage
+  onTranslatePage,
+  onToggleVisibility
 }) => {
   const hasChildren = page.children && page.children.length > 0;
   const isHomePage = page.id === "1";
@@ -127,6 +130,31 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
                 }}
               >
                 Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={e => {
+                  e.stopPropagation();
+                  onToggleVisibility(page.id);
+                }} 
+                className="cursor-pointer text-[#1B2124] transition-colors"
+                style={{
+                  height: '40px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  margin: '0',
+                  borderRadius: '0'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#5A4FFF';
+                  e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#1B2124';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                {page.isVisible ? 'Hide from menu' : 'Show in menu'}
               </DropdownMenuItem>
               <DropdownMenuItem 
                 onClick={e => {

@@ -19,6 +19,7 @@ export const useLanguageManagement = () => {
   const [languageDeleteDialogOpen, setLanguageDeleteDialogOpen] = useState(false);
   const [languageVisibilityDialogOpen, setLanguageVisibilityDialogOpen] = useState(false);
   const [languageVisibilityAction, setLanguageVisibilityAction] = useState<'enable' | 'disable'>('disable');
+  const [languageReorderOpen, setLanguageReorderOpen] = useState(false);
 
   const handleLanguageDelete = (language?: string) => {
     setLanguageDeleteDialogOpen(true);
@@ -62,6 +63,15 @@ export const useLanguageManagement = () => {
     setLanguageVisibilityDialogOpen(false);
   };
 
+  const handleReorderLanguages = () => {
+    setLanguageReorderOpen(true);
+  };
+
+  const handleSaveLanguageOrder = (reorderedLanguages: { id: string; name: string }[]) => {
+    setAvailableTabs(reorderedLanguages.map(lang => lang.id));
+    setLanguageReorderOpen(false);
+  };
+
   const addLanguage = (languageData: any) => {
     // Add the new language to available tabs
     const newLanguage = languageData.languageName;
@@ -74,6 +84,13 @@ export const useLanguageManagement = () => {
       }
     }
     console.log("Adding new language:", languageData);
+  };
+
+  const getLanguagesForReorder = () => {
+    return availableTabs.map(tab => ({
+      id: tab,
+      name: tab === "english" ? "English" : tab === "estonian" ? "Estonian" : tab
+    }));
   };
 
   return {
@@ -95,12 +112,17 @@ export const useLanguageManagement = () => {
     languageVisibilityDialogOpen,
     setLanguageVisibilityDialogOpen,
     languageVisibilityAction,
+    languageReorderOpen,
+    setLanguageReorderOpen,
     handleLanguageDelete,
     confirmLanguageDelete,
     handleLanguagePublishToggle,
     handleEnglishLanguageVisibilityToggle,
     handleEstonianLanguageVisibilityToggle,
     confirmLanguageVisibilityToggle,
+    handleReorderLanguages,
+    handleSaveLanguageOrder,
+    getLanguagesForReorder,
     addLanguage
   };
 };

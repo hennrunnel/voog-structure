@@ -11,6 +11,7 @@ interface LanguageTabsActionsProps {
   onAddPageClick: () => void;
   onLanguageVisibilityToggle?: (action: 'enable' | 'disable') => void;
   onLanguageDelete?: (language: string) => void;
+  onReorderLanguages?: () => void;
 }
 
 export const LanguageTabsActions = ({
@@ -20,7 +21,8 @@ export const LanguageTabsActions = ({
   onLanguageSettings,
   onAddPageClick,
   onLanguageVisibilityToggle,
-  onLanguageDelete
+  onLanguageDelete,
+  onReorderLanguages
 }: LanguageTabsActionsProps) => {
   const handleDownloadSite = () => {
     console.log("Download entire site clicked");
@@ -135,6 +137,28 @@ export const LanguageTabsActions = ({
               }}
             >
               {isCurrentLanguagePublished() ? 'Unpublish this language' : 'Publish this language'}
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={onReorderLanguages} 
+              className="cursor-pointer text-[#1B2124] transition-colors"
+              style={{
+                height: '40px',
+                padding: '8px 16px',
+                fontSize: '14px',
+                lineHeight: '24px',
+                margin: '0',
+                borderRadius: '0'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#5A4FFF';
+                e.currentTarget.style.backgroundColor = 'rgba(90, 79, 255, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#1B2124';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              Reorder languages
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={handleDownloadSite} 
