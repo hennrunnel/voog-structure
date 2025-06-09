@@ -45,7 +45,7 @@ export const mockPages: PageItem[] = [
     pageType: "Product List",
     seoScore: "Good",
     isVisible: true,
-    isExpanded: true,
+    isExpanded: false,
     children: [
       {
         id: "2-1",
@@ -65,7 +65,7 @@ export const mockPages: PageItem[] = [
     seoScore: "Poor",
     translationStatus: "Untranslated",
     isVisible: false,
-    isExpanded: true,
+    isExpanded: false,
     children: [
       {
         id: "3-1",
@@ -110,7 +110,7 @@ export const mockPages: PageItem[] = [
     pageType: "Common Page",
     seoScore: "Good",
     isVisible: true,
-    isExpanded: true,
+    isExpanded: false,
     children: [
       {
         id: "6-1",
@@ -119,7 +119,7 @@ export const mockPages: PageItem[] = [
         pageType: "Common Page",
         seoScore: "Good",
         isVisible: true,
-        isExpanded: true,
+        isExpanded: false,
         children: [
           {
             id: "6-1-1",
