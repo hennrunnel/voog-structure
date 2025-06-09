@@ -3,6 +3,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PageTable } from "@/components/pages/PageTable";
 import { AddLanguageSidebar } from "@/components/pages/AddLanguageSidebar";
+import { LanguageReorderSidepanel } from "@/components/pages/LanguageReorderSidepanel";
 import { LanguageTabsHeader } from "./LanguageTabsHeader";
 import { LanguageTabsActions } from "./LanguageTabsActions";
 import { EmptyLanguageState } from "./EmptyLanguageState";
@@ -29,6 +30,11 @@ interface LanguageTabsProps {
   onAddLanguage: (languageData: any) => void;
   onLanguageVisibilityToggle?: (action: 'enable' | 'disable') => void;
   onLanguageDelete?: (language: string) => void;
+  onReorderLanguages?: () => void;
+  languageReorderOpen?: boolean;
+  onSaveLanguageOrder?: (reorderedLanguages: { id: string; name: string }[]) => void;
+  getLanguagesForReorder?: () => { id: string; name: string }[];
+  onCloseLanguageReorder?: () => void;
 }
 
 export const LanguageTabs = ({
@@ -50,7 +56,12 @@ export const LanguageTabs = ({
   onTranslatePage,
   onAddLanguage,
   onLanguageVisibilityToggle,
-  onLanguageDelete
+  onLanguageDelete,
+  onReorderLanguages,
+  languageReorderOpen = false,
+  onSaveLanguageOrder,
+  getLanguagesForReorder,
+  onCloseLanguageReorder
 }: LanguageTabsProps) => {
   const [addLanguageSidebarOpen, setAddLanguageSidebarOpen] = useState(false);
 
@@ -101,6 +112,7 @@ export const LanguageTabs = ({
             onAddPageClick={onAddPageClick}
             onLanguageVisibilityToggle={onLanguageVisibilityToggle}
             onLanguageDelete={onLanguageDelete}
+            onReorderLanguages={onReorderLanguages}
           />
 
           {availableTabs.map(tab => (
@@ -127,6 +139,15 @@ export const LanguageTabs = ({
         onClose={() => setAddLanguageSidebarOpen(false)} 
         onAddLanguage={handleAddLanguage} 
       />
+
+      {languageReorderOpen && getLanguagesForReorder && onSaveLanguageOrder && onCloseLanguageReorder && (
+        <LanguageReorderSidepanel
+          open={languageReorderOpen}
+          onClose={onCloseLanguageReorder}
+          languages={getLanguagesForReorder()}
+          onSave={onSaveLanguageOrder}
+        />
+      )}
     </TooltipProvider>
   );
 };

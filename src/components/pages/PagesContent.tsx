@@ -1,3 +1,4 @@
+
 import { LanguageTabs } from "@/components/pages/LanguageTabs";
 import { LanguageSettingsSidebar } from "@/components/pages/LanguageSettingsSidebar";
 import { PageItem } from "@/types/pages";
@@ -31,6 +32,11 @@ interface PagesContentProps {
   onPageSettings: (page: PageItem) => void;
   onEditPage: (page: PageItem) => void;
   onTranslatePage: (page: PageItem) => void;
+  languageReorderOpen: boolean;
+  handleReorderLanguages: () => void;
+  handleSaveLanguageOrder: (reorderedLanguages: { id: string; name: string }[]) => void;
+  getLanguagesForReorder: () => { id: string; name: string }[];
+  setLanguageReorderOpen: (open: boolean) => void;
 }
 
 export const PagesContent = ({
@@ -61,7 +67,12 @@ export const PagesContent = ({
   onPageSettings,
   onEditPage,
   onTranslatePage,
-  addLanguage
+  addLanguage,
+  languageReorderOpen,
+  handleReorderLanguages,
+  handleSaveLanguageOrder,
+  getLanguagesForReorder,
+  setLanguageReorderOpen
 }: PagesContentProps & { addLanguage: (languageData: any) => void }) => {
   const [languageSettingsOpen, setLanguageSettingsOpen] = useState(false);
 
@@ -75,6 +86,10 @@ export const PagesContent = ({
     } else if (activeTab === "estonian") {
       handleEstonianLanguageVisibilityToggle(action === 'enable');
     }
+  };
+
+  const handleCloseLanguageReorder = () => {
+    setLanguageReorderOpen(false);
   };
 
   const getCurrentLanguageSettings = () => {
@@ -123,6 +138,11 @@ export const PagesContent = ({
         onAddLanguage={addLanguage}
         onLanguageVisibilityToggle={handleLanguageVisibilityToggle}
         onLanguageDelete={handleLanguageDelete}
+        onReorderLanguages={handleReorderLanguages}
+        languageReorderOpen={languageReorderOpen}
+        onSaveLanguageOrder={handleSaveLanguageOrder}
+        getLanguagesForReorder={getLanguagesForReorder}
+        onCloseLanguageReorder={handleCloseLanguageReorder}
       />
 
       {/* Only show language settings sidebar if there are languages */}

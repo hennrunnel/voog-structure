@@ -1,3 +1,4 @@
+
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
 import { DevControls } from "@/components/DevControls";
@@ -46,12 +47,17 @@ export const PagesContainer = () => {
     languageVisibilityDialogOpen,
     setLanguageVisibilityDialogOpen,
     languageVisibilityAction,
+    languageReorderOpen,
+    setLanguageReorderOpen,
     handleLanguageDelete,
     confirmLanguageDelete,
     handleLanguagePublishToggle,
     handleEnglishLanguageVisibilityToggle,
     handleEstonianLanguageVisibilityToggle,
     confirmLanguageVisibilityToggle,
+    handleReorderLanguages,
+    handleSaveLanguageOrder,
+    getLanguagesForReorder,
     addLanguage
   } = useLanguageManagement();
 
@@ -127,6 +133,11 @@ export const PagesContainer = () => {
               onEditPage={handleEditPage}
               onTranslatePage={handleTranslatePage}
               addLanguage={addLanguage}
+              languageReorderOpen={languageReorderOpen}
+              handleReorderLanguages={handleReorderLanguages}
+              handleSaveLanguageOrder={handleSaveLanguageOrder}
+              getLanguagesForReorder={getLanguagesForReorder}
+              setLanguageReorderOpen={setLanguageReorderOpen}
             />
           </CardContent>
         </Card>
