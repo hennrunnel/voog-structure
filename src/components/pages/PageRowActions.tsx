@@ -39,7 +39,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   };
 
   return (
-    <div className="w-6 flex items-center justify-center kebab-actions opacity-0 page-row:hover .kebab-actions { opacity: 100 } transition-opacity">
+    <div className="w-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button 

@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface PageSettingsHeaderProps {
   activeTab: string;
@@ -31,15 +32,21 @@ export const PageSettingsHeader = ({ activeTab, setActiveTab }: PageSettingsHead
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           <h2 id="page-settings-title" className="text-xl font-semibold text-foreground">Page settings</h2>
-          <Button 
-            onClick={handleEditPage}
-            variant="ghost"
-            size="sm"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
-          >
-            <EditPageIcon />
-            <span className="ml-2">Edit page</span>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                onClick={handleEditPage}
+                variant="ghost"
+                size="sm"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted"
+              >
+                <EditPageIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Click to edit page</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
       

@@ -58,7 +58,7 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
 
   return (
     <div 
-      className="page-row flex items-center border-l-2 border-l-transparent hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
+      className="group flex items-center border-l-2 border-l-transparent hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
       style={{ 
         paddingLeft: `${paddingLeft + 24}px`, 
         paddingRight: '24px',
@@ -98,7 +98,7 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
       />
 
       {/* Move handle - invisible placeholder for Home page to maintain spacing */}
-      <div className={`${isHomePage ? 'opacity-0' : 'page-row:hover .move-icon { opacity: 100 } opacity-0'} transition-opacity mr-2 move-icon`}>
+      <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity mr-2`}>
         <MoveIcon />
       </div>
 
