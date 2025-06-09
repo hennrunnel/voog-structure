@@ -1,7 +1,9 @@
 
+
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 const Upsell = () => {
   return (
@@ -78,6 +80,22 @@ const Upsell = () => {
                     Add language
                   </button>
                 </div>
+
+                {/* Upgrade Message Content */}
+                <div className="p-6">
+                  <h1 className="text-2xl font-semibold text-[#1B2124] mb-4">
+                    Upgrade required
+                  </h1>
+                  <p className="text-[#1B2124] mb-6 leading-relaxed">
+                    Your Voog Standard plan allows 3 languages. For just €22 per month you'll get 20 GB of storage, unlimited pages, users, languages, and access to developer tools for deep customization of your website.
+                  </p>
+                  <Button 
+                    variant="outline" 
+                    className="border-[#5A4FFF] text-[#5A4FFF] hover:bg-[#5A4FFF] hover:text-white"
+                  >
+                    Contact site admin
+                  </Button>
+                </div>
               </Tabs>
             </div>
           </CardContent>
@@ -88,3 +106,4 @@ const Upsell = () => {
 };
 
 export default Upsell;
+
