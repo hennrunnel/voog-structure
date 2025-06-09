@@ -40,9 +40,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   };
 
   return (
-    <div className={`w-6 flex items-center justify-center transition-opacity ${
-      isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-    }`}>
+    <div className="w-6 flex items-center justify-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button 
