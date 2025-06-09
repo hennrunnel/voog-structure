@@ -1,38 +1,5 @@
+
 import { PageItem } from "@/types/pages";
-
-export interface LayoutOption {
-  id: string;
-  title: string;
-  icon: string;
-}
-
-export const layoutOptions: LayoutOption[] = [
-  {
-    id: "front-page",
-    title: "Front page",
-    icon: "🏠"
-  },
-  {
-    id: "common-page", 
-    title: "Common page",
-    icon: "📄"
-  },
-  {
-    id: "blog-layout",
-    title: "Blog",
-    icon: "📝"
-  },
-  {
-    id: "shop-layout",
-    title: "Shop",
-    icon: "🛍️"
-  },
-  {
-    id: "external-link",
-    title: "External link",
-    icon: "🔗"
-  }
-];
 
 export const mockPages: PageItem[] = [
   {
