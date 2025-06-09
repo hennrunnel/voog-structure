@@ -1,5 +1,7 @@
+
 import { PageRowContainer } from "@/components/pages/PageRowContainer";
 import { PageItem } from "@/types/pages";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PageTableProps {
   pages: PageItem[];
@@ -26,6 +28,8 @@ export const PageTable = ({
   onEditPage,
   onTranslatePage
 }: PageTableProps) => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="overflow-hidden" style={{ borderTop: '1px solid #EFEFEF' }}>
       {/* Table Header */}
@@ -44,28 +48,33 @@ export const PageTable = ({
             <span>Menu title</span>
           </div>
           
-          {/* Slug */}
-          <div className="w-48 px-4">
-            <span>Slug</span>
-          </div>
-          
-          {/* Layout */}
-          <div className="w-32 px-4">
-            <span>Layout</span>
-          </div>
-          
-          {/* SEO */}
-          <div className="w-24 px-4 flex justify-center">
-            <span>SEO</span>
-          </div>
-          
-          {/* In menu */}
-          <div className="w-24 px-4 flex justify-center">
-            <span>In menu</span>
-          </div>
+          {/* Hide columns in mobile view */}
+          {!isMobile && (
+            <>
+              {/* Slug */}
+              <div className="w-48 px-4">
+                <span>Slug</span>
+              </div>
+              
+              {/* Layout */}
+              <div className="w-32 px-4">
+                <span>Layout</span>
+              </div>
+              
+              {/* SEO */}
+              <div className="w-24 px-4 flex justify-center">
+                <span>SEO</span>
+              </div>
+              
+              {/* In menu */}
+              <div className="w-24 px-4 flex justify-center">
+                <span>In menu</span>
+              </div>
 
-          {/* Space for move handle */}
-          <div className="mr-2" style={{ width: '16px' }}></div>
+              {/* Space for move handle */}
+              <div className="mr-2" style={{ width: '16px' }}></div>
+            </>
+          )}
           
           {/* Actions */}
           <div className="w-6"></div>

@@ -6,6 +6,7 @@ import { PageTitleSection } from "./PageTitleSection";
 import { PageRowColumns } from "./PageRowColumns";
 import { PageRowActions } from "./PageRowActions";
 import { getTranslatedPageTitle } from "@/constants/translations";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PageRowContentProps {
   page: PageItem;
@@ -34,6 +35,7 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
   onEditPage,
   onTranslatePage
 }) => {
+  const isMobile = useIsMobile();
   const hasChildren = page.children && page.children.length > 0;
   const paddingLeft = level * 24;
   const isHomePage = page.id === "1";
@@ -90,17 +92,19 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
       {/* Title */}
       <PageTitleSection page={translatedPage} />
 
-      {/* Columns (Slug, Layout, SEO, Menu Visibility) */}
+      {/* Columns (Slug, Layout, SEO, Menu Visibility) - Hidden in mobile */}
       <PageRowColumns
         page={page}
         currentLanguage={currentLanguage}
         onToggleVisibility={onToggleVisibility}
       />
 
-      {/* Move handle - invisible placeholder for Home page to maintain spacing */}
-      <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity mr-2`}>
-        <MoveIcon />
-      </div>
+      {/* Move handle - Hidden in mobile view */}
+      {!isMobile && (
+        <div className={`${isHomePage ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'} transition-opacity mr-2`}>
+          <MoveIcon />
+        </div>
+      )}
 
       {/* Actions */}
       <div className="actions-container">

@@ -4,6 +4,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { PageItem } from "@/types/pages";
 import { EyeVisibleIcon, EyeHiddenIcon } from "./PageRowIcons";
 import { getTranslatedPageSlug } from "@/constants/translations";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PageRowColumnsProps {
   page: PageItem;
@@ -25,6 +26,7 @@ export const PageRowColumns: React.FC<PageRowColumnsProps> = ({
   currentLanguage,
   onToggleVisibility
 }) => {
+  const isMobile = useIsMobile();
   const isUntranslated = page.translationStatus === "Untranslated";
   const translatedSlug = getTranslatedPageSlug(page.slug, currentLanguage, isUntranslated);
 
@@ -37,6 +39,11 @@ export const PageRowColumns: React.FC<PageRowColumnsProps> = ({
     e.stopPropagation();
     onToggleVisibility(page.id);
   };
+
+  // Hide all columns in mobile view
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>

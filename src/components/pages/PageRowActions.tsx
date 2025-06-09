@@ -5,6 +5,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useNavigate } from "react-router-dom";
 import { PageItem } from "@/types/pages";
 import { KebabIcon } from "./PageRowIcons";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PageRowActionsProps {
   page: PageItem;
@@ -28,6 +29,7 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   onToggleVisibility
 }) => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const hasChildren = page.children && page.children.length > 0;
   const isHomePage = page.id === "1";
   const isUntranslated = page.translationStatus === "Untranslated";
@@ -38,7 +40,9 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   };
 
   return (
-    <div className="w-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+    <div className={`w-6 flex items-center justify-center transition-opacity ${
+      isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+    }`}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button 
