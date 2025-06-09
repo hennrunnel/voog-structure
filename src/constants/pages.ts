@@ -36,7 +36,18 @@ export const mockPages: PageItem[] = [
     slug: "/",
     pageType: "Front Page",
     seoScore: "Good",
-    isVisible: true
+    isVisible: true,
+    isExpanded: false,
+    children: [
+      {
+        id: "1-1",
+        title: "Upsell",
+        slug: "/upsell",
+        pageType: "Common Page",
+        seoScore: "Good",
+        isVisible: true
+      }
+    ]
   },
   {
     id: "2",
