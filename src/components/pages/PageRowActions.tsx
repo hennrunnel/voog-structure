@@ -1,8 +1,8 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useNavigate } from "react-router-dom";
 import { PageItem } from "@/types/pages";
 import { KebabIcon } from "./PageRowIcons";
 
@@ -27,15 +27,14 @@ export const PageRowActions: React.FC<PageRowActionsProps> = ({
   onTranslatePage,
   onToggleVisibility
 }) => {
+  const navigate = useNavigate();
   const hasChildren = page.children && page.children.length > 0;
   const isHomePage = page.id === "1";
   const isUntranslated = page.translationStatus === "Untranslated";
 
   const handleEditPage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Navigate to edit mode - this would typically be handled by the parent component
-    console.log(`Navigating to edit mode for page: ${page.title}`);
-    onEditPage(page);
+    navigate("/edit-mode");
   };
 
   return (

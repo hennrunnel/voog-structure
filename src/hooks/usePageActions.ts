@@ -1,9 +1,11 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PageItem } from "@/types/pages";
 import { layoutOptions } from "@/constants/pages";
 
 export const usePageActions = (setPages: React.Dispatch<React.SetStateAction<PageItem[]>>) => {
+  const navigate = useNavigate();
   const [addPageSidebarOpen, setAddPageSidebarOpen] = useState(false);
   const [selectedLayout, setSelectedLayout] = useState<string | null>(null);
   const [pageSettingsOpen, setPageSettingsOpen] = useState(false);
@@ -29,7 +31,7 @@ export const usePageActions = (setPages: React.Dispatch<React.SetStateAction<Pag
       // This will be handled by the translate page functionality
       console.log("Edit untranslated page - should open translate page sidebar");
     } else {
-      handlePageSettings(page);
+      navigate("/edit-mode");
     }
   };
 

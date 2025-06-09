@@ -1,7 +1,7 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useNavigate } from "react-router-dom";
 
 interface PageSettingsHeaderProps {
   activeTab: string;
@@ -23,8 +23,10 @@ const EditPageIcon = () => (
 );
 
 export const PageSettingsHeader = ({ activeTab, setActiveTab }: PageSettingsHeaderProps) => {
+  const navigate = useNavigate();
+
   const handleEditPage = () => {
-    console.log("Navigating to page editor...");
+    navigate("/edit-mode");
   };
 
   return (
