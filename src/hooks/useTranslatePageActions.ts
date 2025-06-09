@@ -24,14 +24,13 @@ export const useTranslatePageActions = (setPages: React.Dispatch<React.SetStateA
     visibility: string;
   }) => {
     if (translationData.title && translationData.slug && pageToTranslate) {
-      const newPage = {
+      const newPage: PageItem = {
         id: Date.now().toString(),
         title: translationData.title,
         slug: translationData.slug.startsWith('/') ? translationData.slug : `/${translationData.slug}`,
         pageType: "Common Page",
         seoScore: "Good" as const,
-        isVisible: translationData.visibility === "visible",
-        translationStatus: "Translated" as const
+        isVisible: translationData.visibility === "visible"
       };
       setPages(prevPages => [...prevPages, newPage]);
       setTranslatePageSidebarOpen(false);
