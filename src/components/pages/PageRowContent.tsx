@@ -111,6 +111,7 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
         onPageSettings={onPageSettings}
         onEditPage={onEditPage}
         onTranslatePage={onTranslatePage}
+        onToggleVisibility={onToggleVisibility}
       />
     </div>
   );
