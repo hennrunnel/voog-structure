@@ -1,5 +1,3 @@
-
-
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,7 +18,7 @@ const Upsell = () => {
             border: '0.5px solid rgba(24, 24, 27, 0.10)',
             background: 'var(--Primary-White, #FFF)',
             boxShadow: '0px 0.5px 1px 0px var(--shadow-dark, rgba(24, 24, 27, 0.05)), 0px 2px 5px 0px rgba(0, 0, 0, 0.05), 0px 17px 17.7px 0px rgba(0, 0, 0, 0.01)',
-            paddingBottom: '0px',
+            paddingBottom: '32px',
             marginBottom: '32px'
           }}
         >
@@ -82,19 +80,20 @@ const Upsell = () => {
                 </div>
 
                 {/* Upgrade Message Content */}
-                <div className="p-6">
-                  <h1 className="text-2xl font-semibold text-[#1B2124] mb-4">
-                    Upgrade required
-                  </h1>
-                  <p className="text-[#1B2124] mb-6 leading-relaxed">
-                    Your Voog Standard plan allows 3 languages. For just €22 per month you'll get 20 GB of storage, unlimited pages, users, languages, and access to developer tools for deep customization of your website.
-                  </p>
-                  <Button 
-                    variant="outline" 
-                    className="border-[#5A4FFF] text-[#5A4FFF] hover:bg-[#5A4FFF] hover:text-white"
-                  >
-                    Contact site admin
-                  </Button>
+                <div className="flex justify-center px-6 py-6">
+                  <div className="text-center" style={{ maxWidth: '800px' }}>
+                    <h1 className="text-2xl font-semibold text-[#1B2124] mb-4">
+                      Upgrade required
+                    </h1>
+                    <p className="text-[#1B2124] mb-6 leading-relaxed">
+                      Your Voog Standard plan allows 3 languages. For just €22 per month you'll get 20 GB of storage, unlimited pages, users, languages, and access to developer tools for deep customization of your website.
+                    </p>
+                    <Button 
+                      className="bg-[#5A4FFF] text-white hover:bg-[#4a3fee]"
+                    >
+                      Contact site admin
+                    </Button>
+                  </div>
                 </div>
               </Tabs>
             </div>
@@ -106,4 +105,3 @@ const Upsell = () => {
 };
 
 export default Upsell;
-
