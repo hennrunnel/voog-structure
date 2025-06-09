@@ -1,10 +1,12 @@
 
 import { PageSettings } from "@/components/PageSettings";
 import { AddPageSidebar } from "@/components/AddPageSidebar";
+import { TranslatePageSidebar } from "@/components/TranslatePageSidebar";
 import { DevControls } from "@/components/DevControls";
 import { usePageManagement } from "@/hooks/usePageManagement";
 import { useLanguageManagement } from "@/hooks/useLanguageManagement";
 import { usePageActions } from "@/hooks/usePageActions";
+import { useTranslatePageActions } from "@/hooks/useTranslatePageActions";
 import { PageDialogs } from "@/components/pages/PageDialogs";
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { PagesContent } from "@/components/pages/PagesContent";
@@ -70,11 +72,19 @@ export const PagesContainer = () => {
     handleAddPageClick,
     handlePageSettings,
     handleEditPage,
-    handleTranslatePage,
+    handleTranslatePage: originalHandleTranslatePage,
     handleClosePageSettings,
     handleCloseAddPageSidebar,
     handleCreatePage
   } = usePageActions(setPages);
+
+  const {
+    translatePageSidebarOpen,
+    pageToTranslate,
+    handleTranslatePage,
+    handleCloseTranslatePageSidebar,
+    handleCreateTranslation
+  } = useTranslatePageActions(setPages);
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: devControlsVisible ? '24px' : '80px' }}>
@@ -166,6 +176,15 @@ export const PagesContainer = () => {
           onClose={handleCloseAddPageSidebar} 
           onCreatePage={handleCreatePage} 
           selectedLayout={selectedLayout} 
+        />
+
+        <TranslatePageSidebar
+          isOpen={translatePageSidebarOpen}
+          onClose={handleCloseTranslatePageSidebar}
+          onCreateTranslation={handleCreateTranslation}
+          pageToTranslate={pageToTranslate}
+          currentLanguage={activeTab}
+          availableLanguages={availableTabs}
         />
       </div>
     </div>

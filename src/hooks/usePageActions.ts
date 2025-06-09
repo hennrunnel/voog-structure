@@ -26,16 +26,16 @@ export const usePageActions = (setPages: React.Dispatch<React.SetStateAction<Pag
 
   const handleEditPage = (page: PageItem) => {
     if (page.translationStatus === "Untranslated") {
-      setSelectedLayout("common-page");
-      setAddPageSidebarOpen(true);
+      // This will be handled by the translate page functionality
+      console.log("Edit untranslated page - should open translate page sidebar");
     } else {
       handlePageSettings(page);
     }
   };
 
   const handleTranslatePage = (page: PageItem) => {
-    setSelectedLayout("common-page");
-    setAddPageSidebarOpen(true);
+    // This will be overridden by the parent component
+    console.log("Translate page action triggered for:", page.title);
   };
 
   const handleClosePageSettings = () => {
