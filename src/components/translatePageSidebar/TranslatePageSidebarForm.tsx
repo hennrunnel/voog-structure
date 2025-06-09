@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 interface TranslatePageSidebarFormProps {
   title: string;
@@ -114,20 +115,21 @@ export const TranslatePageSidebarForm = ({
           </div>
         )}
 
-        {/* Visibility */}
+        {/* Show in menu toggle */}
         <div className="space-y-2">
-          <Label htmlFor="visibility" className="text-sm font-medium text-foreground">
-            Visibility
+          <Label htmlFor="show-in-menu" className="text-sm font-medium text-foreground">
+            Show in menu
           </Label>
-          <Select value={visibility} onValueChange={setVisibility}>
-            <SelectTrigger className="w-full border-border rounded-lg" id="visibility">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="visible">Visible in menu</SelectItem>
-              <SelectItem value="hidden">Hidden from menu</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="show-in-menu"
+              checked={visibility === "visible"}
+              onCheckedChange={(checked) => setVisibility(checked ? "visible" : "hidden")}
+            />
+            <span className="text-sm text-muted-foreground">
+              {visibility === "visible" ? "Visible" : "Hidden"}
+            </span>
+          </div>
         </div>
       </div>
     </div>

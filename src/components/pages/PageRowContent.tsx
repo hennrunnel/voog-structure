@@ -44,7 +44,7 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
 
   const handleRowClick = () => {
     if (page.translationStatus === "Untranslated") {
-      onEditPage(page);
+      onTranslatePage(page);
     } else {
       onPageSettings(page);
     }
