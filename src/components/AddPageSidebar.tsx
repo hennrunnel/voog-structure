@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/sheet";
 import { AddPageSidebarHeader } from "./addPageSidebar/AddPageSidebarHeader";
 import { AddPageSidebarForm } from "./addPageSidebar/AddPageSidebarForm";
+import { AddPageSidebarSeoForm } from "./addPageSidebar/AddPageSidebarSeoForm";
 import { AddPageSidebarFooter } from "./addPageSidebar/AddPageSidebarFooter";
 
 interface AddPageSidebarProps {
@@ -16,22 +17,39 @@ interface AddPageSidebarProps {
 }
 
 export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }: AddPageSidebarProps) => {
+  const [activeTab, setActiveTab] = useState("general");
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [layout, setLayout] = useState("2023-front-page");
   const [showInMenu, setShowInMenu] = useState(true);
+  const [access, setAccess] = useState("public");
   const [isLinkMode, setIsLinkMode] = useState(false);
   const [hasManuallyEditedAddress, setHasManuallyEditedAddress] = useState(false);
+
+  // SEO state
+  const [seoTitle, setSeoTitle] = useState("");
+  const [titleFormat, setTitleFormat] = useState("page-title-site-name");
+  const [customizeTitleFormat, setCustomizeTitleFormat] = useState(false);
+  const [metaDescription, setMetaDescription] = useState("");
+  const [visibleToSearchEngines, setVisibleToSearchEngines] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
       // Reset form when opening
+      setActiveTab("general");
       setTitle("");
       setAddress("");
       setLayout("2023-front-page");
       setShowInMenu(true);
+      setAccess("public");
       setIsLinkMode(false);
       setHasManuallyEditedAddress(false);
+      // Reset SEO fields
+      setSeoTitle("");
+      setTitleFormat("page-title-site-name");
+      setCustomizeTitleFormat(false);
+      setMetaDescription("");
+      setVisibleToSearchEngines(true);
     }
   }, [isOpen]);
 
@@ -47,6 +65,13 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
       setAddress(slug ? `/${slug}` : "");
     }
   }, [title, hasManuallyEditedAddress, isLinkMode]);
+
+  // Auto-generate SEO title from title
+  useEffect(() => {
+    if (title && !customizeTitleFormat) {
+      setSeoTitle(title);
+    }
+  }, [title, customizeTitleFormat]);
 
   const handleAddressChange = (value: string) => {
     setAddress(value);
@@ -75,19 +100,46 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
         role="dialog"
         aria-labelledby="add-page-title"
       >
-        <AddPageSidebarHeader isLinkMode={isLinkMode} />
-        
-        <AddPageSidebarForm
-          title={title}
-          setTitle={setTitle}
-          address={address}
-          handleAddressChange={handleAddressChange}
-          layout={layout}
-          setLayout={setLayout}
-          showInMenu={showInMenu}
-          setShowInMenu={setShowInMenu}
-          isLinkMode={isLinkMode}
+        <AddPageSidebarHeader 
+          isLinkMode={isLinkMode} 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
         />
+        
+        <div className="px-6 py-6 flex-1 overflow-y-auto">
+          {activeTab === "general" && (
+            <AddPageSidebarForm
+              title={title}
+              setTitle={setTitle}
+              address={address}
+              handleAddressChange={handleAddressChange}
+              layout={layout}
+              setLayout={setLayout}
+              showInMenu={showInMenu}
+              setShowInMenu={setShowInMenu}
+              access={access}
+              setAccess={setAccess}
+              isLinkMode={isLinkMode}
+            />
+          )}
+
+          {activeTab === "seo" && !isLinkMode && (
+            <AddPageSidebarSeoForm
+              seoTitle={seoTitle}
+              setSeoTitle={setSeoTitle}
+              titleFormat={titleFormat}
+              setTitleFormat={setTitleFormat}
+              customizeTitleFormat={customizeTitleFormat}
+              setCustomizeTitleFormat={setCustomizeTitleFormat}
+              metaDescription={metaDescription}
+              setMetaDescription={setMetaDescription}
+              visibleToSearchEngines={visibleToSearchEngines}
+              setVisibleToSearchEngines={setVisibleToSearchEngines}
+              pageTitle={title}
+              urlSlug={address}
+            />
+          )}
+        </div>
         
         <AddPageSidebarFooter
           title={title}
