@@ -58,9 +58,14 @@ export const PageRowContent: React.FC<PageRowContentProps> = ({
     title: translatedTitle
   };
 
+  // Conditional hover styles - only apply on non-mobile views
+  const hoverClasses = isMobile 
+    ? "" 
+    : "hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF]";
+
   return (
     <div 
-      className="group flex items-center border-l-2 border-l-transparent hover:bg-[#FBFBFF] hover:border-l-[#5A4FFF] transition-colors cursor-pointer" 
+      className={`group flex items-center border-l-2 border-l-transparent ${hoverClasses} transition-colors cursor-pointer`}
       style={{ 
         paddingLeft: `${paddingLeft + 24}px`, 
         paddingRight: '24px',
