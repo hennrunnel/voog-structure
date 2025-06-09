@@ -158,13 +158,5 @@ export const mockPages: PageItem[] = [
         isVisible: true
       }
     ]
-  },
-  {
-    id: "7",
-    title: "Upsell",
-    slug: "/upsell",
-    pageType: "Common Page",
-    seoScore: "Good",
-    isVisible: true
   }
 ];
