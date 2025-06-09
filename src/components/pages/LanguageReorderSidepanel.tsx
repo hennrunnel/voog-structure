@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
@@ -123,41 +123,49 @@ export const LanguageReorderSidepanel: React.FC<LanguageReorderSidepanelProps> =
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
-      <SheetContent className="w-[440px] max-w-full p-8 flex flex-col gap-8">
-        <h2 className="text-2xl font-bold mb-4">Reorder languages</h2>
+      <SheetContent className="w-[400px] max-w-full flex flex-col">
+        <SheetHeader className="pb-6">
+          <SheetTitle className="text-left">Arrange languages</SheetTitle>
+        </SheetHeader>
         
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext items={items.map(item => item.id)} strategy={verticalListSortingStrategy}>
-            <div className="flex flex-col gap-4">
-              {items.map((language) => (
-                <LanguageCard
-                  key={language.id}
-                  language={language}
-                />
-              ))}
-            </div>
-          </SortableContext>
+        <div className="flex-1 flex flex-col gap-6">
+          <p className="text-sm text-muted-foreground">
+            Change the order that languages appear in your site's language menu.
+          </p>
           
-          <DragOverlay>
-            {activeLanguage ? (
-              <LanguageCard language={activeLanguage} isDragging />
-            ) : null}
-          </DragOverlay>
-        </DndContext>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext items={items.map(item => item.id)} strategy={verticalListSortingStrategy}>
+              <div className="flex flex-col gap-4">
+                {items.map((language) => (
+                  <LanguageCard
+                    key={language.id}
+                    language={language}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+            
+            <DragOverlay>
+              {activeLanguage ? (
+                <LanguageCard language={activeLanguage} isDragging />
+              ) : null}
+            </DragOverlay>
+          </DndContext>
+        </div>
 
-        <div className="flex gap-4 mt-auto">
-          <Button onClick={handleSave} className="px-8 text-lg">
+        <div className="flex gap-3 pt-6 border-t">
+          <Button onClick={handleSave} className="flex-1">
             Save
           </Button>
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={handleCancel}
-            className="bg-blue-50 text-blue-700 px-8 text-lg hover:bg-blue-100"
+            className="flex-1"
           >
             Cancel
           </Button>
