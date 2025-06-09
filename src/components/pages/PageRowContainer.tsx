@@ -35,7 +35,7 @@ export const PageRowContainer: React.FC<PageRowContainerProps> = ({
 
   return (
     <TooltipProvider>
-      <div key={page.id} className="font-sans group">
+      <div key={page.id} className="font-sans">
         <PageRowContent
           page={page}
           currentLanguage={currentLanguage}
