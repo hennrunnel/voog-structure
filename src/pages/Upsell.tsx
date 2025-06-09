@@ -1,25 +1,12 @@
 
-import { DevControls } from "@/components/DevControls";
 import { PagesHeader } from "@/components/pages/PagesHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
 
 const Upsell = () => {
-  const [devControlsVisible, setDevControlsVisible] = useState<boolean>(true);
-
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: devControlsVisible ? '24px' : '80px' }}>
+    <div className="min-h-screen bg-gray-50 flex justify-center px-4 font-sans" style={{ paddingTop: '80px' }}>
       <div className="w-full" style={{ maxWidth: '992px' }}>
-        {devControlsVisible && (
-          <DevControls
-            emptyState={false}
-            onEmptyStateChange={() => {}}
-            currentPageName="Upsell"
-            onDestroy={() => setDevControlsVisible(false)}
-          />
-        )}
-        
         <div style={{ marginBottom: '64px' }}>
           <PagesHeader />
         </div>
@@ -67,7 +54,29 @@ const Upsell = () => {
                     >
                       English
                     </TabsTrigger>
+                    <TabsTrigger 
+                      value="estonian" 
+                      className="px-0 py-2 text-sm font-medium text-[#1B2124] bg-transparent border-b-2 border-transparent data-[state=active]:border-[#5A4FFF] data-[state=active]:bg-transparent data-[state=active]:text-[#5A4FFF] data-[state=active]:shadow-none hover:text-[#5A4FFF] rounded-none"
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        lineHeight: '24px'
+                      }}
+                    >
+                      Estonian
+                    </TabsTrigger>
                   </TabsList>
+                  
+                  <button 
+                    className="text-sm text-[#5A4FFF] hover:underline outline-none focus:outline-none"
+                    style={{ 
+                      paddingBottom: '16px',
+                      paddingTop: '0px',
+                      fontWeight: 500
+                    }}
+                  >
+                    Add language
+                  </button>
                 </div>
               </Tabs>
             </div>
