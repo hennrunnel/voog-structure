@@ -123,6 +123,15 @@ export const DevControls: React.FC<DevControlsProps> = ({
             >
               Refactor "Site structure" view
             </a>
+            <span className="text-orange-600 text-xs">, </span>
+            <a 
+              href="https://linear.app/voog/document/prd-site-structure-management-44f5b6613cf7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-orange-600 text-xs hover:underline underline"
+            >
+              PRD
+            </a>
           </div>
         </div>
       </div>
