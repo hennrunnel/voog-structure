@@ -50,9 +50,9 @@ export const usePageActions = (setPages: React.Dispatch<React.SetStateAction<Pag
     setSelectedLayout(null);
   };
 
-  const handleCreatePage = (pageData: { title: string; slug: string; }) => {
-    if (pageData.title && pageData.slug && selectedLayout) {
-      const layoutOption = layoutOptions.find(opt => opt.id === selectedLayout);
+  const handleCreatePage = (pageData: { title: string; slug: string; layout: string }) => {
+    if (pageData.title && pageData.slug) {
+      const layoutOption = layoutOptions.find(opt => opt.id === pageData.layout);
       const newPage = {
         id: Date.now().toString(),
         title: pageData.title,
