@@ -12,7 +12,7 @@ import { AddPageSidebarFooter } from "./addPageSidebar/AddPageSidebarFooter";
 interface AddPageSidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreatePage: (pageData: { title: string; slug: string }) => void;
+  onCreatePage: (pageData: { title: string; slug: string; layout: string }) => void;
   selectedLayout: string | null;
 }
 
@@ -39,7 +39,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
       setActiveTab("general");
       setTitle("");
       setAddress("");
-      setLayout("2023-front-page");
+      setLayout(selectedLayout || "2023-front-page");
       setShowInMenu(true);
       setAccess("public");
       setIsLinkMode(false);
@@ -51,7 +51,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
       setMetaDescription("");
       setVisibleToSearchEngines(true);
     }
-  }, [isOpen]);
+  }, [isOpen, selectedLayout]);
 
   // Auto-generate address from title
   useEffect(() => {
@@ -80,7 +80,7 @@ export const AddPageSidebar = ({ isOpen, onClose, onCreatePage, selectedLayout }
 
   const handleCreatePage = () => {
     if (title && address) {
-      onCreatePage({ title, slug: address });
+      onCreatePage({ title, slug: address, layout });
       onClose();
     }
   };
