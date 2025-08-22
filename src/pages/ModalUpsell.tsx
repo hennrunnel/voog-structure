@@ -30,20 +30,20 @@ const ModalUpsell = () => {
             <X className="w-5 h-5 text-gray-500" />
           </button>
 
-          <DialogHeader className="text-center mb-6">
+          <DialogHeader className="text-left mb-6">
             <DialogTitle className="text-2xl font-semibold text-[#1B2124] mb-4">
               Upgrade required
             </DialogTitle>
           </DialogHeader>
           
-          <div className="text-center space-y-6">
+          <div className="text-left space-y-6">
             <p className="text-[#1B2124] leading-relaxed">
               Your Voog Standard plan allows 3 languages. For just €22 per month you'll get 20 GB of storage, unlimited pages, users, languages, and access to developer tools for deep customization of your website.
             </p>
             
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col items-start gap-3">
               <Button 
-                className="bg-[#5A4FFF] text-white hover:bg-[#4a3fee]"
+                className="bg-[#5A4FFF] text-white hover:bg-[#4a3fee] px-4"
                 onClick={() => {
                   console.log("Subscribe to Voog Plus clicked");
                   handleClose();
