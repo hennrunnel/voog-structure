@@ -8,6 +8,7 @@ import Pages from "./pages/Pages";
 import EditMode from "./pages/EditMode";
 import NotFound from "./pages/NotFound";
 import Upsell from "./pages/Upsell";
+import ModalUpsell from "./pages/ModalUpsell";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Pages />} />
           <Route path="/edit-mode" element={<EditMode />} />
           <Route path="/upsell" element={<Upsell />} />
+          <Route path="/modal-upsell" element={<ModalUpsell />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
