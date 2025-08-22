@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -20,21 +21,29 @@ const ModalUpsell = () => {
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[600px] p-0" hideCloseButton>
-        <div className="p-8">
-          <DialogHeader className="text-left mb-6">
-            <DialogTitle className="text-2xl font-medium text-foreground mb-4">
+        <div className="relative p-8">
+          {/* Close button */}
+          <button
+            onClick={handleClose}
+            className="absolute right-4 top-4 p-2 hover:bg-gray-100 rounded-md transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+
+          <DialogHeader className="text-center mb-6">
+            <DialogTitle className="text-2xl font-semibold text-[#1B2124] mb-4">
               Upgrade required
             </DialogTitle>
           </DialogHeader>
           
-          <div className="space-y-6">
-            <p className="text-muted-foreground leading-relaxed">
+          <div className="text-center space-y-6">
+            <p className="text-[#1B2124] leading-relaxed">
               Your Voog Standard plan allows 3 languages. For just €22 per month you'll get 20 GB of storage, unlimited pages, users, languages, and access to developer tools for deep customization of your website.
             </p>
             
             <div className="flex flex-col gap-3">
               <Button 
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12"
+                className="bg-[#5A4FFF] text-white hover:bg-[#4a3fee]"
                 onClick={() => {
                   console.log("Subscribe to Voog Plus clicked");
                   handleClose();
@@ -43,28 +52,9 @@ const ModalUpsell = () => {
                 Subscribe to Voog Plus
               </Button>
               
-              <button 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors underline"
-                onClick={() => {
-                  console.log("Pay ahead one year clicked");
-                  handleClose();
-                }}
-              >
+              <p className="text-sm text-[#1B2124]">
                 save 22%, pay ahead one year
-              </button>
-            </div>
-            
-            <div className="pt-4 border-t border-border">
-              <Button 
-                variant="outline"
-                className="w-full"
-                onClick={() => {
-                  console.log("Contact site admin clicked");
-                  handleClose();
-                }}
-              >
-                Contact site admin
-              </Button>
+              </p>
             </div>
           </div>
         </div>
